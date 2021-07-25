@@ -6,14 +6,14 @@
 @import "../foundation/base/keyframes";
 @import "../editor/common/color_palette";
 
-// プレビュー用に
+// プレビュー用にブロックのスタイル読み込む
 @import "../object/parts/balloon";
 @import "../object/project/blogCard";
-@import "../editor/block/swell-cap-block";
 @import "../editor/block/swell-button";
 @import "../editor/block/swell-faq";
 @import "../editor/common/box_style";
 @import "../editor/block/core/core-list";
+@import "../../gutenberg/blocks/**/_common.scss";
 
 
 #wpwrap #wpcontent {

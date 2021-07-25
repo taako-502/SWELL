@@ -1,7 +1,3 @@
-//---------------------------------------
-// キャプション付きボックス
-//---------------------------------------
-
 .cap_box {
     position: relative;
 }
@@ -21,7 +17,6 @@
 
     i {
         margin-right: .4em;
-        // font-size: 1.1em;
     }
 
     svg {
@@ -58,7 +53,7 @@
 .is-style-onborder_ttl,
 .is-style-onborder_ttl2 {
 
-    & > .cap_box_ttl {
+    > .cap_box_ttl {
         //color: inherit;
         // background: #fff;
         position: relative;
@@ -74,7 +69,7 @@
         // border-radius: 0;
     }
 
-    & > .cap_box_content {
+    > .cap_box_content {
         padding-top: 1.5em;
 
         @include tab {
@@ -85,12 +80,12 @@
 
 .is-style-onborder_ttl {
 
-    & > .cap_box_ttl {
+    > .cap_box_ttl {
         color: var(--color_main);
         background: var(--color_content_bg) !important;
     }
 
-    & > .cap_box_content {
+    > .cap_box_content {
         // background: none !important;
         background: var(--color_content_bg) !important;
     }
@@ -98,7 +93,7 @@
 
 .is-style-onborder_ttl2 {
 
-    & > .cap_box_ttl {
+    > .cap_box_ttl {
         color: #fff;
     }
 }
@@ -112,7 +107,7 @@
         @extend %boxShadow;
     }
 
-    & > .cap_box_content {
+    > .cap_box_content {
         background: #fff;
         border: none;
     }
@@ -124,7 +119,7 @@
 
 .is-style-inner {
 
-    & > .cap_box_ttl {
+    > .cap_box_ttl {
         position: absolute;
         min-width: 2em;
         max-width: 100%;
@@ -134,7 +129,7 @@
         white-space: nowrap;
     }
 
-    & > .cap_box_content {
+    > .cap_box_content {
         // border-radius: 0;
 
         &::before {
@@ -155,7 +150,7 @@
         border: solid 1px var(--color_main);
     }
 
-    & > .cap_box_ttl {
+    > .cap_box_ttl {
         justify-content: flex-start;
         padding: 0;
         color: var(--color_main);
@@ -163,7 +158,7 @@
         background: none !important;
     }
 
-    & > .cap_box_content {
+    > .cap_box_content {
         margin-top: 1em;
         padding: 0;
         background: none !important;

@@ -42,7 +42,6 @@ function register_normal_blocks() {
 		'accordion-item',
 		'banner-link',
 		'button',
-		'cap-block',
 		'dl',
 		'dl-dt',
 		'dl-dd',
@@ -71,6 +70,32 @@ function register_normal_blocks() {
 		$block_name = str_replace( 'dl-', '', $block_name );
 		register_block_type( "loos/{$block_name}", [ 'editor_script' => $handle ] );
 	}
+
+	// リファクタリング済み
+	$blocks = [
+		'cap-block',
+	];
+	foreach ( $blocks as $block_name ) {
+
+		$handle = "swell-block/{$block_name}";
+		$asset  = include T_DIRE . "/build/blocks/{$block_name}/index.asset.php";
+
+		wp_register_script(
+			$handle,
+			T_DIRE_URI . "/build/blocks/{$block_name}/index.js",
+			array_merge( $asset['dependencies'], [ 'swell_blocks' ] ),
+			SWELL_VERSION,
+			true
+		);
+
+		register_block_type_from_metadata(
+			T_DIRE . "/src/gutenberg/blocks/{$block_name}",
+			[
+				'editor_script' => $handle,
+			]
+		);
+	}
+
 }
 
 
