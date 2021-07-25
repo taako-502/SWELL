@@ -8,6 +8,10 @@
 
     .swell-components-tab {
         margin-top: 1em;
+
+        .components-button {
+            padding: 0 8px;
+        }
     }
 
     .p-blogCard {
@@ -15,25 +19,22 @@
         text-decoration: none;
     }
 
-    .swell-components-tab {
-
-        .components-button {
-            padding: 0 8px;
-        }
-    }
-
 }
+
 // プレビュー
 .swell-block-postLink__preview {
     margin: 0 0;
 
-    & > div {
+    > div {
         pointer-events: none;
     }
 
-
     .p-blogCard {
         margin: 0 0;
+    }
+
+    .u-mb-ctrl {
+        margin: 0 !important;
     }
 }
 

@@ -6,70 +6,20 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * 関連記事ブロック
  */
-$block_name = 'post-link';
-$handle     = 'swell-block/' . $block_name;
+$asset = include T_DIRE . '/build/blocks/post-link/index.asset.php';
 wp_register_script(
-	$handle,
-	T_DIRE_URI . '/build/blocks/' . $block_name . '/index.js',
-	['swell_blocks' ],
+	'swell-block/post-link',
+	T_DIRE_URI . '/build/blocks/post-link/index.js',
+	array_merge( $asset['dependencies'], [ 'swell_blocks' ] ),
 	SWELL_VERSION,
 	true
 );
 
-register_block_type(
-	'loos/post-link',
-	[
-		'editor_script'   => $handle,
-		'attributes'      => [
-			'className' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'postTitle' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'postId' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'cardCaption' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'isNewTab' => [
-				'type'    => 'boolean',
-				'default' => false,
-			],
-			'externalUrl' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'isPreview' => [
-				'type'    => 'boolean',
-				'default' => false,
-			],
-			'rel' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'hideImage' => [
-				'type'    => 'boolean',
-				'default' => false,
-			],
-			'hideExcerpt' => [
-				'type'    => 'boolean',
-				'default' => false,
-			],
-			'isText' => [
-				'type'    => 'boolean',
-				'default' => false,
-			],
-
-		],
-		'render_callback' => 'SWELL_THEME\Block\cb_post_link',
-	]
-);
+register_block_type_from_metadata( T_DIRE . '/src/gutenberg/blocks/post-link', [
+	// 'style' => "swell-block/post-link",
+	'editor_script'   => 'swell-block/post-link',
+	'render_callback' => __NAMESPACE__ . '\cb_post_link',
+] );
 
 function cb_post_link( $attrs ) {
 
@@ -90,7 +40,6 @@ function cb_post_link( $attrs ) {
 		'noimg'     => $hideImage,
 		'nodesc'    => $hideExcerpt,
 	];
-	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	$link_style  = $isText ? 'text' : 'card';
 	$block_class = 'swell-block-postLink';
@@ -98,6 +47,7 @@ function cb_post_link( $attrs ) {
 		$block_class .= ' ' . $className;
 	}
 
+	// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	ob_start();
 	echo '<div class="' . esc_attr( $block_class ) . '" data-style="' . esc_attr( $link_style ) . '">';
 	if ( $externalUrl ) {

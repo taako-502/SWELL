@@ -1,0 +1,65 @@
+{
+    "apiVersion": 2,
+    "name": "loos/post-link",
+    "title": "関連記事",
+    "category": "swell-blocks",
+    "keywords": [
+        "swell",
+        "blogcard"
+    ],
+    "supports": {
+        "className": false
+    },
+    "example": {
+        "attributes": {
+            "isPreview": true
+        }
+    },
+    "attributes": {
+        "className": {
+            "type": "string",
+            "default": ""
+        },
+        "postTitle": {
+            "type": "string",
+            "default": ""
+        },
+        "postId": {
+            "type": "string",
+            "default": ""
+        },
+        "cardCaption": {
+            "type": "string",
+            "default": ""
+        },
+        "isNewTab": {
+            "type": "boolean",
+            "default": false
+        },
+        "externalUrl": {
+            "type": "string",
+            "default": ""
+        },
+        "isPreview": {
+            "type": "boolean",
+            "default": false
+        },
+        "rel": {
+            "type": "string",
+            "default": ""
+        },
+        "hideImage": {
+            "type": "boolean",
+            "default": false
+        },
+        "hideExcerpt": {
+            "type": "boolean",
+            "default": false
+        },
+        "isText": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "textdomain": "swell"
+}

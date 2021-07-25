@@ -4,24 +4,19 @@
 import { __ } from '@wordpress/i18n';
 import { memo, useMemo, useState } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
-import { URLInput, InspectorControls } from '@wordpress/block-editor';
-import ServerSideRender from '@wordpress/server-side-render';
+import { URLInput, InspectorControls, useBlockProps } from '@wordpress/block-editor';
 import { PanelBody, ToggleControl, TextControl } from '@wordpress/components';
+import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * @SWELL dependencies
  */
-import { iconColor } from '@swell-guten/config';
-import example from './_example';
-import exampleHtml from './_exampleHtml';
+import metadata from './block.json';
 import deprecated from './deprecated';
+import exampleHtml from './_exampleHtml';
 import setBlankRel from '@swell-guten/utils/setBlankRel';
 import SwellTab from '@swell-guten/components/SwellTab';
-
-/**
- * @Others dependencies
- */
-import classnames from 'classnames';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /* eslint jsx-a11y/no-autofocus: 0 */
 
@@ -96,63 +91,11 @@ const SettingArea = memo(
 /**
  * 関連記事ブロック
  */
-registerBlockType('loos/post-link', {
-	title: '関連記事',
+registerBlockType(metadata.name, {
+	title: __('関連記事', 'swell'),
 	description: __('関連記事をブログカード型で表示します。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: 'admin-links',
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'blogcard', 'postlink'],
-	supports: {
-		className: false,
-	},
-	example,
-	attributes: {
-		postTitle: {
-			type: 'string',
-			default: '',
-		},
-		postId: {
-			type: 'string',
-			default: '',
-		},
-		cardCaption: {
-			type: 'string',
-			default: '',
-		},
-		isNewTab: {
-			type: 'boolean',
-			default: false,
-		},
-		externalUrl: {
-			type: 'string',
-			default: '',
-		},
-		isPreview: {
-			type: 'boolean',
-			default: false,
-		},
-		rel: {
-			type: 'string',
-			default: '',
-		},
-		hideImage: {
-			type: 'boolean',
-			default: false,
-		},
-		hideExcerpt: {
-			type: 'boolean',
-			default: false,
-		},
-		isText: {
-			type: 'boolean',
-			default: false,
-		},
-	},
-
-	edit: ({ attributes, setAttributes, className, isSelected }) => {
+	icon: getBlockIcon('admin-links'),
+	edit: ({ attributes, setAttributes, isSelected }) => {
 		const {
 			isPreview,
 			postId,
@@ -185,6 +128,10 @@ registerBlockType('loos/post-link', {
 
 		// 現在の記事のID
 		// const currentID = useSelect((select) => select('core/editor').getCurrentPostId());
+
+		const blockProps = useBlockProps({
+			className: 'swell-block-postLink',
+		});
 
 		return (
 			<>
@@ -248,7 +195,7 @@ registerBlockType('loos/post-link', {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={classnames('swell-block-postLink', className)}>
+				<div {...blockProps}>
 					<div className='swell-block-postLink__preview'>
 						{postId || externalUrl ? (
 							<ServerSideRender block='loos/post-link' attributes={attributes} />
