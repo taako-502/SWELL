@@ -1,0 +1,58 @@
+@import "../foundation/variable";
+@import "../foundation/mixin/**";
+
+//=========================================================
+// お知らせ表示
+//=========================================================
+.c-infoBar {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    &.-bg-stripe {
+
+        &::before {
+            display: block;
+            background-image: repeating-linear-gradient(-45deg, #fff 0 6px, transparent 6px 12px);
+            opacity: .1;
+            content: "";
+        }
+    }
+
+
+    &__link {
+        position: relative;
+        z-index: 0;
+        display: block;
+        color: inherit;
+    }
+
+    &__text {
+        position: relative;
+        z-index: 1;
+        display: block;
+        padding: 8px 0;
+        color: inherit;
+        font-weight: bold;
+
+        &.-flow-on {
+            white-space: nowrap;
+            text-align: left;
+            transform: translateX(100%);
+            animation: flowing_text 12s linear infinite;
+            animation-duration: 12s;
+
+            @include pc {
+                animation-duration: 20s;
+            }
+        }
+
+        &.-flow-off {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+    }
+}

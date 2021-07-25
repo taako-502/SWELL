@@ -1,0 +1,24 @@
+.l-mainContent {
+    position: static !important; //色々と重要
+    width: 100%;
+
+    .-sidebar-on & {
+
+        max-width: 100%;
+
+        @include pc {
+            width: calc(100% - 356px);
+        }
+    }
+}
+
+.l-mainContent__inner {
+
+    & > :first-child {
+        margin-top: 0 !important;
+    }
+
+    & > :last-child {
+        margin-bottom: 0 !important;
+    }
+}

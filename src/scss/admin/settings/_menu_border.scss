@@ -1,0 +1,43 @@
+.swell-menu-border {
+
+    @media (min-width: 783px) {
+        display: flex;
+        flex-wrap: wrap;
+
+    }
+
+    .__settings {
+        display: flex;
+        margin-right: 16px;
+        margin-bottom: 16px;
+    }
+
+    .__item {
+        margin-right: 16px;
+        padding-top: 4px;
+    }
+
+    .__width {
+        width: 4em;
+    }
+
+    .__preview {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .__previwBox {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        // width: 100%;
+        height: 80px;
+        color: #666;
+        font-size: 12px;
+    }
+
+    .-customColor {
+        margin-top: 8px;
+    }
+}

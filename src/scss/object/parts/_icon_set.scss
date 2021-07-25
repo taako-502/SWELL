@@ -1,0 +1,14 @@
+//=========================================================
+// アイコン
+//=========================================================
+
+//カテゴリー ドロップダウン
+// .widget_archive form::after,
+.widget_categories form::after,
+.wp-block-archives-dropdown::after,
+.wp-block-categories-dropdown::after {
+
+    @extend %swellicon;
+    @extend .icon-arrow_drop_down::before;
+
+}

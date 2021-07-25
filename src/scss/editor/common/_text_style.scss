@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+//マーカー
+.mark_blue,
+.mark_green,
+.mark_yellow,
+.mark_orange {
+    display: inline;
+    padding: 2px;
+}
+
+code.dir_name::before {
+    margin-right: .25em;
+    opacity: .8;
+
+    @extend %swellicon;
+    @extend .icon-folder::before;
+}
+
+code.file_name::before {
+    margin-right: .25em;
+
+    @extend %swellicon;
+    @extend .icon-file-empty::before;
+}
+

@@ -1,0 +1,16 @@
+
+// .c-prBanner{}
+.c-prBanner__link {
+    display: block;
+    max-width: 400px;
+    margin: 0 auto;
+    transition: opacity .25s;
+
+    &:hover {
+        opacity: .8;
+    }
+}
+
+.c-prBanner__img {
+    width: 100%;
+}

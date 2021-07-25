@@ -1,0 +1,55 @@
+//フリーワード検索
+.c-searchForm {
+    position: relative;
+
+    // label {
+    //     display: none;
+    // }
+}
+
+.c-searchForm__s {
+    width: 100%;
+    padding: 4px 44px 4px 8px;
+    line-height: 2;
+    background-color: #fff;
+    // border-radius: 2px;
+}
+
+.c-searchForm__submit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    overflow: hidden;
+    // line-height: 10;
+    // border-radius: 2px;
+
+    &::before {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 1;
+        color: #fff;
+        font-size: 20px;
+        transform: translateX(-50%) translateY(-50%);
+    }
+}
+
+
+// ヘッダーウィジェット
+.w-header {
+
+    .c-searchForm__s {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .c-searchForm__submit {
+        width: 30px;
+
+        &::before {
+            font-size: 16px;
+        }
+    }
+}

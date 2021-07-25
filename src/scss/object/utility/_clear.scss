@@ -1,0 +1,14 @@
+.cf::before,
+.cf::after {
+    display: block;
+    clear: both;
+    height: 0;
+    overflow: hidden;
+    content: "";
+}
+
+.u-cf,
+.clear {
+    clear: both !important;
+}
+

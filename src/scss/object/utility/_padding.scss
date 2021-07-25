@@ -1,0 +1,55 @@
+@include pc {
+
+    .pc-py-0 {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .pc-py-20 {
+        padding-top: 2em !important;
+        padding-bottom: 2em !important;
+    }
+
+    .pc-py-40 {
+        padding-top: 4em !important;
+        padding-bottom: 4em !important;
+    }
+
+    .pc-py-60 {
+        padding-top: 6em !important;
+        padding-bottom: 6em !important;
+    }
+
+    .pc-py-80 {
+        padding-top: 8em !important;
+        padding-bottom: 8em !important;
+    }
+}
+
+@include sp {
+
+    .sp-py-0 {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .sp-py-20 {
+        padding-top: 2em !important;
+        padding-bottom: 2em !important;
+    }
+
+    .sp-py-40 {
+        padding-top: 4em !important;
+        padding-bottom: 4em !important;
+    }
+
+    .sp-py-60 {
+        padding-top: 6em !important;
+        padding-bottom: 6em !important;
+    }
+
+    .sp-py-80 {
+        padding-top: 8em !important;
+        padding-bottom: 8em !important;
+    }
+}

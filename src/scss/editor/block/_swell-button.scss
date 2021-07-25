@@ -1,0 +1,256 @@
+//SWELLボタン
+.swell-block-button {
+
+    &[data-align="right"] {
+        text-align: right;
+    }
+
+    &[data-align="left"] {
+        text-align: left;
+    }
+
+    a {
+        text-align: center;
+    }
+
+    .swell-block-button__link[data-has-icon] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .__icon {
+        margin-right: .5em;
+        // margin-left: -.25em;
+    }
+
+    svg {
+        width: 1.1em;
+        height: 1.1em;
+    }
+}
+
+
+.swell-block-button__img {
+    display: none !important;
+    border: none;
+}
+
+// クラシック用
+
+// SWELLボタン共通
+[class*="is-style-btn_"] {
+    position: relative;
+    display: block;
+    margin: 0 auto 2em;
+    text-align: center;
+
+
+    a {
+        position: relative;
+        display: inline-block;
+        min-width: 64%;
+        margin: 0;
+        padding: .75em 1.5em;
+        line-height: 1.5;
+        letter-spacing: 1px;
+        text-decoration: none !important;
+        background: var(--color_main);
+
+        @include tab {
+            min-width: 40%;
+        }
+    }
+
+    &.-size-s a {
+        min-width: 40%;
+        // padding: .5em 1.5em;
+        font-size: .9em;
+
+        @include tab {
+            min-width: 20%;
+        }
+    }
+
+    &.-size-l a {
+        min-width: 100%;
+        padding: 1em 1.5em;
+
+        @include tab {
+            min-width: 80%;
+        }
+    }
+
+    // 広告タグのimgに対処
+    img {
+        display: none;
+    }
+}
+
+
+// normal
+.is-style-btn_normal {
+
+    a {
+        color: #fff;
+        font-weight: bold;
+        transition: box-shadow .25s;
+
+        @extend %buttonShadow;
+
+        &:hover {
+            // box-shadow: 0 12px 20px -4px rgba(0, 0, 0, .25);
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, .1),
+                0 12px 24px -12px rgba(0, 0, 0, .2);
+            opacity: 1;
+        }
+    }
+}
+
+// 立体
+.is-style-btn_solid {
+
+    a {
+        z-index: 1;
+        color: #fff;
+        font-weight: bold;
+        box-shadow: 0 4px 0 var(--color_main_dark);
+        transition: transform .25s, box-shadow .25s;
+
+        &:hover {
+            box-shadow: 0 0 0 transparent !important;
+            transform: translate3d(0, 4px, 0);
+        }
+    }
+
+    &.red_ a {
+        box-shadow: 0 4px 0 var(--color_btn_red_dark);
+    }
+
+    &.blue_ a {
+        box-shadow: 0 4px 0 var(--color_btn_blue_dark);
+    }
+
+    &.green_ a {
+        box-shadow: 0 4px 0 var(--color_btn_green_dark);
+    }
+}
+
+// キラッと
+.is-style-btn_shiny {
+
+    a {
+        color: #fff;
+        font-weight: bold;
+
+        @extend %buttonShadow;
+        @extend %shinyBtn;
+    }
+}
+
+// アウトライン
+.is-style-btn_line {
+
+    a {
+        position: relative;
+        color: var(--color_main);
+        background: none;
+        border: solid 1px currentColor;
+        transition: background-color .25s;
+
+        &:hover {
+            color: #fff !important;
+            background-color: var(--color_main);
+            border-color: transparent;
+        }
+    }
+
+    &.red_ a {
+        color: var(--color_btn_red);
+    }
+
+    &.blue_ a {
+        color: var(--color_btn_blue);
+    }
+
+    &.green_ a {
+        color: var(--color_btn_green);
+    }
+}
+
+// MOREボタン
+.is-style-more_btn {
+    position: relative;
+    display: block;
+    margin: 0 auto 2em;
+    padding: 2px 0; //main_contentのhiddenによってboreder消えるの阻止
+    text-align: center;
+
+    // 広告タグのimgに対処
+    img {
+        display: none;
+    }
+
+    a {
+        position: relative;
+        display: inline-block;
+        min-width: 80%;
+        padding: .75em 3em;
+        color: #666;
+        font-size: 3.4vw;
+        text-decoration: none !important;
+        background: #fff;
+        box-shadow: 0 0 0 1px #dcdcdc;
+        transition: box-shadow .25s, background-color .25s;
+
+        @include tab {
+            min-width: 64%;
+            font-size: 14px;
+        }
+
+
+        &::after {
+            position: absolute;
+            top: 50%;
+            right: 1.25em;
+            font-family: icomoon;
+            transform: translateY(-50%);
+            transition: transform .25s;
+            content: "\e930";
+        }
+
+        &:hover {
+            color: #fff;
+            background-color: var(--color_main);
+            box-shadow: none;
+
+            &::after {
+                transform: translateX(4px) translateY(-50%);
+            }
+
+        }
+    }
+}
+
+
+.is-style-btn_normal.red_ a,
+.is-style-btn_shiny.red_ a,
+.is-style-btn_solid.red_ a,
+.is-style-btn_line.red_ a:hover {
+    background: var(--color_btn_red);
+}
+
+.is-style-btn_normal.blue_ a,
+.is-style-btn_shiny.blue_ a,
+.is-style-btn_solid.blue_ a,
+.is-style-btn_line.blue_ a:hover {
+    background: var(--color_btn_blue);
+}
+
+.is-style-btn_normal.green_ a,
+.is-style-btn_shiny.green_ a,
+.is-style-btn_solid.green_ a,
+.is-style-btn_line.green_ a:hover {
+    background: var(--color_btn_green);
+}

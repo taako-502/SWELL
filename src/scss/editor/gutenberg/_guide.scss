@@ -1,0 +1,76 @@
+
+// プレビュー画面ではスタイル当てない
+.block-editor-writing-flow {
+
+    // ガイド付き線
+    .u-block-guide {
+        padding: 1em 1em 1em;
+
+        &:not(.has-border) {
+            border: dashed 1px $color_guide;
+        }
+
+        &.swell-block-dl {
+            padding-top: 1.5em;
+        }
+    }
+}
+
+
+// ガイド線を表示する
+
+
+// ガイド線を表示する
+[data-type="core/group"],
+[data-type="core/columns"] {
+
+    &:not(.has-background).has-child-selected::after {
+        border: dashed 1px $color_guide;
+    }
+}
+
+[data-type="loos/ab-test"],
+[data-type="loos/accordion"],
+[data-type="loos/step"],
+[data-type="loos/dl"],
+[data-type="loos/tab"],
+[data-type="loos/faq"] {
+
+    &.has-child-selected::after {
+        border: dashed 1px $color_guide;
+    }
+}
+
+// ガイド線を少し外側に
+.is-root-container > [data-type="core/group"],
+.is-root-container > [data-type="core/columns"],
+.is-root-container > [data-type="loos/ab-test"],
+.is-root-container > [data-type="loos/accordion"],
+.is-root-container > [data-type="loos/step"],
+.is-root-container > [data-type="loos/dl"],
+.is-root-container > [data-type="loos/tab"],
+.is-root-container > [data-type="loos/faq"] {
+
+    &::after {
+        top: -8px;
+        right: -8px;
+        bottom: -8px;
+        left: -8px;
+    }
+}
+
+[data-type="loos/balloon"],
+[data-type="loos/step-item"] {
+
+    &::after {
+        top: -4px !important;
+        bottom: -4px !important;
+    }
+}
+
+[data-type="loos/button"] {
+
+    &::after {
+        top: -4px !important;
+    }
+}

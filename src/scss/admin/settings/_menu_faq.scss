@@ -1,0 +1,40 @@
+.tr-faq {
+
+    th {
+        min-width: 8em;
+    }
+}
+
+.swell-menu-faq {
+
+    @include tab {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .__settings {
+        min-width: 12em;
+        margin-right: 16px;
+        margin-bottom: 16px;
+    }
+
+    .__preview {
+        // text-align: center;
+        display: flex;
+        width: 400px;
+
+        @include mobile {
+            width: 100%;
+        }
+
+        .swell-block-faq {
+            flex-basis: 50%;
+        }
+
+        .faq_a {
+            margin: 0;
+        }
+    }
+
+    // .swell-block-capbox {}
+}

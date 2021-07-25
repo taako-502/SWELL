@@ -1,0 +1,4 @@
+src/js/plugin/*.js
+assets
+build
+node_modules

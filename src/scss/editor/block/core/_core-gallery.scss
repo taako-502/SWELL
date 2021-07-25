@@ -1,0 +1,28 @@
+// ギャラリー
+ul.wp-block-gallery {
+    width: 100%;
+    padding-left: 0 !important;
+}
+
+.wp-block-gallery {
+    //5.3からは figure.wp-block-gallery > ul.blocks-gallery-grid
+    .blocks-gallery-grid {
+        width: 100%;
+    }
+
+    .blocks-gallery-grid,
+    .blocks-gallery-item {
+        padding: 0;
+    }
+
+    figure {
+        margin: 0;
+    }
+
+    .blocks-gallery-caption {
+        width: 100%;
+        font-size: .9em;
+        text-align: center;
+        opacity: .8;
+    }
+}

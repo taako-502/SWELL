@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+// settingファイル
+@import "foundation/variable";
+@import "foundation/mixin/**";
+@import "foundation/placeholder";
+
+// base
+@import "foundation/base/reset";
+@import "foundation/base/keyframes";
+
+// root
+@import "foundation/root";
+
+// プラグイン初期設定用style
+@import "foundation/plugins/**";
+
+//共通スタイル
+@import "foundation/common";
+
+//各パーツ
+@import "layout/*.scss";
+@import "object/**";
+
+// カスタムスタイル
+@import "custom";
+
+// エディターコンテンツ
+@import "editor/front";
+@import "editor/block/**";
+@import "../gutenberg/blocks/**/_common.scss";
+@import "../gutenberg/blocks/**/_front.scss";
+
+
+[data-spmenu="opened"] body > .adsbygoogle {
+    top: -140px !important;
+}
+

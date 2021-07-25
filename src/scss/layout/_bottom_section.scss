@@ -1,0 +1,13 @@
+// 投稿ページ下部
+// php側でもstyleあり。
+.l-articleBottom__section {
+
+    @include mobile {
+        margin-top: 4em;
+    }
+
+    @include tab {
+        margin-top: 6em;
+    }
+
+}

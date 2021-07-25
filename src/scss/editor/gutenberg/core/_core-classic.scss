@@ -1,0 +1,15 @@
+// クラシックブロック
+.wp-block[data-type="core/freeform"] {
+    // テーブルボタンなどのアイコンが消えてしまうので明示的にdashiconsを指定
+    .mce-btn i {
+        // font-family: dashicons !important;
+    }
+
+    .block-library-rich-text__tinymce {
+
+        blockquote {
+            padding-left: 3em;
+            border: none;
+        }
+    }
+}

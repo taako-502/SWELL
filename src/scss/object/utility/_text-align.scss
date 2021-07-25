@@ -1,0 +1,19 @@
+/* --------------------------------------
+    text align
+
+    ※ ここに important つけるなら、メインビジュアルは u-ta-は使わないように変更する。
+-------------------------------------- */
+.al_c,
+.u-ta-c {
+    text-align: center;
+}
+
+.al_l,
+.u-ta-l {
+    text-align: left;
+}
+
+.al_r,
+.u-ta-r {
+    text-align: right;
+}

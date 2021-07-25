@@ -1,0 +1,29 @@
+.tr-custom-format {
+
+    .__tr {
+        align-items: center;
+
+        & + .__tr {
+            margin-top: 8px;
+        }
+
+        span {
+            min-width: 5em;
+        }
+    }
+}
+
+
+.__settings.-codemirror {
+
+    // 実際表示されるのは.CodeMirror
+    textarea,
+    .CodeMirror {
+        box-sizing: border-box;
+        width: 100%;
+        height: 50vh;
+        min-height: 25vh;
+        font-size: 14px;
+        border: 1px solid #ddd;
+    }
+}

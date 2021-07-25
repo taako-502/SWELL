@@ -1,0 +1,23 @@
+// タイトル周り
+.editor-post-title__block {
+    position: relative;
+    padding: 16px 0;
+
+    &::after {
+        position: absolute;
+        right: 0;
+        bottom: 8px;
+        display: block;
+        padding: 0 8px;
+        color: #333;
+        font-size: 12px;
+        line-height: 2;
+        background: #eee;
+        content: "文字数 : " attr(data-txtct);
+    }
+
+    .editor-post-title__input {
+        font-weight: bold;
+        font-size: 24px;
+    }
+}

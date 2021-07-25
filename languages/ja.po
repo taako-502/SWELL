@@ -1,0 +1,1504 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SWELL\n"
+"POT-Creation-Date: 2021-04-06 16:03+0900\n"
+"PO-Revision-Date: 2021-04-06 16:03+0900\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: style.css\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
+"X-Poedit-SearchPathExcluded-2: assets\n"
+"X-Poedit-SearchPathExcluded-3: src/js/set_prefetch.js\n"
+"X-Poedit-SearchPathExcluded-4: src/js/gutenberg/icon.js\n"
+"X-Poedit-SearchPathExcluded-5: vendor\n"
+"X-Poedit-SearchPathExcluded-6: src/gutenberg/blocks/_columns\n"
+
+#: src/gutenberg/blocks/ab-test/index.js:28
+msgid "2つのブロックをランダムに表示します。"
+msgstr ""
+
+#: src/gutenberg/blocks/accordion/_sidebar.js:30
+msgid "アイコンセットを選択"
+msgstr ""
+
+#: src/gutenberg/blocks/accordion/index-child.js:62
+#: src/gutenberg/blocks/balloon/index.js:177
+#: src/gutenberg/blocks/button/index.js:232
+#: src/gutenberg/blocks/dl/index.js:169 src/gutenberg/blocks/faq/index.js:149
+msgid "Text…"
+msgstr ""
+
+#: src/gutenberg/blocks/accordion/index-parent.js:28
+msgid "クリックで展開できるアコーディオンコンテンツを作成できます。"
+msgstr ""
+
+#: src/gutenberg/blocks/ad-tag/index.js:117
+msgid "登録済みの広告タグを呼び出すことができます。"
+msgstr ""
+
+#: src/gutenberg/blocks/balloon/_sidebar.js:118
+msgid "ふきだしの形"
+msgstr ""
+
+#: src/gutenberg/blocks/balloon/_sidebar.js:145
+msgid "アイコンの丸枠"
+msgstr ""
+
+#: src/gutenberg/blocks/balloon/_sidebar.js:172
+msgid "吹き出しの方向"
+msgstr ""
+
+#: src/gutenberg/blocks/balloon/_sidebar.js:199
+msgid "ふきだしの線"
+msgstr ""
+
+#: src/gutenberg/blocks/balloon/_sidebar.js:226
+msgid "ふきだしカラー"
+msgstr ""
+
+#: src/gutenberg/blocks/balloon/_sidebar.js:252
+msgid "ふきだしとアイコンの並び"
+msgstr ""
+
+#: src/gutenberg/blocks/balloon/index.js:35
+msgid "ふきだし形式の文章を簡単に作成できます。"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/_sidebar.js:140
+msgid "Altテキスト"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/_sidebar.js:181
+#: src/gutenberg/blocks/full-wide/_sidebar.js:341
+msgid "Focal Point Picker"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/_sidebar.js:191
+#: src/gutenberg/blocks/full-wide/_sidebar.js:173
+msgid "テキストカラー"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/_sidebar.js:203
+msgid "オーバーレイカラー"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/_sidebar.js:266
+#: src/gutenberg/blocks/button/_sidebar.js:233
+#: src/gutenberg/blocks/post-link/index.js:190
+msgid "Open in new tab"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/_sidebar.js:277
+#: src/gutenberg/blocks/button/_sidebar.js:244
+#: src/gutenberg/blocks/post-link/index.js:203
+msgid "Link rel"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/index.js:76
+msgid "簡易的なバナー型のリンクを作成できます。"
+msgstr ""
+
+#: src/gutenberg/blocks/banner-link/index.js:246
+#: lib/customizer/top/main_visual.php:31
+msgid "Image"
+msgstr "画像"
+
+#: src/gutenberg/blocks/blog-parts/index.js:30
+#: classes/SWELL_THEME/Taxonomy.php:84
+msgid "For category"
+msgstr "カテゴリー用"
+
+#: src/gutenberg/blocks/blog-parts/index.js:34
+#: classes/SWELL_THEME/Taxonomy.php:85
+msgid "For tag"
+msgstr "タグ用"
+
+#: src/gutenberg/blocks/blog-parts/index.js:42
+#: classes/SWELL_THEME/Taxonomy.php:83
+msgid "Block Pattern"
+msgstr "ブロックパターン"
+
+#: src/gutenberg/blocks/blog-parts/index.js:105
+msgid "登録済みのブログパーツを呼び出すことができます。"
+msgstr ""
+
+#: src/gutenberg/blocks/button/_sidebar.js:127
+msgid "クリック率を計測する"
+msgstr ""
+
+#: src/gutenberg/blocks/button/_sidebar.js:256
+#: src/gutenberg/blocks/cap-block/_sidebar.js:104
+msgid "アイコンのクラス"
+msgstr ""
+
+#: src/gutenberg/blocks/button/index.js:54
+msgid "カスタマイザーのデータと連携する特殊なボタンブロックです。"
+msgstr ""
+
+#: src/gutenberg/blocks/cap-block/index.js:53
+msgid "キャプションタイトル付けのコンテンツを作成できます。"
+msgstr ""
+
+#: src/gutenberg/blocks/cap-block/index.js:117
+#: src/gutenberg/blocks/step/index-child.js:232
+#: src/gutenberg/blocks/tab/components/TabNavList.js:67
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:71
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:89
+msgid "Title"
+msgstr "タイトル"
+
+#: src/gutenberg/blocks/faq/index.js:27
+msgid "Q&A形式のコンテンツを簡単に設置できます。"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/_sidebar.js:104
+msgid "コンテンツの横幅をどこに揃えるか"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/_sidebar.js:125
+msgid "上下のpadding量（PC）"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/_sidebar.js:148
+msgid "上下のpadding量（SP）"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/_sidebar.js:312
+msgid "背景効果"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/_sidebar.js:314
+msgid "Fixed Background"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/_sidebar.js:352
+msgid "上部の境界線の形状"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/_sidebar.js:397
+msgid "下部の境界線の形状"
+msgstr ""
+
+#: src/gutenberg/blocks/full-wide/index.js:89
+msgid "フルワイド幅でコンテンツを配置できます。"
+msgstr ""
+
+#: src/gutenberg/blocks/post-link/index.js:131
+msgid "関連記事をブログカード型で表示します。"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/index.js:29
+msgid "投稿リストを好きな条件で呼び出すことができます。"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:40
+#: src/gutenberg/blocks/rss/_sidebar.js:23
+#: src/gutenberg/extension/add_block_styles.js:33
+#: classes/SWELL_THEME/Data.php:112
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:84
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:102
+msgid "Card type"
+msgstr "カード型"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:44
+#: src/gutenberg/blocks/post-list/panel/_display.js:48
+#: src/gutenberg/blocks/rss/_sidebar.js:27 classes/SWELL_THEME/Data.php:113
+#: classes/SWELL_THEME/Data.php:114
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:89
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:107
+msgid "List type"
+msgstr "リスト型"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:48
+#: classes/SWELL_THEME/Data.php:114
+msgid "(Alternate left and right)"
+msgstr "（左右交互）"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:52
+#: classes/SWELL_THEME/Data.php:115
+msgid "Thumbnail type"
+msgstr "サムネイル型"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:56
+#: src/gutenberg/blocks/rss/_sidebar.js:31 classes/SWELL_THEME/Data.php:117
+msgid "Text type"
+msgstr "テキスト型"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:232
+msgid "各種表示設定"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:263
+#: lib/customizer/post_list.php:212 lib/customizer/top/post_slider.php:137
+msgid "Category display position"
+msgstr "カテゴリー表示位置"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:272
+#: src/gutenberg/blocks/rss/_sidebar.js:208
+msgid "HTML tag for title"
+msgstr "タイトルのHTMLタグ"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:294
+msgid "最大カラム数（PC）"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:318
+msgid "最大カラム数（SP）"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:340
+#: src/gutenberg/blocks/post-list/panel/_display.js:364
+#: lib/customizer/post_list.php:161 lib/customizer/post_list.php:181
+msgid "Number of characters in the excerpt"
+msgstr "抜粋文の文字数"
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:388
+msgid "MOREリンクの表示テキスト"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:405
+msgid "MOREリンクのURL"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_display.js:414
+msgid "最後の投稿を非表示にするかどうか"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_pickup.js:67
+msgid "All"
+msgstr "全て"
+
+#: src/gutenberg/blocks/post-list/panel/_pickup.js:258
+msgid "選択したカテゴリーを…"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_pickup.js:278
+msgid "選択したタグを…"
+msgstr ""
+
+#: src/gutenberg/blocks/post-list/panel/_pickup.js:319
+msgid "選択したタームを…"
+msgstr ""
+
+#: src/gutenberg/blocks/rss/_sidebar.js:100
+msgid "Show page name of site"
+msgstr "サイトのページ名を表示する"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:105 lib/customizer/post_list.php:128
+msgid "Show release date"
+msgstr "公開日を表示する"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:111 lib/customizer/post_list.php:150
+msgid "Show author"
+msgstr "著者を表示する"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:119
+msgid "Show thumbnail"
+msgstr "サムネイルを表示する"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:128
+msgid "RSS settings"
+msgstr "RSS設定"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:130
+msgid "RSS feed URL"
+msgstr "RSSフィードのURL"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:137
+msgid "RSS feed page name"
+msgstr "RSSフィードのページ名"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:144
+msgid "Use the cache"
+msgstr "キャッシュを利用する"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:145
+msgid "If you want to clear the cache, turn it off only once."
+msgstr "キャッシュを削除したい時、一度だけオフにしてください。"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:152
+#: lib/customizer/single_page/share_btn.php:24
+msgid "Display settings"
+msgstr "表示設定"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:154
+#: src/gutenberg/blocks/rss/_sidebar.js:163
+msgid "Number of posts to display"
+msgstr "表示する投稿数"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:172 lib/term_meta.php:68
+msgid "List layout"
+msgstr "リストレイアウト"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:181
+msgid "What to display"
+msgstr "小さく表示何を表示するか"
+
+#: src/gutenberg/blocks/rss/_sidebar.js:232
+#: src/gutenberg/blocks/rss/_sidebar.js:260
+msgid "最大カラム数"
+msgstr ""
+
+#: src/gutenberg/blocks/rss/index.js:33
+msgid "RSS"
+msgstr ""
+
+#: src/gutenberg/blocks/rss/index.js:34
+msgid "Create a list of RSS feeds."
+msgstr "RSSフィードのリストを作成します。"
+
+#: src/gutenberg/blocks/step/_sidebar.js:32
+msgid "ステップ番号の並び"
+msgstr ""
+
+#: src/gutenberg/blocks/step/_sidebar.js:58
+msgid "ステップ番号の形"
+msgstr ""
+
+#: src/gutenberg/blocks/step/index-parent.js:29
+msgid "ステップ形式で流れを説明できます。"
+msgstr ""
+
+#: src/gutenberg/blocks/tab/components/TabNavList.js:74
+msgid "タブを前に移動する"
+msgstr ""
+
+#: src/gutenberg/blocks/tab/components/TabNavList.js:87
+msgid "タブを削除する"
+msgstr ""
+
+#: src/gutenberg/blocks/tab/components/TabNavList.js:98
+msgid "タブを後ろに移動する"
+msgstr ""
+
+#: src/gutenberg/blocks/tab/components/TabNavList.js:116
+msgid "タブを追加"
+msgstr ""
+
+#: src/gutenberg/blocks/tab/index.js:96
+msgid "Tab 1"
+msgstr ""
+
+#: src/gutenberg/blocks/tab/index.js:96
+msgid "Tab 2"
+msgstr ""
+
+#: src/gutenberg/blocks/tab/index.js:250
+msgid "タブテキスト"
+msgstr ""
+
+#: src/gutenberg/components/BorderPanel.js:92
+msgid "ボーダーをクリア"
+msgstr ""
+
+#: src/gutenberg/components/BoxStyleControls.js:52
+msgid "スタイルをクリア"
+msgstr ""
+
+#: src/gutenberg/extension/add_block_styles.js:15
+#: src/gutenberg/extension/add_block_styles.js:32
+#: src/gutenberg/extension/add_block_styles.js:45
+#: src/gutenberg/extension/add_block_styles.js:81
+#: src/gutenberg/extension/add_block_styles.js:98
+msgid "Default"
+msgstr ""
+
+#: src/gutenberg/extension/add_block_styles.js:20
+msgctxt "Block Style"
+msgid "Section"
+msgstr "セクション用"
+
+#: src/gutenberg/extension/add_block_styles.js:34
+msgid "Broken Grid"
+msgstr "ブロークングリッド"
+
+#: src/gutenberg/extension/add_block_styles.js:46
+#: classes/SWELL_THEME/Data.php:506 classes/SWELL_THEME/Data.php:718
+#: lib/post_meta/meta_side.php:133
+msgid "TOC"
+msgstr "目次"
+
+#: src/gutenberg/extension/add_block_styles.js:47
+msgid "Check"
+msgstr "チェック"
+
+#: src/gutenberg/extension/add_block_styles.js:48
+msgid "Good"
+msgstr "グッド"
+
+#: src/gutenberg/extension/add_block_styles.js:49
+msgid "Bad"
+msgstr "バッド"
+
+#: src/gutenberg/extension/add_block_styles.js:50
+msgid "Round number"
+msgstr "丸数字"
+
+#: src/gutenberg/extension/add_block_styles.js:51
+msgid "Notes"
+msgstr "注釈"
+
+#: src/gutenberg/extension/add_block_styles.js:70
+msgctxt "Block Style"
+msgid "Border"
+msgstr "枠あり"
+
+#: src/gutenberg/extension/add_block_styles.js:71
+msgctxt "Block Style"
+msgid "Shadow"
+msgstr "影あり"
+
+#: src/gutenberg/extension/add_block_styles.js:72
+msgctxt "Block Style"
+msgid "Photo frame"
+msgstr "フォトフレーム"
+
+#: src/gutenberg/extension/add_block_styles.js:102
+msgid "Simple"
+msgstr "シンプル"
+
+#: src/gutenberg/extension/add_block_styles.js:106
+msgid "Double line"
+msgstr "二重線"
+
+#: src/gutenberg/extension/add_plugin_menu.js:109
+msgid "SWELL設定"
+msgstr ""
+
+#: src/gutenberg/format/btn/font-size/_popover.js:63
+msgid "Clear"
+msgstr ""
+
+#: src/gutenberg/hoc/components/DevicePanel.js:49
+msgid "表示するデバイスサイズ"
+msgstr ""
+
+#: classes/SWELL_THEME/Admin_Menu.php:73 classes/SWELL_THEME/Admin_Menu.php:74
+#: classes/SWELL_THEME/Admin_Menu.php:85 classes/SWELL_THEME/Admin_Menu.php:86
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:50 lib/menu/swell_menu.php:34
+#: lib/post_meta/meta_side.php:18 lib/term_meta.php:46
+msgid "SWELL Settings"
+msgstr "SWELL設定"
+
+#: classes/SWELL_THEME/Admin_Menu.php:94 classes/SWELL_THEME/Admin_Menu.php:95
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:71 lib/menu/swell_menu.php:39
+#: lib/menu/swell_menu_editor.php:37
+msgid "Editor Settings"
+msgstr "エディター設定"
+
+#: classes/SWELL_THEME/Admin_Menu.php:101 classes/SWELL_THEME/Taxonomy.php:52
+#, php-format
+msgid "Edit %s"
+msgstr "%sを編集"
+
+#: classes/SWELL_THEME/Admin_Menu.php:114
+#: classes/SWELL_THEME/Admin_Menu.php:115
+msgid "SWELLERS'"
+msgstr "SWELLERS’"
+
+#: classes/SWELL_THEME/Admin_Menu.php:123
+#: classes/SWELL_THEME/Admin_Menu.php:124
+msgid "Reusable Block"
+msgstr "再利用ブロック"
+
+#: classes/SWELL_THEME/Data.php:116
+msgid "Blog type"
+msgstr "ブログ型"
+
+#: classes/SWELL_THEME/Data.php:354
+msgid "Please enter the information here."
+msgstr "お知らせ内容をここに入力してください。"
+
+#: classes/SWELL_THEME/Data.php:355 classes/SWELL_THEME/Gutenberg.php:137
+#: lib/customizer/single_page/share_btn.php:155
+#: lib/customizer/single_page/share_btn.php:156
+#: lib/menu/swell_menu_editor.php:11
+msgid "Button"
+msgstr "ボタン"
+
+#: classes/SWELL_THEME/Data.php:422
+msgid "Home"
+msgstr "ホーム"
+
+#: classes/SWELL_THEME/Data.php:467
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:11
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:202
+msgid "Popular articles"
+msgstr "人気記事"
+
+#: classes/SWELL_THEME/Data.php:468
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:11
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:169
+msgid "New articles"
+msgstr "新着記事"
+
+#: classes/SWELL_THEME/Data.php:523
+msgid "Let's share this post!"
+msgstr "よかったらシェアしてね！"
+
+#: classes/SWELL_THEME/Data.php:540
+msgid "Author of this article"
+msgstr "この記事を書いた人"
+
+#: classes/SWELL_THEME/Data.php:541 lib/post_meta/meta_side.php:144
+msgid "Related posts"
+msgstr "関連記事"
+
+#: classes/SWELL_THEME/Data.php:542 lib/post_meta/meta_side.php:152
+msgid "Comments"
+msgstr "コメント"
+
+#: classes/SWELL_THEME/Data.php:640
+msgctxt "mv"
+msgid "Let's start."
+msgstr "さぁ、始めよう。"
+
+#: classes/SWELL_THEME/Data.php:715
+msgid "Menu"
+msgstr "メニュー"
+
+#: classes/SWELL_THEME/Data.php:716
+msgid "Search"
+msgstr "検索"
+
+#: classes/SWELL_THEME/Data.php:717
+msgid "To the top"
+msgstr "トップへ"
+
+#: classes/SWELL_THEME/Gutenberg.php:129 classes/SWELL_THEME/Gutenberg.php:188
+msgid "This is a paragraph block. Please enter your text here."
+msgstr "ここは段落ブロックです。文章をここに入力してください。"
+
+#: classes/SWELL_THEME/Gutenberg.php:130 classes/SWELL_THEME/Gutenberg.php:189
+msgid "Big Text"
+msgstr "大きなテキスト"
+
+#: classes/SWELL_THEME/Gutenberg.php:131
+msgid "List"
+msgstr "リスト"
+
+#: classes/SWELL_THEME/Gutenberg.php:136
+msgid "Button with microcopy & icon code"
+msgstr "マイクロコピーとアイコン付きのボタン"
+
+#: classes/SWELL_THEME/Gutenberg.php:137
+msgid "\\ This is Button /"
+msgstr "＼ ぼたんだよ ／"
+
+#: classes/SWELL_THEME/Gutenberg.php:146
+msgid "List with border"
+msgstr "枠線付きのリスト"
+
+#: classes/SWELL_THEME/Gutenberg.php:156
+msgid "List with light border and background"
+msgstr "薄い枠線と背景付きのリスト"
+
+#: classes/SWELL_THEME/Gutenberg.php:166
+msgid "Point group"
+msgstr "ポイントグループ"
+
+#: classes/SWELL_THEME/Gutenberg.php:179
+msgid "Card-style media and text"
+msgstr "カード型のメディアと文章"
+
+#: classes/SWELL_THEME/Gutenberg.php:197
+msgid "Broken media and text"
+msgstr "ブロークン型のメディアと文章"
+
+#: classes/SWELL_THEME/Gutenberg.php:207
+msgid "Full wide section"
+msgstr "フルワイドセクション"
+
+#: classes/SWELL_THEME/Gutenberg.php:208
+msgid "SECTION"
+msgstr "セクション"
+
+#: classes/SWELL_THEME/Gutenberg.php:268
+msgctxt "size"
+msgid "Tiny"
+msgstr "極小"
+
+#: classes/SWELL_THEME/Gutenberg.php:274
+msgctxt "size"
+msgid "Small"
+msgstr "小"
+
+#: classes/SWELL_THEME/Gutenberg.php:280
+msgctxt "size"
+msgid "Medium"
+msgstr "中"
+
+#: classes/SWELL_THEME/Gutenberg.php:286
+msgctxt "size"
+msgid "Large"
+msgstr "大"
+
+#: classes/SWELL_THEME/Gutenberg.php:292
+msgctxt "size"
+msgid "Huge"
+msgstr "特大"
+
+#: classes/SWELL_THEME/Gutenberg.php:302
+msgctxt "col"
+msgid "Thin"
+msgstr "薄"
+
+#: classes/SWELL_THEME/Gutenberg.php:303
+msgctxt "col"
+msgid "Dark"
+msgstr "濃"
+
+#: classes/SWELL_THEME/Gutenberg.php:304
+msgid "Custom"
+msgstr "カスタム"
+
+#: classes/SWELL_THEME/Gutenberg.php:307 classes/SWELL_THEME/Gutenberg.php:312
+#: lib/customizer/common/color.php:25
+msgid "Main Color"
+msgstr "メインカラー"
+
+#: classes/SWELL_THEME/Gutenberg.php:317
+msgid "Gray"
+msgstr ""
+
+#: classes/SWELL_THEME/Gutenberg.php:322
+msgid "White"
+msgstr ""
+
+#: classes/SWELL_THEME/Gutenberg.php:327
+msgid "Black"
+msgstr ""
+
+#: classes/SWELL_THEME/Gutenberg.php:385
+msgid "SWELL Blocks"
+msgstr "SWELLブロック"
+
+#: classes/SWELL_THEME/Hooks.php:231
+msgid ""
+"This content is password protected. To view it please enter your password "
+"below:"
+msgstr ""
+
+#: classes/SWELL_THEME/Hooks.php:241
+msgid "Password:"
+msgstr ""
+
+#: classes/SWELL_THEME/Hooks.php:241
+msgctxt "post password form"
+msgid "Enter"
+msgstr ""
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:66
+msgctxt "table"
+msgid "Thumbnail"
+msgstr "アイキャッチ"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:72
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:79
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:86
+msgid "Calling code"
+msgstr "呼び出しコード"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:73
+msgid "Preview"
+msgstr "プレビュー"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:78
+msgid "Ad type"
+msgstr "広告タイプ"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:80
+msgctxt "count"
+msgid "Click"
+msgstr "クリック数"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:80
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:81
+msgctxt "count"
+msgid "Display"
+msgstr "表示回数"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:81
+msgctxt "count"
+msgid "PV"
+msgstr "PV数"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:82
+msgid "Reset measurement"
+msgstr "計測リセット"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:131
+msgctxt "code"
+msgid "speech_balloon"
+msgstr "ふきだし"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:133
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:138
+msgid "Your text..."
+msgstr "ここにテキスト..."
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:207 lib/menu/swell_menu.php:13
+msgid "Reset"
+msgstr "リセット"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:278
+msgid "用途で検索"
+msgstr ""
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:346
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:350
+msgid "Now"
+msgstr "現在"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:346
+msgid "Stopping"
+msgstr "停止中"
+
+#: classes/SWELL_THEME/Hooks/Admin_Display.php:350
+msgid "Running"
+msgstr "稼働中"
+
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:62
+msgid "To setting page"
+msgstr "設定ページへ"
+
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:80
+msgid "Manual"
+msgstr "マニュアル"
+
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:89
+msgid "Forum"
+msgstr "フォーラム"
+
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:98
+msgid "List of icons"
+msgstr "アイコン一覧"
+
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:107
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:116
+msgid "Cache clear"
+msgstr "キャッシュクリア"
+
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:107
+msgid "Content"
+msgstr "コンテンツ"
+
+#: classes/SWELL_THEME/Hooks/Admin_Toolbar.php:116
+msgid "Blog card"
+msgstr "ブログカード"
+
+#: classes/SWELL_THEME/Menu/Tab_Custom.php:28
+#, fuzzy
+#| msgid "Custom"
+msgid "Custom format"
+msgstr "カスタム"
+
+#: classes/SWELL_THEME/Parts/Setting_Field.php:21
+msgid "Show"
+msgstr "表示する"
+
+#: classes/SWELL_THEME/Parts/Setting_Field.php:22
+#: lib/customizer/common/info_bar.php:28 lib/customizer/header.php:369
+#: lib/customizer/header.php:522 lib/customizer/header.php:538
+#: lib/customizer/post_list.php:216
+#: lib/customizer/single_page/share_btn.php:172
+#: lib/customizer/top/main_visual.php:30
+#: lib/customizer/top/pickup_banner.php:82
+#: lib/customizer/top/post_slider.php:140
+msgid "Don't show"
+msgstr "表示しない"
+
+#: classes/SWELL_THEME/Parts/Setting_Field.php:50
+msgid "Select image"
+msgstr "画像を選択"
+
+#: classes/SWELL_THEME/Parts/Setting_Field.php:51
+msgid "Delete image"
+msgstr "画像を削除"
+
+#: classes/SWELL_THEME/Parts/Setting_Field.php:63
+msgid "Select Blog Parts"
+msgstr "ブログパーツを選択する"
+
+#: classes/SWELL_THEME/Post_Type.php:70
+msgid "Blog Parts"
+msgstr "ブログパーツ"
+
+#: classes/SWELL_THEME/Post_Type.php:97
+msgid "Ad Tags"
+msgstr "広告タグ"
+
+#: classes/SWELL_THEME/Post_Type.php:124
+msgid "Balloons"
+msgstr "ふきだし"
+
+#: classes/SWELL_THEME/Taxonomy.php:38
+msgid "Use"
+msgstr "用途"
+
+#: classes/SWELL_THEME/Taxonomy.php:48
+#, php-format
+msgid "Search %s"
+msgstr "%sを検索"
+
+#: classes/SWELL_THEME/Taxonomy.php:49
+#, php-format
+msgid "All %s"
+msgstr "全%s"
+
+#: classes/SWELL_THEME/Taxonomy.php:50 classes/SWELL_THEME/Taxonomy.php:51
+#, php-format
+msgid "Parent %s"
+msgstr "親%s"
+
+#: classes/SWELL_THEME/Taxonomy.php:53
+#, php-format
+msgid "Update %s"
+msgstr "%sを更新"
+
+#: classes/SWELL_THEME/Taxonomy.php:54
+#, php-format
+msgid "Add New %s"
+msgstr "%sを追加"
+
+#: classes/SWELL_THEME/Taxonomy.php:55
+#, php-format
+msgid "New %s"
+msgstr "新しい%s"
+
+#: classes/SWELL_THEME/Widget/Custom_WP_Widget_Recent_Posts.php:11
+msgid "Recent Posts"
+msgstr "最近の投稿"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:12
+msgid "Display articles in new order"
+msgstr "新着順で記事を表示"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:77
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:95
+msgid "Number of posts to show:"
+msgstr ""
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:95
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:101
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:113
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:119
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:125
+#, php-format
+msgid "Display %s ?"
+msgstr "%sを表示する"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:95
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:113
+msgid "post date"
+msgstr "投稿日"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:101
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:119
+msgid "category"
+msgstr "カテゴリー"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:106
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:136
+#, php-format
+msgid "Select page to %s"
+msgstr "%sにするページを選択"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:106
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:136
+msgctxt "show"
+msgid "hide"
+msgstr "非表示"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:110
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:140
+msgctxt "page"
+msgid "Home"
+msgstr "トップページ"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:111
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:141
+msgctxt "page"
+msgid "Posts"
+msgstr "投稿ページ"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:112
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:142
+msgctxt "page"
+msgid "Pages"
+msgstr "固定ページ"
+
+#: classes/SWELL_THEME/Widget/SWELL_New_Posts.php:113
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:143
+msgctxt "page"
+msgid "Archives"
+msgstr "アーカイブページ"
+
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:12
+msgid "Display articles in descending order of PV"
+msgstr "PV数の多い順で記事を表示"
+
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:125
+msgid "PV count"
+msgstr "PV数"
+
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:131
+msgid "Larger display of 1st place"
+msgstr "１位を大きく表示する"
+
+#: classes/SWELL_THEME/Widget/SWELL_Popular_Posts.php:131
+msgid "Only valid for card type"
+msgstr "カード型でのみ有効"
+
+#: comments.php:9
+msgid "List of comments"
+msgstr "コメント一覧"
+
+#: comments.php:33
+msgid "To comment"
+msgstr "コメントする"
+
+#: comments.php:34
+msgid "Send comment"
+msgstr "コメントを送信"
+
+#: functions.php:28
+msgid "Note : "
+msgstr "※ "
+
+#: lib/block/rss.php:42
+msgid "Please enter the URL of the RSS feed."
+msgstr "RSSフィードのURLを入力してください。"
+
+#: lib/block/rss.php:67
+msgid "RSS feed is not found."
+msgstr "RSSフィードが見つかりませんでした。"
+
+#: lib/block/rss.php:120
+msgid "The URL of the RSS feed is incorrect."
+msgstr ""
+
+#: lib/block/rss.php:135 parts/post_list/loop_main.php:21
+#: parts/post_list/loop_sub.php:37
+msgid "The article was not found."
+msgstr "記事が見つかりませんでした。"
+
+#: lib/customizer/archive.php:38 lib/customizer/single_page/post_title.php:37
+#: lib/customizer/single_page/post_title.php:164
+#: lib/post_meta/meta_side.php:120 lib/term_meta.php:102
+msgid "Above the content"
+msgstr "コンテンツ上"
+
+#: lib/customizer/archive.php:39 lib/customizer/single_page/post_title.php:38
+#: lib/customizer/single_page/post_title.php:165
+#: lib/post_meta/meta_side.php:121 lib/term_meta.php:103
+msgid "Inside the content"
+msgstr "コンテンツ内"
+
+#: lib/customizer/common.php:8
+msgid "Site-wide Settings"
+msgstr "サイト全体設定"
+
+#: lib/customizer/common/color.php:13
+msgid "Basic Colors"
+msgstr "基本カラー"
+
+#: lib/customizer/common/color.php:37
+msgid "Text Color"
+msgstr "テキストカラー"
+
+#: lib/customizer/common/color.php:48
+msgid "Link Color"
+msgstr "リンクカラー"
+
+#: lib/customizer/common/color.php:59
+msgid "Background Color"
+msgstr "背景色"
+
+#: lib/customizer/header.php:13
+msgid "Header"
+msgstr "ヘッダー"
+
+#: lib/customizer/post_list.php:139
+msgid "Show update date"
+msgstr "更新日を表示する"
+
+#: lib/customizer/post_list.php:202
+msgid "Category display settings"
+msgstr "カテゴリーの表示設定"
+
+#: lib/customizer/single_page/share_btn.php:13
+msgid "SNS share buttons"
+msgstr "SNSシェアボタン"
+
+#: lib/customizer/single_page/share_btn.php:33
+msgid "Position to display the share button"
+msgstr "シェアボタンを表示する位置"
+
+#: lib/customizer/single_page/share_btn.php:43
+msgid "Display at the top of the article"
+msgstr "記事上部に表示する"
+
+#: lib/customizer/single_page/share_btn.php:54
+msgid "Display at the bottom of the article"
+msgstr "記事下部に表示する"
+
+#: lib/customizer/single_page/share_btn.php:65
+msgid "Fixed display at the edge of the screen"
+msgstr "画面端に固定表示する"
+
+#: lib/customizer/single_page/share_btn.php:75
+msgid "Types of buttons to display"
+msgstr "表示するボタンの種類"
+
+#: lib/customizer/single_page/share_btn.php:151
+msgid "Share button design type"
+msgstr "シェアボタンのデザイン"
+
+#: lib/customizer/single_page/share_btn.php:154
+msgid "Block"
+msgstr "ブロック"
+
+#: lib/customizer/single_page/share_btn.php:156
+msgid "small"
+msgstr "小"
+
+#: lib/customizer/single_page/share_btn.php:157
+msgid "Icon"
+msgstr "アイコン"
+
+#: lib/customizer/single_page/share_btn.php:158
+msgid "Box"
+msgstr "ボックス"
+
+#: lib/customizer/single_page/share_btn.php:169
+msgid "URL copy button"
+msgstr "URLコピーボタン"
+
+#: lib/customizer/single_page/share_btn.php:173
+msgid "Small display"
+msgstr "小さく表示"
+
+#: lib/customizer/single_page/share_btn.php:174
+msgid "Large display"
+msgstr "大きく表示"
+
+#: lib/customizer/single_page/share_btn.php:185
+msgid "Message to be displayed above \"Share button at the bottom\""
+msgstr "「記事下部シェアボタン」の上に表示するメッセージ"
+
+#: lib/customizer/single_page/share_btn.php:195
+msgid "Additional settings for Twitter"
+msgstr "Twitter用の追加設定"
+
+#: lib/customizer/single_page/share_btn.php:205
+msgid "Hashtag when shared"
+msgstr "シェアされた時のハッシュタグ"
+
+#: lib/customizer/single_page/share_btn.php:206
+msgid ""
+"Enter without including \"#\", and if there are multiple entries, enter them "
+"separated by \",\"."
+msgstr "「#」は含めずに入力し、複数の時は「,」区切りで入力してください。"
+
+#: lib/customizer/single_page/share_btn.php:217
+msgid "via setting (mention destination)"
+msgstr "via設定（メンション先）"
+
+#: lib/customizer/single_page/share_btn.php:218
+msgid "You can add \"From @ ◯◯\". Please enter the ID name excluding @."
+msgstr ""
+"「@◯◯さんから」をつけることができます。@を除いたID名を入力してください。"
+
+#: lib/customizer/top/main_visual.php:32
+msgid "Video"
+msgstr "動画"
+
+#: lib/customizer/wp_setting.php:5
+msgid "WordPress Settings"
+msgstr "WordPress設定"
+
+#: lib/customizer/wp_setting.php:9
+msgid "Site Identity"
+msgstr ""
+
+#: lib/customizer/wp_setting.php:14
+msgid "Homepage Settings"
+msgstr ""
+
+#: lib/menu/swell_menu.php:7
+msgid "Speeding up"
+msgstr "高速化"
+
+#: lib/menu/swell_menu.php:8
+msgid "Structured Data"
+msgstr "構造化データ"
+
+#: lib/menu/swell_menu.php:11
+msgid "Outage"
+msgstr "機能停止"
+
+#: lib/menu/swell_menu.php:12
+msgid "Ad Code"
+msgstr "広告コード"
+
+#: lib/menu/swell_menu.php:21 lib/menu/swell_menu_editor.php:23
+msgid "Your settings have been saved."
+msgstr "設定を保存しました。"
+
+#: lib/menu/swell_menu.php:38
+#, php-format
+msgid "You can set the Design and Color from the \"%s\" page."
+msgstr "デザインやカラーの設定は「%s」ページから可能です。"
+
+#: lib/menu/swell_menu_editor.php:8
+msgid "Color set"
+msgstr "カラーセット"
+
+#: lib/menu/swell_menu_editor.php:9
+msgid "Border set"
+msgstr "ボーダーセット"
+
+#: lib/menu/swell_menu_editor.php:10
+msgid "Marker"
+msgstr "マーカー"
+
+#: lib/menu/swell_menu_editor.php:12
+msgid "Icon box"
+msgstr "アイコンボックス"
+
+#: lib/menu/swell_menu_editor.php:13
+msgid "Balloon"
+msgstr "ふきだし"
+
+#: lib/menu/swell_menu_editor.php:15
+msgid "Others"
+msgstr "その他"
+
+#: lib/post_meta/meta_ad.php:132 lib/post_meta/meta_ad.php:133
+#: lib/post_meta/meta_ad.php:134 lib/post_meta/meta_ad.php:135
+#: lib/post_meta/meta_ad.php:136 lib/post_meta/meta_ad.php:137
+#: lib/post_meta/meta_ad.php:138 lib/post_meta/meta_ad.php:139
+#: lib/post_meta/meta_ad.php:140 lib/post_meta/meta_ad.php:141
+msgid "Star"
+msgstr "星"
+
+#: lib/post_meta/meta_lp.php:18
+msgid "LP Settings"
+msgstr "LP設定"
+
+#: lib/post_meta/meta_lp.php:40
+msgid "コンテンツの最大幅"
+msgstr ""
+
+#: lib/post_meta/meta_lp.php:63 lib/post_meta/meta_lp.php:75
+#: lib/post_meta/meta_side.php:113 lib/term_meta.php:117 lib/term_meta.php:134
+msgctxt "show"
+msgid "Hide"
+msgstr "非表示"
+
+#: lib/post_meta/meta_lp.php:76 lib/post_meta/meta_side.php:112
+#: lib/term_meta.php:116 lib/term_meta.php:133
+msgctxt "show"
+msgid "Show"
+msgstr "表示"
+
+#: lib/post_meta/meta_lp.php:100
+msgid "SWELLのヘッダーを使用する"
+msgstr ""
+
+#: lib/post_meta/meta_lp.php:101
+msgid "SWELLのフッターを使用する"
+msgstr ""
+
+#: lib/post_meta/meta_side.php:43
+msgid "Subtitle"
+msgstr "サブタイトル"
+
+#: lib/post_meta/meta_side.php:55
+msgid "Related articles to be displayed with priority"
+msgstr "優先的に表示する関連記事"
+
+#: lib/post_meta/meta_side.php:57
+msgid "Enter the post ID"
+msgstr "投稿IDを入力"
+
+#: lib/post_meta/meta_side.php:62
+msgid "If there are multiple, specify them separated by \",\"."
+msgstr "複数の場合は「,」区切りで指定してください。"
+
+#: lib/post_meta/meta_side.php:70
+msgid "Youtube videos for Featured image"
+msgstr "アイキャッチ用のYoutube動画"
+
+#: lib/post_meta/meta_side.php:72
+msgid "Enter the Youtube video ID"
+msgstr "Youtubeの動画IDを入力"
+
+#: lib/post_meta/meta_side.php:77
+msgid "Please enter only the ID part from the Youtube URL."
+msgstr "YoutubeのURLから、ID部分のみを入力してください。"
+
+#: lib/post_meta/meta_side.php:86
+msgid "Notes of featured images"
+msgstr "アイキャッチ画像の注釈"
+
+#: lib/post_meta/meta_side.php:96 lib/term_meta.php:142
+msgid "Background image for title"
+msgstr "タイトルの背景画像"
+
+#: lib/post_meta/meta_side.php:102
+msgid ""
+"Specify the background image when the title display position is \"Above the "
+"content\"."
+msgstr "タイトル表示位置が「コンテンツ上」の場合の背景画像を指定します。"
+
+#: lib/post_meta/meta_side.php:108
+msgid "Display override settings"
+msgstr "表示の上書き設定"
+
+#: lib/post_meta/meta_side.php:118 lib/term_meta.php:96
+msgid "Title position"
+msgstr "タイトル位置"
+
+#: lib/post_meta/meta_side.php:125
+msgid "Pickup Banner"
+msgstr "ピックアップバナー"
+
+#: lib/post_meta/meta_side.php:129 lib/term_meta.php:110
+msgid "Sidebar"
+msgstr "サイドバー"
+
+#: lib/post_meta/meta_side.php:137 lib/term_meta.php:15 lib/term_meta.php:149
+msgid "Featured image"
+msgstr "アイキャッチ画像"
+
+#: lib/post_meta/meta_side.php:148
+msgid "Author data"
+msgstr "著者情報"
+
+#: lib/post_meta/meta_side.php:170
+msgid "Hide top-widget"
+msgstr "上部ウィジェットを隠す"
+
+#: lib/post_meta/meta_side.php:171
+msgid "Hide bottom-widget"
+msgstr "下部ウィジェットを隠す"
+
+#: lib/post_meta/meta_side.php:172
+msgid "Hide pre-toc ad"
+msgstr "目次広告を隠す"
+
+#: lib/post_meta/meta_side.php:173
+msgid "Stop automatic ad"
+msgstr "自動広告を停止する"
+
+#: lib/post_meta/meta_side.php:176
+msgid "Hide share buttons"
+msgstr "シェアボタンを隠す"
+
+#: lib/post_meta/meta_side.php:177
+msgid "Hide CTA-widget"
+msgstr "CTAウィジェットを隠す"
+
+#: lib/post_meta/meta_side.php:179
+msgid "Eliminate the margins under the content"
+msgstr "コンテンツ下の余白をなくす"
+
+#: lib/term_meta.php:50
+msgid "Title to display on the page"
+msgstr "ページに表示するタイトル"
+
+#: lib/term_meta.php:54
+msgid "If left blank, the term name will be output as is."
+msgstr "空白の場合、ターム名がそのまま出力されます。"
+
+#: lib/term_meta.php:59
+msgid "Subtitle to display on the page"
+msgstr "ページに表示するサブタイトル"
+
+#: lib/term_meta.php:63
+msgid "If left blank, \"category\" or \"tag\" will be output."
+msgstr "空白の場合、「category」または「tag」が出力されます。"
+
+#: lib/term_meta.php:71 lib/term_meta.php:85 lib/term_meta.php:99
+#: lib/term_meta.php:113 lib/term_meta.php:130
+msgid "Follow base settings"
+msgstr "ベース設定に従う"
+
+#: lib/term_meta.php:82
+msgid "Whether to separate tabs by \"new arrival\" / \"popularity\""
+msgstr "新着順 / 人気順 でタブを分けるかどうか"
+
+#: lib/term_meta.php:88
+msgctxt "do"
+msgid "Yes"
+msgstr "する"
+
+#: lib/term_meta.php:89
+msgctxt "do"
+msgid "No"
+msgstr "しない"
+
+#: lib/update/Puc/v4p5/Plugin/Ui.php:54
+msgid "View details"
+msgstr ""
+
+#: lib/update/Puc/v4p5/Plugin/Ui.php:77
+#, php-format
+msgid "More information about %s"
+msgstr ""
+
+#: lib/update/Puc/v4p5/Plugin/Ui.php:128
+msgid "Check for updates"
+msgstr ""
+
+#: lib/update/Puc/v4p5/Plugin/Ui.php:213
+#, php-format
+msgctxt "the plugin title"
+msgid "The %s plugin is up to date."
+msgstr ""
+
+#: lib/update/Puc/v4p5/Plugin/Ui.php:215
+#, php-format
+msgctxt "the plugin title"
+msgid "A new version of the %s plugin is available."
+msgstr ""
+
+#: lib/update/Puc/v4p5/Plugin/Ui.php:217
+#, php-format
+msgctxt "the plugin title"
+msgid "Could not determine if updates are available for %s."
+msgstr ""
+
+#: lib/update/Puc/v4p5/Plugin/Ui.php:223
+#, php-format
+msgid "Unknown update checker status \"%s\""
+msgstr ""
+
+#: lib/update/Puc/v4p5/Vcs/PluginUpdateChecker.php:98
+msgid "There is no changelog available."
+msgstr ""
+
+#: parts/single/related_post_list.php:107
+msgid "No related articles were found yet."
+msgstr "関連する記事はまだ見つかりませんでした。"
+
+#: parts/single/share_btns.php:30
+msgid "Share on Facebook"
+msgstr "Facebookでシェア"
+
+#: parts/single/share_btns.php:36
+msgid "Share on Twitter"
+msgstr "Twitterでシェア"
+
+#: parts/single/share_btns.php:46
+msgid "Register in Hatena Bookmark"
+msgstr "はてなブックマークに登録"
+
+#: parts/single/share_btns.php:52
+msgid "Save to Pocket"
+msgstr "Pocketに保存"
+
+#: parts/single/share_btns.php:61
+msgid "Save pin"
+msgstr "ピンを保存"
+
+#: parts/single/share_btns.php:67
+msgid "Send to LINE"
+msgstr "LINEに送る"
+
+#: parts/single/share_btns.php:133 parts/single/share_btns.php:147
+#: parts/single/share_btns.php:151
+msgid "Copy the URL"
+msgstr "URLをコピーする"
+
+#: parts/single/share_btns.php:155
+msgid "Copied the URL!"
+msgstr "URLをコピーしました！"
+
+#: parts/single/sns_cta.php:17
+msgid "Like or Follow"
+msgstr "いいね または フォロー"
+
+#: parts/single/sns_cta.php:19
+msgid "Like"
+msgstr "いいね"
+
+#: parts/single/sns_cta.php:21
+msgid "Follow"
+msgstr "フォロー"
+
+#: parts/single/sns_cta.php:26
+#, php-format
+msgid "If you like this article, please %s!"
+msgstr "この記事が気に入ったら%sしてね！"
+
+#. Theme Name of the plugin/theme
+msgid "SWELL"
+msgstr "SWELL"
+
+#. Theme URI of the plugin/theme
+msgid "https://swell-theme.com/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"シンプルなのに高機能。ブロックエディターの使い心地にこだわった国内最高峰の"
+"WordPressテーマ"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "LOOS,Inc."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://twitter.com/ddryo_loos"
+msgstr ""
+
+#~ msgid "Top of content"
+#~ msgstr "コンテンツ上部"
+
+#~ msgid "Top page"
+#~ msgstr "トップページ"
+
+#~ msgid "Posts"
+#~ msgstr "投稿ページ"
+
+#~ msgid "Pages"
+#~ msgstr "固定ページ"
+
+#~ msgid "Archives"
+#~ msgstr "アーカイブページ"
+
+#~ msgid "Image for title background"
+#~ msgstr "タイトル背景用画像"
+
+#~ msgid "Parts Tag"
+#~ msgstr "パーツタグ"
+
+#~ msgid "Category Parts"
+#~ msgstr "カテゴリー用パーツ"
+
+#~ msgid "Tag Parts"
+#~ msgstr "タグ用パーツ"
+
+#~ msgid "Normal"
+#~ msgstr "通常パーツ"
+
+#~ msgid "Paragraph block"
+#~ msgstr "段落ブロック"

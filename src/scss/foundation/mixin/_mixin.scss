@@ -1,0 +1,55 @@
+// font-size：remとpx両方記述
+//------------------------------------------
+@mixin rem($size) {
+    font-size: $size + px;
+    font-size: ($size / 10) + rem;
+}
+
+//clear
+//------------------------------------------
+@mixin cf {
+
+    &::before,
+    &::after {
+        display: block;
+        clear: both;
+        height: 0;
+        content: "";
+    }
+}
+
+//メタリック色
+//------------------------------------------
+@mixin gradient-metalic($color1) {
+    background-color: $color1;
+    $color2: lighten($color1, 25%); //明度25%アップ
+    $color3: darken($color1, 15%); //明度15%ダウン
+    $color4: adjust-hue($color1, 5deg); //色相5°ずらす
+    $color5: adjust-hue($color1, -5deg); //色相-5°ずらす
+    $color6: saturate($color1, 10%); //彩度10%アップ
+    $color7: desaturate($color1, 10%); //彩度10%ダウン
+    background-image: linear-gradient(to top left, $color5, $color2, $color6, $color1, $color7, $color3, $color1, $color2, $color4, $color7, $color5);
+}
+
+//abs 1行でかけるように
+//------------------------------------------
+@mixin absolute($top: null, $right: null, $bottom: null, $left: null, $z: 0) {
+    position: absolute;
+    z-index: $z;
+
+    @if $top != null {
+        top: $top;
+    }
+
+    @if $right != null {
+        right: $right;
+    }
+
+    @if $bottom != null {
+        bottom: $bottom;
+    }
+
+    @if $left != null {
+        left: $left;
+    }
+}

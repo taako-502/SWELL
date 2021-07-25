@@ -1,0 +1,133 @@
+
+.tr-design {
+
+    th {
+        min-width: 12em;
+    }
+}
+
+
+// ブログカード
+.swell-menu-blogcard {
+
+    .__settings {
+        margin-bottom: 16px;
+    }
+
+    .__preview {
+        max-width: 640px;
+    }
+
+    .p-blogCard {
+        margin: 0;
+        color: inherit;
+
+        .__thumb {
+            display: block;
+            padding: 30% 0;
+            color: #666;
+            font-size: 10px;
+            text-align: center;
+            background: #f1f1f1;
+        }
+    }
+}
+
+
+.swell-menu-blockquote {
+
+    .__settings {
+        margin-bottom: 16px;
+    }
+
+    //引用
+    blockquote {
+        position: relative;
+        background: var(--color_gray);
+
+        cite {
+            font-size: .8em;
+            opacity: .8;
+        }
+
+        p {
+            position: relative;
+            z-index: 1;
+            margin: .5em 0;
+        }
+
+        & > cite {
+            display: block;
+            margin-top: 1em;
+        }
+
+        &::before,
+        &::after {
+            position: absolute;
+            z-index: 0;
+            line-height: 1;
+        }
+
+        &[data-type="simple"] {
+            padding: 1.5em 2em 1.5em 3em;
+
+            &::before,
+            &::after {
+                top: 1.5em;
+                bottom: auto;
+                display: block;
+                width: 1px;
+                height: calc(100% - 3em);
+                font-size: inherit;
+                background-color: rgba(180, 180, 180, .75);
+                // opacity: 1;
+                content: "";
+            }
+
+            &::before {
+                right: auto;
+                left: 1.5em;
+            }
+
+            &::after {
+                right: auto;
+                left: calc(1.5em + 5px);
+                transform: rotate(0);
+            }
+        }
+
+        &[data-type="quotation"] {
+            padding: 1.5em 3em;
+
+            &::before,
+            &::after {
+                position: absolute;
+                display: inline-block;
+                width: auto;
+                height: auto;
+                color: rgba(180, 180, 180, .75);
+                font-size: 6em;
+                font-family: Arial, Helvetica, sans-serif;
+                background: none;
+                // opacity: .1;
+                content: "\00201c";
+            }
+
+            &::before {
+                top: 4px;
+                right: auto;
+                bottom: auto;
+                left: 8px;
+            }
+
+            &::after {
+                top: auto;
+                right: 8px;
+                bottom: 4px;
+                left: auto;
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+}

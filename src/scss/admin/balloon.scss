@@ -1,0 +1,142 @@
+@charset "UTF-8";
+@import "../foundation/variable";
+@import "../foundation/mixin/media";
+@import "../foundation/placeholder";
+// @import "../foundation/plugins/icomoon";
+
+// プレビュー用
+@import "../object/parts/balloon";
+
+/**
+ * ふきだし一覧テーブルの表示
+ */
+th#balloon_preview {
+    width: 400px;
+    min-width: 400px;
+}
+
+td.balloon_preview {
+
+    * {
+        box-sizing: border-box;
+    }
+}
+
+td.balloon_code code {
+    display: block;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+
+/**
+ * メタボックス
+ */
+.swl-meta--balloon {
+    padding: 16px;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    @media (min-width: 1200px) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+
+// プレビュー
+.swl-meta--balloon__preview {
+    width: 100%;
+    margin-bottom: 24px;
+    border-bottom: dashed 1px #ececec;
+}
+
+.swl-meta--balloon__preview__inner {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 32px 8px;
+    padding: 32px 16px 24px;
+    font-size: 15px;
+    border: solid 1px #ccc;
+}
+
+.swl-meta--balloon__preview__title {
+    position: absolute;
+    top: -1em;
+    left: 1em;
+    padding: 0 8px;
+    color: #5a5a5a;
+    font-size: 13px;
+    line-height: 2;
+    background: #fff;
+}
+
+
+.swl-meta--balloon__inner {
+    box-sizing: border-box;
+
+    @media (min-width: 1200px) {
+
+        &.-left {
+            flex-basis: 280px;
+        }
+
+        &.-right {
+            flex-basis: calc(100% - 288px);
+        }
+
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .swl-meta--balloon__inner.-right {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+
+        .swl-meta__item {
+            min-width: 40%;
+            margin-right: 8px;
+        }
+    }
+}
+
+
+#preview_balloon_icon {
+    box-sizing: content-box;
+    width: max-content;
+    min-width: 100px;
+    padding: 8px;
+}
+
+#preview_balloon_icon img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+
+    /* border-radius: 50%;
+    border: solid 2px #ccc; */
+}
+
+#balloon_icon_name {
+    width: 100%;
+    max-width: 200px;
+}
+
+//ふきだしコントロール
+.balloon_icon_src_ctrl {
+
+    .media_btns {
+        margin: -1em 0 1.5em;
+    }
+}
+
+.c-balloon__text {
+    font-size: 15px;
+    line-height: 1.5;
+    word-break: break-word;
+}

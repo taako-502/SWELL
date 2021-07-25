@@ -1,0 +1,57 @@
+.tr-list {
+
+    th {
+        min-width: 8em;
+    }
+}
+
+.swell-menu-list {
+
+    @include tab {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+
+    .is-style-num_circle {
+        list-style: none !important;
+        counter-reset: li;
+
+        li::before {
+            counter-increment: li;
+        }
+    }
+
+    ul,
+    ol {
+        margin: 0 !important;
+    }
+
+    li {
+        position: relative;
+        margin: .25em 0;
+        line-height: 1.5;
+    }
+
+    .__description {
+        font-size: 11px;
+        opacity: .8;
+    }
+
+    .__settings {
+        min-width: 12em;
+        margin-right: 16px;
+        margin-bottom: 16px;
+    }
+
+    .__preview {
+        width: 400px;
+        // text-align: center;
+
+        @include mobile {
+            width: 100%;
+        }
+    }
+
+    // .swell-block-capbox {}
+}

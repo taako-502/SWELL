@@ -1,0 +1,72 @@
+.c-pageTitle {
+    position: relative;
+    font-size: 1.3em;
+    line-height: 1.4;
+
+    @include tab {
+        font-size: 1.5em;
+    }
+
+    &::after {
+        display: block;
+        clear: both;
+        height: 0;
+        visibility: hidden;
+        content: "";
+    }
+
+    &[data-style="b_bottom"] {
+        border-bottom: solid 1px var(--color_border);
+
+        .c-pageTitle__inner {
+            float: left;
+            margin-bottom: -1px;
+            padding: .25em .5em;
+            border-bottom: solid 1px var(--color_main);
+        }
+    }
+}
+
+.c-pageTitle__inner {
+    display: block;
+    padding-top: .5em;
+}
+
+.c-pageTitle__subTitle {
+    position: relative;
+    top: -2px;
+    margin-left: 1em;
+    font-style: italic;
+    letter-spacing: 1px;
+    opacity: .8;
+}
+
+
+.c-pageExcerpt {
+    margin-top: 1em;
+}
+
+
+.c-secTitle {
+
+    position: relative;
+    display: block;
+    margin-bottom: 1.5em;
+    // font-weight: bold;
+    font-size: 4.5vw;
+    // border-left: solid 2px var(--color_main);
+
+    @include tab {
+        font-size: 20px;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        z-index: 0;
+        display: block;
+        box-sizing: inherit;
+        height: 1px;
+    }
+
+}

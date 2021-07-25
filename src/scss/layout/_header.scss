@@ -1,0 +1,159 @@
+
+
+.l-header {
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    width: 100%;
+    background: var(--color_header_bg);
+
+    &[data-spfix="1"] {
+
+        @include sp {
+            position: sticky;
+            top: var(--swl-adminbar_height, 0);
+        }
+    }
+}
+
+// ヘッドバー
+.l-header__bar {
+    position: relative;
+    width: 100%;
+
+    @include sp {
+        display: none;
+    }
+
+    .c-catchphrase {
+        width: 50%;
+        margin-right: auto;
+        padding: 4px 0;
+        overflow: hidden;
+        color: inherit;
+        font-size: 12px;
+        line-height: 14px;
+        letter-spacing: .2px;
+        white-space: nowrap;
+    }
+
+    .c-iconList {
+
+        .c-iconList__link {
+            margin: 0;
+            padding: 4px 6px;
+        }
+    }
+}
+
+.l-header__barInner {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.l-header__inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    color: var(--color_header_text);
+
+    @include sp {
+        display: flex;
+        // align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0;
+    }
+
+
+    .c-catchphrase {
+        letter-spacing: .2px;
+
+        @include sp {
+            display: none;
+        }
+    }
+}
+
+.l-header__logo {
+    line-height: 1;
+
+    @include sp {
+        padding: 0 2vw;
+    }
+}
+
+.c-headLogo {
+
+    &.-txt {
+        display: flex;
+        align-items: center;
+    }
+
+    @include sp {
+        height: var(--logo_size_sp);
+    }
+
+    @include pc {
+        height: var(--logo_size_pc);
+
+        .l-fixHeader & {
+            height: var(--logo_size_pcfix);
+        }
+    }
+
+}
+
+
+.c-headLogo__link {
+    display: block;
+
+    .-img & {
+        height: 100%;
+
+        @include sp {
+            display: block;
+            padding: 10px 0;
+        }
+    }
+
+    .-txt & {
+        display: block;
+        color: inherit;
+        font-weight: bold;
+        font-size: 5vw;
+
+        @include tab {
+            font-size: 24px;
+        }
+    }
+}
+
+.c-headLogo__img {
+    // display: block;
+    width: auto;
+    height: 100%;
+    object-fit: contain;
+    font-family: "object-fit: contain;";
+}
+
+
+.w-header {
+    display: flex;
+    align-items: center;
+}
+
+.l-header__menuBtn,
+.l-header__customBtn {
+    width: var(--logo_size_sp);
+    height: var(--logo_size_sp);
+    line-height: 1.25;
+    text-align: center;
+}
+
+
+@import "./header/gnav";
+@import "./header/spHeadNav";
+@import "./header/fixBar";

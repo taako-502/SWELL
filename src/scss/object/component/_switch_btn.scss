@@ -1,0 +1,46 @@
+.c-switchIconBtn,
+.c-switch_icon_btn {
+    position: relative;
+    display: block;
+
+    %__icon {
+        display: block;
+        width: 100%;
+        font-size: inherit;
+        line-height: 1;
+        transition: transform .25s, opacity .25s;
+    }
+
+    .__icon--closed,
+    .__icon_closed {
+
+        @extend %__icon;
+        transform: scale(1) rotate(0);
+    }
+
+    .__icon--opened,
+    .__icon_opened {
+
+        @extend %__icon;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: scale(.5) rotate(-180deg);
+        opacity: 0;
+    }
+
+    &[data-opened="true"] {
+
+        & > .__icon--closed,
+        & > .__icon_closed {
+            transform: scale(.5) rotate(180deg);
+            opacity: 0;
+        }
+
+        & > .__icon--opened,
+        & > .__icon_opened {
+            transform: scale(1) rotate(0);
+            opacity: 1;
+        }
+    }
+}

@@ -1,0 +1,16 @@
+.swell-block-columns {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-right: -16px;
+    margin-left: -16px;
+
+    &__item {
+        padding: 16px;
+    }
+
+    &__body {
+        // padding: 1em;
+        // border: solid 1px #ccc;
+    }
+}

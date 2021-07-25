@@ -1,0 +1,66 @@
+
+.block-editor-writing-flow {
+
+    .is-style-kakko_box::after {
+        top: auto !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: auto !important;
+        border-radius: 0 !important;
+    }
+
+    .is-style-big_kakko_box::after {
+        top: auto !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: auto !important;
+        border-radius: 0 !important;
+    }
+
+    [class*="is-style-icon_"]::after {
+        // position: absolute;
+        top: 25%;
+        right: auto;
+        bottom: auto;
+        left: 3.25em;
+        border-radius: 0;
+    }
+
+
+    .is-root-container div {
+
+        .is-style-sticky_box,
+        .is-style-balloon_box,
+        .is-style-balloon_box2 {
+
+            &:not(.has-text-align-center) {
+                margin-left: 0;
+            }
+
+        }
+    }
+    // マージン auto で中央寄せになってしまったもの
+    .is-root-container {
+
+        & > .is-style-sticky_box,
+        & > .is-style-balloon_box,
+        & > .is-style-balloon_box2 {
+
+            &:not(.has-text-align-center) {
+                position: relative;
+                left: calc(var(--block_width, 100%) / 2 * (-1));
+                transform: translateX(50%);
+            }
+        }
+    }
+}
+
+
+.is-style-desktop {
+
+    &.is-drop-target::before,
+    .is-block-moving-mode &.is-selected::before {
+        height: 2px;
+        background: none !important;
+    }
+}

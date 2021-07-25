@@ -1,0 +1,6 @@
+/assets/css/*
+/vendor
+/build
+/.vscode
+/node_modules
+webpack.config.local.js

@@ -1,0 +1,75 @@
+.swl-error-message {
+    color: #ff3939;
+}
+
+.editor-styles-wrapper {
+
+    [data-type="core/list"] {
+
+        li {
+            margin: .25em 0;
+        }
+
+        &.-list-flex > li {
+            margin-right: 1em;
+        }
+
+        &.-list-under-dashed > li {
+            margin-bottom: .75em;
+            padding-bottom: .75em;
+        }
+    }
+}
+
+// リスト
+ul[data-type="core/list"] {
+    list-style: disc;
+}
+
+ol[data-type="core/list"] {
+    list-style: decimal;
+
+    &.is-style-index {
+
+        & > li,
+        ol > li {
+            margin-left: 2em;
+        }
+    }
+}
+
+[data-type="core/list"] {
+    white-space: normal;
+
+    // デフォルトスタイル
+    &.is-style-default,
+    &:not([class*="is-style-"]) {
+        padding-left: 1.5em !important; //全幅グループブロック内で 0 にされたりもするから important
+
+        &.has-background {
+            padding: 1.5em 1.5em 1.5em 3em !important;
+        }
+    }
+
+    // スタイル付きリスト
+    &:not(.is-style-default)[class*="is-style-"] {
+        padding-left: .5em;
+        list-style: none !important;
+
+        &.has-background {
+            padding: 1.5em;
+        }
+    }
+
+
+    ul {
+        list-style: circle;
+    }
+
+    ul,
+    ol {
+        padding-left: 0;
+    }
+
+
+}

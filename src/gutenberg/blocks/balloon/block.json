@@ -1,0 +1,65 @@
+{
+    "name": "loos/balloon",
+    "title": "Balloon",
+    "category": "swell-blocks",
+    "keywords": [
+        "swell",
+        "balloon"
+    ],
+    "supports": {
+        "className": false
+    },
+    "attributes": {
+        "className": {
+            "type": "string",
+            "default": ""
+        },
+        "content": {
+            "type": "string",
+            "source": "html",
+            "selector": "p",
+            "default": "ここにテキストを入力"
+        },
+        "balloonID": {
+            "type": "string",
+            "default": "0"
+        },
+        "balloonTitle": {
+            "type": "string",
+            "default": ""
+        },
+        "balloonIcon": {
+            "type": "string",
+            "default": ""
+        },
+        "balloonName": {
+            "type": "string",
+            "default": ""
+        },
+        "balloonCol": {
+            "type": "string",
+            "default": ""
+        },
+        "balloonType": {
+            "type": "string",
+            "default": ""
+        },
+        "balloonAlign": {
+            "type": "string",
+            "default": ""
+        },
+        "balloonBorder": {
+            "type": "string",
+            "default": ""
+        },
+        "balloonShape": {
+            "type": "string",
+            "default": ""
+        },
+        "spVertical": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "textdomain": "swell"
+}

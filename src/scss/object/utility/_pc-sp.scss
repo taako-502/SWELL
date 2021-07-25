@@ -1,0 +1,23 @@
+/* --------------------------------------
+    Only PC or SP
+    
+    .sp_only / .pc_only はエディターで使用。
+    .sp_ / .pc_ はHTMLで使用中。
+
+    .u-only-sp / .u-only-pc に統一したいところ。
+-------------------------------------- */
+@include pc {
+
+    .sp_,
+    .sp_only {
+        display: none !important;
+    }
+}
+
+@include sp {
+
+    .pc_,
+    .pc_only {
+        display: none !important;
+    }
+}

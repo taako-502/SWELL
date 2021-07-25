@@ -1,0 +1,36 @@
+// アンダーライン
+//------------------------------------------
+@mixin hov_underline() {
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+// 不透明度
+//------------------------------------------
+@mixin hov_opacity($opacity, $duration: null) {
+    opacity: 1;
+
+    @if $duration != null {
+        transition-duration: $duration;
+    }
+
+    &:hover {
+        opacity: $opacity;
+    }
+}
+
+// ボーダー　色変更
+//------------------------------------------
+@mixin hov_border($size: 2px, $color: $color_border, $toColor: $color_main, $duration: null) {
+    border: $size solid $color;
+
+    @if $duration != null {
+        transition-duration: $duration;
+    }
+
+    &:hover {
+        border-color: $toColor;
+    }
+}

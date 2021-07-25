@@ -1,0 +1,34 @@
+
+.w-fixSide {
+    top: 8px;
+    margin-top: 2em;
+
+    @include pc {
+        position: sticky;
+        display: flex;
+        flex-direction: column;
+        max-height: calc(100vh - 16px);
+        margin-top: 2.5em;
+
+        .c-widget {
+            flex: 1 1 auto;
+        }
+
+        .widget_swell_new_posts,
+        .widget_swell_popular_posts,
+        .widget_swell_index {
+            overflow-y: auto;
+        }
+
+        &.-multiple {
+
+            .c-widget {
+                max-height: 50vh;
+            }
+        }
+    }
+
+    @include sp {
+        max-height: unset !important;
+    }
+}

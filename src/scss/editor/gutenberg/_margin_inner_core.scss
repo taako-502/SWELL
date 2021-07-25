@@ -1,0 +1,27 @@
+// インナーブロックを持つコアブロックの最初と最後のブロックの余白を打ち消す余白
+
+// Note : 5.5 から、グループブロックにも .block-list-appender がある
+
+.wp-block-column,
+.wp-block-media-text__content,
+.wp-block-cover__inner-container,
+.wp-block-group__inner-container {
+
+    & > :first-child {
+        margin-top: 0 !important;
+    }
+
+    & > :last-child {
+        margin-bottom: 0 !important;
+    }
+
+    & > .block-list-appender {
+        margin-top: 0;
+        margin-bottom: 0;
+
+        .block-editor-default-block-appender__content {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+}

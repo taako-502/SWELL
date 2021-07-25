@@ -1,0 +1,128 @@
+
+// テキストカラー
+.font_col_main,
+.has-swl-main-color {
+    color: var(--color_main) !important;
+}
+
+.has-swl-main-thin-color {
+    color: var(--color_main_thin) !important;
+}
+
+.has-swl-gray-color {
+    color: var(--color_gray) !important;
+}
+
+.has-black-color {
+    color: #000 !important;
+}
+
+.has-white-color {
+    color: #fff !important;
+}
+
+
+.has-swl-pale-01-color {
+    color: var(--color_pale01) !important;
+}
+
+.has-swl-pale-02-color {
+    color: var(--color_pale02) !important;
+}
+
+.has-swl-pale-03-color {
+    color: var(--color_pale03) !important;
+}
+
+.has-swl-pale-04-color {
+    color: var(--color_pale04) !important;
+}
+
+.font_col_red,
+.has-swl-deep-01-color {
+    color: var(--color_deep01) !important;
+}
+
+.font_col_blue,
+.has-swl-deep-02-color {
+    color: var(--color_deep02) !important;
+}
+
+.font_col_green,
+.has-swl-deep-03-color {
+    color: var(--color_deep03) !important;
+}
+
+.has-swl-deep-04-color {
+    color: var(--color_deep04) !important;
+}
+
+[class*="fill_col_"],
+.swl-bg-color {
+    padding: .25em .5em;
+    border-radius: 1px;
+}
+
+// 背景色
+.fill_col_main,
+.has-swl-main-background-color {
+    color: #fff;
+    background-color: var(--color_main);
+}
+
+.has-swl-main-thin-background-color {
+    background-color: var(--color_main_thin) !important;
+}
+
+.has-swl-gray-background-color {
+    background-color: var(--color_gray) !important;
+}
+
+.has-black-background-color {
+    color: #fff;
+    background-color: #000 !important;
+}
+
+.has-white-background-color {
+    background-color: #fff !important;
+}
+
+
+.fill_col_red,
+.has-swl-deep-01-background-color {
+    color: #fff;
+    background-color: var(--color_deep01) !important;
+}
+
+.fill_col_blue,
+.has-swl-deep-02-background-color {
+    color: #fff;
+    background-color: var(--color_deep02) !important;
+}
+
+.fill_col_green,
+.has-swl-deep-03-background-color {
+    color: #fff;
+    background-color: var(--color_deep03) !important;
+}
+
+.has-swl-deep-04-background-color {
+    color: #fff;
+    background-color: var(--color_deep04) !important;
+}
+
+.has-swl-pale-01-background-color {
+    background-color: var(--color_pale01) !important;
+}
+
+.has-swl-pale-02-background-color {
+    background-color: var(--color_pale02) !important;
+}
+
+.has-swl-pale-03-background-color {
+    background-color: var(--color_pale03) !important;
+}
+
+.has-swl-pale-04-background-color {
+    background-color: var(--color_pale04) !important;
+}

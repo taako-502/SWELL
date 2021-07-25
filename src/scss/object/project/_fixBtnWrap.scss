@@ -1,0 +1,40 @@
+// FIxボタン系
+.p-fixBtnWrap {
+    position: fixed;
+    right: 1em;
+    bottom: 1em;
+    z-index: 99; // sp_menuより下
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: center;
+    transform: translateY(-8px);
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .3s, transform .3s, visibility .3s;
+
+
+    [data-loaded="false"] & {
+        display: none;
+    }
+
+    [data-scrolled="true"] & {
+        transform: translateY(0);
+        visibility: visible;
+        opacity: 1;
+    }
+
+    @include pc {
+        right: 2em;
+        bottom: 2em;
+    }
+
+    @include sp {
+        // #fix_bottom_menuと同じ値
+        padding-bottom: calc(env(safe-area-inset-bottom) * .5);
+
+        #fix_bottom_menu + & {
+            bottom: 64px;
+        }
+    }
+}

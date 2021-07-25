@@ -1,0 +1,380 @@
+<?php
+namespace SWELL_Theme\Hooks;
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+/**
+ * 投稿一覧テーブルに アイキャッチ画像などの列を追加。
+ */
+add_filter( 'manage_posts_columns', __NAMESPACE__ . '\add_custom_post_columns' ); // 投稿 & カスタム投稿
+add_filter( 'manage_pages_columns', __NAMESPACE__ . '\add_custom_post_columns' ); // 固定ページ
+function add_custom_post_columns( $columns ) {
+	global $post_type;
+
+	// 投稿タイプごとに分岐
+	if ( in_array( $post_type, ['post', 'page' ], true ) ) {
+
+		$columns['thumbnail'] = _x( 'Thumbnail', 'table', 'swell' );
+		$columns['post_id']   = 'ID';
+
+	} elseif ( $post_type === 'speech_balloon' ) {
+
+		unset( $columns['date'] );
+		$columns['balloon_code']    = __( 'Calling code', 'swell' );
+		$columns['balloon_preview'] = __( 'Preview', 'swell' );
+
+	} elseif ( $post_type === 'ad_tag' ) {
+
+		unset( $columns['date'] );
+		$columns['ad_type']       = __( 'Ad type', 'swell' );
+		$columns['ad_code']       = __( 'Calling code', 'swell' );
+		$columns['ad_ctr']        = _x( 'Click', 'count', 'swell' ) . ' / ' . _x( 'Display', 'count', 'swell' );
+		$columns['ad_pv']         = _x( 'Display', 'count', 'swell' ) . ' / ' . _x( 'PV', 'count', 'swell' );
+		$columns['ad_data_reset'] = __( 'Reset measurement', 'swell' );
+
+	} elseif ( $post_type === 'blog_parts' ) {
+		unset( $columns['date'] );
+		$columns['parts_code']    = __( 'Calling code', 'swell' );
+		$columns['parts_used_at'] = __( '使用ページ', 'swell' );
+	}
+
+	// PV数表示
+	if ( in_array( $post_type, \SWELL_Theme::$post_types_for_pvct, true ) ) {
+		$columns['swell_pv_ct'] = 'PV';
+	}
+	return $columns;
+}
+
+
+/**
+ * 表示内容
+ */
+add_action( 'manage_posts_custom_column', __NAMESPACE__ . '\output_custom_post_columns', 10, 2 );  // 投稿 & カスタム投稿
+add_action( 'manage_pages_custom_column', __NAMESPACE__ . '\output_custom_post_columns', 10, 2 );  // 固定ページ
+function output_custom_post_columns( $column_name, $post_id ) {
+	if ( 'thumbnail' === $column_name ) {
+		$thumb_id = get_post_thumbnail_id( $post_id );
+		$ttlbg    = get_post_meta( $post_id, 'swell_meta_ttlbg', true );
+		if ( $thumb_id ) {
+			$thumb_img = wp_get_attachment_image_src( $thumb_id, 'medium' );
+			echo '<img src="' . esc_url( $thumb_img[0] ) . '" width="160px">';
+		} else {
+			echo '—';  // em dash
+		}
+		echo '<br>';
+		if ( $ttlbg ) {
+			$ttlbg_id = attachment_url_to_postid( $ttlbg );
+			$ttlbg_s  = $ttlbg_id ? wp_get_attachment_image_url( $ttlbg_id, 'medium' ) : '';
+			echo '<img src="' . esc_url( $ttlbg_s ) . '" width="160px" style="margin-top:8px;">';
+		} else {
+			echo '—';  // em dash
+		}
+	} elseif ( 'post_id' === $column_name ) {
+
+		echo esc_html( $post_id );
+
+	} elseif ( 'swell_pv_ct' === $column_name ) {
+		$pv = get_post_meta( $post_id, SWELL_CT_KEY, true );
+		if ( empty( $pv ) ) {
+			echo '0';
+		} else {
+			echo esc_html( $pv );
+		}
+	} elseif ( 'balloon_code' === $column_name ) {
+
+		$balcode = _x( 'speech_balloon', 'code', 'swell' );
+		// $tag = '['. $balcode . ' set="' . esc_attr( get_the_title( $post_id ) ) . '"]'. __( 'Your text...', 'swell' ) . '[/'. $balcode .']';
+		$tag = '[' . $balcode . ' id="' . esc_attr( $post_id ) . '"]' . __( 'Your text...', 'swell' ) . '[/' . $balcode . ']';
+		echo '<input class="swl-codeCopyBox" type="text" onClick="this.select();" value="' . esc_attr( $tag ) . '" readonly />';
+
+	} elseif ( 'balloon_preview' === $column_name ) {
+
+		$balloon = do_shortcode( '[ふきだし id="' . $post_id . '"]' . __( 'Your text...', 'swell' ) . '[/ふきだし]' );
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo preg_replace( '/\ssrc="([^"]*)"\sdata-src=/', ' src=', $balloon );
+
+	} elseif ( 'ad_type' === $column_name ) {
+
+		$types     = [
+			'text'      => 'テキスト型',
+			'normal'    => 'バナー型',
+			'affiliate' => 'アフィリエイト型',
+			'amazon'    => 'Amazon型',
+			'ranking'   => 'ランキング型',
+		];
+		$type_key  = get_post_meta( $post_id, 'ad_type', true );
+		$type_name = isset( $types[ $type_key ] ) ? $types[ $type_key ] : $type_key;
+
+		echo esc_html( $type_name );
+
+	} elseif ( 'ad_code' === $column_name ) {
+
+		$tag = '[ad_tag id="' . $post_id . '"]';
+		echo '<input class="swl-codeCopyBox" type="text" onClick="this.select();" value="' . esc_attr( $tag ) . '" readonly />';
+
+	} elseif ( 'parts_code' === $column_name ) {
+
+		$tag = '[blog_parts id="' . $post_id . '"]';
+		echo '<input class="swl-codeCopyBox" type="text" onClick="this.select();" value="' . esc_attr( $tag ) . '" readonly />';
+
+	} elseif ( 'parts_used_at' === $column_name ) {
+
+		$args = [
+			'post_type'              => [ 'post', 'page' ],
+			'posts_per_page'         => -1,
+			'no_found_rows'          => true,
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false,
+			'fields'                 => 'ids',
+			's'                      => 'wp:loos/blog-parts "partsID":"' . $post_id . '"',
+		];
+
+		$the_query  = new \WP_Query( $args );
+		$used_posts = $the_query->posts;
+		wp_reset_postdata();
+
+		// ショートコード
+		$args      = [
+			'post_type'              => [ 'post', 'page' ],
+			'posts_per_page'         => -1,
+			'no_found_rows'          => true,
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false,
+			'post__not_in'           => $used_posts,
+			'fields'                 => 'ids',
+			's'                      => '[blog_parts id="' . $post_id . '"',
+		];
+		$the_query = new \WP_Query( $args );
+
+		$used_posts = array_merge( $used_posts, $the_query->posts );
+		foreach ( $used_posts  as $the_id ) {
+			$edit_link = admin_url( 'post.php?post=' . $the_id . '&action=edit' );
+			echo '<a href="' . esc_url( $edit_link ) . '" class="swl-usedLink">' .
+				esc_html( $the_id )
+			. '</a>';
+		}
+		wp_reset_postdata();
+
+		// [blog_parts id = '169' ]
+
+	} elseif ( 'ad_ctr' === $column_name ) {
+
+		$ad_type = get_post_meta( $post_id, 'ad_type', true );
+
+		// imp数
+		$imp_ct = (int) get_post_meta( $post_id, 'imp_count', true );
+
+		// 広告タグ部分
+		$tag_clicked_ct = (int) get_post_meta( $post_id, 'tag_clicked_ct', true );
+		$tag_ctr        = ( $imp_ct !== 0 ) ? round( $tag_clicked_ct / $imp_ct * 100, 2 ) : '0';
+		$rate_data      = $tag_clicked_ct . ' / ' . $imp_ct . ' = ' . $tag_ctr . '%';
+		echo '<div><span class="swl-adCtrLabel -tag">タグ</span>' . esc_html( $rate_data ) . '</div>';
+
+		// ボタンの計測結果
+		if ( $ad_type !== 'normal' ) {
+
+			// ボタン1
+			if ( get_post_meta( $post_id, 'ad_btn1_url', true ) ) {
+				$btn1_clicked_ct = (int) get_post_meta( $post_id, 'btn1_clicked_ct', true );
+				$btn1_ctr        = ( $imp_ct !== 0 ) ? round( $btn1_clicked_ct / $imp_ct * 100, 2 ) : '0';
+
+				$btn1_data = $btn1_clicked_ct . ' / ' . $imp_ct . ' = ' . $btn1_ctr . '%';
+				echo '<div><span class="swl-adCtrLabel -btn1">ボタン1</span>' . esc_html( $btn1_data ) . '</div>';
+			}
+
+			// ボタン2
+			if ( get_post_meta( $post_id, 'ad_btn2_url', true ) ) {
+				$btn2_clicked_ct = (int) get_post_meta( $post_id, 'btn2_clicked_ct', true );
+				$btn2_ctr        = ( $imp_ct !== 0 ) ? round( $btn2_clicked_ct / $imp_ct * 100, 2 ) : '0';
+				$btn2_data       = $btn2_clicked_ct . ' / ' . $imp_ct . ' = ' . $btn2_ctr . '%';
+				echo '<div><span class="swl-adCtrLabel -btn2">ボタン2</span>' . esc_html( $btn2_data ) . '</div>';
+			}
+		}
+	} elseif ( 'ad_pv' === $column_name ) {
+		// imp数
+		$imp_ct = (int) get_post_meta( $post_id, 'imp_count', true );
+
+		// pv数
+		$pv_ct   = (int) get_post_meta( $post_id, 'pv_count', true );
+		$rate    = ( $pv_ct !== 0 ) ? round( $imp_ct / $pv_ct * 100, 2 ) : '0';
+		$pv_data = $imp_ct . ' / ' . $pv_ct . ' = ' . $rate . '%';
+
+		echo '<div>' . esc_html( $pv_data ) . '</div>';
+
+	} elseif ( 'ad_data_reset' === $column_name ) {
+
+		echo '<button type="button" class="swl-adDataResetBtn" data-id="' . esc_attr( $post_id ) . '">' .
+			esc_html__( 'Reset', 'swell' ) .
+		'</button>';
+	}
+}
+
+
+/**
+ * カテゴリー・タグ一覧テーブルに IDのカラム 追加
+ */
+add_filter( 'manage_edit-category_columns', __NAMESPACE__ . '\add_term_columns' );
+add_filter( 'manage_edit-post_tag_columns', __NAMESPACE__ . '\add_term_columns' );
+function add_term_columns( $columns ) {
+	return array_merge(
+		array_slice( $columns, 0, 2 ),
+		['id' => 'ID' ],
+		array_slice( $columns, 2 )
+	);
+}
+
+
+/**
+ * IDカラムの出力
+ */
+add_filter( 'manage_category_custom_column', __NAMESPACE__ . '\output_term_custom_columns', 10, 3 );
+add_filter( 'manage_post_tag_custom_column', __NAMESPACE__ . '\output_term_custom_columns', 10, 3 );
+function output_term_custom_columns( $content, $column_name, $term_id ) {
+	if ( 'id' === $column_name ) {
+		$content = $term_id;
+	}
+	return $content;
+}
+
+
+/**
+ * カテゴリー・タグ一覧：IDでソート可能に
+ */
+add_filter( 'manage_edit-category_sortable_columns', __NAMESPACE__ . '\add_term_sortable_columns' );
+add_filter( 'manage_edit-post_tag_sortable_columns', __NAMESPACE__ . '\add_term_sortable_columns' );
+function add_term_sortable_columns( $columns ) {
+	$columns['id'] = 'ID';
+	return $columns;
+}
+
+
+/**
+ * PV順でソート可能に
+ */
+add_filter( 'manage_edit-post_sortable_columns', __NAMESPACE__ . '\add_post_sortable_columns' );
+function add_post_sortable_columns( $columns ) {
+	$columns['swell_pv_ct'] = 'swell_pv_ct';
+	return $columns;
+}
+
+
+/**
+ * 投稿一覧：PV順でソート可能に
+ */
+add_filter( 'request', __NAMESPACE__ . '\hook_request' );
+function hook_request( $vars ) {
+	if ( isset( $vars['orderby'] ) && 'swell_pv_ct' === $vars['orderby'] ) {
+		$vars = array_merge(
+			$vars,
+			[
+				'meta_key' => SWELL_CT_KEY,
+				'orderby'  => 'meta_value_num',
+			]
+		);
+	}
+	return $vars;
+}
+
+
+/**
+ * ブログパーツに絞り込みのセレクトボックスを追加
+ */
+add_filter( 'restrict_manage_posts', __NAMESPACE__ . '\add_search_parts_use' );
+function add_search_parts_use( $post_type ) {
+	if ( 'blog_parts' !== $post_type ) return;
+
+	$options = '<option value="">' . __( '用途で検索', 'swell' ) . '</option>';
+	$terms   = get_terms( 'parts_use' );
+	foreach ( $terms as $term ) {
+		$selected = ( $term->slug === get_query_var( 'parts_use' ) ) ? ' selected' : '';
+		$options .= '<option value="' . esc_attr( $term->slug ) . '"' . $selected . '>' . esc_html( $term->name ) . ' </option>';
+	}
+
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<select name="parts_use">' . $options . '</select>';
+}
+
+
+/**
+ * 広告タイプで絞り込みのセレクトボックスを追加
+ */
+add_filter( 'restrict_manage_posts', __NAMESPACE__ . '\add_search_ad_type' );
+function add_search_ad_type( $post_type ) {
+	if ( 'ad_tag' !== $post_type ) return;
+
+	$options = '<option value="">- 広告タイプで検索 -</option>';
+	$types   = [
+		'text'      => 'テキスト型',
+		'normal'    => 'バナー型',
+		'affiliate' => 'アフィリエイト型',
+		'amazon'    => 'Amazon型',
+		'ranking'   => 'ランキング型',
+	];
+	foreach ( $types as $key => $value ) {
+		$selected = ( $key === get_query_var( 'ad_type' ) ) ? ' selected' : '';
+		$options .= '<option value="' . esc_attr( $key ) . '"' . $selected . '>' . esc_html( $value ) . ' </option>';
+	}
+
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<select name="ad_type">' . $options . '</select>';
+}
+
+
+/**
+ * query_vars に ad_type を追加
+ */
+add_filter( 'query_vars', __NAMESPACE__ . '\add_query_vars' );
+function add_query_vars( $vars ) {
+	$vars[] = 'ad_type';
+	return $vars;
+}
+
+/**
+ * 検索条件にカスタムフィールド「ad_type」の値を追加
+ */
+add_filter( 'posts_where', __NAMESPACE__ . '\add_posts_where' );
+function add_posts_where( $where ) {
+
+	if ( ! is_admin() ) return $where;
+
+	global $wpdb;
+	$value = get_query_var( 'ad_type' );
+	if ( ! empty( $value ) ) {
+		$where .= $wpdb->prepare(
+			" AND EXISTS ( SELECT * FROM {$wpdb->postmeta} as m
+		WHERE m.post_id = {$wpdb->posts}.ID AND m.meta_key = 'ad_type' AND m.meta_value like %s )",
+			"%{$value}%"
+		);
+	}
+
+	return $where;
+}
+
+
+/**
+ * プラグインの自動更新の表示
+ */
+// 自動更新系
+add_filter( 'plugin_auto_update_setting_html', __NAMESPACE__ . '\customize_plugin_auto_update_html', 10, 3 );
+function customize_plugin_auto_update_html( $html, $plugin_file, $plugin_data ) {
+	if ( strpos( $html, 'data-wp-action="enable"' ) !== false ) {
+		// 「有効化する」ボタン(今は無効)
+		// $html = str_replace( '<span class="label">自動更新', '<span class="label button action">自動更新', $html);
+		$html .= '<div class="now-status -off">' . __( 'Now', 'swell' ) . ' : <span>' . __( 'Stopping', 'swell' ) . '</span></div>';
+	} elseif ( strpos( $html, 'data-wp-action="disable"' ) !== false ) {
+
+		$html .= '<div class="now-status -on">' . __( 'Now', 'swell' ) . ' : <span>' . __( 'Running', 'swell' ) . '</span></div>';
+	}
+
+	$html = str_replace( '自動更新を有効化', '自動更新を有効化する', $html );
+	$html = str_replace( '自動更新を無効化', '自動更新を無効化する', $html );
+
+	return '<div class="_wraper">' . $html . '</div>';
+}
+
+/**
+ * テーマの自動更新の表示
+ */
+// add_filter( 'theme_auto_update_setting_html', __NAMESPACE__ . '\customize_theme_auto_update_html', 10, 3 );
+// function customize_theme_auto_update_html( $html, $stylesheet, $theme ) {}

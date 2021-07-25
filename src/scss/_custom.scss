@@ -1,0 +1,30 @@
+.ab-icon.icon-swell {
+    transform: scale(.9);
+}
+
+//背景メインカラー
+
+//▼ front
+.comment-respond .submit,
+//▼ common
+.c-postThumb__cat,
+.is-style-balloon_box,
+.is-style-main .swell-block-accordion__title,
+.swell-block-dl.is-style-vtabel .swell-block-dl__dt {
+    background-color: var(--color_main);
+}
+
+//ボーダーメイン
+.is-style-border_sm,
+.is-style-border_dm,
+.is-style-sticky_box,
+.is-style-emboss_box,
+.is-style-kakko_box::before,
+.is-style-kakko_box::after,
+.is-style-big_kakko_box::before,
+.is-style-big_kakko_box::after,
+.border_main .wp-block-column,
+.is-style-main .swell-block-accordion__body,
+.swell-block-dl.is-style-border .swell-block-dl__dt {
+    border-color: var(--color_main);
+}

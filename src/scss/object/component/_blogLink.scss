@@ -1,0 +1,24 @@
+.c-blogLink {
+    // display: flex;
+    // align-items: center;
+    line-height: 1.5;
+    text-decoration: none !important;
+}
+
+.c-blogLink__icon {
+    display: block;
+    display: inline-flex;
+    margin-right: 3px;
+    padding: 4px;
+    text-decoration: none;
+    border: solid 1px;
+    border-radius: 50%;
+
+    &::before {
+        font-size: .8em;
+    }
+}
+
+.c-blogLink__text {
+    text-decoration: underline;
+}

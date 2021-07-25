@@ -1,0 +1,27 @@
+.swl-input--url {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 2em;
+
+    .__label {
+        display: block;
+        flex-basis: 50px;
+        color: #555;
+        font-size: 13px;
+    }
+
+    .__input {
+        max-width: 300px;
+
+        .components-base-control__field {
+            margin-bottom: 0;
+            border: solid 1px #ddd;
+        }
+
+        .block-editor-url-input__input {
+            width: 100%;
+
+        }
+    }
+}

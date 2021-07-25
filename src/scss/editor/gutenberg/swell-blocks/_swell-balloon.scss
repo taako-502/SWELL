@@ -1,0 +1,16 @@
+.block-editor__container {
+
+    .balloon_prev {
+        margin-bottom: 16px;
+    }
+
+    .c-balloon__iconImg {
+        width: 60px;
+        height: 60px;
+
+        @include tab {
+            width: 80px;
+            height: 80px;
+        }
+    }
+}

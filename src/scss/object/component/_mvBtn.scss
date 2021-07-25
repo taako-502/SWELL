@@ -1,0 +1,61 @@
+.c-mvBtn {
+    position: relative;
+    display: block;
+    margin: 2em auto 0;
+    text-align: center;
+
+    .u-ta-l & {
+        margin-left: 0;
+    }
+
+    .u-ta-r & {
+        margin-right: 0;
+    }
+
+    &__btn {
+        position: relative;
+        display: block;
+        padding: .75em 2.5em;
+        overflow: hidden;
+        font-size: 3.2vw;
+        letter-spacing: 1px;
+        text-decoration: none !important;
+        text-shadow: none;
+        background-color: var(--color_main);
+        border-radius: var(--mv_btn_radius);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+        transition: box-shadow .25s;
+
+        .-btn-n > & {
+            color: #fff;
+        }
+
+        @include tab {
+            font-size: 14px;
+        }
+
+        &::before {
+
+            @extend %absLayer;
+            display: block;
+            background: linear-gradient(rgba(255, 255, 255, .2), #fff);
+            border-radius: 2px;
+            opacity: 0;
+            transition: opacity .25s;
+        }
+
+        &:hover {
+            box-shadow: 0 1px 8px rgba(0, 0, 0, .2);
+            opacity: 1;
+
+            &::before {
+                opacity: .2;
+            }
+        }
+
+        .-btn-b > & {
+            background: none;
+            border: solid 1px;
+        }
+    }
+}

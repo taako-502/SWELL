@@ -1,0 +1,20 @@
+.loos_style_block {
+    position: relative;
+}
+
+.block-editor-writing-flow {
+
+    .swl-obsoleteBlocks {
+        position: absolute;
+        top: -1px;
+        right: -1px;
+        display: inline-block;
+        padding: 0 8px;
+        color: #474952;
+        color: #fff;
+        font-size: 12px;
+        line-height: 20px;
+        background: #ff8640;
+        // content: "このブロックは廃止されました : " attr(data-layout);
+    }
+}

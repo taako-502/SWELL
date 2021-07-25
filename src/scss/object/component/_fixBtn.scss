@@ -1,0 +1,45 @@
+.c-fixBtn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    color: var(--color_main);
+    line-height: 1;
+    text-align: center;
+    background: #fff;
+    border: solid 1px var(--color_main);
+    cursor: pointer;
+    opacity: .75;
+    transition: .25s;
+
+    @extend %btnShadow;
+
+    @include pc {
+
+        &:hover {
+            opacity: 1;
+        }
+    }
+
+    & + & {
+        margin-top: 12px;
+    }
+}
+
+.c-fixBtn__icon {
+    display: block;
+    font-size: 20px;
+
+    #pagetop &::before {
+        font-size: 24px;
+    }
+}
+
+.c-fixBtn__label {
+    display: block;
+    margin-top: 2px;
+    font-size: 10px;
+}

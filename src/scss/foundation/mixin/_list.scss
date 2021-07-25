@@ -1,0 +1,41 @@
+//2列リスト
+//------------------------------------------
+@mixin list2($width: 48%, $mb: 20px) {
+    float: left;
+    width: $width;
+    margin-bottom: $mb;
+
+    &:nth-child(2n) {
+        float: right;
+    }
+}
+
+//3列リスト
+//------------------------------------------
+@mixin list3($width: 30%, $mb: 20px) {
+    $mr: (100 - $width * 3) / 2;
+
+    float: left;
+    width: $width;
+    margin: 0 $mr 2% 0;
+
+    &:nth-child(3n) {
+        float: right;
+        margin-right: 0;
+    }
+}
+
+//4列リスト
+//------------------------------------------
+@mixin list4($width: 22%, $mb: 20px) {
+    $mr: (100 - $width * 4) / 3;
+
+    float: left;
+    width: $width;
+    margin: 0 $mr $mb 0;
+
+    &:nth-child(4n) {
+        float: right;
+        margin-right: 0;
+    }
+}

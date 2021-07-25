@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+// ウィジェット基本
+.c-widget {
+
+    & + .c-widget {
+        margin-top: 2em;
+    }
+
+    p:empty::before {
+        content: none;
+    }
+}
+
+.c-widget__title {
+    position: relative;
+    margin-bottom: 1.5em;
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 4vw;
+
+    @include tab {
+        font-size: 16px;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        z-index: 0;
+        display: block;
+        box-sizing: inherit;
+        height: 1px;
+    }
+}
+

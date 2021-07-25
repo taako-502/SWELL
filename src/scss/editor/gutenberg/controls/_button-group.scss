@@ -1,0 +1,76 @@
+// ボタンの横幅を最低限確保する。
+.swl-btns--minWidth {
+
+    .components-button {
+        display: inline-block;
+        min-width: 2em;
+    }
+}
+
+.swl-btns--icons {
+    display: flex;
+    flex-wrap: wrap;
+    // border-top: solid 1px;
+    // border-right: solid 1px;
+
+    .components-button {
+        position: relative;
+        display: block;
+        width: 20%;
+        height: auto;
+        margin: -1px 0 0 -1px !important;
+        padding: 0;
+        border: solid 1px #1e1e1e;
+        border-radius: 0;
+        box-shadow: none !important;
+
+        &::before {
+            display: block;
+            padding-top: 100%;
+            content: "";
+        }
+
+        i {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%) scale(1.2);
+            // transform: translateY(-50%);
+        }
+    }
+}
+
+// 小さく表示する。 isSmall だと小さくなりすぎる時用
+.swl-btns--small {
+
+    .components-button {
+        height: 32px;
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
+
+// メディアの選択 / 削除
+.swell-control-mediaBtns,
+.swl-btns--media {
+    display: flex;
+
+    .swell-control-mediaDelete,
+    .swl-btn--delete {
+        margin-left: 1em;
+    }
+}
+
+.button_group_help {
+    display: block;
+    margin: -4px 0 4px;
+    font-style: italic;
+}
+// ボタングループ
+.swl-btns--padSmall {
+
+    .components-button {
+        padding-right: 8px; //default: 12px
+        padding-left: 8px; //default: 12px
+    }
+}

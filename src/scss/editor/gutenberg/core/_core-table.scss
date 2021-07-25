@@ -1,0 +1,24 @@
+.editor-styles-wrapper {
+
+    thead,
+    tfoot {
+        border: none;
+    }
+
+
+    .wp-block-table:not(.is-style-double) {
+
+
+        td {
+
+            &:not(:last-child) {
+                border-right: none;
+            }
+        }
+
+        tr:not(:last-child) > td {
+            border-bottom: none;
+        }
+    }
+}
+

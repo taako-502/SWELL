@@ -1,0 +1,148 @@
+
+.swell-menu-palette {
+
+    .__label {
+        display: inline-block;
+        min-width: 5em;
+        margin-top: 4px;
+        font-size: 13px;
+    }
+
+}
+
+.swell-menu-capbox {
+
+    @include tab {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .__settings {
+
+        margin-right: 16px;
+        margin-bottom: 16px;
+    }
+
+    .__preview {
+        width: 400px;
+        text-align: center;
+
+        @include mobile {
+            width: 100%;
+        }
+    }
+
+    // .swell-block-capbox {}
+}
+
+
+// マーカー
+#swell_setting_page tr.marker_type {
+
+    td,
+    th {
+        padding-bottom: 0;
+    }
+}
+
+#swell_setting_page tr.marker_color,
+#swell_setting_page tr.marker_type {
+
+    th {
+        min-width: 6em;
+    }
+}
+
+.swell-menu-marker {
+
+    .marker_color & .__settings {
+        margin-bottom: 16px;
+    }
+
+    .swl-marker {
+        display: inline-block;
+    }
+
+    .__preview {
+        padding: 32px 16px;
+        font-size: 16px;
+        text-align: center;
+    }
+
+    &[data-type="thin"] {
+
+        .mark_blue {
+            background: linear-gradient(transparent 64%, var(--color_mark_blue) 0%);
+        }
+
+        .mark_green {
+            background: linear-gradient(transparent 64%, var(--color_mark_green) 0%);
+        }
+
+        .mark_yellow {
+            background: linear-gradient(transparent 64%, var(--color_mark_yellow) 0%);
+        }
+
+        .mark_orange {
+            background: linear-gradient(transparent 64%, var(--color_mark_orange) 0%);
+        }
+    }
+
+    &[data-type="stripe"] {
+
+        .mark_blue {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_blue), var(--color_mark_blue) 2px, transparent 2px, transparent 4px);
+        }
+
+        .mark_green {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_green), var(--color_mark_green) 2px, transparent 2px, transparent 4px);
+        }
+
+        .mark_yellow {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_yellow), var(--color_mark_yellow) 2px, transparent 2px, transparent 4px);
+        }
+
+        .mark_orange {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_orange), var(--color_mark_orange) 2px, transparent 2px, transparent 4px);
+        }
+    }
+
+    &[data-type="thin-stripe"] {
+
+        .mark_blue {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_blue), var(--color_mark_blue) 2px, transparent 2px, transparent 4px) no-repeat 0 .75em;
+        }
+
+        .mark_green {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_green), var(--color_mark_green) 2px, transparent 2px, transparent 4px) no-repeat 0 .75em;
+        }
+
+        .mark_yellow {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_yellow), var(--color_mark_yellow) 2px, transparent 2px, transparent 4px) no-repeat 0 .75em;
+        }
+
+        .mark_orange {
+            background: repeating-linear-gradient(-45deg, var(--color_mark_orange), var(--color_mark_orange) 2px, transparent 2px, transparent 4px) no-repeat 0 .75em;
+        }
+    }
+
+    &[data-type="bold"] {
+
+        .mark_blue {
+            background: var(--color_mark_blue);
+        }
+
+        .mark_green {
+            background: var(--color_mark_green);
+        }
+
+        .mark_yellow {
+            background: var(--color_mark_yellow);
+        }
+
+        .mark_orange {
+            background: var(--color_mark_orange);
+        }
+    }
+
+}

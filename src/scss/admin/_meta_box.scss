@@ -1,0 +1,138 @@
+/**
+ * カスタムCSS
+ */
+#swell_metabox_css textarea {
+    width: 100%;
+    padding: 8px;
+    font-family: Menlo, monospace, Consolas, sans-serif;
+    tab-size: 2;
+}
+
+#swell_post_meta_side,
+#swell_post_meta_code,
+#swell_post_meta_lp {
+
+    .postbox-header .ui-sortable-handle {
+        justify-content: flex-start;
+
+        &::before {
+
+            @extend %swellicon;
+            @extend .icon-swell::before;
+            margin-right: 4px;
+        }
+    }
+}
+
+.edit-post-meta-boxes-area.is-side {
+
+    .postbox-header {
+        border-color: #f0f0f0;
+    }
+}
+
+
+/**
+ * SWELL METABOX
+ */
+.swl-meta {
+
+    .swl-meta__item {
+        padding: 12px 0;
+
+        input,
+        textarea,
+        select {
+            max-width: 100%;
+        }
+    }
+
+    &.-code {
+
+        .swl-meta__item {
+            padding: 12px;
+        }
+    }
+
+    // .swell_meta_subttl,
+    .swl-meta__subttl {
+
+        display: block;
+        margin: 0 0 1em;
+        padding-left: 8px;
+        font-weight: bold;
+        border-left: solid 2px #04384c;
+
+    }
+
+    .swl-meta__field {
+        margin: 0;
+        padding: 8px 0;
+
+        &.-select {
+
+            .swl-meta__label {
+                display: inline-block;
+                min-width: 5em;
+            }
+        }
+
+        // &.-radio{}
+        .swl-meta__radio {
+            margin-right: 8px;
+            padding: 2px 0;
+        }
+    }
+
+    .swl-meta__desc {
+        margin: 0;
+        color: #666;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+}
+
+
+/**
+ * 画像アップロードボタン
+ */
+.media_btns {
+    margin: 8px 0;
+
+    [name="media-clear"] {
+        margin-left: 8px;
+        background: none;
+        border: none;
+        box-shadow: none;
+    }
+}
+
+.media_preview {
+    min-height: 8px;
+    margin: 4px 0;
+    padding: 4px;
+    border: dashed 1px #ccc;
+
+    img {
+        display: block;
+        max-width: 100%;
+    }
+}
+
+/**
+ * メタテーブルタイトル
+ */
+.swell_term_meta_title h2 {
+    padding: 16px 0 0;
+    border-top: dashed 1px #ccc;
+}
+
+/**
+ * ラジオボックス
+ */
+// .swell_radio_wrap {
+
+//     label {
+//         line-height: 1.8;
+//     }
+// }

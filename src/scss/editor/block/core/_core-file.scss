@@ -1,0 +1,17 @@
+//ファイルブロック
+// .wp-block-file{}
+
+.wp-block-file__button {
+    padding: .75em 1.5em;
+    color: #fff;
+    font-size: inherit;
+    background: #32373c;
+    border-radius: 8px;
+
+    &::before {
+        display: inline-block;
+        margin-right: .5em;
+        font-family: icomoon;
+        content: "\e914"; //e924
+    }
+}

@@ -1,0 +1,103 @@
+
+// ボタンブロック
+.editor-styles-wrapper {
+
+    // hover時にリンク色に変わるのを阻止
+    .is-style-btn_normal,
+    .is-style-btn_solid,
+    .is-style-btn_shiny {
+
+        a {
+            color: #fff;
+        }
+    }
+
+    .swell-block-button {
+
+        // HTML直接入力時
+        &.-prev {
+            pointer-events: none;
+        }
+
+        .__prevLabel {
+            margin-top: 8px;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .swell-block-button__wrapper {
+            width: 100%;
+        }
+
+        .swell-block-button__link {
+            // display: inline-block;
+            margin-bottom: 8px !important;
+            cursor: text;
+
+            .rich-text {
+                min-width: 1em;
+            }
+
+            &[data-has-icon] .rich-text {
+                padding-right: 4px;
+            }
+
+            &:not([data-has-icon]) .rich-text {
+                display: block;
+            }
+
+            // i {
+            //     vertical-align: middle;
+            // }
+        }
+
+        .is-style-btn_solid .swell-block-button__link {
+            border-bottom: none !important;
+        }
+
+        .is-style-more_btn .swell-block-button__link {
+            min-width: 64%;
+        }
+
+    }
+
+    // ツールバーから「リンク」を消す
+    [data-type="loos/button"] {
+
+        // 5.5
+        .swell-format-toolbar + .block-editor-format-toolbar > .components-toolbar-group > button:nth-child(3) {
+            display: none;
+        }
+
+        // ~ 5.4
+        .swell-format-toolbar + .block-editor-format-toolbar .components-toolbar > div:nth-child(3) {
+            display: none;
+        }
+    }
+}
+
+
+// 計測結果の表示
+.swell-button-data {
+
+    .__title {
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .__data {
+        margin-bottom: 4px;
+    }
+}
+
+[data-type="loos/button"] {
+
+    .swell-button-alert {
+        margin-bottom: 4px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 13px;
+        background: #f1301a;
+    }
+}

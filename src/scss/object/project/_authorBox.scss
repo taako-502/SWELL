@@ -1,0 +1,106 @@
+@charset "UTF-8";
+
+.p-authorBox {
+    padding: 5vw;
+    border: solid 1px $color_border;
+
+    @include mobile {
+        text-align: center;
+    }
+
+    @include tab {
+        display: flex;
+        align-content: stretch;
+        justify-content: space-between;
+        padding: 1.5em;
+    }
+
+    // @media (min-width: 1200px) {
+    //     padding: 2em;
+    // }
+
+    &__l {
+        margin: 0 0 1em;
+        text-align: center;
+
+        @include tab {
+            width: 160px;
+            margin-bottom: 0;
+        }
+    }
+
+    &__r {
+        width: 100%;
+
+        @include tab {
+            display: flex;
+            flex-direction: column;
+            width: calc(100% - 160px - 1.5em);
+            padding-left: 1.5em;
+            border-left: solid 1px $color_border;
+        }
+    }
+
+    &__name {
+        display: block;
+        margin-top: 8px;
+        color: inherit;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+    &__position {
+        display: block;
+        margin-top: 4px;
+        font-style: italic;
+        line-height: 1.2;
+    }
+
+    &__desc {
+        width: 100%;
+    }
+
+    &__iconList {
+        margin-top: 8px;
+
+        @include mobile {
+            justify-content: center;
+        }
+    }
+
+    &__more {
+        padding-top: 1em;
+
+        @include tab {
+            margin-top: auto;
+        }
+    }
+
+    &__moreLink {
+        position: relative;
+        display: block;
+        padding: 0 1em;
+        line-height: 3;
+        letter-spacing: .5px;
+        text-align: center;
+        border: solid 1px $color_border;
+
+        &::after {
+            position: absolute;
+            top: 0;
+            right: 1em;
+            margin-left: .25em;
+            font-family: icomoon;
+            content: "\e930";
+        }
+    }
+
+    .avatar {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        font-family: "object-fit: cover;";
+        border: solid 2px $color_border;
+        border-radius: 50%;
+    }
+}

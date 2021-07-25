@@ -1,0 +1,37 @@
+// メインビジュアルしたのお知らせバー
+.p-mvInfo {
+    margin: 0;
+    padding: 1em 0;
+    color: #fff;
+    background-color: #222;
+}
+
+.p-mvInfo__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    // justify-content: center;
+}
+
+.p-mvInfo__badge {
+    margin-right: 2em;
+    padding: .5em;
+    font-size: 12px;
+    line-height: 1;
+    background-color: #ff9148;
+}
+
+.p-mvInfo__text {
+    text-decoration: underline;
+}
+
+.p-mvInfo__btn {
+
+    display: none;
+    margin-right: 1em;
+    margin-left: 2em;
+    padding: .5em;
+    color: #fff;
+    line-height: 1;
+    background-color: #05394c;
+}

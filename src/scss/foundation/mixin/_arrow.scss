@@ -1,0 +1,58 @@
+@mixin arrow_beta($color, $size: 6px, $direction: left) {
+    $pad: $size * 2;
+    //べた三角 ▼
+    position: relative;
+
+    @if $direction == left {
+        padding-left: $pad;
+    }
+
+    @else {
+        padding-right: $pad;
+    }
+
+    &::before {
+        position: absolute;
+        top: calc(50% - #{$size});
+        left: 0;
+        display: block;
+        width: 0;
+        height: 0;
+        border: $size solid transparent;
+        content: "";
+        border-#{$direction}: $size solid $color;
+    }
+}
+
+@mixin arrow_ku($color: #fff, $size: 8px, $weight: 2px, $posi: 0, $direction: left) {
+    //対角線の長さ / 2 を　50%から引く
+    $shift_top: ((($size + $weight) * 1.4) / 2);
+    //paddingサイズ
+    $padding: $size * 1.4 + $weight * 2 + $posi + 8px;
+
+    //くの字三角　＞
+    position: relative;
+    padding-#{$direction}: $padding;
+
+    &::before {
+        position: absolute;
+        top: calc(50% - #{$weight});
+        width: $size;
+        height: $size;
+
+        margin: auto;
+        vertical-align: middle;
+        border-top: $weight solid $color;
+        border-right: $weight solid $color;
+        transform: rotate(45deg) translateY(-50%);
+        content: "";
+
+        @if $direction == left {
+            left: calc(#{$weight} + #{$posi});
+        }
+
+        @else {
+            right: calc(#{$weight} + #{$posi});
+        }
+    }
+}

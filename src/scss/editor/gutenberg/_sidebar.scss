@@ -1,0 +1,110 @@
+//コントロールパネル用スタイル
+.edit-post-sidebar {
+
+    // 5.5から出現したサイドバーのメタボックスのボタンサイズを小さく。
+    .postbox .handle-actions {
+
+        button {
+            width: 28px;
+            height: 28px;
+
+        }
+
+        .handlediv {
+            margin-right: 4px;
+        }
+
+        .order-higher-indicator,
+        .order-lower-indicator {
+
+            &::before {
+                font-size: 16px;
+            }
+        }
+
+    }
+
+    // 色設定で薄い色をチェックした時にチェックマークが見えない問題に対応
+    .components-circular-option-picker__option.is-pressed + svg {
+        filter: drop-shadow(0 0 1px rgba(0, 0, 0, .75));
+    }
+
+    // BaseControl の help つまりすぎ
+    .components-base-control__help {
+        margin-top: 0;
+    }
+
+
+    // 5.3からinline-blockに切り替わったのでblockに上書き
+    .components-base-control__label {
+        display: block;
+        margin-bottom: 8px; // 5,6からなくなった？
+    }
+
+    .checkbox_group {
+
+        .components-base-control__label {
+            margin-bottom: 8px;
+        }
+
+        .components-base-control {
+            margin-bottom: 4px;
+        }
+    }
+
+    .toggle_group {
+
+        .components-base-control__label {
+            margin-bottom: 8px;
+        }
+
+        .components-base-control {
+            margin-bottom: 8px;
+        }
+
+        .components-base-control__field {
+            margin-bottom: 0;
+        }
+    }
+
+
+}
+
+
+// スタイル選択画面での表示
+.__prevWrap {
+
+    .is-style-browser_mac {
+        padding: 0;
+
+        &::before {
+            height: 16px;
+            background-position: left 4px top 50%;
+            background-size: auto 8px;
+        }
+    }
+
+    .is-style-desktop {
+        position: relative;
+        max-width: 80%;
+        margin: auto !important;
+
+        &::before {
+            bottom: -1px;
+            width: 100%;
+            height: 8px;
+            background-size: auto 8px;
+            content: "";
+        }
+
+        &::after {
+            display: block;
+            width: 100%;
+            height: calc(100% - 8px);
+            overflow: hidden;
+            border: solid 4px #3f4244;
+            border-radius: 4px;
+            content: "";
+        }
+    }
+}

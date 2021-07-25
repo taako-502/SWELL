@@ -1,0 +1,153 @@
+// 5.5の調整用
+:root {
+    --block_width: 900px; // (JSで数値が動的に切り替わっていく)
+    --block_max_width: 900px;
+}
+
+// スマホで再利用ブロックの中の画像が飛び出るバグを回避
+.branch-5-6,
+.branch-5-7,
+.branch-5-8 {
+
+    .interface-interface-skeleton__editor {
+        width: 100%;
+    }
+
+    .block-editor-block-list__layout.is-root-container > [data-type="loos/full-wide"] {
+        margin-right: -10px;
+        margin-left: -10px;
+    }
+
+    .block-library-block__reusable-block-container {
+
+        .wp-block-image > div {
+            max-width: 100%;
+        }
+    }
+}
+
+// 本文エリア
+.block-editor-writing-flow {
+
+    // 5.7 ~ エディターの縦幅の最小値がなくなっている
+    // .branch-5-7 & {
+    padding-bottom: 40px;
+    // }
+
+}
+
+// 全体の幅
+.wp-block {
+    clear: both;
+    max-width: var(--block_max_width, 900px);
+}
+
+// フォント
+.editor-styles-wrapper {
+    font-weight: 500;
+    // font-size: 16px;
+    font-family: "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "メイリオ", Meiryo, sans-serif !important;
+    line-height: 1.8;
+    background-color: var(--color_content_bg);
+
+    // アンドロイドで太字にならないのを防止
+    b,
+    strong {
+        font-weight: 700;
+    }
+
+    // .wp-block,
+    &.block-editor-block-preview__container,
+    .editor-post-title__input,
+    .editor-post-title__input:focus,
+    .block-editor-writing-flow {
+        color: var(--color_text);
+    }
+
+}
+
+
+// カラーパレットの透明パターン非表示
+.components-circular-option-picker__option-wrapper::before {
+    background: none;
+}
+
+// 色設定の 背景色を分かりやすく四角形に。
+.block-editor-color-gradient-control {
+
+    & + & {
+        // border: solid 1px;
+        .components-button.components-circular-option-picker__option {
+            border-radius: 4px;
+
+            &::after {
+                border-radius: 4px;
+            }
+        }
+    }
+}
+
+// インサーターボタン、背景黒でも見えるように
+// .block-editor-block-list__block-popover-inserter,
+// .block-editor-block-list__empty-block-inserter,
+// .block-editor-block-list__insertion-point-inserter,
+// .block-editor-default-block-appender {
+
+//     .block-editor-inserter__toggle {
+//         box-shadow: 0 0 0 1px #fff;
+//     }
+// }
+
+
+// ブロックの「Move To」モードで出てくる ::before のバーが崩れないように。
+#wpbody .is-block-moving-mode {
+
+    .wp-block.is-selected {
+
+        &::before {
+            position: absolute;
+            top: -14px;
+            right: 0;
+            bottom: auto;
+            left: 0;
+            z-index: 0;
+            display: inline;
+            margin: 0;
+            padding: 0;
+            border: none;
+            border-top: 4px solid var(--wp-admin-theme-color);
+            border-radius: 2px;
+            transform: none;
+            transition: border-color .1s linear, border-style .1s linear, box-shadow .1s linear;
+            content: "";
+            pointer-events: none;
+        }
+    }
+}
+
+
+// ツールバーのアイコンが5.6から <i>になってしまったところの調整
+.components-dropdown-menu__menu .components-dropdown-menu__menu-item > .dashicon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+
+// fullwideコンテンツを使うと少し左右にスクロールできてしまうのを防ぐ
+.interface-interface-skeleton__content {
+    overflow-x: hidden;
+}
+
+
+// 5.8のインナーブロックバグへのとり急ぎの対応
+[data-type="loos/accordion"],
+[data-type="loos/step"],
+[data-type="loos/dl"],
+[data-type="loos/faq"] {
+
+    &:not(.is-selected):not(.has-child-selected) .block-editor-block-list__layout > .block-list-appender {
+        display: none;
+    }
+}

@@ -1,0 +1,67 @@
+@import "./common/text_style";
+@import "./common/box_style";
+@import "./common/color_palette"; //優先度高くするため、最後に
+// 共通
+.mce-content-body,
+.editor-styles-wrapper {
+
+    // エディターではpcとして表示する
+    .sp_only,
+    .pc_only {
+        display: block !important;
+
+        &.wp-block-columns,
+        &.-list-flex {
+            display: flex !important;
+        }
+
+        &.wp-block-media-text {
+            display: grid !important;
+        }
+    }
+
+    @include pc {
+
+        .sp_only {
+            opacity: .4;
+        }
+    }
+
+    @include sp {
+
+        .pc_only {
+            opacity: .4;
+        }
+    }
+
+    th,
+    td {
+
+        &:not([class*="has-text-align-"]) {
+            text-align: left;
+        }
+    }
+
+    @import "./common/post_content";
+
+    li {
+        // 前後のブロックまでフォーカスがぶっとんでいくの防止
+        line-height: 1.5;
+
+        @include mobile {
+            //relativeだと スマホで日本語入力できなくなる。（スタイルは崩れるので、バグフィックスされたら外す。）
+            position: static;
+        }
+    }
+
+}
+
+.is-style-crease {
+
+    &::after {
+
+        border-color: #fff #fff rgba(0, 0, 0, .1) rgba(0, 0, 0, .1);
+
+    }
+}
+

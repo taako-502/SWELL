@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+.p-breadcrumb {
+    position: relative;
+    margin: 0 auto;
+    padding: 8px 0;
+
+    &.-bg-on {
+        // padding: 16px 0;
+        background: #f7f7f7;
+    }
+
+    &:not(.-bg-on) {
+        padding-top: 12px;
+    }
+
+    //ページタイトル
+    .-body-solid &.-bg-on {
+        box-shadow: inset 0 -1px 8px $color_thin_shadow;
+    }
+
+    // パンくずリストの背景効果がないケース
+    .-frame-on &,
+    .c-infoBar + &,
+    .c-infoBar + [data-barba="container"] > &,
+    .l-topTitleArea + & {
+        padding-top: 12px;
+        background: none !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    .-frame-on & {
+        padding-bottom: 12px;
+    }
+}
+
+
+.p-breadcrumb__list {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    list-style: none;
+}
+
+.p-breadcrumb__item {
+    position: relative;
+    margin-right: 10px;
+    padding-right: 12px;
+
+    &::after {
+
+        @extend %breadcrumb_separation;
+        position: absolute;
+        top: calc(50% - 2px);
+        right: 0;
+    }
+
+    &:last-child {
+
+        &::after {
+            content: none;
+        }
+
+        span {
+            opacity: .8;
+        }
+    }
+}
+
+
+.p-breadcrumb__text {
+    display: block;
+    color: inherit;
+    font-size: 10px;
+    white-space: nowrap;
+
+    @include tab {
+        font-size: 11px;
+    }
+
+    &::before {
+        margin-right: 3px;
+    }
+
+    &:hover {
+
+        span {
+            opacity: .76;
+        }
+    }
+
+}
+
+// 投稿名は非表示
+.single span.p-breadcrumb__text {
+    display: none;
+}

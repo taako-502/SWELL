@@ -1,0 +1,11 @@
+.l-article {
+    max-width: var(--article_size);
+    padding-right: 0;
+    padding-left: 0;
+
+    .-sidebar-off &,
+    .lp-content & {
+        margin-right: auto;
+        margin-left: auto;
+    }
+}

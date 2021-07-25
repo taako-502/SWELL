@@ -1,0 +1,83 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+$args     = $variable ?: [
+	'tw_id'    => '',
+	'insta_id' => '',
+	'fb_url'   => '',
+];
+$tw_id    = $args['tw_id'];
+$fb_url   = $args['fb_url'];
+$insta_id = $args['insta_id'];
+
+$has_follow_btn = ( $tw_id || $insta_id );
+
+$action_text = '';
+if ( $has_follow_btn && $fb_url ) {
+	$action_text = __( 'Like or Follow', 'swell' );
+} elseif ( $fb_url ) {
+	$action_text = __( 'Like', 'swell' );
+} elseif ( $has_follow_btn ) {
+	$action_text = __( 'Follow', 'swell' );
+}
+
+// この記事が気に入ったら%sしてね！
+$cta_message = sprintf(
+	__( 'If you like this article, please %s!', 'swell' ),
+	'<br><i class="icon-thumb_up"></i> ' . $action_text
+);
+
+$lang    = get_bloginfo( 'language' );
+$fb_lang = ( 'ja' === $lang ) ? 'ja_JP' : 'en'; // _x( 'en', 'fb', 'swell' );
+$tw_lang = ( 'ja' === $lang ) ? 'ja' : 'en'; // _x( 'en', 'tw', 'swell' );
+
+// @codingStandardsIgnoreStart
+?>
+<div class="p-snsCta">
+	<?php
+	if ( $fb_url ) : // FBのscript
+		$fb_appID       = SWELL_FUNC::get_setting( 'fb_like_appID' ) ?: '';
+		$fb_appID_query = $fb_appID ? '&appId=' . $fb_appID . '&autoLogAppEvents=1' : '';
+	?>
+	<div id="fb-root"></div>
+	<script class="fb_like_script">
+		(function(d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (d.getElementById(id)) return;
+			js = d.createElement(s); js.id = id;
+			js.async = true;
+			js.src = "https://connect.facebook.net/<?=$fb_lang?>/sdk.js#xfbml=1&version=v4.0<?=esc_js( $fb_appID_query )?>";
+			fjs.parentNode.insertBefore(js, fjs);
+		}(document, 'script', 'facebook-jssdk'));
+	</script>
+	<?php endif; ?>
+	<figure class="p-snsCta__figure">
+		<?php
+			\SWELL_Theme::get_thumbnail( [
+				'post_id'      => get_the_ID(),
+				'size'         => 'medium_large',
+				'sizes'        => '(min-width: 600px) 320px, 50vw',
+				'class'        => 'p-snsCta__img',
+				'use_lazyload' => true,
+				'echo'         => true,
+			] );
+		?>
+	</figure>
+	<div class="p-snsCta__body">
+		<p class="p-snsCta__message u-lh-15">
+			<?=wp_kses_post( apply_filters( 'swell_sns_cta_message', $cta_message ) );?>
+		</p>
+		<div class="p-snsCta__btns">
+			<?php if ( $fb_url ) : ?>
+				<div class="fb-like" data-href="<?=esc_url( $fb_url )?>" data-layout="button" data-action="like" data-show-faces="false" data-share="false"></div>
+			<?php endif; ?>
+			<?php if ( $tw_id ) : ?>
+				<a href="https://twitter.com/<?=esc_attr( $tw_id )?>?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-screen-name="false" data-lang="<?=$tw_lang?>" data-show-count="false">Follow @<?=esc_html( $tw_id )?></a>
+				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+			<?php endif; ?>
+			<?php if ( $insta_id ) : ?>
+				<a href="https://www.instagram.com/<?=esc_attr( $insta_id )?>/" class="c-instaFollowLink" target="_blank" rel="noopener noreferrer"><i class="c-iconList__icon icon-instagram" role="presentation"></i><span>Follow Me</span></a>
+			<?php endif; ?>
+		</div>
+	</div>
+</div>

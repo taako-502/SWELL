@@ -1,0 +1,32 @@
+// 著者部分
+.c-postAuthor {
+    display: flex;
+    align-items: center;
+
+    &.is-link {
+        color: inherit;
+        transition: opacity .25s;
+
+        &:hover {
+            opacity: .75;
+        }
+    }
+}
+
+.c-postAuthor__figure {
+    width: 20px;
+    height: 20px;
+    margin-right: .25em;
+    margin-left: 1px;
+    overflow: hidden;
+    border-radius: 50%;
+
+    .avatar {
+
+        @extend %objFitCover;
+    }
+}
+
+// .c-postAuthor__name {
+//     font-size: 12px;
+// }

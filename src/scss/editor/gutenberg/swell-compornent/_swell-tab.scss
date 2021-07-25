@@ -1,0 +1,19 @@
+.swell-components-tab {
+    display: flex;
+
+    .components-button {
+        height: auto;
+        // font-size: 12px;
+        line-height: 2.5;
+        border-radius: 0;
+
+        &:focus {
+            box-shadow: none !important;
+        }
+
+        &:not(.is-primary) {
+            background: none;
+        }
+    }
+
+}

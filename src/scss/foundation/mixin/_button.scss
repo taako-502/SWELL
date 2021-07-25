@@ -1,0 +1,39 @@
+//□枠ボタン 白抜き
+@mixin button($color: $color_main, $pad: 15px, $bsize: 1px, $duration: .25s) {
+    display: block;
+    padding: $pad 0;
+    color: $color;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    border: $bsize solid $color;
+    cursor: pointer;
+    transition-duration: $duration;
+
+    &:hover {
+        color: #fff;
+        background: $color;
+    }
+}
+
+//背景色入り
+@mixin button2($color: $color_main) {
+    display: block;
+    padding: 3% 0;
+    color: #fff;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: center;
+    background-color: $color;
+    border: 1px solid $color;
+    transition-duration: .25s;
+
+    &:hover {
+        color: $color;
+        background-color: #fff !important;
+        cursor: pointer;
+        opacity: .7;
+        opacity: 1 !important;
+        transition-duration: .25s;
+    }
+}

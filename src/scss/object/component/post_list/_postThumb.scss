@@ -1,0 +1,89 @@
+
+// サムネイル
+.c-postThumb {
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.c-postThumb__figure {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    overflow: hidden;
+    transform: perspective(0);
+    backface-visibility: hidden;
+
+    &::before {
+        display: block;
+        height: 0;
+        padding-top: var(--card_posts_thumb_ratio); //デフォルト：カード
+        content: "";
+    }
+
+
+    // リスト型の比率
+    .p-blogCard &::before,
+    .-type-list &::before,
+    .-type-list2 &::before {
+        padding-top: var(--list_posts_thumb_ratio);
+    }
+
+    // ビッグ型の比率
+    .-type-big &::before {
+        padding-top: var(--big_posts_thumb_ratio);
+    }
+
+    // サムネイル型の比率
+    .-type-thumb &::before {
+        padding-top: var(--thumb_posts_thumb_ratio);
+    }
+}
+
+
+.c-postThumb__img {
+
+    @extend %objFitCover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(1.01) perspective(0);
+    backface-visibility: hidden;
+    transition: transform .25s;
+}
+
+.c-postThumb__cat {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    display: inline-block;
+    padding: 0 .75em;
+    overflow: hidden;
+    font-size: 10px;
+    line-height: 2;
+    white-space: nowrap;
+    transform: perspective(0);
+    transform-origin: 100% 0;
+    backface-visibility: hidden;
+
+    @include mobile {
+        transform: scale(.9) perspective(0);
+    }
+
+    @include tab {
+        font-size: 11px;
+    }
+
+    .-type-list &,
+    .-type-list2 & {
+        right: auto;
+        left: 0;
+        transform-origin: 0 0;
+    }
+
+
+    &::before {
+        margin-right: .5em;
+    }
+}

@@ -1,0 +1,27 @@
+
+//---------------------------------------
+// 旧 フルワイド
+//---------------------------------------
+.wp-block-loos-full-wide {
+    margin: 0 calc(50% - 50vw) 2em;
+    padding: 4em calc(50vw - 50%);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    & > p,
+    & > div {
+        margin-bottom: 2em;
+    }
+}
+
+.-sidebar-off {
+
+    .wp-block-loos-full-wide {
+
+        @include pc {
+            padding-top: 6em;
+            padding-bottom: 6em;
+        }
+    }
+}

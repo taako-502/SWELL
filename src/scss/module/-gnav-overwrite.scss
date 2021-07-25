@@ -1,0 +1,49 @@
+@import "../foundation/mixin/**";
+
+
+.l-header__spNav {
+    background-color: var(--color_gnav_bg);
+}
+
+.p-spHeadMenu a {
+    color: #fff;
+}
+
+.p-spHeadMenu .menu-item.-current {
+    border-bottom-color: #fff;
+}
+
+@include pc {
+
+    .-parallel {
+
+        .l-header__gnav {
+            color: #fff;
+            background-color: var(--color_gnav_bg);
+
+            .c-gnav > li > a {
+                padding-top: 12px;
+                padding-bottom: 12px;
+            }
+
+            // ホバー時の線
+            .c-gnav > li > a::after {
+                background-color: #fff;
+            }
+        }
+
+
+        // .c-gnav > li > a::before {
+        //     background: #fff;
+        // }
+    }
+
+    .-parallel-top .l-header__gnav {
+        margin-bottom: 8px;
+    }
+
+    .-parallel-bottom .l-header__gnav {
+        margin-top: 8px;
+    }
+
+}

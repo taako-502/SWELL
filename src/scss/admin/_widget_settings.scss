@@ -1,0 +1,54 @@
+/* ウィジェット管理ページ */
+.swl-widgetExSetting {
+    margin: 2em 0 1em;
+    padding: 0 1em 0;
+    border: solid 1px #ddd;
+
+    .__title {
+        margin: 0 -1em 1em;
+        padding: 8px;
+        background: #eee;
+        border-bottom: solid 1px #ddd;
+    }
+}
+
+
+.swl-widgetField {
+
+    margin: 16px 0;
+
+    .media_preview img {
+        max-height: 200px;
+        object-fit: cover;
+    }
+
+    &.-media.-center {
+
+        .media_preview img {
+            margin-right: auto;
+            margin-left: auto;
+        }
+    }
+}
+
+.swl-widgetField.-checkbox {
+    display: flex;
+    align-items: center;
+
+    [type="checkbox"] {
+        margin: 0 4px 0 0;
+    }
+}
+
+.swl-widgetField.-radio {
+
+    .__choice {
+        display: inline-flex;
+        align-items: center;
+        margin: 0 4px 0 0;
+    }
+}
+
+.swl-widgetField.-checkbox + .swl-widgetField.-checkbox {
+    margin-top: -4px;
+}

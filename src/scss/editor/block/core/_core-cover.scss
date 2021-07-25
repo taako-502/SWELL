@@ -1,0 +1,27 @@
+.wp-block-cover {
+    padding: 2em;
+    overflow: hidden;
+
+    @include sp {
+        padding: 1em;
+    }
+
+    // パララックス用
+    .__bgLayer {
+        position: absolute;
+
+        left: 0;
+        z-index: 0;
+        width: 100%;
+        background-size: cover;
+        // background-attachment: fixed;
+    }
+}
+
+.wp-block-cover__inner-container {
+
+    .wp-block-cover & {
+        width: 100%; // コアのcalc(100% - 70px);を打ち消す
+    }
+}
+

@@ -1,0 +1,97 @@
+// キャプションブロック
+[data-type="loos/cap-block"] {
+
+    .is-style-inner > .editor-rich-text {
+        position: absolute;
+        width: 100%;
+    }
+
+    .is-style-small_ttl > .block-editor-rich-text {
+        min-height: 1em;
+    }
+
+    .cap_box_ttl {
+
+        .rich-text {
+            min-width: 1em;
+        }
+
+        &[data-has-icon] .rich-text {
+            padding-right: 4px;
+        }
+
+        &:not([data-has-icon]) .rich-text {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .is-style-onborder_ttl,
+    .is-style-onborder_ttl2 {
+
+        .cap_box_ttl {
+            position: relative;
+            top: 1em;
+            left: 1em;
+            z-index: 1;
+            display: inline-block;
+            margin-bottom: 0;
+            padding: .5em .75em;
+            font-size: .9em;
+            line-height: 1;
+            text-align: center;
+        }
+    }
+
+    .is-style-onborder_ttl {
+
+        .cap_box_ttl {
+            // background: #fff;
+            background: var(--color_content_bg);// > エディター側でもカラー設定入れるなら
+        }
+    }
+
+
+    .is-style-onborder_ttl2 {
+
+        .cap_box_ttl {
+            color: #fff;
+        }
+    }
+
+    .is-style-shadow {
+        overflow: hidden;
+        // box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+
+        @extend %thumbShadow;
+
+        .cap_box_content {
+            border: none;
+        }
+    }
+
+    .is-style-inner {
+
+        .cap_box_ttl {
+            position: absolute;
+            min-width: 2em;
+            max-width: 100%;
+            padding: .25em 1em;
+            overflow: hidden;
+            font-size: .9em;
+            white-space: nowrap;
+        }
+
+        .cap_box_content {
+            // border-radius: 0;
+
+            &::before {
+                display: block;
+                width: 100%;
+                height: 1em;
+                visibility: hidden;
+                content: "";
+            }
+        }
+    }
+}

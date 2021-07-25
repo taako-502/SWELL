@@ -1,0 +1,13 @@
+.p-postSlider {
+
+    /* module化 */
+
+    &::before { // beforeだけ extend あるので main に含める
+
+        @extend %absLayer;
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+    }
+}

@@ -1,0 +1,29 @@
+
+//タグクラウド
+.tagcloud,
+.wp-block-tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.tag-cloud-link {
+    position: relative;
+    display: block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    padding: 6px 8px;
+    color: #333 !important; //footerで inherit になるので
+    line-height: 1;
+    text-decoration: none;
+    background: #f7f7f7;
+    border: none;
+
+    @include mobile {
+        font-size: 12px !important; //タグクラウドは使用頻度でフォントサイズ変えてくる
+    }
+
+    @include tab {
+        font-size: 13px !important; //タグクラウドは使用頻度でフォントサイズ変えてくる
+    }
+}

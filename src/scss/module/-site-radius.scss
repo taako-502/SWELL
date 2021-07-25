@@ -1,0 +1,129 @@
+@import "../foundation/mixin/**";
+//2px
+.c-shareBtns__btn,
+.p-blogCard__inner::before,
+.p-articleThumb__img,
+.p-profileBox,
+.p-profileBox__bgImg,
+.p-profileBox__iconList,
+.p-toc {
+    border-radius: 2px;
+}
+
+//4px
+input[type="text"],
+input[type="number"],
+// input[type="number"],
+textarea,
+.c-searchForm__submit,
+.p-authorBox__moreLink,
+.-related .p-postList__thumb,
+.p-pickupBanners .c-bannerLink,
+.c-bannerLink__label,
+.p-pnLinks__thumb,
+[class*="is-style-big_icon_"],
+.is-style-border_sg,
+.is-style-border_dg,
+.is-style-border_sm,
+.is-style-border_dm,
+.is-style-bg_gray,
+.is-style-bg_main,
+.is-style-bg_main_thin,
+.is-style-bg_stripe,
+.is-style-dent_box,
+.is-style-note_box,
+.is-style-stitch {
+    border-radius: 4px;
+}
+
+//8px
+.p-snsCta,
+.p-authorBox,
+.p-commentArea {
+    border-radius: 8px;
+}
+
+// 40px
+.submit,
+.is-style-more_btn > a {
+    border-radius: 40px;
+}
+
+
+// 投稿リスト
+.p-postList__thumb,
+.-type-thumb .p-postList__link,
+.-ps-style-img .p-postList__link {
+    z-index: 0; //safariでradius & hiddenが効かないバグを防ぐ
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.c-widget .-type-list.-w-ranking .p-postList__item::before {
+    top: 2px;
+    left: 2px;
+    border-radius: 16px;
+}
+
+.c-widget .-type-card.-w-ranking .p-postList__item::before {
+    border-radius: 0 0 4px 4px;
+}
+
+@include pc {
+
+    #sidebar .-type-list .p-postList__thumb {
+        border-radius: 8px;
+    }
+}
+
+@include sp {
+
+    .p-postList__thumb,
+    .-type-thumb .p-postList__link,
+    .-ps-style-img .p-postList__link {
+        border-radius: 8px;
+    }
+}
+
+
+// 投稿リストのカテゴリー
+.c-postThumb__cat {
+    margin: .5em;
+    padding: 0 8px;
+    border-radius: 16px;
+}
+
+// タームリンク
+.c-categoryList__link
+.c-tagList__link,
+.tag-cloud-link {
+    padding: 6px 12px;
+    border-radius: 16px;
+}
+
+// キャプション付きボックス
+
+.cap_box_ttl {
+    border-radius: 2px 2px 0 0;
+}
+
+.cap_box_content {
+    border-radius: 0 0 2px 2px;
+}
+
+.cap_box.is-style-small_ttl .cap_box_content {
+    border-radius: 0 2px 2px 2px;
+}
+
+.cap_box.is-style-inner .cap_box_content,
+.cap_box.is-style-onborder_ttl .cap_box_content,
+.cap_box.is-style-onborder_ttl2 .cap_box_content,
+.cap_box.is-style-onborder_ttl2 .cap_box_ttl,
+.cap_box.is-style-shadow {
+    border-radius: 2px;
+}
+
+// 投稿リストのREAD MORE
+.p-postList__body::after {
+    border-radius: 40px;
+}

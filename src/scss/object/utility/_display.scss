@@ -1,0 +1,13 @@
+/* --------------------------------------
+	display
+    .none : officialのform_modalで使用中
+    .block : なし
+-------------------------------------- */
+.none,
+.u-none {
+    display: none !important;
+}
+
+.u-block {
+    display: block !important;
+}

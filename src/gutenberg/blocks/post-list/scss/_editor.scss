@@ -1,0 +1,91 @@
+// 投稿リストブロック
+.editor-styles-wrapper {
+
+    // 5.8からカラム数がバグる
+    [data-type="loos/post-list"] {
+
+        &::before,
+        &::after {
+            box-sizing: border-box;
+        }
+    }
+
+    .p-postListWrap {
+        pointer-events: none;
+    }
+
+    // 投稿リスト
+    .p-postList {
+        box-sizing: border-box !important; // 5.8で revert される
+        padding-left: 0;
+        list-style: none !important;
+    }
+
+    .c-postThumb__figure {
+        margin: 0;
+    }
+
+    .c-postThumb__img {
+        height: 100%;
+    }
+
+    .-type-list .c-postThumb__cat,
+    .-type-list2 .c-postThumb__cat {
+        right: auto;
+        left: 0;
+    }
+
+    .p-postList__link {
+        text-decoration: none;
+    }
+
+
+    @include pc {
+
+        .-type-card.-pc-col3 .p-postList__item {
+            width: calc(100% / 3);
+        }
+    }
+}
+
+
+// 投稿リストの設定パネル
+.swell-panel-postList--pickup {
+
+    .components-select-control__input[multiple] {
+        min-height: 8em !important; // 5.6から上書きされてしまう
+        padding: 8px;
+    }
+
+    // 5.6から急に出てきたやつ消す
+    .components-input-control__suffix {
+        display: none;
+    }
+
+    .swell-control-catRelation,
+    .swell-control-tagRelation,
+    .swell-control-termRelation {
+        margin-top: -16px;
+    }
+
+    .-term.components-base-control {
+        margin-top: -16px;
+    }
+
+    .-exCatChildren {
+        margin-top: -16px;
+        margin-bottom: 16px;
+        padding-bottom: 4px;
+    }
+
+}
+
+// 小さく表示する
+.swl-btns--pickup {
+
+    .components-button {
+        height: 32px;
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,53 @@
+// 1440px  ~ 1280pxの時、 トップツールバーの場合はボタン多すぎてはみ出るのでサイズを縮める
+@media (min-width: 1280px) and (max-width: 1440px) {
+
+    body:not(.is-fullscreen-mode) .edit-post-header-toolbar {
+
+        .components-button.has-icon {
+            min-width: 32px !important;
+            padding-right: 4px !important;
+            padding-left: 4px !important;
+        }
+    }
+}
+
+
+// 中サイズでのみ各種サイズを縮める
+@media screen and (max-width: 820px) and (min-width: 600px) {
+
+    .edit-post-header__toolbar,
+    .edit-post-header__settings {
+
+        .components-button.has-icon {
+            min-width: 32px !important;
+            padding: 4px !important;
+        }
+
+        .components-button.is-tertiary {
+            padding: 0 4px !important;
+            font-size: 12px;
+            line-height: 1;
+        }
+    }
+
+    .swl-custom-header-toolbar {
+        font-size: 12px;
+    }
+
+    .editor-post-switch-to-draft {
+        margin-right: 8px !important;
+    }
+
+    .edit-post-header-toolbar__left {
+        padding-left: 14px;
+    }
+
+}
+
+// サイドバーの歯車アイコン以外を非表示にするサイズを少し大きめから
+@media screen and (max-width: 640px) {
+
+    .interface-pinned-items .components-button:not(:first-child) {
+        display: none;
+    }
+}

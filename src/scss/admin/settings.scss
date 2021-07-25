@@ -1,0 +1,251 @@
+@charset "UTF-8";
+@import "../foundation/variable";
+@import "../foundation/mixin/media";
+@import "../foundation/placeholder";
+@import "../foundation/plugins/icomoon";
+@import "../foundation/base/keyframes";
+@import "../editor/common/color_palette";
+
+// プレビュー用に
+@import "../object/parts/balloon";
+@import "../object/project/blogCard";
+@import "../editor/block/swell-cap-block";
+@import "../editor/block/swell-button";
+@import "../editor/block/swell-faq";
+@import "../editor/common/box_style";
+@import "../editor/block/core/core-list";
+
+
+#wpwrap #wpcontent {
+    padding-left: 0;
+}
+
+#wpbody {
+    position: relative;
+    box-sizing: border-box;
+
+    @include tab {
+        padding: 24px;
+    }
+}
+
+#swell_setting_page {
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Segoe UI", "メイリオ", Meiryo, sans-serif;
+    opacity: 0;
+    animation: FadeIn .75s ease .25s 1 normal both;
+
+    @include mobile {
+        padding-top: 16px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .wp-picker-holder {
+        box-sizing: content-box;
+
+        * {
+            box-sizing: content-box;
+        }
+
+    }
+
+    .swell_settings__title {
+        box-sizing: border-box;
+        padding: 0 16px;
+        line-height: 1;
+    }
+
+    .swell_settings__page_desc {
+        padding: 0 16px;
+    }
+
+    .swell_settings__body {
+        padding: 16px;
+    }
+
+    h2 {
+        margin: 1em 0 1em;
+        padding: 4px 16px;
+        font-size: 16px;
+        border-left: 2px solid $color_main;
+    }
+
+    table + h2 {
+        margin-top: 2em;
+    }
+
+    tbody th {
+        width: auto;
+        padding: 16px 12px;
+    }
+
+    tbody td {
+        padding: 16px 12px;
+    }
+
+    @media (max-width: 782px) {
+
+        tbody th {
+            padding: 8px;
+        }
+
+        tbody td {
+            padding: 8px 8px 24px;
+        }
+    }
+
+    .form-table {
+        position: relative;
+        display: block;
+        padding: 12px;
+        background: #fdfdfd;
+        border-radius: 2px;
+
+        @extend %boxShadow;
+    }
+
+    .form-table tbody,
+    .form-table th,
+    .form-table td {
+        display: block;
+    }
+
+    .form-table th small {
+        display: block;
+        margin-top: 8px;
+        font-weight: 400;
+        font-size: .9em;
+        opacity: .8;
+    }
+
+    @media screen and (min-width: 783px) {
+
+        .form-table tr {
+            display: flex;
+        }
+
+        .form-table td {
+            flex-grow: 1;
+        }
+
+    }
+
+    @media screen and (max-width: 782px) {
+
+        .form-table tr {
+            display: block;
+        }
+    }
+
+    .swell_settings__tabs {
+        margin: 0 -24px;
+
+        // @include sp {
+
+        // justify-content: flex-start;
+        padding: 0 0 4px;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        // scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+
+        // .nav-tab-wrapper {
+        //     flex-wrap: nowrap;
+        // }
+        // }
+    }
+
+    /* タブコンテンツ */
+    .nav-tab-wrapper {
+        display: flex;
+        flex-wrap: nowrap;
+        // flex-wrap: wrap;
+        align-items: flex-end;
+        padding: 8px 24px 0;
+        border-bottom: 1px solid $color_main;
+
+    }
+
+    .nav-tab {
+        float: none;
+        padding: .25em 1em;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 1.5;
+        background: #f7f7f7;
+        border-color: $color_main;
+        border-radius: 2px 2px 0 0;
+        cursor: pointer;
+    }
+
+    .nav-tab.act_,
+    .nav-tab:hover {
+        color: #fff;
+        background: $color_main;
+        border-color: $color_main;
+    }
+
+    .nav-tab.act_ {
+        padding: .5em 1em;
+    }
+
+    .tab-contents {
+        display: none;
+    }
+
+    .tab-contents.act_ {
+        display: block;
+    }
+
+    .swell_radio_wrapper {
+
+        label {
+            position: relative;
+            padding-left: 24px;
+        }
+
+        [type="radio"] {
+            position: absolute;
+            top: 4px;
+            left: 0;
+        }
+    }
+
+}
+
+.swell_settings {
+    // 設定エリア & プレビュー の共通スタイル
+    .__preview {
+        position: relative;
+        width: 100%;
+        max-width: 480px;
+        margin-bottom: 16px;
+        padding: 24px;
+        color: var(--color_text);
+        background: var(--color_content_bg);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, .15);
+    }
+
+    .__previewLabel {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        padding: 8px 0 0;
+        color: #666;
+        font-size: 10px;
+        transform: translateX(-50%);
+    }
+}
+
+
+@import "./settings/**";

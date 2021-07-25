@@ -1,0 +1,35 @@
+[data-align="full"] {
+
+    // 5.6 ~
+    & > .wp-block-embed {
+        max-width: 100%;
+    }
+
+    // 5.5
+    & > .block-editor-block-list__block > .wp-embed-aspect-16-9,
+    & > .block-editor-block-list__block > .wp-block-embed-youtube {
+        max-width: 100%;
+    }
+}
+
+
+// 5.6 ~ これらのクラスはエディターから消えた。
+.wp-block-embed-twitter,
+.wp-block-embed-instagram {
+    margin-right: auto !important;
+    margin-left: auto !important;
+
+    .wp-block-embed__wrapper > iframe {
+        display: block;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+// 5.6の取り急ぎの対応
+.wp-block-embed iframe[title="twitter からの埋め込みコンテンツ"] {
+    display: block;
+    max-width: 500px;
+    margin-right: auto;
+    margin-left: auto;
+}

@@ -1,0 +1,105 @@
+
+/*
+ * プレビュー画面の調整
+ */
+
+// 影などを濃い目に
+.block-editor-block-preview__container {
+
+    // 分かりにくいので濃いめに。
+    .is-style-shadow img,
+    .is-style-shadow video {
+        box-shadow: 0 2px 16px 1px rgba(0, 0, 0, .5), 0 4px 4px -4px rgba(0, 0, 0, .25);
+    }
+
+    // 分かりにくいので濃いめに。
+    .is-style-photo_frame img,
+    .is-style-photo_frame video {
+        border: solid 16px #fff;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, .5);
+    }
+
+    // 分かりにくいので濃いめに。
+    .is-style-border img,
+    .is-style-photo_frame video {
+        border-width: 8px;
+    }
+
+    // タブブロックのコンテンツを表示
+    [data-type="loos/tab-body"]:first-child {
+        display: block !important;
+    }
+
+    // テーブルのスクロールバーでないように
+    .wp-block-table {
+        overflow: hidden;
+    }
+}
+
+// ブロックパターンのプレビュー
+#tab-panel-0-patterns-view {
+
+    .block-editor-inserter__panel-content {
+        padding-bottom: 16px;
+    }
+}
+
+.block-editor-block-patterns-list__item {
+
+    .block-editor-block-preview__container {
+
+        // プレビューエリアに余白をつける。
+        .is-root-container {
+            transform: scale(.95);
+        }
+    }
+}
+
+
+// スタイル選択したときの黒線が太いので1pに。
+.block-editor-block-styles__item.is-active .block-editor-block-styles__item-preview {
+    border-width: 1px;
+}
+
+
+// サイドバーと変換パネルのプレビューにのみ適用する。（パターンプレビューに影響がないようにする。）
+.edit-post-sidebar,
+.block-editor-block-switcher__styles__menugroup {
+
+    .block-editor-block-preview__container {
+
+        // プレビューエリアに余白をつける。
+        .is-root-container > .wp-block {
+            transform: scale(.9);
+        }
+
+        // リストを拡大する
+        [data-type="core/list"] {
+            padding-top: 10%;
+            padding-bottom: 10%;
+        }
+
+        [data-type="core/list"] li {
+            font-size: 2em;
+            // line-height: 2;
+            transform: scale(1.25);
+            transform-origin: 0 50%;
+
+            // li の数が多すぎるから減らす
+            &:last-child {
+                display: none;
+            }
+        }
+
+        // SWELLボタンを拡大する
+        .swell-block-button {
+            padding-top: 10%;
+            padding-bottom: 10%;
+
+            .swell-block-button__link {
+                transform: scale(1.5);
+            }
+
+        }
+    }
+}

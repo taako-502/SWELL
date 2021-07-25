@@ -1,0 +1,20 @@
+// コンテンツエリア (Note: 上部の余白が padding なのは、最初に配置したコンテンツが途切れないようにするため)
+.l-content {
+    position: relative;
+    z-index: 1;
+    margin: 0 auto 6em;
+    padding-top: 2em;
+
+    @include tab {
+        padding-top: 4em;
+    }
+
+    .-sidebar-on & {
+
+        @include pc {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+    }
+}

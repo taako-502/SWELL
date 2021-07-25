@@ -1,0 +1,54 @@
+.wp-block-categories-dropdown,
+.wp-block-archives-dropdown,
+.widget_archive,
+.widget_categories {
+
+    select {
+        display: block;
+        width: 100%;
+        height: auto;
+        padding: 0 1em;
+        padding: 4px 24px 4px 12px;
+        line-height: 32px;
+        border: solid 1px $color_border;
+        border-radius: 5px;
+        border-radius: 2px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        &::-ms-expand {
+            display: none;
+        }
+    }
+}
+
+.widget_archive,
+.wp-block-archives-dropdown {
+
+    .screen-reader-text {
+        display: none;
+    }
+}
+
+// .widget_archives form,
+.widget_categories form,
+.wp-block-categories-dropdown,
+.wp-block-archives-dropdown {
+    position: relative;
+
+    &::after {
+        position: absolute;
+        top: 50%;
+        right: 4px;
+        z-index: 1;
+        // content: '\e91c';
+        // font-family: 'icomoon';
+        display: inline-block;
+        color: #555;
+        font-size: 20px;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+}
+

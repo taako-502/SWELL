@@ -1,0 +1,237 @@
+@charset "UTF-8";
+@import "../foundation/variable";
+@import "../foundation/mixin/media";
+@import "../foundation/placeholder";
+
+// プレビュー用
+@import "../object/project/adBox";
+
+.p-adBox__star {
+    font-size: 1.2em;
+
+    i {
+        color: #ffc82e;
+    }
+}
+
+.p-adBox__title {
+
+    &.-rank1 {
+        background-image: url(../../img/icon/icon_rank1.png);
+    }
+
+    &.-rank2 {
+        background-image: url(../../img/icon/icon_rank2.png);
+    }
+
+    &.-rank3 {
+        background-image: url(../../img/icon/icon_rank3.png);
+    }
+}
+
+/**
+ * 広告タグ一覧テーブルの表示
+ */
+td.ad_ctr {
+
+    & > div + div {
+        margin-top: .5em;
+    }
+}
+
+.swl-adCtrLabel {
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 4.5em;
+    margin-right: 10px;
+    padding: 4px;
+    font-size: 12px;
+    line-height: 1.25;
+    text-align: center;
+    border-radius: 3px;
+
+    &.-tag {
+        background: #f7f7f7;
+        border: solid 1px #5f5f5f;
+    }
+
+    &.-btn1 {
+        color: #fff;
+        background: #309ff7;
+    }
+
+    &.-btn2 {
+        color: #fff;
+        background: #ffad13;
+    }
+}
+
+//リセットボタン
+.swl-adDataResetBtn {
+    cursor: pointer;
+}
+
+/**
+ * プレビュー
+ */
+.p-adBox__dammyImage {
+    display: block;
+    margin: 0 auto;
+    // height: 200px;
+    padding: 80px 0;
+    text-align: center;
+    background: #f7f7f7;
+}
+
+/**
+ * 設定エリア
+ */
+
+//広告
+#ad_name {
+    width: 100%;
+}
+
+#ad_img,
+#ad_desc {
+    width: 100%;
+    max-width: 100%;
+}
+
+
+// メタボックス
+.swl-meta--ad {
+
+    @include pc {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+}
+
+.swl-meta--ad__preview {
+    flex-basis: 100%;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 24px;
+    font-size: 15px;
+    line-height: 1.6;
+    border-bottom: dashed 1px #ececec;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .p-adBox {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+}
+
+.swl-meta--ad__inner {
+
+    @include pc {
+        flex-basis: 48.5%;
+    }
+
+}
+
+.swl-meta--ad__description {
+    display: none;
+    margin: 0;
+    padding: 8px;
+    line-height: 1.25;
+
+    [data-adtype="text"] & {
+        display: block;
+    }
+}
+
+// テキスト・バナー型は設定エリアを100%幅に
+[data-adtype="text"],
+[data-adtype="normal"] {
+
+    .swl-meta--ad__inner.-left {
+        flex-basis: 100%;
+        padding: 0 2em;
+    }
+}
+
+[data-adtype="text"] {
+
+    .p-adBox__details {
+        display: none;
+    }
+
+    .p-adBox__dammyImage {
+        display: initial;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        background: none;
+    }
+
+    .swellMetaBox__item.-border {
+        display: none;
+    }
+
+    .swl-meta--ad__inner.-right {
+        display: none;
+    }
+}
+
+// 広告タイプごとの出し分け
+[data-adtype="normal"] {
+
+    .p-adBox__dammyImage {
+        max-width: 200px;
+    }
+
+    .p-adBox__details {
+        display: none;
+    }
+
+    .swl-meta--ad__inner.-right {
+        display: none;
+    }
+}
+
+[data-adtype="amazon"] {
+
+    .meta_ad_desc {
+        opacity: .25;
+        pointer-events: none;
+    }
+}
+
+
+// ランキング設定は ranking のみ
+[data-adtype="ranking"] {
+
+    .p-adBox__name {
+        display: none;
+    }
+
+    .p-adBox__body .p-adBox__btns {
+        display: none;
+    }
+
+}
+
+// ランキング以外
+.swl-meta--ad:not([data-adtype="ranking"]) {
+
+    .swl-meta--ad__ranking {
+        display: none;
+    }
+
+    .p-adBox__title {
+        display: none;
+    }
+
+    .p-adBox__body + .p-adBox__btns {
+        display: none;
+    }
+
+}

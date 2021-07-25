@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+// 各パーツの間隔
+.w-singleTop,
+.w-pageTop,
+.w-singleBottom {
+
+    @extend %postParts_margin;
+}

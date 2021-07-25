@@ -1,0 +1,33 @@
+.tr-balloon {
+
+    th {
+        min-width: 14em;
+    }
+}
+
+.swell-menu-balloon {
+    display: flex;
+    flex-wrap: wrap;
+
+    .__settings {
+        margin-right: 16px;
+        margin-bottom: 16px;
+    }
+
+    .__preview {
+        max-width: 240px;
+        padding: 8px;
+    }
+}
+
+.swell-menu-balloon__item {
+    display: flex;
+    margin-bottom: 4px;
+
+    .__label {
+        display: inline-block;
+        width: 5em;
+        margin-top: 4px;
+        font-size: 13px;
+    }
+}

@@ -1,0 +1,171 @@
+/**
+ * 投稿一覧の「クラシックエディター」などの文字を小さく薄く表示
+ */
+table.wp-list-table .post-state {
+    color: #666;
+    font-size: 11px;
+}
+
+/**
+ * 投稿一覧テーブルの表示
+ */
+.wp-list-table {
+
+    #thumbnail {
+        width: 120px;
+        max-width: 120px;
+    }
+
+    #swell_pv_ct,
+    #post_id {
+        width: 56px;
+        max-width: 56px;
+    }
+
+    td.column-thumbnail {
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+
+    .swl-codeCopyBox {
+        width: 100%;
+        background: #efefef;
+        border: solid 1px #ccc;
+        border-radius: 2px;
+    }
+
+    .swl-usedLink {
+        display: inline-block;
+        margin: 2px;
+        padding: 0 2px;
+        line-height: 1.5;
+    }
+
+
+    @media (min-width: 783px) and (max-width: 1500px) {
+
+        #thumbnail {
+            width: 100px;
+            max-width: 100px;
+        }
+
+        #swell_pv_ct,
+        #post_id {
+            width: 50px;
+            max-width: 50px;
+        }
+
+        #comments {
+            width: 40px;
+        }
+
+        th.column-date,
+        th.column-comments,
+        th.column-author,
+        th.column-categories,
+        th.column-tags {
+            width: auto;
+        }
+    }
+
+    @media (min-width: 783px) and (max-width: 1200px) {
+
+        #thumbnail {
+            width: 80px;
+            max-width: 80px;
+            font-size: 13px;
+        }
+
+        #swell_pv_ct,
+        #post_id {
+            width: 40px;
+            max-width: 40px;
+        }
+
+        td.column-post_id,
+        td.column-swell_pv_ct,
+        td.column-date,
+        td.column-categories,
+        td.column-tags,
+        td.column-author {
+            font-size: 12px;
+        }
+    }
+
+}
+
+
+// 自動アップデート
+.column-auto-updates {
+
+    ._wraper {
+        display: flex;
+        flex-direction: column;
+
+        .now-status {
+            order: -1;
+        }
+    }
+
+
+    // .toggle-auto-update{}
+
+    .now-status {
+        margin-bottom: 4px;
+        font-size: 12px;
+
+        span {
+            margin-left: 2px;
+        }
+
+        span::before {
+            margin-right: 2px;
+            font-weight: 400;
+
+            font-family: icomoon !important;
+            font-style: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-transform: none;
+            // vertical-align: bottom;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+    }
+
+    // 現在 無効
+    [data-wp-action="enable"] + .now-status,
+    [data-wp-action="enable"] + div + .now-status {
+
+        span {
+
+            color: #ec1d1d;
+
+            &::before {
+
+                font-size: 11px;
+
+                @extend .icon-batsu::before;
+            }
+        }
+    }
+
+    // 現在：有効
+    [data-wp-action="disable"] + .now-status,
+    [data-wp-action="disable"] + div + .now-status {
+
+        span {
+            color: #37bb00;
+
+            &::before {
+
+                @extend .icon-check::before;
+            }
+        }
+    }
+
+}

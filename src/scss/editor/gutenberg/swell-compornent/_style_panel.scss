@@ -1,0 +1,200 @@
+// .edit-post-sidebar {
+
+.swl-style-ctrls {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    margin-right: -8px;
+    padding-right: 8px;
+
+    &::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: #fff;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        // width: 4px;
+        background: rgba(0, 0, 0, .2);
+        border-radius: 4px;
+        // box-shadow: inset 0 0 0 1px #fff;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .c-balloon {
+        width: 160%;
+        margin-top: -16px;
+        margin-bottom: -16px;
+        transform: scale(.62);
+        transform-origin: 0 50%;
+        pointer-events: none;
+
+        p {
+            margin-bottom: 0;
+            // font-size: 10px;
+        }
+    }
+
+    .__clearBtn {
+        width: 100%;
+        margin: 8px 0;
+        text-align: center;
+
+        .components-button {
+            border-radius: 3px;
+        }
+    }
+
+    .__btnBox {
+        display: block;
+        width: 50%;
+        padding: 4px;
+    }
+
+    &.-balloon {
+
+        max-height: 320px;
+        overflow-y: auto;
+
+        .__btnBox {
+            width: 100%;
+        }
+    }
+
+    .__labelBtn {
+        display: block;
+        padding: 6px;
+        border-radius: 3px;
+
+        &[data-selected="true"] {
+            box-shadow: 0 0 0 1px #555d66;
+        }
+
+        &:hover {
+            background: #f3f4f5;
+        }
+    }
+
+    .__prevWrap {
+        display: block;
+        padding: 6px;
+        background: #fff;
+        border-radius: 3px;
+        box-shadow: 0 0 0 1px #eceef0;
+
+        &.-style {
+            padding: 4px 6px;
+
+            .__prev {
+                width: 110%;
+                height: 48px;
+                margin-left: -5%;
+                transform: scale(.9);
+            }
+        }
+    }
+
+    .__prev {
+        display: block;
+        padding: 0;
+
+        &.has-border {
+            height: 48px;
+        }
+
+    }
+
+
+    .__prevTitle {
+        display: block;
+        margin-top: 8px;
+        font-size: 10px;
+        line-height: 1;
+        text-align: center;
+    }
+
+    .__description {
+        margin-top: 1em;
+    }
+}
+
+// カラムブロックのスタイルパネル
+.swell-style-controls {
+
+    .components-base-control__field {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .components-radio-control__option {
+        width: 50%;
+        margin-bottom: 1em;
+        padding: 4px;
+
+        label {
+            display: block;
+            padding: 6px;
+            border-radius: 4px;
+
+            &:hover {
+                background: #f3f4f5;
+            }
+        }
+
+        .prev_wrap_ {
+            display: block;
+            padding: 6px;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 0 1px #d8d9db;
+        }
+
+        .prev_ {
+            display: block;
+            height: 3.5em;
+        }
+
+        .title_ {
+            display: block;
+            margin-top: .5em;
+            font-size: 10px;
+        }
+
+        :checked + label {
+            box-shadow: 0 0 0 2px #555d66;
+        }
+    }
+
+    .components-radio-control__input {
+        display: none;
+    }
+
+    // カラム
+    .wp-block-columns {
+        padding: 0 !important;
+    }
+
+    .wp-block-column {
+        height: 100%;
+    }
+}
+
+
+// ボーダー設定パネルのミニプレビュー
+.swell-panel-border-prev {
+    display: inline-block;
+    border: none !important;
+
+    .has-border {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+    }
+}
+// }

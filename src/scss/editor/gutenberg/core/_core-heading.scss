@@ -1,0 +1,77 @@
+//エディター側のみ（プレビューには反映させない）
+.block-editor-writing-flow {
+
+    [data-type="core/heading"]:not(:first-child) {
+        margin-top: 80px;
+    }
+
+}
+
+.editor-styles-wrapper {
+
+
+    [data-type="core/heading"] .is-style-section_ttl,
+    [data-type="core/heading"].is-style-section_ttl {
+        color: inherit;
+    }
+
+    h1[data-type="core/heading"],
+    [data-type="core/heading"] h1 {
+        font-size: 2em;
+        line-height: 1.4;
+    }
+
+    h2[data-type="core/heading"],
+    [data-type="core/heading"] h2 {
+        font-size: 1.2em;
+        line-height: 1.4;
+
+        @include tab {
+            font-size: 1.4em;
+        }
+    }
+
+    h3[data-type="core/heading"],
+    [data-type="core/heading"] h3 {
+        font-size: 1.1em;
+        line-height: 1.4;
+
+        @include tab {
+            font-size: 1.3em;
+        }
+    }
+
+    h4[data-type="core/heading"],
+    [data-type="core/heading"] h4 {
+        font-size: 1.05em;
+        line-height: 1.4;
+
+        @include tab {
+            font-size: 1.2em;
+        }
+    }
+
+
+}
+
+// ブロック選択時に真っ黒になってしまうのを防ぐ
+[data-type="core/heading"].is-style-section_ttl.is-highlighted {
+
+    &::after {
+        // position: absolute;
+        // top: 1px;
+        // right: 1px;
+        // bottom: 1px;
+        // left: 1px;
+        z-index: 1;
+        width: 100%;
+        height: 100%;
+        background: none;
+        // content: "";
+    }
+}
+
+
+.is-style-section_ttl.block-editor-rich-text__editable[data-is-placeholder-visible="true"] {
+    position: absolute;
+}

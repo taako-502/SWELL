@@ -1,0 +1,225 @@
+/*
+ * SWELL独自に実装しているコンテンツなどへのスタイル
+ */
+
+
+// SWELLブロックカテゴリーのアイコン
+
+[data-icon-name="swell-block-category"] {
+
+
+    // インサーター
+    .block-editor-inserter__menu & {
+        width: 18px;
+        margin-top: 0;
+        fill: $color_main;
+    }
+
+    // ツールバー
+    .swell-format-toolbar &,
+    .edit-post-header__settings & {
+        fill: $color_main;
+    }
+
+    .components-button.is-pressed > & {
+        fill: #fff;
+    }
+
+    // カスタム書式
+    .components-dropdown-menu__menu & {
+        padding: 2px;
+    }
+}
+
+
+// ヘッダーツールバーに追加したコンテンツ（「投稿を表示する」）。
+.swl-custom-header-toolbar {
+    flex-basis: 100%; // 5.7対応
+    align-self: center;
+    margin-left: 8px;
+}
+
+.ark-custom-header-toolbar {
+    display: none;
+}
+
+// ツールバー
+.swl-toolbtn--margin {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    // wp 5.4でマージンが入っちゃう
+    svg {
+        margin-right: 0 !important;
+        margin-left: -2px !important;
+        transform: scale(.75);
+    }
+}
+
+.swl-null-icon {
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    background: transparent;
+    // border: solid 4px #000;
+    border-radius: 2px;
+    box-shadow: inset 0 0 0 1px #464646;
+
+    .is-active & {
+        background: #111;
+        background: var(--wp-admin-theme-color, #000);
+    }
+}
+
+
+[data-swl-disable] {
+    opacity: .5;
+    pointer-events: none;
+}
+
+// サイドバー
+.edit-post-sidebar {
+
+    .swl-panel {
+
+        .components-panel__body-title .components-panel__body-toggle {
+
+            &::before {
+
+                @extend %swellicon;
+                @extend .icon-swell::before;
+                margin-right: 4px;
+                padding-bottom: 2px;
+            }
+        }
+    }
+
+    .swl-btns--margin {
+
+        button {
+            display: inline-block;
+            min-width: 2.5em;
+            text-align: center;
+        }
+    }
+
+    // SWELLのヘルプテキスト
+    .swl-helptext {
+        margin-top: 8px;
+        font-size: 13px;
+        font-style: italic;
+        line-height: 1.5;
+    }
+}
+
+// サイドバーコントロール
+.faq-controles {
+
+    .components-radio-control__option {
+        padding: 4px 0;
+    }
+
+    [class^="faq_label_"] {
+        display: inline-block;
+        vertical-align: middle;
+
+        &::before {
+            display: inline-block;
+            width: 2em;
+            height: 2em;
+            margin-right: .5em;
+            font-size: 18px;
+            line-height: 2;
+            text-align: center;
+            vertical-align: middle;
+            content: "";
+        }
+
+        i {
+            font-size: 12px;
+            vertical-align: middle;
+        }
+    }
+
+    .faq_label_square {
+
+        &::before {
+            background: #555d66;
+        }
+    }
+
+    .faq_label_rounded {
+
+        &::before {
+            background: #555d66;
+            border-radius: 20%;
+        }
+    }
+
+    .faq_label_circle {
+
+        &::before {
+            background: #555d66;
+            border-radius: 50%;
+        }
+    }
+
+    .faq_q::before {
+        content: "Q";
+    }
+
+    .q_txt_n_ .faq_q::before {
+        color: #000;
+        border: solid 1px;
+    }
+
+    .faq_a::before {
+        content: "A";
+    }
+
+    .a_txt_n_ .faq_a::before {
+        color: #000;
+        border: solid 1px;
+    }
+}
+
+
+// 投稿リストブロックのタブ
+.swell-tab-panel {
+
+
+    .components-panel__body:last-child {
+        margin-bottom: 0;
+    }
+
+    .components-tab-panel__tabs {
+        display: flex;
+        border-top: 1px solid #e2e4e7;
+
+        .components-button {
+            display: block;
+            width: 100%;
+            height: auto;
+            padding: 8px 0;
+            font-weight: 400;
+            border-radius: 0;
+            transition: none !important;
+
+            // 5.5から一瞬丈夫にバーが表示されるのを防ぐ
+            &:focus:not(.is-active) {
+                box-shadow: none !important;
+            }
+        }
+    }
+
+    .components-button {
+
+        .dashicons-before {
+            display: block;
+            margin: auto;
+            margin-bottom: 4px;
+        }
+    }
+
+}

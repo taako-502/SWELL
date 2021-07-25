@@ -1,0 +1,34 @@
+[data-type="core/media-text"] {
+
+    // コンテンツ側にガイドをつける
+    &.is-selected .wp-block-media-text > .block-editor-inner-blocks,
+    &.has-child-selected .wp-block-media-text > .block-editor-inner-blocks {
+        border-top: dashed 1px $color_guide;
+        border-bottom: dashed 1px $color_guide;
+    }
+
+    // コンテンツ側のさらなるインナーブロックにも左右に余白できるのを阻止
+    .wp-block-group__inner-container .block-editor-inner-blocks {
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .wp-block-media-text {
+
+        &.is-style-broken {
+
+            &:not(.has-media-on-the-right) > .block-editor-inner-blocks {
+                // margin-left: -3em;
+                padding-left: 0;
+                transform: translateX(-40px);
+            }
+
+            &.has-media-on-the-right .block-editor-inner-blocks {
+                padding-right: 0;
+                // margin-right: -3em;
+                transform: translateX(40px);
+            }
+        }
+    }
+
+}

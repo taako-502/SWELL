@@ -1,0 +1,47 @@
+
+.swell-block-abTest {
+
+    .swell-components-tab {
+        margin-bottom: -1px;
+    }
+
+    [data-type="loos/ab-test-a"],
+    [data-type="loos/ab-test-b"] {
+        margin-top: 0;
+        margin-bottom: 0;
+
+        &::before {
+            border: none !important;
+        }
+    }
+
+    &.tab-a {
+
+        & > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="loos/ab-test-b"] {
+            display: none;
+        }
+    }
+
+    &.tab-b {
+
+        & > .block-editor-inner-blocks > .block-editor-block-list__layout > [data-type="loos/ab-test-a"] {
+            display: none;
+        }
+    }
+
+    .swell-block-abTest__a,
+    .swell-block-abTest__b {
+
+        border-color: #007cba;
+        border-style: solid;
+    }
+}
+
+// A・Bブロックのツールバーは表示しない
+.block-editor-block-contextual-toolbar {
+
+    &[data-type="loos/ab-test-a"],
+    &[data-type="loos/ab-test-b"] {
+        display: none;
+    }
+}

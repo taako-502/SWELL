@@ -1,0 +1,22 @@
+@charset "utf-8";
+@import "foundation/variable";
+@import "foundation/mixin/**";
+@import "foundation/base/keyframes";
+@import "foundation/placeholder";
+@import "foundation/plugins/icomoon";
+
+// root
+@import "foundation/root";
+
+//
+@import "object/**";
+@import "editor/editor";
+@import "editor/block/**";
+@import "editor/gutenberg/**";
+@import "editor/tinymce/**";
+@import "../gutenberg/blocks/**/_common.scss";
+@import "../gutenberg/blocks/**/_editor.scss";
+
+// カスタムスタイル
+@import "custom";
+

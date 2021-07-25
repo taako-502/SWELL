@@ -1,0 +1,238 @@
+// テーブル
+.wp-block-table {
+
+    & > table {
+        margin-bottom: 0;
+    }
+
+    figcaption {
+
+        @extend %figcaption;
+    }
+}
+
+table caption {
+    padding: .5em;
+    font-size: .9em;
+    opacity: .8;
+}
+
+
+.is-style-simple {
+
+    & > table {
+        border-right: none;
+        border-collapse: collapse !important;
+        box-shadow: none;
+    }
+
+    th,
+    td {
+        background-color: unset !important; //th風tdの詳細度を上書き
+        border-right: none !important;
+        border-left: none;
+        box-shadow: none;
+    }
+
+    thead {
+
+        td,
+        th {
+            color: inherit;
+            border-bottom: double 4px #ededed;
+        }
+    }
+}
+
+// ストライプ
+.is-style-stripes {
+
+    &.wp-block-table {
+        // figureについているコアのボーダーを打ち消す
+        border-bottom: none;
+    }
+
+    table {
+        //tableにつける (figcaptionがボーダーの下にくるように。)
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: var(--color_content_bg, #fff);
+    }
+
+    tbody th,
+    tbody td {
+        background-color: unset !important; //th風tdの詳細度を上書き
+        border: none !important;
+    }
+
+    figcaption {
+        margin-top: 0;
+    }
+}
+
+.is-style-simple.td_to_th_ tbody tr > :first-child::before,
+.is-style-stripes.td_to_th_ tbody tr > :first-child::before {
+    content: none !important;
+}
+
+// 二重線
+table.is-style-double,
+.is-style-double table {
+    border: solid 1px #ededed;
+    border-collapse: separate;
+    border-spacing: 2px;
+}
+
+.is-style-double {
+
+    th,
+    td {
+        border: solid 1px #ededed;
+    }
+
+    @include sp {
+
+        &.sp_block_ {
+
+            th,
+            td {
+                margin-top: 2px;
+
+            }
+        }
+    }
+}
+
+@include sp {
+
+    // 縦並び
+    table.sp_block_,
+    .sp_block_ table,
+    .sp_block_ thead,
+    .sp_block_ tbody,
+    .sp_block_ tr,
+    .sp_block_ th,
+    .sp_block_ td {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .sp_block_ th,
+    .sp_block_ td {
+        padding: 1em;
+        border-right: solid 1px #ededed;
+    }
+
+    // （二重線の時）
+    table.sp_block_.is-style-double,
+    .sp_block_.is-style-double table {
+        padding: 0 2px 2px;
+        border-spacing: 0;
+    }
+
+}
+
+
+// 横スクロール
+[data-table-scrollable] {
+
+    table {
+        min-width: 100%;
+    }
+}
+
+[data-table-scrollable="sp"] {
+
+    // pcサイズではスクロールさせない
+    @include pc {
+
+        table {
+            max-width: 100% !important;
+        }
+    }
+
+    @include sp {
+        display: block;
+        padding-bottom: 16px;
+        overflow-x: scroll;
+    }
+}
+
+[data-table-scrollable="pc"] {
+
+    @include pc {
+        display: block;
+        padding-bottom: 16px;
+        overflow-x: scroll;
+    }
+}
+
+
+[data-table-scrollable="both"] {
+    display: block;
+    padding-bottom: 16px;
+    overflow-x: scroll;
+}
+
+// １行目を固定
+[data-cell1-fixed] {
+
+    table {
+        border-collapse: separate;
+    }
+
+    tr > :first-child {
+        position: sticky !important;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+
+    tbody tr > :first-child,
+    tfoot tr > :first-child,
+    &.is-style-simple thead tr > :first-child {
+        background-color: var(--color_content_bg, #fff) !important;
+    }
+}
+
+
+.is-style-stripes[data-cell1-fixed] {
+
+    tbody tr > :first-child {
+        background-color: inherit !important;
+    }
+}
+
+// ヘッダー固定
+.wp-block-table[data-theadfix] {
+    overflow: visible;
+
+    table {
+        border-collapse: separate;
+    }
+}
+
+.wp-block-table[data-theadfix="sp"] {
+
+    @include sp {
+
+        thead th {
+            position: sticky;
+            top: var(--swl-offset_y, 0);
+            z-index: 1;
+        }
+    }
+}
+
+
+.wp-block-table[data-theadfix="both"] {
+
+    thead th {
+        position: sticky;
+        top: var(--swl-offset_y, 0);
+        z-index: 1;
+    }
+}
+

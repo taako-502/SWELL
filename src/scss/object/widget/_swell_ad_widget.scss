@@ -1,0 +1,17 @@
+// 広告用ウィジェット
+.widget_swell_ad_widget {
+    width: 100%;
+    margin: 0 auto;
+    // padding: 8px;
+    // overflow: hidden;
+    text-align: center;
+    //     background-image:
+    //  linear-gradient(-45deg, rgba(150, 150, 150, .1) 0%, rgba(150, 150, 150, .1) 25%, transparent 25%, transparent 50%, rgba(150, 150, 150, .1) 50%, rgba(150, 150, 150, .1) 75%, transparent 75%, transparent 100%);
+    //     background-size: 6px 6px;
+
+    ins,
+    iframe {
+        box-sizing: border-box;
+        max-width: 100%;
+    }
+}
