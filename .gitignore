@@ -3,4 +3,5 @@
 /build
 /.vscode
 /node_modules
+.wp-env.override.json
 webpack.config.local.js
