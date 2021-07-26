@@ -1,25 +1,7 @@
 {
     "core": null,
+    "themes": [ "." ],
     "config": {
         "WP_DEBUG": true
-    },
-    "themes": [
-        "."
-    ],
-    "plugins": [
-        "https://downloads.wordpress.org/plugin/wp-multibyte-patch.zip",
-        "https://downloads.wordpress.org/plugin/seo-simple-pack.zip",
-        "https://downloads.wordpress.org/plugin/highlighting-code-block.zip"
-    ],
-    "env": {
-        "development": {
-            "port": 1111
-        },
-        "tests": {
-            "port": 1110
-        }
-    },
-    "mappings": {
-        "sql": "~/Dropbox/LOOS/DEV/wpenv/swell"
     }
 }
