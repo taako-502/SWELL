@@ -33,7 +33,6 @@ export default function ({ attributes, setAttributes }) {
 					</BaseControl.VisualLabel>
 					<ButtonGroup className='swl-btns--padSmall'>
 						<Button
-							isLarge
 							isPrimary={'vertical' === numLayout}
 							onClick={() => {
 								setAttributes({ numLayout: 'vertical' });
@@ -42,7 +41,6 @@ export default function ({ attributes, setAttributes }) {
 							縦並び
 						</Button>
 						<Button
-							isLarge
 							isPrimary={'horizontal' === numLayout}
 							onClick={() => {
 								setAttributes({ numLayout: 'horizontal' });
@@ -59,7 +57,6 @@ export default function ({ attributes, setAttributes }) {
 					</BaseControl.VisualLabel>
 					<ButtonGroup className='swl-btns--padSmall'>
 						<Button
-							isLarge
 							isPrimary={'circle' === numShape}
 							onClick={() => {
 								setAttributes({ numShape: 'circle' });
@@ -68,7 +65,6 @@ export default function ({ attributes, setAttributes }) {
 							円形
 						</Button>
 						<Button
-							isLarge
 							isPrimary={'square' === numShape}
 							onClick={() => {
 								setAttributes({ numShape: 'square' });

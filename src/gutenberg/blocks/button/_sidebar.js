@@ -197,7 +197,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 									}
 									return (
 										<Button
-											isLarge
 											isSecondary={!isPrimary}
 											isPrimary={isPrimary}
 											onClick={() => {
