@@ -264,7 +264,7 @@ export default function ({ attributes, setAttributes }) {
 								onClick={() => {
 									setAttributes({ order: btn.val });
 								}}
-								key={`order_${order.val}`}
+								key={`order_${btn.val}`}
 							>
 								{btn.label}
 							</Button>

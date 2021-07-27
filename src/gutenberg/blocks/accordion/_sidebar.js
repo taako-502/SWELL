@@ -35,7 +35,6 @@ export default ({ iconOpened, updateIcons }) => {
 						const isActive = iconSet.opened === iconOpened;
 						return (
 							<Button
-								isLarge
 								isPrimary={isActive}
 								onClick={() => {
 									updateIcons({
