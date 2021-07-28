@@ -43,7 +43,7 @@ registerBlockType(metadata.name, {
 	edit: () => {
 		// ブロックprops
 		const blockProps = useBlockProps({
-			className: `${blockName}__dd`,
+			className: `${blockName}__dd swl-inner-blocks swl-has-margin--s`,
 		});
 
 		const innerBlocksProps = useInnerBlocksProps(blockProps, {

@@ -67,7 +67,9 @@ registerBlockType(metadata.name, {
 			className: blockName,
 		});
 		const innerBlocksProps = useInnerBlocksProps(
-			{},
+			{
+				className: 'swl-inner-blocks',
+			},
 			{
 				allowedBlocks: ALLOWED_BLOCKS,
 				template: TEMPLATE,
