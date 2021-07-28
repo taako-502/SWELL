@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $SETTING = SWELL_Theme::get_setting();
 
 // タイトル・背景画像を取得
-if ( \SWELL_Theme::is_term() ) {
+if ( SWELL_Theme::is_term() ) {
 	// タームアーカイブの場合
 	$term_id = get_queried_object_id();
 
@@ -20,8 +20,8 @@ if ( \SWELL_Theme::is_term() ) {
 		$ttlbg_id = attachment_url_to_postid( $ttlbg );
 		$ttlbg_s  = $ttlbg_id ? wp_get_attachment_image_url( $ttlbg_id, 'medium' ) : '';
 	} else {
-		$ttlbg   = \SWELL_Theme::get_noimg( 'url' );
-		$ttlbg_s = \SWELL_Theme::get_noimg( 'small' );
+		$ttlbg   = SWELL_Theme::get_noimg( 'url' );
+		$ttlbg_s = SWELL_Theme::get_noimg( 'small' );
 	}
 } else {
 	// 投稿ページ・固定ページの場合
@@ -33,8 +33,8 @@ if ( \SWELL_Theme::is_term() ) {
 		$ttlbg_id = attachment_url_to_postid( $ttlbg );
 		$ttlbg_s  = $ttlbg_id ? wp_get_attachment_image_url( $ttlbg_id, 'medium' ) : '';
 	} else {
-		$ttlbg   = get_the_post_thumbnail_url( $the_id, 'full' ) ?: \SWELL_Theme::get_noimg( 'url' );
-		$ttlbg_s = get_the_post_thumbnail_url( $the_id, 'medium' ) ?: \SWELL_Theme::get_noimg( 'small' );
+		$ttlbg   = get_the_post_thumbnail_url( $the_id, 'full' ) ?: SWELL_Theme::get_noimg( 'url' );
+		$ttlbg_s = get_the_post_thumbnail_url( $the_id, 'medium' ) ?: SWELL_Theme::get_noimg( 'small' );
 	}
 }
 
@@ -47,9 +47,9 @@ $filter_class = ( 'nofilter' === $filter_name ) ? '' : "c-filterLayer -$filter_n
 	<div class="l-topTitleArea__img c-filterLayer__img lazyload" data-bg="<?=esc_attr( $ttlbg )?>" style="background-image:url(<?=esc_attr( $ttlbg_s )?>)"></div>
 	<div class="l-topTitleArea__body l-container">
 	<?php
-		if ( \SWELL_Theme::is_term() ) :
+		if ( SWELL_Theme::is_term() ) :
 
-			\SWELL_Theme::pluggable_parts( 'term_title', [
+			SWELL_Theme::pluggable_parts( 'term_title', [
 				'term_id'   => $term_id,
 				'has_inner' => false,
 			] );
@@ -57,12 +57,12 @@ $filter_class = ( 'nofilter' === $filter_name ) ? '' : "c-filterLayer -$filter_n
 
 		elseif ( is_single() ) :
 
-			SWELL_FUNC::get_parts( 'parts/single/post_head', $the_id );
+			SWELL_FUNC::get_parts( 'parts/single/post_head' );
 
 		elseif ( is_page() || is_home() ) :
 
 			// タイトル
-			\SWELL_Theme::pluggable_parts( 'page_title', [
+			SWELL_Theme::pluggable_parts( 'page_title', [
 				'title'     => get_the_title( $the_id ),
 				'subtitle'  => get_post_meta( $the_id, 'swell_meta_subttl', true ),
 				'has_inner' => false,
@@ -71,7 +71,9 @@ $filter_class = ( 'nofilter' === $filter_name ) ? '' : "c-filterLayer -$filter_n
 			// 抜粋文
 			$post_data = get_post( $the_id );
 			$excerpt   = $post_data->post_excerpt;
-			if ( $excerpt ) echo '<div class="c-pageExcerpt">' . $excerpt . '</div>';
+			if ( $excerpt ) :
+				echo '<div class="c-pageExcerpt">' . wp_kses( $excerpt, SWELL_Theme::$allowed_text_html ) . '</div>';
+			endif;
 
 		endif;
 		?>

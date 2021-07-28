@@ -5,7 +5,7 @@ get_header();
 while ( have_posts() ) :
 	the_post();
 
-	$SETTING = SWELL_FUNC::get_setting();
+	$SETTING = SWELL_Theme::get_setting();
 	$the_id  = get_the_ID();
 
 	// シェアボタンを隠すかどうか
@@ -18,20 +18,19 @@ while ( have_posts() ) :
 		<?php
 			// タイトル周り
 			if ( ! SWELL_Theme::is_show_ttltop() ) :
-				SWELL_FUNC::get_parts( 'parts/single/post_head', $the_id );
+				SWELL_Theme::get_parts( 'parts/single/post_head' );
 			endif;
 
 			// アイキャッチ画像
 			if ( SWELL_Theme::is_show_thumb( $the_id ) ) :
 				do_action( 'swell_before_post_thumb', $the_id );
-				// @codingStandardsIgnoreStart
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo SWELL_PARTS::post_thumbnail( $the_id );
-				// @codingStandardsIgnoreEnd
 			endif;
 
 			// 記事上シェアボタン
 			if ( $show_share_btns && $SETTING['show_share_btn_top'] ) :
-				SWELL_FUNC::get_parts( 'parts/single/share_btns', [
+				SWELL_Theme::get_parts( 'parts/single/share_btns', [
 					'post_id'  => $the_id,
 					'position' => '-top',
 				] );
@@ -51,10 +50,10 @@ while ( have_posts() ) :
 		<?php
 			// 改ページナビゲーション
 			$defaults = [
-				'before'           => '<div class="c-pagination">',
-				'after'            => '</div>',
-				'next_or_number'   => 'number',
-				// 'pagelink'         => '<span>%</span>',
+				'before'         => '<div class="c-pagination">',
+				'after'          => '</div>',
+				'next_or_number' => 'number',
+				// 'pagelink'      => '<span>%</span>',
 			];
 			wp_link_pages( $defaults );
 
@@ -66,14 +65,14 @@ while ( have_posts() ) :
 			endif;
 
 			// post_foot
-			SWELL_FUNC::get_parts( 'parts/single/post_foot', $the_id );
+			SWELL_Theme::get_parts( 'parts/single/post_foot' );
 
 			// FBいいね & Twitterフォロー ボックス
 			$tw_id    = $SETTING['show_tw_follow_btn'] ? $SETTING['tw_follow_id'] : '';
 			$fb_url   = $SETTING['show_fb_like_box'] ? $SETTING['fb_like_url'] : '';
 			$insta_id = $SETTING['show_insta_follow_btn'] ? $SETTING['insta_follow_id'] : '';
 			if ( $tw_id || $fb_url || $insta_id ) :
-				SWELL_FUNC::get_parts( 'parts/single/sns_cta', [
+				SWELL_Theme::get_parts( 'parts/single/sns_cta', [
 					'tw_id'    => $tw_id,
 					'fb_url'   => $fb_url,
 					'insta_id' => $insta_id,
@@ -82,7 +81,7 @@ while ( have_posts() ) :
 
 			// 下部シェアボタン
 			if ( $show_share_btns && $SETTING['show_share_btn_bottom'] ) :
-				SWELL_FUNC::get_parts( 'parts/single/share_btns', [
+				SWELL_Theme::get_parts( 'parts/single/share_btns', [
 					'post_id'  => $the_id,
 					'position' => '-bottom',
 				] );
@@ -90,7 +89,7 @@ while ( have_posts() ) :
 
 			// 固定シェアボタン
 			if ( $show_share_btns && $SETTING['show_share_btn_fix'] ) :
-				SWELL_FUNC::get_parts( 'parts/single/share_btns', [
+				SWELL_Theme::get_parts( 'parts/single/share_btns', [
 					'post_id'  => $the_id,
 					'position' => '-fix',
 				] );
@@ -99,7 +98,7 @@ while ( have_posts() ) :
 		<div id="after_article" class="l-articleBottom">
 			<?php
 				if ( ! \SWELL_Theme::is_use( 'ajax_after_post' ) ) :
-					SWELL_FUNC::get_parts( 'parts/single/after_article', ['post_id' => $the_id ] );
+					SWELL_Theme::get_parts( 'parts/single/after_article', ['post_id' => $the_id ] );
 				endif;
 			?>
 		</div>

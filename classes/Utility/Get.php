@@ -288,7 +288,7 @@ trait Get {
 		];
 
 		wp_cache_set( $cache_key, $data, 'swell' );
-		return $return;
+		return $data;
 	}
 
 
@@ -704,6 +704,39 @@ trait Get {
 
 		return $content;
 	}
+
+
+	/**
+	 * 投稿のタームデータから必要なものを取得
+	 */
+	public static function get_the_terms_data( $post_id, $tax ) {
+
+		$cache_key = "the_terms_data_{$post_id}_{$tax}";
+
+		// キャッシュ取得
+		$cache_data = wp_cache_get( $cache_key, 'swell' );
+		if ( $cache_data ) return $cache_data;
+
+		$data  = [];
+		$terms = get_the_terms( $post_id, $tax );
+
+		if ( ! empty( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$data[] = [
+					'id'   => $term->term_id,
+					'slug' => $term->slug,
+					'name' => $term->name,
+					'url'  => get_term_link( $term ),
+				];
+			}
+		}
+
+		$data = apply_filters( 'swell_get_the_terms_data', $data );
+
+		wp_cache_set( $cache_key, $data, 'swell' );
+		return $data;
+	}
+
 
 
 	/**

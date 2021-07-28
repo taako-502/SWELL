@@ -93,7 +93,6 @@ class SWELL_FUNC {
 	public static function get_sns_settings(){
 		return SWELL::get_sns_settings();
 	}
-
 	public static function get_thumbnail( $the_id, $args, $is_term = false ) {
 		if ( $is_term ) {
 			$args['term_id'] = $the_id;
@@ -104,18 +103,16 @@ class SWELL_FUNC {
 	}
 
 	/**
-	 * テンプレート読み込み
+	 * テンプレート読み込み 3.0で消す
 	 */
 	public static function get_parts( $path = '', $variable = null, $cache_key = '', $expiration = null ) {
 		SWELL::get_parts( $path, $variable, $cache_key, $expiration );
 	}
 
-
 	/**
-	 * カテゴリーを出力
+	 * カテゴリーを出力 3.0で消す
 	 */
 	public static function get_the_term_links( $post_id = '', $tax = '' ) {
-
 		if ( $tax === 'cat' ) {
 			$terms = get_the_category( $post_id );
 			$link_class = 'c-categoryList__link hov-flash-up';
@@ -128,12 +125,11 @@ class SWELL_FUNC {
 		}
 
 		if ( empty( $terms ) ) return '';
-
 		$thelist = '';
 		foreach ( $terms as $term ) {
 			$term_link = get_term_link( $term );
 			$data_id = 'data-'. $tax .'-id="'. $term->term_id .'"';
-			$thelist .= '<a class="'. $link_class .'" href="' . esc_url( $term_link ) . '" '. $data_id .'>'. $term->name . '</a>';
+			$thelist .= '<a class="'. $link_class .'" href="' . esc_url( $term_link ) . '" '. $data_id .'>'. esc_html( $term->name ) . '</a>';
 		}
 
 		return apply_filters( 'swell_get_the_term_links', $thelist, $post_id, $tax );
