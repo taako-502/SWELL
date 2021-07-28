@@ -16,7 +16,7 @@
 
 .is-style-border {
 
-    & > .swell-block-dl__dt {
+    > .swell-block-dl__dt {
         padding-left: .75em;
         border-left: solid 1px;
     }
@@ -24,13 +24,13 @@
 
 .is-style-vtabel {
 
-    & > .swell-block-dl__dt {
+    > .swell-block-dl__dt {
         margin-top: 0;
         padding: .5em 1em;
         color: #fff;
     }
 
-    & > .swell-block-dl__dd {
+    > .swell-block-dl__dd {
         margin-left: 0;
         border: solid 1px $color_border;
         border-top: none;
@@ -55,7 +55,7 @@
         }
     }
 
-    & > .swell-block-dl__dt {
+    > .swell-block-dl__dt {
         position: relative;
         float: left;
         clear: both;
@@ -79,7 +79,7 @@
         }
     }
 
-    & > .swell-block-dl__dd {
+    > .swell-block-dl__dd {
         float: right;
         width: 72%;
         margin-left: 0;

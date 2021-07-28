@@ -42,9 +42,6 @@ function register_normal_blocks() {
 		'accordion-item',
 		'banner-link',
 		'button',
-		'dl',
-		'dl-dt',
-		'dl-dd',
 		'faq',
 		'faq-item',
 		'full-wide',
@@ -74,6 +71,9 @@ function register_normal_blocks() {
 	// リファクタリング済み
 	$blocks = [
 		'cap-block',
+		'dl',
+		'dl-dt',
+		'dl-dd',
 	];
 	foreach ( $blocks as $block_name ) {
 

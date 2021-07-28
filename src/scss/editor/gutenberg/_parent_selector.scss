@@ -19,7 +19,8 @@
         opacity: 1;
     }
 
-    .has-child-selected > div > & {
+    .has-child-selected > div > &,
+    .has-child-selected > & {
         display: block;
     }
 }

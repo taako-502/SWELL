@@ -3,83 +3,66 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { RichText } from '@wordpress/block-editor';
+import { RichText, useBlockProps } from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
+import metadata from './block.json';
 import blockIcon from './_icon';
-import { iconColor } from '@swell-guten/config';
-
-/**
- * @Others dependencies
- */
-import classnames from 'classnames';
-
-/**
- * registerBlockType
- */
-const blockName = 'swell-block-dl';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * 子要素 DT
  */
-const getDtStyle = (dtWidth, isEdit) => {
+const getDtStyle = (dtWidth) => {
 	const style = {};
-	const offset = isEdit ? 6 : 2.5;
+	const offset = 2.5;
 	if (dtWidth) {
 		style.width = dtWidth + offset + 'em';
 	}
 	return style;
 };
-registerBlockType('loos/dt', {
-	title: '項目のタイトル(DT)',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.dt,
-	},
-	category: 'swell-blocks',
-	parent: ['loos/dl'],
-	supports: {
-		className: false,
-		reusable: false,
-	},
-	attributes: {
-		content: {
-			type: 'string',
-			source: 'html',
-			selector: 'dt',
-		},
-		dtWidth: {
-			type: 'number',
-		},
-	},
+
+/**
+ * 項目のタイトル(DT)ブロック
+ */
+const blockName = 'swell-block-dl';
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
 	getEditWrapperProps(attributes) {
 		const { dtWidth } = attributes;
-		const dtStyle = getDtStyle(dtWidth, true);
+		const dtStyle = getDtStyle(dtWidth);
 		return { style: dtStyle };
 	},
-	edit: ({ attributes, setAttributes, className }) => {
-		const blockClass = classnames(className, blockName + '__dt');
+	edit: ({ attributes, setAttributes }) => {
+		const { content } = attributes;
+
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: `${blockName}__dt`,
+		});
+
 		return (
 			<RichText
+				{...blockProps}
 				tagName='div'
 				placeholder={__('Text…', 'swell')}
-				value={attributes.content}
-				className={blockClass}
-				onChange={(content) => setAttributes({ content })}
+				value={content}
+				onChange={(newContent) => setAttributes({ content: newContent })}
 			/>
 		);
 	},
 	save: ({ attributes }) => {
-		const dtStyle = getDtStyle(attributes.dtWidth, false);
-		return (
-			<RichText.Content
-				tagName='dt'
-				className={blockName + '__dt'}
-				style={dtStyle || null}
-				value={attributes.content}
-			/>
-		);
+		const { content } = attributes;
+		const dtStyle = getDtStyle(attributes.dtWidth);
+
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: `${blockName}__dt`,
+			style: dtStyle || null,
+		});
+
+		return <RichText.Content {...blockProps} tagName='dt' value={content} />;
 	},
 });
