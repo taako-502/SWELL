@@ -17,12 +17,12 @@ while ( have_posts() ) :
 	<article class="l-mainContent__inner">
 		<?php
 			// タイトル周り
-			if ( ! SWELL_FUNC::is_show_ttltop() ) :
+			if ( ! SWELL_Theme::is_show_ttltop() ) :
 				SWELL_FUNC::get_parts( 'parts/single/post_head', $the_id );
 			endif;
 
 			// アイキャッチ画像
-			if ( SWELL_FUNC::is_show_thumb( $the_id ) ) :
+			if ( SWELL_Theme::is_show_thumb( $the_id ) ) :
 				do_action( 'swell_before_post_thumb', $the_id );
 				// @codingStandardsIgnoreStart
 				echo SWELL_PARTS::post_thumbnail( $the_id );
@@ -103,9 +103,7 @@ while ( have_posts() ) :
 				endif;
 			?>
 		</div>
-		<?php
-			if ( SWELL_FUNC::is_show_comments( $the_id ) ) comments_template();
-		?>
+		<?php if ( SWELL_Theme::is_show_comments( $the_id ) ) comments_template(); ?>
 	</article>
 </main>
 <?php endwhile; ?>

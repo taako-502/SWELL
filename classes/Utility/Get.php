@@ -28,21 +28,84 @@ trait Get {
 
 
 	/**
+	 * フレーム設定を取得する
+	 */
+	public static function get_frame_class() {
+		$content_frame = self::get_setting( 'content_frame' );
+		$frame_scope   = self::get_setting( 'frame_scope' );
+
+		$frame_class = '';
+		if ( 'frame_off' === $content_frame ) {
+			$frame_class = '-frame-off';
+		} else {
+			$is_page = is_page() && ! is_front_page();
+
+			if ( 'page' === $frame_scope && ! $is_page ) {
+				$frame_class = '-frame-off';
+			} elseif ( 'post' === $frame_scope && ! is_single() ) {
+				$frame_class = '-frame-off';
+			} elseif ( 'post_page' === $frame_scope && ! is_single() && ! $is_page ) {
+				$frame_class = '-frame-off';
+			} else {
+				// フレーム オン
+				$frame_class  = '-frame-on';
+				$frame_class .= ( 'frame_on_main' === $content_frame ) ? ' -frame-off-sidebar' : ' -frame-on-sidebar';
+
+				// さらに「線で囲む」がオンの場合
+				if ( self::get_setting( 'on_frame_border' ) ) {
+					$frame_class .= ' -frame-border';
+				}
+			}
+		}
+
+		return apply_filters( 'swell_frame_class', $frame_class );
+	}
+
+
+	/**
+	 * ヘッダーのクラス
+	 */
+	public static function get_header_class() {
+		$header_layout = str_replace( '_', '-', self::get_setting( 'header_layout' ) );
+		switch ( $header_layout ) {
+			case 'parallel-top':
+			case 'parallel-bottom':
+				$header_class = '-parallel -' . $header_layout;
+				break;
+			case 'sidefix':
+				$header_class = '-sidefix';
+				break;
+			default:
+				$header_class = '-series -' . $header_layout;
+				break;
+		}
+
+		// ヒーローヘッダーの時だけトップページに付与するクラス
+		$header_transparent = str_replace( '_', '-', self::get_setting( 'header_transparent' ) ); // no | t-fff | t-000
+		if ( self::is_top() && $header_transparent !== 'no' ) {
+			$header_class .= ' -transparent -' . $header_transparent;
+		}
+
+		return $header_class;
+	}
+
+
+	/**
 	 * キャプションデータ
 	 */
 	public static function get_cap_colors_data() {
 		return [
 			'col1' => [
 				'label' => 'カラーセット1',
-				'value' => \SWELL_FUNC::get_editor( 'color_cap_01' ),
+				'value' => self::get_editor( 'color_cap_01' ),
 			],
 			'col2' => [
 				'label' => 'カラーセット2',
-				'value' => \SWELL_FUNC::get_editor( 'color_cap_02' ),
+				'value' => self::get_editor( 'color_cap_02' ),
 			],
 			'col3' => [
 				'label' => 'カラーセット3',
-				'value' => \SWELL_FUNC::get_editor( 'color_cap_03' ),
+				'value' => self::get_editor( 'color_cap_03' ),
 			],
 		];
 	}
@@ -306,4 +369,72 @@ trait Get {
 		return $thumb;
 	}
 
+
+	/**
+	 * アーカイブページのデータを取得
+	 */
+	public static function get_archive_data() {
+		if ( ! is_archive() ) return false;
+
+		$data = [
+			'type'  => '',
+			'title' => 'title',
+		];
+
+		if ( is_date() ) {
+			// 日付アーカイブなら
+
+			$qv_day      = get_query_var( 'day' );
+			$qv_monthnum = get_query_var( 'monthnum' );
+			$qv_year     = get_query_var( 'year' );
+
+			if ( $qv_day !== 0 ) {
+				$ymd_name = $qv_year . '年' . $qv_monthnum . '月' . $qv_day . '日';
+			} elseif ( $qv_monthnum != 0 ) {
+				$ymd_name = $qv_year . '年' . $qv_monthnum . '月';
+			} else {
+				$ymd_name = $qv_year . '年';
+			}
+			if ( is_post_type_archive() ) {
+				// さらに、投稿タイプの日付アーカイブだった場合
+				$data['title'] = $ymd_name . '(' . post_type_archive_title( '', false ) . ')';
+			}
+			$data['title'] = $ymd_name;
+			$data['type']  = 'date';
+
+		} elseif ( is_post_type_archive() ) {
+			// 投稿タイプのアーカイブページなら
+
+			$data['title'] = post_type_archive_title( '', false );
+			$data['type']  = 'pt_archive';
+
+		} elseif ( is_author() ) {
+			// 投稿者アーカイブ
+
+			$data['title'] = get_queried_object()->display_name;
+			$data['type']  = 'author';
+
+		} elseif ( is_category() ) {
+
+			$data['title'] = single_term_title( '', false );
+			$data['type']  = 'category';
+
+		} elseif ( is_tag() ) {
+
+			$data['title'] = single_term_title( '', false );
+			$data['type']  = 'tag';
+
+		} elseif ( is_tax() ) {
+
+			$data['title'] = single_term_title( '', false );
+			$data['type']  = 'tax';
+
+		} else {
+
+			$data['title'] = single_term_title( '', false );
+			$data['type']  = '';
+
+		}
+		return $data;
+	}
 }

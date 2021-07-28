@@ -155,4 +155,176 @@ trait Status {
 	}
 
 
+	/**
+	 * アイキャッチ画像を表示するかどうか
+	 */
+	public static function is_show_thumb( $post_id ) {
+
+		if ( ! $post_id ) return false;
+
+		$setting_key = ( is_single() ) ? 'show_post_thumb' : 'show_page_thumb';
+
+		$is_show_thumb = get_post_meta( $post_id, 'swell_meta_show_thumb', true );
+		if ( $is_show_thumb === 'show' ) {
+
+			$is_show_thumb = true;
+
+		} elseif ( $is_show_thumb === 'hide' ) {
+
+			$is_show_thumb = false;
+
+		} else {
+
+			$is_show_thumb = self::get_setting( $setting_key );
+
+		}
+
+		// アイキャッチを表示しない場合の追加条件
+		if ( (int) get_query_var( 'page' ) !== 0 ) {
+			$is_show_thumb = false;
+		}
+
+		return $is_show_thumb;
+	}
+
+
+	/**
+	 * ページタイトルをコンテンツ上部に表示するかどうか
+	 */
+	public static function is_show_ttltop() {
+
+		if ( self::is_top() ) return false;
+
+		if ( is_single() ) {
+			$title_pos = self::get_setting( 'post_title_pos' );
+		} elseif ( is_page() || is_home() ) {
+			$title_pos = self::get_setting( 'page_title_pos' );
+		} elseif ( self::is_term() ) {
+			$title_pos = self::get_setting( 'term_title_pos' );
+		} else {
+			$title_pos = '';
+		}
+
+		$is_show_ttltop = ( 'top' === $title_pos ) ? true : false;
+		return apply_filters( 'swell_is_show_ttltop', $is_show_ttltop );
+
+	}
+
+
+	/**
+	 * 目次機能を使うかどうか
+	 */
+	public static function is_show_index() {
+
+		$is_show_index = false;
+
+		if ( ! is_singular( 'lp' ) && is_single() ) {
+			$is_show_index = self::get_setting( 'show_index' );
+		} elseif ( ! is_front_page() && is_page() ) {
+			$is_show_index = self::get_setting( 'show_index_page' );
+		}
+
+		return apply_filters( 'swell_is_show_index', $is_show_index );
+	}
+
+
+	/**
+	 * 目次広告を表示するかどうか
+	 */
+	public static function is_show_toc_ad( $in_shortcode = false ) {
+
+		$is_show_toc_ad = false;
+
+		if ( ! is_singular( 'lp' ) && is_single() ) {
+			$is_show_toc_ad = $is_show_toc_ad || self::get_setting( 'show_toc_ad_alone_post' ) || self::is_show_index();
+		} elseif ( ! is_front_page() && is_page() ) {
+			$is_show_toc_ad = $is_show_toc_ad || self::get_setting( 'show_toc_ad_alone_page' ) || self::is_show_index();
+		}
+
+		return apply_filters( 'swell_is_show_toc_ad', $is_show_toc_ad, $in_shortcode );
+	}
+
+
+	/**
+	 * 各ページでサイドバーを使用するかどうか
+	 */
+	public static function is_show_sidebar() {
+
+		if ( self::is_top() ) {
+
+			$is_show_sidebar = self::get_setting( 'show_sidebar_top' );
+
+		} elseif ( is_singular( 'lp' ) ) {
+
+			$is_show_sidebar = false;
+
+		} elseif ( is_page() || is_home() ) {
+
+			$is_show_sidebar = self::get_setting( 'show_sidebar_page' );
+
+		} elseif ( is_single() ) {
+
+			$is_show_sidebar = self::get_setting( 'show_sidebar_post' );
+
+		} elseif ( is_archive() ) {
+
+			$is_show_sidebar = self::get_setting( 'show_sidebar_archive' );
+
+		} elseif ( is_search() ) {
+
+			$is_show_sidebar = self::get_setting( 'show_sidebar_archive' );
+
+		} else {
+
+			$is_show_sidebar = false;
+
+		}
+
+		return apply_filters( 'swell_is_show_sidebar', $is_show_sidebar );
+
+	}
+
+
+	/**
+	 * コメントを使用するかどうか
+	 */
+	public static function is_show_comments( $post_id ) {
+
+		$is_show_comments = false;
+
+		if ( is_single() ) {
+
+			$show_comments = self::get_setting( 'show_comments' );
+			$comments_meta = get_post_meta( $post_id, 'swell_meta_show_comments', true );
+			$comments_open = comments_open( $post_id ) && ! post_password_required( $post_id );
+
+			$is_show_comments = ( $comments_meta !== 'hide' && ( $comments_meta === 'show' || $show_comments ) );
+			$is_show_comments = $is_show_comments && $comments_open;
+
+		} elseif ( is_page() ) {
+			$is_show_comments = comments_open( $post_id ) && ! post_password_required( $post_id );
+		}
+
+		return apply_filters( 'swell_is_show_comments', $is_show_comments );
+	}
+
+
+	/**
+	 * ピックアップバナーを使用するかどうか
+	 */
+	public static function is_show_pickup_banner() {
+
+		if ( is_paged() ) return false;
+
+		$is_show_banners = false;
+
+		if ( self::is_top() ) {
+			$is_show_banners = true;
+		} else {
+			$is_show_banners = self::get_setting( 'pickbnr_show_under' );
+		}
+
+		return apply_filters( 'swell_is_show_pickup_banner', $is_show_banners );
+	}
+
 }

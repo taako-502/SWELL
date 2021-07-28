@@ -93,6 +93,18 @@ trait Others {
 
 
 	/**
+	 * ファイル読み込み
+	 */
+	public static function get_file_contents( $file ) {
+		if ( file_exists( $file ) ) {
+			$file_content = file_get_contents( $file );
+			return $file_content;
+		}
+		return false;
+	}
+
+
+	/**
 	 * width,height から aspectratio を指定
 	 */
 	public static function set_aspectratio( $props, $src = '' ) {

@@ -25,6 +25,7 @@ require_once T_DIRE . '/lib/autoloader.php';
 class SWELL_Theme extends \SWELL_Theme\Theme_Data {
 
 	use \SWELL_Theme\Utility\Get;
+	use \SWELL_Theme\Utility\Attrs;
 	use \SWELL_Theme\Utility\Parts;
 	use \SWELL_Theme\Utility\Status;
 	use \SWELL_Theme\Utility\Others;

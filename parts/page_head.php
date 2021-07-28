@@ -5,16 +5,16 @@ $SETTING = SWELL_FUNC::get_setting();
 $the_id  = $variable ?: get_queried_object_id();
 
 // 記事タイトル
-if ( ! SWELL_FUNC::is_show_ttltop() ) {
+if ( ! SWELL_Theme::is_show_ttltop() ) {
 	\SWELL_Theme::pluggable_parts( 'page_title', [
-		'title'     => get_the_title( $the_id ),
+		'title'     => get_the_title(),
 		'subtitle'  => get_post_meta( $the_id, 'swell_meta_subttl', true ),
 		'has_inner' => true,
 	] );
 }
 
 // アイキャッチ画像
-if ( SWELL_FUNC::is_show_thumb( $the_id ) ) {
+if ( SWELL_Theme::is_show_thumb( $the_id ) ) {
 	echo SWELL_PARTS::post_thumbnail( $the_id );
 }
 

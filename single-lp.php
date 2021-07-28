@@ -20,7 +20,7 @@ if ( file_exists( $include_path_php ) ) {
 
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> <?php SWELL_FUNC::root_attrs(); ?>>
+<html <?php language_attributes(); ?> <?php SWELL_Theme::root_attrs(); ?>>
 <head>
 <meta charset="utf-8">
 <meta name="format-detection" content="telephone=no">
@@ -72,7 +72,7 @@ the_post();
 		</figure>
 	<?php endif; ?>
 	</div>
-	<div id="lp-content" class="lp-content -style-<?=esc_attr( $body_style )?>" <?php SWELL_FUNC::lp_content_attrs(); ?>>
+	<div id="lp-content" class="lp-content -style-<?=esc_attr( $body_style )?>" <?php SWELL_Theme::lp_content_attrs(); ?>>
 		<main class="lp-content__inner">
 
 			<?php if ( 'inner' === $thumb_pos ) : ?>

@@ -30,7 +30,7 @@ $list_type = apply_filters( 'swell_post_list_type_on_term', $list_type, $term_id
 <main id="main_content" class="l-mainContent l-article">
 	<div class="l-mainContent__inner">
 		<?php
-			if ( ! SWELL_FUNC::is_show_ttltop() ) :
+			if ( ! SWELL_Theme::is_show_ttltop() ) :
 				\SWELL_Theme::pluggable_parts( 'term_title', [
 					'term_id'   => $term_id,
 					'has_inner' => true,

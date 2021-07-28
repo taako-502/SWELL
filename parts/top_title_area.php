@@ -2,10 +2,10 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * SWELL_FUNC::is_show_ttltop()が true の時のみ呼び出される。
+ * SWELL_Theme::is_show_ttltop()が true の時のみ呼び出される。
  * タームアーカイブ / 固定ページ / 投稿ページの３種類で呼び出される可能性があることに注意。
  */
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 
 // タイトル・背景画像を取得
 if ( \SWELL_Theme::is_term() ) {

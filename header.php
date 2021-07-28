@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?> <?php SWELL_FUNC::root_attrs(); ?>>
+<html <?php language_attributes(); ?> <?php SWELL_Theme::root_attrs(); ?>>
 <head>
 <meta charset="utf-8">
 <meta name="format-detection" content="telephone=no">
@@ -13,7 +13,7 @@
 </head>
 <body>
 <?php if ( function_exists( 'wp_body_open' ) ) wp_body_open(); ?>
-<div id="body_wrap" <?php body_class(); ?> <?php SWELL_FUNC::body_attrs(); ?>>
+<div id="body_wrap" <?php body_class(); ?> <?php SWELL_Theme::body_attrs(); ?>>
 <?php
 	// SPメニュー
 	$cache_key = $SETTING['cache_spmenu'] ? 'spmenu' : '';
@@ -50,16 +50,16 @@
 	}
 
 	// タイトル(コンテンツ上)
-	if ( SWELL_FUNC::is_show_ttltop() ) SWELL_FUNC::get_parts( 'parts/top_title_area' );
+	if ( SWELL_Theme::is_show_ttltop() ) SWELL_FUNC::get_parts( 'parts/top_title_area' );
 
 	// ぱんくず
 	if ( 'top' === $SETTING['pos_breadcrumb'] ) SWELL_FUNC::get_parts( 'parts/breadcrumb' );
 
 ?>
-<div id="content" class="l-content l-container" <?php SWELL_FUNC::content_attrs(); ?>>
+<div id="content" class="l-content l-container" <?php SWELL_Theme::content_attrs(); ?>>
 <?php
 	// ピックアップバナー
-	if ( SWELL_FUNC::is_show_pickup_banner() ) {
+	if ( SWELL_Theme::is_show_pickup_banner() ) {
 		$cache_key = $SETTING['cache_top'] ? 'pickup_banner' : '';
 		SWELL_FUNC::get_parts( 'parts/top/pickup_banner', null, $cache_key );
 	}

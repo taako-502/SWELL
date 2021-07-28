@@ -11,18 +11,17 @@ class SWELL_PARTS{
 	private function __construct() {}
 
 	/**
-	 * キャッチフレーズの生成
+	 * 3.0で消す
 	 */
 	public static function catchphrase() {
-		return apply_filters( 'swell_parts_catchphrase', \SWELL_Theme::site_data( 'catchphrase' ) );
+		return apply_filters( 'swell_parts_catchphrase', SWELL::site_data( 'catchphrase' ) );
 	}
 
 	/**
-	 * ヘッダーロゴ画像
-	 * スマホヘッダーではcommonもtopも両方使う
+	 * 3.0で消す
 	 */
 	public static function head_logo_img( $use_top_logo ) {
-		return \SWELL_Theme::get_pluggable_parts( 'head_logo', [
+		return SWELL::get_pluggable_parts( 'head_logo', [
 			'use_top_logo' => $use_top_logo,
 		] );
 	}
@@ -54,10 +53,10 @@ class SWELL_PARTS{
 
 
 	/**
-	 * 固定ページのタイトルを取得
+	 * 3.0で消す
 	 */
 	public static function page_title( $page_id ) {
-		$title = \SWELL_Theme::get_pluggable_parts( 'page_title', [
+		$title = SWELL::get_pluggable_parts( 'page_title', [
 			'title'    => get_the_title( $page_id ),
 			'subtitle' => get_post_meta( $page_id, 'swell_meta_subttl', true ),
 			'nowrap'   => true,
@@ -67,12 +66,12 @@ class SWELL_PARTS{
 
 
 	/**
-	 * タームアーカイブページのタイトルを取得
+	 * 3.0で消す
 	 */
 	public static function term_title( $term_id ) {
-		$archive_data = \SWELL_FUNC::get_archive_data();
+		$archive_data = SWELL::get_archive_data();
 
-		$title = \SWELL_Theme::get_pluggable_parts( 'page_title', [
+		$title = SWELL::get_pluggable_parts( 'page_title', [
 			'title'    => get_term_meta( $term_id, 'swell_term_meta_ttl', 1 ) ?: $archive_data['title'],
 			'subtitle' => get_term_meta( $term_id, 'swell_term_meta_subttl', 1 ) ?: $archive_data['type'],
 			'nowrap'   => true,
@@ -111,7 +110,7 @@ class SWELL_PARTS{
 
 		} else {
 
-			$thumb = \SWELL_Theme::get_thumbnail( [
+			$thumb = SWELL::get_thumbnail( [
 				'post_id'          => $post_id,
 				'class'            => 'p-articleThumb__img',
 				'placeholder_size' => 'medium',
@@ -130,24 +129,24 @@ class SWELL_PARTS{
 
 
 	/**
-	 * 抜粋文を取得する
+	 * 3.0で消す
 	 */
 	public static function post_excerpt( $post_data, $length = null ) {
-		return \SWELL_Theme::get_excerpt( $post_data, $length );
+		return SWELL::get_excerpt( $post_data, $length );
 	}
 
 
 	/**
-	 * 著者アイコンを取得する
+	 * 3.0で消す
 	 */
 	public static function post_author( $author_id, $add_class = '', $is_link = false ) {
 
 		if ( $is_link ) {
-			return \SWELL_Theme::get_pluggable_parts( 'the_post_author', [
+			return SWELL::get_pluggable_parts( 'the_post_author', [
 				'author_id' => $author_id,
 			] );
 		} else {
-			return \SWELL_Theme::get_pluggable_parts( 'post_list_author', [
+			return SWELL::get_pluggable_parts( 'post_list_author', [
 				'author_id' => $author_id,
 			] );
 		}
@@ -197,19 +196,19 @@ class SWELL_PARTS{
 
 
 	/**
-	 * MVボタン
+	 * 3.0で消す
 	 */
 	public static function mv_btn( $args ) {
-		return \SWELL_Theme::get_pluggable_parts( 'mv_btn', $args );
+		return SWELL::get_pluggable_parts( 'mv_btn', $args );
 	}
 
 
 	/**
-	 * メインビジュアルのスクロールアイコン
+	 * 3.0で消す
 	 */
 	public static function get_scroll_arrow( $type = 'slide' ) {
 		$color = ( 'video' === $type ) ? SWELL_FUNC::get_setting( 'movie_txtcol' ) : SWELL_FUNC::get_setting( 'slider1_txtcol' );
-		$return = \SWELL_Theme::get_pluggable_parts( 'scroll_arrow', ['color' => $color ] ); 
+		$return = SWELL::get_pluggable_parts( 'scroll_arrow', ['color' => $color ] ); 
 		return apply_filters( 'swell_parts_scroll_arrow', $return );
 	}
 

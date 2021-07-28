@@ -1,8 +1,8 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$SETTING      = SWELL_FUNC::get_setting();
-$header_class = SWELL_FUNC::get_header_class(); // ヘッダーとfixバーへのクラクラス
+$SETTING      = SWELL_Theme::get_setting();
+$header_class = SWELL_Theme::get_header_class(); // ヘッダーとfixバーへのクラクラス
 
 // お知らせバー（上部表示）
 if ( $SETTING['info_bar_pos'] === 'head_top' ) SWELL_FUNC::get_parts( 'parts/header/info_bar' );

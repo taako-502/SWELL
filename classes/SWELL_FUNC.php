@@ -19,324 +19,59 @@ class SWELL_FUNC {
 	private function __construct() {}
 
 	/**
-	 * get_setting
+	 * 3.0で消す
 	 */
 	public static function get_setting( $key = null ) {
 		return SWELL::get_setting( $key );
 	}
-
-
-	/**
-	 * get_option
-	 */
 	public static function get_option( $key = null ) {
 		return SWELL::get_option( $key );
 	}
-
-
-	/**
-	 * get_editor
-	 */
 	public static function get_editor( $key = null ) {
 		return SWELL::get_editor( $key );
 	}
-
-
-	/**
-	 * HTMLタグに付与する属性値
-	 */
 	public static function root_attrs() {
-
-		$attrs = 'data-loaded="false"'; // DOM読み込み御用
-		$attrs .= ' data-scrolled="false"'; // スクロール制御用
-		$attrs .= ' data-spmenu="closed"'; // SPメニュー制御用
-		$attrs = apply_filters( 'swell_root_attrs', $attrs );
-		echo $attrs;
+		SWELL::root_attrs();
 	}
-
-	/**
-	 * #body_wrap に付与する属性値
-	 */
 	public static function body_attrs() {
-
-		$attrs = 'data-barba="wrapper"';
-
-		$attrs = apply_filters( 'swell_body_attrs', $attrs );
-		echo $attrs;
+		SWELL::body_attrs();
 	}
-
-	/**
-	 * #content に付与する属性値
-	 */
 	public static function content_attrs() {
-
-		$attrs = '';
-
-		if ( is_single() || is_page() || ( !is_front_page() && is_home() ) ) {
-			$attrs .= ' data-postid="'. get_queried_object_id() .'"';
-		}
-
-		$attrs = apply_filters( 'swell_content_attrs', $attrs );
-
-		echo trim( $attrs );
+		SWELL::content_attrs();
 	}
-
-
-	/**
-	 * #lp-content に付与する属性値
-	 */
 	public static function lp_content_attrs() {
-
-		$attrs = 'data-postid="'. get_queried_object_id() .'"';
-		$attrs = apply_filters( 'swell_lp_content_attrs', $attrs );
-
-		echo trim( $attrs );
+		SWELL::lp_content_attrs();
 	}
-
-
-	/**
-	 * フレーム設定を取得する
-	 */
 	public static function get_frame_class() {
-		$content_frame = SWELL::get_setting('content_frame');
-		$frame_scope   = SWELL::get_setting('frame_scope');
-
-		$frame_class = '';
-		if ( 'frame_off' === $content_frame ) {
-			$frame_class = '-frame-off';
-		} else {
-			$is_page = is_page() && !is_front_page();
-
-			if ( 'page' === $frame_scope && ! $is_page ) {
-				$frame_class = '-frame-off';
-			} elseif ( 'post' === $frame_scope && ! is_single() ) {
-				$frame_class = '-frame-off';
-			} elseif ( 'post_page' === $frame_scope && ! is_single() && ! $is_page ) {
-				$frame_class = '-frame-off';
-			} else {
-				// フレーム オン
-				$frame_class  = '-frame-on';
-				$frame_class .=  ( $content_frame === 'frame_on_main' ) ? ' -frame-off-sidebar' : ' -frame-on-sidebar';
-
-				// さらに「線で囲む」がオンの場合
-				if ( SWELL::get_setting( 'on_frame_border' ) ) {
-					$frame_class .= ' -frame-border';
-				}
-			}
-		}
-
-		return apply_filters( 'swell_frame_class', $frame_class );
+		return SWELL::get_frame_class();
 	}
-
-
-	/**
-	 * ヘッダーのクラス
-	 */
 	public static function get_header_class() {
-		$SETTING = SWELL_FUNC::get_setting();
-		$header_layout = str_replace( '_', '-', $SETTING['header_layout'] );
-		switch ( $header_layout ) {
-			case 'parallel-top':
-			case 'parallel-bottom':
-				$header_class = '-parallel -'. $header_layout;
-				break;
-			case 'sidefix':
-				$header_class = '-sidefix';
-				break;
-			default:
-				$header_class = '-series -'. $header_layout;
-				break;
-		}
-
-		// ヒーローヘッダーの時だけトップページに付与するクラス
-		$header_transparent = str_replace( '_', '-', $SETTING['header_transparent'] ); //no | t-fff | t-000
-		if ( SWELL::is_top() && $header_transparent !== 'no') {
-			$header_class .= ' -transparent -'. $header_transparent;
-		}
-
-		return $header_class;
+		return SWELL::get_header_class();
 	}
-
-
-	/**
-	 * アイキャッチ画像を表示するかどうか
-	 */
-	public static function is_show_thumb( $post_id = null ) {
-		$post_id = $post_id ?: get_the_ID();
-
-		if ( ! $post_id ) return false;
-
-		$setting_key = ( is_single() ) ? 'show_post_thumb' : 'show_page_thumb';
-
-		$is_show_thumb = get_post_meta( $post_id, 'swell_meta_show_thumb', true );
-		if ( $is_show_thumb === 'show' ) {
-
-			$is_show_thumb = true;
-
-		} elseif( $is_show_thumb === 'hide') {
-
-			$is_show_thumb = false;
-
-		} else {
-
-			$is_show_thumb = SWELL::get_setting( $setting_key );
-
-		}
-
-		//アイキャッチを表示しない場合の追加条件
-		if ( (int) get_query_var('page') !== 0 ) {
-			$is_show_thumb = false;
-		}
-
-		return $is_show_thumb;
+	public static function get_archive_data() {
+		return SWELL::get_archive_data();
 	}
-
-
-	/**
-	 * ページタイトルをコンテンツ上部に表示するかどうか
-	 */
+	public static function is_show_thumb( $post_id ) {
+		return SWELL::is_show_thumb( $post_id );
+	}
 	public static function is_show_ttltop() {
-
-		if ( SWELL::is_top() ) return false;
-
-		if ( is_single() ) {
-			$title_pos = SWELL::get_setting( 'post_title_pos' );
-		} elseif ( is_page() || is_home() ) {
-			$title_pos = SWELL::get_setting( 'page_title_pos' );
-		} elseif ( SWELL::is_term() ) {
-			$title_pos = SWELL::get_setting( 'term_title_pos' );
-		} else {
-			$title_pos = '';
-		}
-
-		$is_show_ttltop = ( $title_pos === 'top' ) ? true : false;
-		return apply_filters( 'swell_is_show_ttltop', $is_show_ttltop );
-
+		return SWELL::is_show_ttltop();
 	}
-
-
-	/**
-	 * 目次機能を使うかどうか
-	 */
 	public static function is_show_index() {
-
-		$is_show_index = false;
-
-		if ( ! is_singular( 'lp' ) && is_single() ) {
-			$is_show_index = SWELL::get_setting( 'show_index' );
-		} elseif( ! is_front_page() && is_page() ) {
-			$is_show_index = SWELL::get_setting( 'show_index_page' );
-		}
-
-		return apply_filters('swell_is_show_index', $is_show_index );
+		return SWELL::is_show_index();
 	}
-
-
-	/**
-	 * 目次広告を表示するかどうか
-	 */
 	public static function is_show_toc_ad( $in_shortcode = false ) {
-		$is_show_toc_ad = false;
-		$the_id         = get_queried_object_id();
-
-		if ( ! is_singular( 'lp' ) && is_single() ) {
-			$is_show_toc_ad = $is_show_toc_ad || SWELL::get_setting( 'show_toc_ad_alone_post' ) || self::is_show_index();
-		} elseif( ! is_front_page() && is_page() ) {
-			$is_show_toc_ad = $is_show_toc_ad || SWELL::get_setting( 'show_toc_ad_alone_page' ) || self::is_show_index();
-		}
-
-		return apply_filters('swell_is_show_toc_ad', $is_show_toc_ad, $in_shortcode );
+		return SWELL::is_show_toc_ad( $in_shortcode );
 	}
-
-
-	/**
-	 * 各ページでサイドバーを使用するかどうか
-	 */
 	public static function is_show_sidebar() {
-
-		if ( SWELL::is_top() ) {
-
-			$is_show_sidebar = SWELL::get_setting('show_sidebar_top');
-
-		} elseif ( is_singular( 'lp' ) ) {
-
-			$is_show_sidebar = false;
-
-		} elseif ( is_page() || is_home() ) {
-
-			$is_show_sidebar = SWELL::get_setting('show_sidebar_page');
-
-		} elseif ( is_single() ) {
-
-			$is_show_sidebar = SWELL::get_setting('show_sidebar_post');
-
-		} elseif ( is_archive() ) {
-
-			$is_show_sidebar = SWELL::get_setting('show_sidebar_archive');
-
-		} elseif( is_search() ) {
-
-			$is_show_sidebar = SWELL::get_setting('show_sidebar_archive');
-
-		} else {
-
-			$is_show_sidebar = false;
-
-		}
-
-		return apply_filters( 'swell_is_show_sidebar', $is_show_sidebar );
-
+		return SWELL::is_show_sidebar();
 	}
-
-
-	/**
-	 * コメントを使用するかどうか
-	 */
-	public static function is_show_comments( $post_id = 0 ) {
-
-		$post_id = $post_id ?: get_queried_object_id();
-
-		$is_show_comments = false;
-
-		if ( is_single() ) {
-
-			$show_comments = SWELL::get_setting('show_comments');
-			$comments_meta = get_post_meta( $post_id, 'swell_meta_show_comments', true );
-			$comments_open = comments_open( $post_id ) && ! post_password_required( $post_id );
-
-			$is_show_comments = ( $comments_meta !== 'hide' && ( $comments_meta === 'show' || $show_comments ) );
-			$is_show_comments = $is_show_comments && $comments_open;
-
-		} elseif ( is_page() ) {
-			$is_show_comments = comments_open( $post_id ) && ! post_password_required( $post_id );
-		}
-
-		return apply_filters( 'swell_is_show_comments', $is_show_comments );
+	public static function is_show_comments( $post_id ) {
+		return SWELL::is_show_comments( $post_id );
 	}
-
-
-	/**
-	 * ピックアップバナーを使用するかどうか
-	 */
 	public static function is_show_pickup_banner() {
-
-		if ( is_paged() ) return false;
-
-		$is_show_banners = false;
-
-		if ( SWELL::is_top() ) {
-			$is_show_banners = true;
-		} else {
-			$is_show_banners = SWELL::get_setting('pickbnr_show_under');
-		}
-
-		return apply_filters( 'swell_is_show_pickup_banner', $is_show_banners );
+		return SWELL::is_show_pickup_banner();
 	}
-
-
-	/**
-	 * アイキャッチ画像を取得
-	 */
 	public static function get_thumbnail( $the_id, $args, $is_term = false ) {
 		if ( $is_term ) {
 			$args['term_id'] = $the_id;
@@ -344,79 +79,9 @@ class SWELL_FUNC {
 		}
 		$args['post_id'] = $the_id;
 		return SWELL::get_thumbnail( $args );
-		
 	}
-
-
-	/**
-	 * アーカイブページのデータを取得
-	 * ['type'] : cayegory | tag | tax | etc...
-	 * ['title']
-	 */
-	public static function get_archive_data() {
-		
-		if ( ! is_archive() ) return false;
-
-		$data = [
-			'type' => '',
-			'title' => 'title'
-		];
-
-		if ( is_date() ) {
-			//日付アーカイブなら
-
-			$qv_day      = get_query_var('day');
-			$qv_monthnum = get_query_var('monthnum');
-			$qv_year     = get_query_var('year');
-
-			if ( $qv_day !== 0 ) {
-				$ymd_name = $qv_year.'年'.$qv_monthnum.'月'.$qv_day.'日';
-			} elseif ($qv_monthnum != 0) {
-				$ymd_name = $qv_year.'年'.$qv_monthnum.'月';
-			} else {
-				$ymd_name = $qv_year.'年';
-			}
-			if ( is_post_type_archive() ) {
-				//さらに、投稿タイプの日付アーカイブだった場合
-				$data['title'] = $ymd_name."(".post_type_archive_title('',false).")";
-			}
-			$data['title'] = $ymd_name;
-			$data['type']  = 'date';
-
-		} elseif ( is_post_type_archive() ) {
-			//投稿タイプのアーカイブページなら
-
-			$data['title'] = post_type_archive_title('',false);
-			$data['type']  = 'pt_archive';
-
-		} elseif ( is_author() ) {
-			//投稿者アーカイブ
-
-			$data['title'] = get_queried_object()->display_name;
-			$data['type']  = 'author';
-
-		} elseif ( is_category() ) {
-
-			$data['title'] = single_term_title( '', false );
-			$data['type']  = 'category';
-
-		} elseif ( is_tag() ) {
-
-			$data['title'] = single_term_title( '', false );
-			$data['type']  = 'tag';
-
-		} elseif ( is_tax() ) {
-
-			$data['title'] = single_term_title( '', false );
-			$data['type']  = 'tax';
-
-		} else {
-
-			$data['title'] = single_term_title( '', false );
-			$data['type']  = '';
-
-		}
-		return $data;
+	public static function get_file_contents( $file ) {
+		return SWELL::get_file_contents( $file );
 	}
 
 
@@ -481,25 +146,6 @@ class SWELL_FUNC {
 
 	}
 
-
-	/**
-	 * ファイル読み込み
-	 */
-	public static function get_file_contents( $file ) {
-
-		if ( file_exists( $file ) ) {
-			$file_content = file_get_contents( $file );
-			return $file_content;
-		}
-		return false;
-
-		// $creds = request_filesystem_credentials('', '', false, false, null);
-		// if ( file_exists( $file ) && WP_Filesystem( $creds ) ) {
-		// 	global $wp_filesystem;
-		// 	$file_content = $wp_filesystem->get_contents( $file );
-		// 	return $file_content;
-		// }
-	}
 
 
 	/**

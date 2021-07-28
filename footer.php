@@ -1,20 +1,20 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( SWELL_FUNC::is_show_sidebar() ) {
+if ( SWELL_Theme::is_show_sidebar() ) {
 	get_sidebar();
 }
 ?>
 </div>
 <?php
-	$SETTING = SWELL_FUNC::get_setting();
+	$SETTING = SWELL_Theme::get_setting();
 
-	if ( \SWELL_Theme::is_use( 'pjax' ) ) echo '</div>'; // End : Barba[data-barba="container"]
+	if ( SWELL_Theme::is_use( 'pjax' ) ) echo '</div>'; // End : Barba[data-barba="container"]
 
 	// フッター前ウィジェット
 	if ( is_active_sidebar( 'before_footer' ) ) :
 		echo '<div id="before_footer_widget" class="w-beforeFooter">';
-		if ( ! \SWELL_Theme::is_use( 'ajax_footer' ) ) :
+		if ( ! SWELL_Theme::is_use( 'ajax_footer' ) ) :
 			SWELL_FUNC::get_parts( 'parts/footer/before_footer' );
 		endif;
 		echo '</div>';
@@ -26,7 +26,7 @@ if ( SWELL_FUNC::is_show_sidebar() ) {
 	endif;
 ?>
 <footer id="footer" class="l-footer">
-	<?php if ( ! \SWELL_Theme::is_use( 'ajax_footer' ) ) SWELL_FUNC::get_parts( 'parts/footer/footer_contents' ); ?>
+	<?php if ( ! SWELL_Theme::is_use( 'ajax_footer' ) ) SWELL_FUNC::get_parts( 'parts/footer/footer_contents' ); ?>
 </footer>
 <?php
 	// 固定フッターメニュー

@@ -6,7 +6,7 @@ get_header();
 if ( \SWELL_Theme::is_term() ) :
 	SWELL_FUNC::get_parts( 'archive-term' );
 else :
-	$archive_data     = SWELL_FUNC::get_archive_data();
+	$archive_data     = SWELL_Theme::get_archive_data();
 	$archive_title    = $archive_data['title'];
 	$archive_subtitle = str_replace( 'pt_archive', 'archive', $archive_data['type'] );
 
