@@ -64,7 +64,6 @@ function register_normal_blocks() {
 			true
 		);
 
-		$block_name = str_replace( 'dl-', '', $block_name );
 		register_block_type( "loos/{$block_name}", [ 'editor_script' => $handle ] );
 	}
 
