@@ -29,10 +29,13 @@
 // 本文エリア
 .block-editor-writing-flow {
 
-    // 5.7 ~ エディターの縦幅の最小値がなくなっている
-    // .branch-5-7 & {
+    // 5.7 ~ エディターの縦幅の最小値がなくなっていて本文短い時に下の余白がない
     padding-bottom: 40px;
-    // }
+
+    .editor-post-title__input,
+    .editor-post-title__input:focus {
+        color: var(--color_text);
+    }
 
 }
 
@@ -44,8 +47,8 @@
 
 // フォント
 .editor-styles-wrapper {
+    color: var(--color_text) !important; // !important は ~5.7で必要
     font-weight: 500;
-    // font-size: 16px;
     font-family: "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "メイリオ", Meiryo, sans-serif !important;
     line-height: 1.8;
     background-color: var(--color_content_bg);
@@ -55,15 +58,6 @@
     strong {
         font-weight: 700;
     }
-
-    // .wp-block,
-    &.block-editor-block-preview__container,
-    .editor-post-title__input,
-    .editor-post-title__input:focus,
-    .block-editor-writing-flow {
-        color: var(--color_text);
-    }
-
 }
 
 
