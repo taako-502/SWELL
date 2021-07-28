@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $slider_images = $variable;
 
 // 設定
-$SETTING       = SWELL_FUNC::get_setting();
+$SETTING       = SWELL_Theme::get_setting();
 $is_fix_text   = $SETTING['mv_fix_text'];
 $mv_img_filter = $SETTING['mv_img_filter']
 
@@ -48,7 +48,7 @@ $mv_img_filter = $SETTING['mv_img_filter']
 					$btncol      = $SETTING[ 'slider' . $i . '_btncol' ];
 					$shadowcol   = $SETTING[ 'slider' . $i . '_shadowcol' ];
 					$parts_id    = (int) $SETTING[ 'slider' . $i . '_parts_id' ];
-					$text_style  = SWELL_FUNC::get_mv_text_style( $txtcol, $shadowcol );
+					$text_style  = SWELL_Theme::get_mv_text_style( $txtcol, $shadowcol );
 			?>
 				<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 					<?php
@@ -78,7 +78,7 @@ $mv_img_filter = $SETTING['mv_img_filter']
 
 						elseif ( $slide_url ) :
 							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-							echo '<a href="' . esc_url( $slide_url ) . '" class="p-mainVisual__slideLink" ' . SWELL_FUNC::get_link_target( $slide_url ) . '></a>';
+							echo '<a href="' . esc_url( $slide_url ) . '" class="p-mainVisual__slideLink" ' . SWELL_Theme::get_link_target( $slide_url ) . '></a>';
 						endif;
 					?>
 					</div>
@@ -116,7 +116,7 @@ $mv_img_filter = $SETTING['mv_img_filter']
 			$btntype     = $SETTING['slider1_btntype'];
 			$btncol      = $SETTING['slider1_btncol'];
 			$shadowcol   = $SETTING['slider1_shadowcol'];
-			$text_style  = SWELL_FUNC::get_mv_text_style( $txtcol, $shadowcol );
+			$text_style  = SWELL_Theme::get_mv_text_style( $txtcol, $shadowcol );
 	?>
 		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 			<?php
@@ -142,7 +142,7 @@ $mv_img_filter = $SETTING['mv_img_filter']
 
 				elseif ( $slide_url ) :
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo '<a href="' . esc_url( $slide_url ) . '" class="p-mainVisual__slideLink"' . SWELL_FUNC::get_link_target( $slide_url ) . '></a>';
+					echo '<a href="' . esc_url( $slide_url ) . '" class="p-mainVisual__slideLink"' . SWELL_Theme::get_link_target( $slide_url ) . '></a>';
 				endif;
 			?>
 		</div>

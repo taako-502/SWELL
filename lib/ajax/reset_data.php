@@ -13,9 +13,8 @@ add_action( 'wp_ajax_swell_reset_pv', __NAMESPACE__ . '\reset_pv' );
  * キャッシュクリア
  */
 function clear_cache() {
-	if ( \SWELL_FUNC::check_ajax_nonce() ) {
-		\SWELL_FUNC::clear_cache();
-		\SWELL_FUNC::clear_cache( [], 'swell' ); // 2.0.2以下で使用していたキーで保持しているキャッシュを削除
+	if ( \SWELL_Theme::check_ajax_nonce() ) {
+		\SWELL_Theme::clear_cache();
 		$return = 'キャッシュクリアに成功しました。';
 	} else {
 		$return = 'キャッシュクリアに失敗しました。';
@@ -28,8 +27,8 @@ function clear_cache() {
  * キャッシュクリア（ブログカード）
  */
 function clear_card_cache() {
-	if ( \SWELL_FUNC::check_ajax_nonce() ) {
-		\SWELL_FUNC::clear_card_cache();
+	if ( \SWELL_Theme::check_ajax_nonce() ) {
+		\SWELL_Theme::clear_card_cache();
 		$return = 'キャッシュクリアに成功しました。';
 	} else {
 		$return = 'キャッシュクリアに失敗しました。';
@@ -43,9 +42,9 @@ function clear_card_cache() {
  * $.ajaxから呼ぶので json_encode不要
  */
 function reset_settings() {
-	if ( \SWELL_FUNC::check_ajax_nonce() ) {
+	if ( \SWELL_Theme::check_ajax_nonce() ) {
 		delete_option( \SWELL_Theme::DB_NAME_CUSTOMIZER );
-		\SWELL_FUNC::clear_cache();
+		\SWELL_Theme::clear_cache();
 		wp_die( 'リセットに成功しました。' );
 	}
 	wp_die( 'リセットに失敗しました。' );
@@ -57,7 +56,7 @@ function reset_settings() {
  * $.ajaxから呼ぶので json_encode不要
  */
 function reset_pv() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( 'リセットに失敗しました。' );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( 'リセットに失敗しました。' );
 
 	$args      = [
 		'post_type'      => 'post',

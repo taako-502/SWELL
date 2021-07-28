@@ -277,10 +277,10 @@ function url_matches_callback( $matches ) {
 	$post_id = url_to_postid( $url );
 	if ( $post_id ) {
 		// 内部リンク
-		return \SWELL_FUNC::get_internal_blog_card( $post_id );
+		return \SWELL_Theme::get_internal_blog_card( $post_id );
 	} else {
 		// 外部リンク
-		return \SWELL_FUNC::get_external_blog_card( $url );
+		return \SWELL_Theme::get_external_blog_card( $url );
 	}
 	return $url;
 

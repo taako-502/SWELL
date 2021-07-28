@@ -74,12 +74,8 @@ function output_custom_post_columns( $column_name, $post_id ) {
 		echo esc_html( $post_id );
 
 	} elseif ( 'swell_pv_ct' === $column_name ) {
-		$pv = get_post_meta( $post_id, SWELL_CT_KEY, true );
-		if ( empty( $pv ) ) {
-			echo '0';
-		} else {
-			echo esc_html( $pv );
-		}
+		$pv = \SWELL_Theme::get_post_views( $post_id );
+		echo esc_html( $pv );
 	} elseif ( 'balloon_code' === $column_name ) {
 
 		$balcode = _x( 'speech_balloon', 'code', 'swell' );

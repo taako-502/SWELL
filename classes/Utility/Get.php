@@ -66,6 +66,10 @@ trait Get {
 	 * ヘッダーのクラス
 	 */
 	public static function get_header_class() {
+		// キャッシュ取得
+		$cached_class = wp_cache_get( 'header_class', 'swell' );
+		if ( $cached_class ) return $cached_class;
+
 		$header_layout = str_replace( '_', '-', self::get_setting( 'header_layout' ) );
 		switch ( $header_layout ) {
 			case 'parallel-top':
@@ -86,6 +90,7 @@ trait Get {
 			$header_class .= ' -transparent -' . $header_transparent;
 		}
 
+		wp_cache_set( 'header_class', $header_class, 'swell' );
 		return $header_class;
 	}
 
@@ -262,23 +267,27 @@ trait Get {
 	/**
 	 * 著者情報を取得
 	 */
-	public static function get_author_data( $author_id, $get_link = false ) {
+	public static function get_author_icon_data( $author_id ) {
 		if ( ! $author_id ) return null;
+
+		$cache_key = "post_author_icon_{$author_id}";
+
+		// キャッシュ取得
+		$cached_data = wp_cache_get( $cache_key, 'swell' );
+		if ( $cached_data ) return $cached_data;
 
 		$author_data = get_userdata( $author_id );
 		if ( false === $author_data ) {
 			return null;
 		}
 
-		$return = [
+		$data = [
 			'name'   => $author_data->display_name,
 			'avatar' => get_avatar( $author_id, 100, '', '' ),
+			'url'    => get_author_posts_url( $author_id ),
 		];
 
-		if ( $get_link ) {
-			$return['url'] = get_author_posts_url( $author_id );
-		}
-
+		wp_cache_set( $cache_key, $data, 'swell' );
 		return $return;
 	}
 
@@ -390,7 +399,7 @@ trait Get {
 
 			if ( $qv_day !== 0 ) {
 				$ymd_name = $qv_year . '年' . $qv_monthnum . '月' . $qv_day . '日';
-			} elseif ( $qv_monthnum != 0 ) {
+			} elseif ( $qv_monthnum !== 0 ) {
 				$ymd_name = $qv_year . '年' . $qv_monthnum . '月';
 			} else {
 				$ymd_name = $qv_year . '年';
@@ -437,4 +446,319 @@ trait Get {
 		}
 		return $data;
 	}
+
+
+	/**
+	 * 内部リンクのブログカード化
+	 */
+	public static function get_internal_blog_card( $post_id, $card_args = [], $is_text = false ) {
+
+		// $caption = '', $is_blank = false, $rel = '', $noimg = false;
+
+		$card_data = '';
+		// キャッシュがあるか調べる
+		if ( self::is_use( 'card_cache__in' ) ) {
+			$cache_key = 'swell_card_id' . $post_id;
+			$card_data = get_transient( $cache_key );
+		}
+
+		// キャッシュがなければ
+		if ( ! $card_data ) {
+
+			$post_data = get_post( $post_id );
+			$title     = get_the_title( $post_id );
+			$url       = get_permalink( $post_id );
+			$excerpt   = self::get_excerpt( $post_data, 80 );
+
+			if ( mb_strwidth( $title, 'UTF-8' ) > 100 ) {
+				$title = mb_strimwidth( $title, 0, 100, '...', 'UTF-8' );
+			}
+			if ( has_post_thumbnail( $post_id ) ) {
+				// アイキャッチ画像のIDを取得
+				$thumb_id   = get_post_thumbnail_id( $post_id );
+				$thumb_data = wp_get_attachment_image_src( $thumb_id, 'medium' );
+				$thumb      = $thumb_data[0];
+			} else {
+				$thumb = self::get_noimg( 'small' );
+			}
+
+			$card_data = [
+				'url'     => $url,
+				'title'   => $title,
+				'thumb'   => $thumb,
+				'excerpt' => $excerpt,
+			];
+
+			if ( self::is_use( 'card_cache__in' ) ) {
+				$day = self::get_setting( 'cache_card_time' ) ?: 30;
+				set_transient( $cache_key, $card_data, DAY_IN_SECONDS * intval( $day ) );
+			}
+		}
+
+		$card_data              = array_merge( $card_data, $card_args );
+		$card_data['add_class'] = '-internal';
+		$card_data['type']      = self::get_editor( 'blog_card_type' ) ?: 'type1';
+
+		if ( $is_text ) {
+			return self::get_pluggable_parts( 'blog_link', $card_data );
+		}
+		return self::get_pluggable_parts( 'blog_card', $card_data );
+	}
+
+
+	/**
+	 * 外部サイトのブログカード
+	 */
+	public static function get_external_blog_card( $url, $card_args = [], $is_text = false ) {
+
+		$card_data = '';
+
+		// キャッシュがあるか調べる
+		if ( self::is_use( 'card_cache__ex' ) ) {
+			$url_hash  = md5( $url );
+			$cache_key = 'swell_card_' . $url_hash;
+			$card_data = get_transient( $cache_key );
+
+			if ( ! isset( $card_data['site_name'] ) ) {
+				// キャプション不具合修正時のコード変更に対応
+				delete_transient( $cache_key );
+				$card_data = '';
+			}
+		}
+
+		if ( ! $card_data ) {
+
+			// Get_OGP_InWP の読み込み
+			require_once T_DIRE . '/classes/plugins/get_ogp_inwp.php';
+
+			$ogps = \Get_OGP_InWP::get( $url );
+			if ( empty( $ogps ) ) return $url;
+
+			// 必要なデータを抽出
+			$card_data = \Get_OGP_InWP::extract_card_data( $ogps );
+
+			$title       = $card_data['title'];
+			$description = $card_data['description'];
+			$site_name   = $card_data['site_name'];
+			$thumb_url   = $card_data['thumbnail'];
+			// $icon        = $card_data['icon'];
+
+			/**
+			 * はてなブログの文字化け対策
+			 */
+			$title_decoded = utf8_decode( $title );  // utf8でのデコード
+			if ( mb_detect_encoding( $title_decoded ) === 'UTF-8' ) {
+				$title = $title_decoded; // 文字化け解消
+
+				$description_decoded = utf8_decode( $description );
+				if ( mb_detect_encoding( $description_decoded ) === 'UTF-8' ) {
+					$description = $description_decoded;
+				}
+
+				$site_name_decoded = utf8_decode( $site_name );
+				if ( mb_detect_encoding( $site_name_decoded ) === 'UTF-8' ) {
+					$site_name = $site_name_decoded;
+				}
+			}
+
+			// 文字数で切り取り
+			if ( mb_strwidth( $title, 'UTF-8' ) > 100 ) {
+				$title = mb_strimwidth( $title, 0, 100 ) . '...';
+			}
+			if ( mb_strwidth( $description, 'UTF-8' ) > 160 ) {
+				$description = mb_strimwidth( $description, 0, 160 ) . '...';
+			}
+			if ( mb_strwidth( $site_name, 'UTF-8' ) > 32 ) {
+				$site_name = mb_strimwidth( $site_name, 0, 32 ) . '...';
+			}
+
+			$card_data = [
+				'url'       => $url,
+				'site_name' => $site_name,
+				'title'     => $title,
+				'thumb'     => $thumb_url,
+				'excerpt'   => $description,
+			];
+
+			if ( self::is_use( 'card_cache__ex' ) ) {
+				$day = self::get_setting( 'cache_card_time' ) ?: 30;
+				set_transient( $cache_key, $card_data, DAY_IN_SECONDS * intval( $day ) );
+			}
+		}
+
+		$card_data              = array_merge( $card_data, $card_args );
+		$card_data['add_class'] = '-external';
+		$card_data['is_blank']  = true;
+		$card_data['type']      = self::get_editor( 'blog_card_type_ex' ) ?: 'type3';
+
+		if ( $is_text ) {
+			return self::get_pluggable_parts( 'blog_link', $card_data );
+		}
+		return self::get_pluggable_parts( 'blog_card', $card_data );
+	}
+
+
+	/**
+	 * 著者情報を取得
+	 */
+	public static function get_author_data( $author_id ) {
+		if ( ! $author_id ) return [];
+
+		$return_data = [];
+		$author_data = get_userdata( $author_id );
+
+		$return_data['name']        = $author_data->display_name;
+		$return_data['description'] = $author_data->description;
+		$return_data['position']    = get_the_author_meta( 'position', $author_id );
+
+		$sns_list              = [];
+		$sns_list['home']      = $author_data->user_url ?: '';
+		$sns_list['home2']     = get_the_author_meta( 'site2', $author_id ) ?: '';
+		$sns_list['facebook']  = get_the_author_meta( 'facebook_url', $author_id ) ?: '';
+		$sns_list['twitter']   = get_the_author_meta( 'twitter_url', $author_id ) ?: '';
+		$sns_list['instagram'] = get_the_author_meta( 'instagram_url', $author_id ) ?: '';
+		$sns_list['room']      = get_the_author_meta( 'room_url', $author_id ) ?: '';
+		$sns_list['pinterest'] = get_the_author_meta( 'pinterest_url', $author_id ) ?: '';
+		$sns_list['github']    = get_the_author_meta( 'github_url', $author_id ) ?: '';
+		$sns_list['youtube']   = get_the_author_meta( 'youtube_url', $author_id ) ?: '';
+		$sns_list['amazon']    = get_the_author_meta( 'amazon_url', $author_id ) ?: '';
+
+		// 空の要素を排除
+		$return_data['sns_list'] = array_filter( $sns_list );
+
+		return $return_data;
+	}
+
+
+	/**
+	 * カスタマイザーのSNS設定情報を取得
+	 *
+	 * @return $key => $url の配列データ
+	 */
+	public static function get_sns_settings() {
+		$sns_settings = [
+			'facebook',
+			'twitter',
+			'instagram',
+			'room',
+			'line',
+			'pinterest',
+			'github',
+			'youtube',
+			'amazon',
+			'feedly',
+			'rss',
+			'contact',
+		];
+
+		$sns_data = [];
+		foreach ( $sns_settings as $key ) {
+			$url = self::get_setting( $key . '_url' );
+			if ( $url ) {
+				$sns_data[ $key ] = $url;
+			}
+		}
+		return $sns_data;
+	}
+
+
+	/**
+	 * ブログパーツのコンテンツを取得
+	 */
+	public static function get_blog_parts_content( $args ) {
+		$q_args = [
+			'post_type'              => 'blog_parts',
+			'no_found_rows'          => true,
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false,
+			'posts_per_page'         => 1,
+		];
+
+		$parts_id    = isset( $args['id'] ) ? (int) $args['id'] : 0;
+		$parts_title = isset( $args['title'] ) ? $args['title'] : '';
+
+		if ( $parts_id ) {
+			$q_args['p'] = $parts_id;
+		} elseif ( $parts_title ) {
+			$q_args['title'] = $parts_title;
+		} else {
+			return '';
+		}
+
+		$the_query  = new \WP_Query( $q_args );
+		$parts_data = $the_query->posts;
+		wp_reset_postdata();
+
+		if ( empty( $parts_data ) ) {
+			return '';
+		}
+
+		$parts_data = $parts_data[0]; // 一つしかないはず
+		$parts_id   = $parts_data->ID;
+		$content    = $parts_data->post_content;
+
+		// 無限ループ回避
+		if ( false !== strpos( $content, 'blog_parts id="' . $parts_id ) || false !== strpos( $content, '"partsID":"' . $parts_id ) ) {
+			return 'ブログパーツ内で自信を呼び出すことはできません。';
+		}
+
+		return $content;
+	}
+
+
+	/**
+	 * メインビジュアルのスタイルを生成する
+	 */
+	public static function get_mv_text_style( $text_color, $shadow_color ) {
+		$return = 'color:' . $text_color . ';';
+		if ( '' !== $shadow_color ) {
+			$return .= 'text-shadow:1px 1px 0px ' . self::get_rgba( $shadow_color, .2 );
+		}
+		return $return;
+	}
+
+
+	/**
+	 * リンク先URLからtarget属性を判定する
+	 */
+	public static function get_link_target( $url ) {
+		// スムースリンクさせたいリンクは _blank にしない
+		if ( strpos( $url, '#' ) !== 0 && strpos( $url, self::site_data( 'home' ) ) === false ) {
+			return ' rel="noopener" target="_blank"';
+		}
+		return '';
+	}
+
+
+	/**
+	 * ファイルURLからサイズを取得
+	 */
+	public static function get_file_size( $file_url ) {
+
+		// ファイル名にサイズがあればそれを返す
+		preg_match( '/-([0-9]*)x([0-9]*)\./', $file_url, $matches );
+		if ( ! empty( $matches ) ) {
+			return [
+				'width'  => $matches[1],
+				'height' => $matches[2],
+			];
+		}
+
+		return false;
+
+		// memo: attachment_url_to_postidは処理が重いので停止
+
+		// $file_id   = attachment_url_to_postid( $file_url );
+		// $file_data = wp_get_attachment_metadata( $file_id );
+		// if ( ! empty( $file_data ) ) {
+		// 	return [
+		// 		'width'  => $file_data['width'],
+		// 		'height' => $file_data['height'],
+		// 	];
+		// }
+
+		// return false;
+	}
+
+
 }

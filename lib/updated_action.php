@@ -42,16 +42,8 @@ function updated_hook() {
  * SWELL用 transientキャッシュをすべて削除
  */
 function all_cache_delete() {
-	\SWELL_FUNC::clear_cache( ['style', 'style_sp' ], 'swell' ); // 1.x系のキャッシュを削除
-	\SWELL_FUNC::clear_cache( [], 'swell' ); // 2.0.2以下でのキャッシュを削除
-	\SWELL_FUNC::clear_cache( [] );
-
-	// 念のため、query回して削除
-	global $wpdb;
-	$option_table = $wpdb->prefix . 'options';
-	// @codingStandardsIgnoreStart
-	$wpdb->query( "DELETE FROM $option_table WHERE (`option_name` LIKE '%_transient_swell_parts_%') OR (`option_name` LIKE '%_transient_timeout_swell_parts_%')" );
-	// @codingStandardsIgnoreEnd
+	// \SWELL_Theme::clear_cache( [] );
+	\SWELL_Theme::clear_all_parts_cache_by_wpdb(); // 念のため、query回して削除
 }
 
 

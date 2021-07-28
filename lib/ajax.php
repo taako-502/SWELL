@@ -13,8 +13,8 @@ require_once __DIR__ . '/ajax/reset_data.php';
 // add_action( 'wp_ajax_swell_pv_count', __NAMESPACE__ . '\pv_count' );
 add_action( 'wp_ajax_nopriv_swell_pv_count', __NAMESPACE__ . '\pv_count' );
 function pv_count() {
-	if ( \SWELL_FUNC::check_ajax_nonce() && isset( $_POST['post_id'] ) ) {
-		\SWELL_FUNC::set_post_views( $_POST['post_id'] );
+	if ( \SWELL_Theme::check_ajax_nonce() && isset( $_POST['post_id'] ) ) {
+		\SWELL_Theme::set_post_views( $_POST['post_id'] );
 	}
 	wp_die( json_encode( '' ) );
 }

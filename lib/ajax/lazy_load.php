@@ -18,9 +18,9 @@ add_action( 'wp_ajax_nopriv_swell_load_after_article', __NAMESPACE__ . '\load_af
  * フッター読み込み
  */
 function load_footer() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( json_encode( '' ) );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( json_encode( '' ) );
 	ob_start();
-	\SWELL_FUNC::get_parts( 'parts/footer/footer_contents' );
+	\SWELL_Theme::get_parts( 'parts/footer/footer_contents' );
 	$return = ob_get_clean();
 	wp_die( json_encode( $return ) );
 }
@@ -30,9 +30,9 @@ function load_footer() {
  * フッター直前ウィジェット読み込み
  */
 function load_foot_before() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( json_encode( '' ) );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( json_encode( '' ) );
 	ob_start();
-	\SWELL_FUNC::get_parts( 'parts/footer/before_footer' );
+	\SWELL_Theme::get_parts( 'parts/footer/before_footer' );
 	$return = ob_get_clean();
 	wp_die( json_encode( $return ) );
 }
@@ -42,7 +42,7 @@ function load_foot_before() {
  * 記事下コンテンツ読み込み
  */
 function load_after_article() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() || ! isset( $_POST['post_id'] ) ) {
+	if ( ! \SWELL_Theme::check_ajax_nonce() || ! isset( $_POST['post_id'] ) ) {
 		wp_die( json_encode( '' ) );
 	}
 
@@ -59,7 +59,7 @@ function load_after_article() {
 	if ( $the_query->have_posts() ) :
 	while ( $the_query->have_posts() ) :
 		$the_query->the_post();
-		\SWELL_FUNC::get_parts( 'parts/single/after_article', ['post_id' => $post_id ] );
+		\SWELL_Theme::get_parts( 'parts/single/after_article', ['post_id' => $post_id ] );
 	endwhile;
 	endif;
 	wp_reset_postdata();

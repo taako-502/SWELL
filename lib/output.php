@@ -200,7 +200,7 @@ function get_swl_front_css() {
 
 	// IEではCSS変数を置換
 	global $is_IE;
-	if ( $is_IE ) $style = \SWELL_FUNC::replace_css_var_on_IE( $style );
+	if ( $is_IE ) $style = SWELL::replace_css_var_on_IE( $style );
 
 	return $style;
 }

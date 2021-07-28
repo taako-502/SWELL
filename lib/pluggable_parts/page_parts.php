@@ -62,7 +62,7 @@ if ( ! function_exists( 'swl_parts__the_post_author' ) ) :
 	function swl_parts__the_post_author( $args ) {
 
 		$author_id   = $args['author_id'] ?? 0;
-		$author_data = SWELL::get_author_data( $author_id, true );
+		$author_data = SWELL::get_author_icon_data( $author_id );
 		if ( empty( $author_data ) ) return;
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
