@@ -1,10 +1,3 @@
-// 旧フルワイド
-.wp-block-loos-full-wide {
-    margin: 0 calc(50% - 50vw);
-    padding: 20px calc(50vw - 50%);
-    border: dashed 1px #ccc;
-}
-
 .swell-block-fullWide {
 
     [data-content-size="full"] & {
@@ -49,6 +42,11 @@
             }
         }
     }
+
+    .block-editor-block-list__layout.is-root-container > & {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
 }
 
 
@@ -81,8 +79,6 @@
         }
     }
 
-    // .__label {
-    // }
 }
 
 .components-popover:not(.is-mobile).is-center.-fullWideBgColor .components-popover__content {

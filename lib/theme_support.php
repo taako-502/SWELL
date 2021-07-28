@@ -30,7 +30,7 @@ function setup_theme() {
 
 	// 5.5からの機能
 	add_theme_support( 'custom-line-height' );
-	add_theme_support( 'custom-units', 'px', 'vw', 'vh' );
+	add_theme_support( 'custom-units', 'px', '%', 'em', 'rem', 'vw', 'vh' );
 
 	// フォントサイズ
 	add_theme_support(

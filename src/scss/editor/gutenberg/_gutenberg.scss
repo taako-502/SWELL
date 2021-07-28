@@ -4,35 +4,16 @@
     --block_max_width: 900px;
 }
 
-// スマホで再利用ブロックの中の画像が飛び出るバグを回避
-.branch-5-6,
-.branch-5-7,
-.branch-5-8 {
-
-    .interface-interface-skeleton__editor {
-        width: 100%;
-    }
-
-    .block-editor-block-list__layout.is-root-container > [data-type="loos/full-wide"] {
-        margin-right: -10px;
-        margin-left: -10px;
-    }
-
-    .block-library-block__reusable-block-container {
-
-        .wp-block-image > div {
-            max-width: 100%;
-        }
-    }
-}
-
 // 本文エリア
 .block-editor-writing-flow {
 
-    // 5.7 ~ エディターの縦幅の最小値がなくなっている
-    // .branch-5-7 & {
+    // 5.7 ~ エディターの縦幅の最小値がなくなっていて本文短い時に下の余白がない
     padding-bottom: 40px;
-    // }
+
+    .editor-post-title__input,
+    .editor-post-title__input:focus {
+        color: var(--color_text);
+    }
 
 }
 
@@ -44,8 +25,8 @@
 
 // フォント
 .editor-styles-wrapper {
+    color: var(--color_text) !important; // !important は ~5.7で必要
     font-weight: 500;
-    // font-size: 16px;
     font-family: "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "メイリオ", Meiryo, sans-serif !important;
     line-height: 1.8;
     background-color: var(--color_content_bg);
@@ -55,15 +36,6 @@
     strong {
         font-weight: 700;
     }
-
-    // .wp-block,
-    &.block-editor-block-preview__container,
-    .editor-post-title__input,
-    .editor-post-title__input:focus,
-    .block-editor-writing-flow {
-        color: var(--color_text);
-    }
-
 }
 
 
@@ -72,7 +44,8 @@
     background: none;
 }
 
-// 色設定の 背景色を分かりやすく四角形に。
+
+// 色設定の 背景色 を分かりやすく四角形に。
 .block-editor-color-gradient-control {
 
     & + & {
@@ -86,17 +59,6 @@
         }
     }
 }
-
-// インサーターボタン、背景黒でも見えるように
-// .block-editor-block-list__block-popover-inserter,
-// .block-editor-block-list__empty-block-inserter,
-// .block-editor-block-list__insertion-point-inserter,
-// .block-editor-default-block-appender {
-
-//     .block-editor-inserter__toggle {
-//         box-shadow: 0 0 0 1px #fff;
-//     }
-// }
 
 
 // ブロックの「Move To」モードで出てくる ::before のバーが崩れないように。
@@ -135,13 +97,25 @@
 }
 
 
-// fullwideコンテンツを使うと少し左右にスクロールできてしまうのを防ぐ
-.interface-interface-skeleton__content {
-    overflow-x: hidden;
+// スマホで再利用ブロックの中の画像が飛び出るバグを回避
+.branch-5-6,
+.branch-5-7,
+.branch-5-8 {
+
+    .interface-interface-skeleton__editor {
+        width: 100%;
+    }
+
+    .block-library-block__reusable-block-container {
+
+        .wp-block-image > div {
+            max-width: 100%;
+        }
+    }
 }
 
 
-// 5.8のインナーブロックバグへのとり急ぎの対応
+// 子ブロックの追加ボタンは、選択中のみ表示させる
 [data-type="loos/accordion"],
 [data-type="loos/step"],
 [data-type="loos/dl"],
