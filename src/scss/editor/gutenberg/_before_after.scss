@@ -42,9 +42,9 @@
     // マージン auto で中央寄せになってしまったもの
     .is-root-container {
 
-        & > .is-style-sticky_box,
-        & > .is-style-balloon_box,
-        & > .is-style-balloon_box2 {
+        > .is-style-sticky_box,
+        > .is-style-balloon_box,
+        > .is-style-balloon_box2 {
 
             &:not(.has-text-align-center) {
                 position: relative;

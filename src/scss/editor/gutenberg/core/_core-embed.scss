@@ -1,13 +1,13 @@
 [data-align="full"] {
 
     // 5.6 ~
-    & > .wp-block-embed {
+    > .wp-block-embed {
         max-width: 100%;
     }
 
     // 5.5
-    & > .block-editor-block-list__block > .wp-embed-aspect-16-9,
-    & > .block-editor-block-list__block > .wp-block-embed-youtube {
+    > .block-editor-block-list__block > .wp-embed-aspect-16-9,
+    > .block-editor-block-list__block > .wp-block-embed-youtube {
         max-width: 100%;
     }
 }

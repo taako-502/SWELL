@@ -49,6 +49,11 @@
             }
         }
     }
+
+    .block-editor-block-list__layout.is-root-container > & {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
 }
 
 
@@ -81,8 +86,6 @@
         }
     }
 
-    // .__label {
-    // }
 }
 
 .components-popover:not(.is-mobile).is-center.-fullWideBgColor .components-popover__content {
