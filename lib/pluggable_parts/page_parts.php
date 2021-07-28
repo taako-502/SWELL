@@ -45,8 +45,8 @@ if ( ! function_exists( 'swl_parts__term_title' ) ) :
 		$has_inner = $args['has_inner'] ?? false;
 		if ( ! $term_id ) return;
 
-		$archive_data = \SWELL_FUNC::get_archive_data();
-		\SWELL_Theme::pluggable_parts( 'page_title', [
+		$archive_data = SWELL::get_archive_data();
+		SWELL::pluggable_parts( 'page_title', [
 			'title'     => get_term_meta( $term_id, 'swell_term_meta_ttl', 1 ) ?: $archive_data['title'],
 			'subtitle'  => get_term_meta( $term_id, 'swell_term_meta_subttl', 1 ) ?: $archive_data['type'],
 			'has_inner' => $has_inner,
@@ -62,7 +62,7 @@ if ( ! function_exists( 'swl_parts__the_post_author' ) ) :
 	function swl_parts__the_post_author( $args ) {
 
 		$author_id   = $args['author_id'] ?? 0;
-		$author_data = SWELL::get_author_data( $author_id, true );
+		$author_data = SWELL::get_author_icon_data( $author_id );
 		if ( empty( $author_data ) ) return;
 
 		// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * メインビジュアル (画像１枚の時)
  */
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 
 // PC画像
 $pc_img    = $SETTING['slider1_img'];
@@ -24,7 +24,7 @@ $slide_text  = $SETTING['slider1_text'];
 $btn_text    = $SETTING['slider1_btn_text'];
 $slide_url   = $SETTING['slider1_url'];
 $txtpos      = $SETTING['slider1_txtpos'];
-$text_style  = SWELL_FUNC::get_mv_text_style( $SETTING['slider1_txtcol'], $SETTING['slider1_shadowcol'] );
+$text_style  = SWELL_Theme::get_mv_text_style( $SETTING['slider1_txtcol'], $SETTING['slider1_shadowcol'] );
 
 // パーツID
 $parts_id = (int) $SETTING['slider1_parts_id'];
@@ -67,7 +67,7 @@ $parts_id = (int) $SETTING['slider1_parts_id'];
 
 			elseif ( $slide_url ) :
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo '<a href="' . esc_url( $slide_url ) . '" class="p-mainVisual__slideLink"' . SWELL_FUNC::get_link_target( $slide_url ) . '></a>';
+				echo '<a href="' . esc_url( $slide_url ) . '" class="p-mainVisual__slideLink"' . SWELL_Theme::get_link_target( $slide_url ) . '></a>';
 			endif;
 		?>
 		</div>

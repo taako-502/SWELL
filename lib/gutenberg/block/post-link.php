@@ -51,9 +51,9 @@ function cb_post_link( $attrs ) {
 	ob_start();
 	echo '<div class="' . esc_attr( $block_class ) . '" data-style="' . esc_attr( $link_style ) . '">';
 	if ( $externalUrl ) {
-		echo \SWELL_FUNC::get_external_blog_card( $externalUrl, $card_args, $isText );
+		echo \SWELL_Theme::get_external_blog_card( $externalUrl, $card_args, $isText );
 	} elseif ( $postId ) {
-		echo \SWELL_FUNC::get_internal_blog_card( $postId, $card_args, $isText );
+		echo \SWELL_Theme::get_internal_blog_card( $postId, $card_args, $isText );
 	}
 	echo '</div>';
 	return ob_get_clean();

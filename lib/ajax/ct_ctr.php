@@ -24,7 +24,7 @@ add_action( 'wp_ajax_nopriv_swell_ct_btn_data', __NAMESPACE__ . '\ct_btn_data' )
  * 広告があるページのPV数をカウント
  */
 function ct_ad_pv() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( json_encode( [] ) );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( json_encode( [] ) );
 	if ( ! isset( $_POST['id'] ) ) wp_die( json_encode( [] ) );
 
 	$return = [];
@@ -47,7 +47,7 @@ function ct_ad_pv() {
  * 広告表示回数を記録
  */
 function ct_ad_imp() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( json_encode( [] ) );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( json_encode( [] ) );
 	if ( ! isset( $_POST['id'] ) ) wp_die( json_encode( [] ) );
 
 	$ad_id = $_POST['id'];
@@ -66,7 +66,7 @@ function ct_ad_imp() {
  * 広告クリック数を記録
  */
 function clicked_ad() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( json_encode( [] ) );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( json_encode( [] ) );
 	if ( ! isset( $_POST['id'] ) ) wp_die( json_encode( [] ) );
 
 	$ad_id = $_POST['id'];
@@ -91,7 +91,7 @@ function clicked_ad() {
  * 広告計測をリセット 全て 0 に。
  */
 function reset_ad_data() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( 'リセットに失敗しました' );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( 'リセットに失敗しました' );
 	if ( ! isset( $_POST['id'] ) ) wp_die( 'リセットに失敗しました' );
 
 	$ad_id = $_POST['id'];
@@ -114,7 +114,7 @@ function reset_ad_data() {
  * ボタンクリック数を記録
  */
 function ct_btn_data() {
-	if ( ! \SWELL_FUNC::check_ajax_nonce() ) wp_die( json_encode( [] ) );
+	if ( ! \SWELL_Theme::check_ajax_nonce() ) wp_die( json_encode( [] ) );
 	if ( ! isset( $_POST['btnid'] ) || ! isset( $_POST['postid'] ) || ! isset( $_POST['ct_name'] ) ) wp_die( json_encode( [] ) );
 
 	$btnid   = $_POST['btnid'];

@@ -87,7 +87,7 @@ function add_toc( $content, $is_content_hook = true ) {
 			'<span class="p-toc__ttl">' . $SETTING['toc_title'] . '</span></div>';
 
 		// 目次広告コード
-		if ( \SWELL_FUNC::is_show_toc_ad( true ) ) {
+		if ( SWELL::is_show_toc_ad( true ) ) {
 			$toc_ad = \SWELL_PARTS::toc_ad();
 		}
 
@@ -107,13 +107,13 @@ function add_toc( $content, $is_content_hook = true ) {
 		if ( SWELL::$added_toc ) return $content;
 
 		// 目次本体
-		if ( \SWELL_FUNC::is_show_index() ) {
+		if ( SWELL::is_show_index() ) {
 			$toc = '<div class="p-toc -' . $SETTING['index_style'] . '">' .
 				'<span class="p-toc__ttl">' . $SETTING['toc_title'] . '</span></div>';
 		}
 
 		// 目次広告コード
-		if ( \SWELL_FUNC::is_show_toc_ad() ) {
+		if ( SWELL::is_show_toc_ad() ) {
 			$toc_ad = \SWELL_PARTS::toc_ad();
 		}
 
@@ -277,10 +277,10 @@ function url_matches_callback( $matches ) {
 	$post_id = url_to_postid( $url );
 	if ( $post_id ) {
 		// 内部リンク
-		return \SWELL_FUNC::get_internal_blog_card( $post_id );
+		return \SWELL_Theme::get_internal_blog_card( $post_id );
 	} else {
 		// 外部リンク
-		return \SWELL_FUNC::get_external_blog_card( $url );
+		return \SWELL_Theme::get_external_blog_card( $url );
 	}
 	return $url;
 

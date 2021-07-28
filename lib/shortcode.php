@@ -96,7 +96,7 @@ if ( ! function_exists( __NAMESPACE__ . '\post_link' ) ) :
 
 		// 外部リンクの場合
 		if ( isset( $args['url'] ) ) {
-			return \SWELL_FUNC::get_external_blog_card( $args['url'], $card_args );
+			return \SWELL_Theme::get_external_blog_card( $args['url'], $card_args );
 		}
 
 		// IDなければアウト
@@ -105,7 +105,7 @@ if ( ! function_exists( __NAMESPACE__ . '\post_link' ) ) :
 		$target                = isset( $args['target'] ) ? $args['target'] : '';
 		$card_args['is_blank'] = ( '_blank' === $target );
 
-		return \SWELL_FUNC::get_internal_blog_card( $args['id'], $card_args );
+		return \SWELL_Theme::get_internal_blog_card( $args['id'], $card_args );
 
 	}
 endif;
@@ -119,13 +119,13 @@ if ( ! function_exists( __NAMESPACE__ . '\blog_parts' ) ) :
 	function blog_parts( $args ) {
 
 		$parts_id = isset( $args['id'] ) ? $args['id'] : '0';
-		$content  = \SWELL_FUNC::get_blog_parts_content( $args );
 
-		// ブロックでセットしたクラスを受け取れるように
 		$bp_class = '';
 		if ( isset( $args['class'] ) && $args['class'] ) {
 			$bp_class .= ' ' . $args['class'];
 		}
+
+		$content = \SWELL_Theme::get_blog_parts_content( $args );
 
 		return '<div class="p-blogParts post_content' . esc_attr( $bp_class ) . '" data-partsID="' . esc_attr( $parts_id ) . '">' .
 			do_blocks( do_shortcode( $content ) ) .

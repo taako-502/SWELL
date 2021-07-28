@@ -44,7 +44,7 @@ function hook_wp_head_999() {
 	output_meta_custom_css();
 
 	// 「head内コード」の出力
-	if ( $head_code = \SWELL_FUNC::get_setting( 'head_code' ) ) echo $head_code . PHP_EOL;
+	if ( $head_code = SWELL::get_setting( 'head_code' ) ) echo $head_code . PHP_EOL;
 
 	// 「自動広告用コード」の出力
 	output_auto_ad();
@@ -79,7 +79,7 @@ function hook_wp_footer_1() {
 function hook_wp_footer_20() {
 
 	// JSON LD
-	if ( \SWELL_FUNC::get_setting( 'use_json_ld' ) ) {
+	if ( SWELL::get_setting( 'use_json_ld' ) ) {
 		$json_ld_data = SWELL::get_json_ld_data();
 		if ( is_array( $json_ld_data ) && ! empty( $json_ld_data ) ) {
 			echo '<script type="application/ld+json">' . wp_json_encode( array_values( $json_ld_data ), JSON_UNESCAPED_UNICODE ) . '</script>' . PHP_EOL;
@@ -121,7 +121,7 @@ function hook_admin_head() {
  */
 function get_swl_front_css() {
 
-	$is_cache_style = ( \SWELL_FUNC::get_setting( 'cache_style' ) && ! is_customize_preview() );
+	$is_cache_style = ( SWELL::get_setting( 'cache_style' ) && ! is_customize_preview() );
 
 	// キャッシュキー (トップ/その他)
 	if ( SWELL::is_top() && ! is_paged() ) {
@@ -161,7 +161,7 @@ function get_swl_front_css() {
 			// カスタマイザープレビュー中にのみ読み込むCSS
 			$customizer_css = T_DIRE . '/assets/css/module/-is-customizer.css';
 			if ( file_exists( $customizer_css ) ) {
-				$style .= \SWELL_FUNC::get_file_contents( $customizer_css );
+				$style .= SWELL::get_file_contents( $customizer_css );
 			}
 		}
 
@@ -179,7 +179,7 @@ function get_swl_front_css() {
 	}
 
 	// Androidでは Noto-serif 以外はデフォルトフォントに指定。(游ゴシックでの太字バグがある & 6.0からデフォルトフォントが Noto-sans に。)
-	$font = \SWELL_FUNC::get_setting( 'body_font_family' );
+	$font = SWELL::get_setting( 'body_font_family' );
 	if ( $is_android && 'serif' !== $font ) {
 		$style .= 'body{font-weight:400;font-family:sans-serif}';
 	}
@@ -195,12 +195,12 @@ function get_swl_front_css() {
 	if ( is_singular( 'lp' ) ) {
 		$lp_css = T_DIRE . '/assets/css/module/-lp.css';
 
-		if ( file_exists( $lp_css ) ) $style .= \SWELL_FUNC::get_file_contents( $lp_css );
+		if ( file_exists( $lp_css ) ) $style .= SWELL::get_file_contents( $lp_css );
 	}
 
 	// IEではCSS変数を置換
 	global $is_IE;
-	if ( $is_IE ) $style = \SWELL_FUNC::replace_css_var_on_IE( $style );
+	if ( $is_IE ) $style = SWELL::replace_css_var_on_IE( $style );
 
 	return $style;
 }
@@ -211,7 +211,7 @@ function get_swl_front_css() {
  */
 function hook_wp_body_open() {
 
-	if ( $body_open_code = \SWELL_FUNC::get_setting( 'body_open_code' ) ) {
+	if ( $body_open_code = SWELL::get_setting( 'body_open_code' ) ) {
 		echo $body_open_code . PHP_EOL;
 	}
 }
@@ -234,7 +234,7 @@ function output_meta_swellers_id() {
  */
 function output_google_font() {
 	$google_font = '';
-	$body_font   = \SWELL_FUNC::get_setting( 'body_font_family' );
+	$body_font   = SWELL::get_setting( 'body_font_family' );
 	$is_android  = \SWELL_Theme::is_android();
 
 	if ( ! $is_android && 'notosans' === $body_font ) {
@@ -273,7 +273,7 @@ function output_auto_ad() {
 		if ( '1' === $is_hide_ad ) return;
 	}
 
-	$auto_ad_code = \SWELL_FUNC::get_setting( 'auto_ad_code' );
+	$auto_ad_code = SWELL::get_setting( 'auto_ad_code' );
 
 	if ( ! $auto_ad_code) return;
 

@@ -22,7 +22,7 @@ if ( isset( $_REQUEST['settings-updated'] ) && $_REQUEST['settings-updated'] ) {
 	$green_message = __( 'Your settings have been saved.', 'swell' );
 
 	// CSSキャッシュ削除
-	\SWELL_FUNC::clear_cache( \SWELL_Theme::$cache_keys['style'] );
+	\SWELL_Theme::clear_cache( \SWELL_Theme::$cache_keys['style'] );
 }
 
 // メッセージの表示

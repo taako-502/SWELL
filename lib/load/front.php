@@ -73,13 +73,13 @@ function load_front_styles() {
 	if ( $is_IE || \SWELL_Theme::get_setting( 'load_style_inline' ) ) {
 
 		// インライン読み込み時
-		$main_style = \SWELL_FUNC::get_file_contents( T_DIRE . '/assets/css/main.css' );
+		$main_style = \SWELL_Theme::get_file_contents( T_DIRE . '/assets/css/main.css' );
 		$main_style = str_replace( '../', T_DIRE_URI . '/assets/', $main_style );
 		$main_style = str_replace( '@charset "UTF-8";', '', $main_style );
 
 		if ( $is_IE ) {
 			// IEではカスタムプロパティを置換しておく
-			$main_style = \SWELL_FUNC::replace_css_var_on_IE( $main_style );
+			$main_style = \SWELL_Theme::replace_css_var_on_IE( $main_style );
 		}
 
 		// 空でmain_styleを登録しておく
@@ -94,7 +94,7 @@ function load_front_styles() {
 	}
 
 	// カスタムフォーマット用CSS
-	$custom_format_css = \SWELL_FUNC::get_editor( 'custom_format_css' );
+	$custom_format_css = \SWELL_Theme::get_editor( 'custom_format_css' );
 	if ( $custom_format_css ) {
 		wp_add_inline_style( 'main_style', $custom_format_css );
 	}

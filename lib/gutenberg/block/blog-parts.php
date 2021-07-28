@@ -41,9 +41,7 @@ register_block_type(
 function cb_blog_parts( $attrs ) {
 
 	$parts_id = $attrs['partsID'] ?: 0;
-	$content  = \SWELL_FUNC::get_blog_parts_content( [
-		'id'    => $parts_id,
-	] );
+	$content  = \SWELL_Theme::get_blog_parts_content( [ 'id' => $parts_id ] );
 
 	$bp_class = 'p-blogParts post_content';
 	if ( $attrs['className'] ) {

@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 ?>
-<div id="fix_header" class="l-fixHeader <?=esc_attr( SWELL_FUNC::get_header_class() )?>">
+<div id="fix_header" class="l-fixHeader <?=esc_attr( SWELL_Theme::get_header_class() )?>">
 	<div class="l-fixHeader__inner l-container">
 		<div class="l-fixHeader__logo">
 			<?=SWELL_PARTS::head_logo( 'no', true )?>
@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		<div class="l-fixHeader__gnav c-gnavWrap">
 			<?php
 				\SWELL_Theme::pluggable_parts( 'gnav', [
-					'use_search' => 'head_menu' === \SWELL_FUNC::get_setting( 'search_pos' ),
+					'use_search' => 'head_menu' === \SWELL_Theme::get_setting( 'search_pos' ),
 				] );
 			?>
 		</div>

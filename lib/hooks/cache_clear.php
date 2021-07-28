@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * カスタマイザー表示時、一旦全キャッシュ削除
  */
-// if ( is_customize_preview() ) \SWELL_FUNC::clear_cache();
+// if ( is_customize_preview() ) \SWELL_Theme::clear_cache();
 
 
 /**
@@ -16,7 +16,7 @@ add_action( 'customize_save_after', function() {
 	$keys         = \SWELL_Theme::$cache_keys;
 	$cache_keys   = array_merge( $keys['style'], $keys['header'], $keys['post'], $keys['widget'] );
 	$cache_keys[] = 'swell_mv';
-	\SWELL_FUNC::clear_cache( $cache_keys );
+	\SWELL_Theme::clear_cache( $cache_keys );
 });
 
 
@@ -26,7 +26,7 @@ add_action( 'customize_save_after', function() {
 add_action( 'update_option', function( $option_name ) {
 	if ( 'blogname' === $option_name || 'blogdescription' === $option_name ) {
 		$keys = \SWELL_Theme::$cache_keys;
-		\SWELL_FUNC::clear_cache( $keys['header'] );
+		\SWELL_Theme::clear_cache( $keys['header'] );
 	}
 });
 
@@ -37,7 +37,7 @@ add_action( 'update_option', function( $option_name ) {
 add_action( 'save_post', function( $post_ID ) {
 	$keys       = \SWELL_Theme::$cache_keys;
 	$cache_keys = array_merge( $keys['widget'], $keys['post'] );
-	\SWELL_FUNC::clear_cache( $cache_keys );
+	\SWELL_Theme::clear_cache( $cache_keys );
 }, 99);
 
 
@@ -47,7 +47,7 @@ add_action( 'save_post', function( $post_ID ) {
 add_action( 'edited_terms', function( $post_ID ) {
 	$keys       = \SWELL_Theme::$cache_keys;
 	$cache_keys = array_merge( $keys['header'], $keys['widget'], $keys['post'] );
-	\SWELL_FUNC::clear_cache( $cache_keys );
+	\SWELL_Theme::clear_cache( $cache_keys );
 }, 99);
 
 
@@ -67,7 +67,7 @@ add_filter('widget_update_callback', function( $instance, $new_instance, $old_in
 			$cache_keys = array_merge( $cache_keys, $keys['header'] );
 		}
 	}
-	\SWELL_FUNC::clear_cache( $cache_keys );
+	\SWELL_Theme::clear_cache( $cache_keys );
 	return $instance;
 
 }, 99, 4);
@@ -91,7 +91,7 @@ add_action( 'widgets_init', function() {
 				$cache_keys = array_merge( $cache_keys, $keys['header'] );
 			}
 		}
-		\SWELL_FUNC::clear_cache( $cache_keys );
+		\SWELL_Theme::clear_cache( $cache_keys );
 
 		// ウィジェット登録状況をキャッシュ
 		set_transient( 'swell_parts_sidebars_widgets', $widget_data );
@@ -120,6 +120,6 @@ add_action( 'wp_update_nav_menu', function( $menu_id ) {
 			if ( 'fix_bottom_menu' === $location ) $cache_keys[] = 'swell_fix_bottom_menu';
 		}
 	}
-	\SWELL_FUNC::clear_cache( $cache_keys );
+	\SWELL_Theme::clear_cache( $cache_keys );
 
 }, 99);

@@ -126,8 +126,8 @@ class Style {
 	 * @return void
 	 */
 	public static function custom_style() {
-		$SETTING     = \SWELL_FUNC::get_setting();
-		$frame_class = \SWELL_FUNC::get_frame_class();
+		$SETTING     = SWELL::get_setting();
+		$frame_class = SWELL::get_frame_class();
 
 		// ページ表示時のアニメーション
 		if ( ! $SETTING['remove_page_fade'] ) {
@@ -181,7 +181,7 @@ class Style {
 		}
 
 		// トップページの１ページ目だけに使用するスタイル
-		if ( \SWELL_Theme::is_top() && ! is_paged() ) Style\Top::init();
+		if ( SWELL::is_top() && ! is_paged() ) Style\Top::init();
 
 		// タイトルデザイン
 		Style\Title::section( $SETTING['sec_title_style'] );
@@ -195,9 +195,6 @@ class Style {
 
 		// コンテンツのフォントサイズ
 		Style\Page::font_size( $SETTING['post_font_size_sp'], $SETTING['post_font_size_pc'] );
-
-		// コメントエリア
-		// if ( \SWELL_FUNC::is_show_comments() ) self::add_module( '-comments' );
 
 		// Footer周り
 		Style\Footer::pagetop_btn( $SETTING['pagetop_style'] );
@@ -229,9 +226,9 @@ class Style {
 	 */
 	public static function post_style() {
 
-		$EDITOR      = \SWELL_FUNC::get_editor();
-		$SETTING     = \SWELL_FUNC::get_setting();
-		$frame_class = \SWELL_FUNC::get_frame_class();
+		$EDITOR      = SWELL::get_editor();
+		$SETTING     = SWELL::get_setting();
+		$frame_class = SWELL::get_frame_class();
 		$color_main  = $SETTING['color_main'];
 
 		// カラー用CSS変数のセット
@@ -356,7 +353,7 @@ class Style {
 				}
 			}
 			if ( $include_path ) {
-				$output_style .= \SWELL_FUNC::get_file_contents( $include_path );
+				$output_style .= SWELL::get_file_contents( $include_path );
 			}
 		}
 

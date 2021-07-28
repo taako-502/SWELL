@@ -37,7 +37,7 @@ function hook_body_class( $classes ) {
 	if ( $SETTING['fix_body_bg'] ) {
 		$classes[] = '-bg-fix';
 	}
-	if ( ! \SWELL_FUNC::is_show_index() ) {
+	if ( ! SWELL::is_show_index() ) {
 		$classes[] = '-index-off';
 	};
 
@@ -46,19 +46,19 @@ function hook_body_class( $classes ) {
 	} else {
 
 		// サイドバーの有無
-		if ( \SWELL_FUNC::is_show_sidebar() ) {
+		if ( SWELL::is_show_sidebar() ) {
 			$classes[] = '-sidebar-on';
 		} else {
 			$classes[] = '-sidebar-off';
 		}
 
 		// フレーム設定
-		$frame_class = \SWELL_FUNC::get_frame_class();
+		$frame_class = SWELL::get_frame_class();
 		$classes[]   = $frame_class;
 	}
 
 	// 後方互換性のためにつけるクラス
-	if ( \SWELL_Theme::is_top() ) {
+	if ( SWELL::is_top() ) {
 		$classes[] = 'top';
 	}
 

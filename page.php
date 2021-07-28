@@ -33,7 +33,7 @@ else :
 					endif;
 				?>
 			</div>
-			<?php if ( SWELL_FUNC::is_show_comments( $the_id ) ) comments_template(); ?>
+			<?php if ( SWELL_Theme::is_show_comments( $the_id ) ) comments_template(); ?>
 		</main>
 	<?php
 	endwhile; // End loop

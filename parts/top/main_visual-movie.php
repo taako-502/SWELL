@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 
 // 動画
 $pc_poster    = $SETTING['mv_video_poster'];
@@ -19,7 +19,7 @@ $slide_url   = $SETTING['movie_url'];
 $btn_text    = $SETTING['movie_btn_text'];
 $txtpos      = $SETTING['movie_txtpos'];
 $txtcol      = $SETTING['movie_txtcol'];
-$text_style  = SWELL_FUNC::get_mv_text_style( $txtcol, $SETTING['movie_shadowcol'] );
+$text_style  = SWELL_Theme::get_mv_text_style( $txtcol, $SETTING['movie_shadowcol'] );
 
 // パーツID
 $parts_id = (int) $SETTING['movie_parts_id'];

@@ -77,7 +77,7 @@ class SWELL_SNS_Links extends WP_Widget {
 		}
 
 		// SNSアイコンリスト
-		$sns_settings = SWELL_FUNC::get_sns_settings();
+		$sns_settings = \SWELL_Theme::get_sns_settings();
 
 		if ( $show_search !== false ) {
 			$sns_settings['search'] = 1;
@@ -93,7 +93,7 @@ class SWELL_SNS_Links extends WP_Widget {
 				$list_data['fz_class']  = 'u-fz-14';
 				$list_data['hov_class'] = 'hov-flash-up';
 			}
-			SWELL_FUNC::get_parts( 'parts/icon_list', $list_data );
+			\SWELL_Theme::get_parts( 'parts/icon_list', $list_data );
 		else :
 			echo '※　カスタマイザーの「SNS設定」が空です。';
 		endif;

@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * SNSなどのアイコンリストを出力するパーツテンプレート。
  *
- * @param int $variable : SWELL_FUNC::get_parts()で渡される変数。
+ * @param int $variable : SWELL_Theme::get_parts()で渡される変数。
  */
 
 // 引数から受け取る情報
@@ -63,7 +63,7 @@ $is_icon_circle = $variable['is_icon_circle'];
 	<?php endif; ?>
 	<?php
 		if ( $show_user_sns ) : // SNSアイコンリスト
-			$sns_settings = SWELL_FUNC::get_sns_settings();
+			$sns_settings = SWELL_Theme::get_sns_settings();
 
 			if ( ! empty( $sns_settings ) ) :
 				$list_data = [
@@ -78,7 +78,7 @@ $is_icon_circle = $variable['is_icon_circle'];
 					$list_data['hov_class'] = 'hov-flash-up';
 				endif;
 
-				SWELL_FUNC::get_parts( 'parts/icon_list', $list_data );
+				SWELL_Theme::get_parts( 'parts/icon_list', $list_data );
 			endif;
 		endif;
 	?>
