@@ -7,12 +7,10 @@ import { registerBlockType } from '@wordpress/blocks';
 import {
 	RichText,
 	InnerBlocks,
-	// BlockControls,
 	InspectorControls,
 	useBlockProps,
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 } from '@wordpress/block-editor';
-// import { PanelBody, RadioControl } from '@wordpress/components';
 
 /**
  * @SWELL dependencies
@@ -26,7 +24,6 @@ import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 /**
  * @others dependencies
  */
-// import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 /**
@@ -92,7 +89,7 @@ registerBlockType(metadata.name, {
 
 		const innerBlocksProps = useInnerBlocksProps(
 			{
-				className: 'cap_box_content',
+				className: 'cap_box_content swl-inner-blocks swl-has-margin--s',
 			},
 			{}
 		);
