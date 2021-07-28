@@ -37,7 +37,7 @@ if ( ! function_exists( 'swl_parts__gnav' ) ) :
 			<?php
 				wp_nav_menu([
 					'container'       => '',
-					'fallback_cb'     => ['SWELL_FUNC', 'default_head_menu' ],
+					'fallback_cb'     => ['SWELL_Theme', 'default_head_menu' ],
 					'theme_location'  => 'header_menu',
 					'items_wrap'      => '%3$s',
 					'link_before'     => '<span class="ttl">',

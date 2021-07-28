@@ -105,7 +105,6 @@ trait Parts {
 
 		// 普通に読み込み
 		include $include_path;
-		return;
 	}
 
 }
