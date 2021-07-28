@@ -14,10 +14,11 @@
 .swell-block-tab__body,
 .swell-block-fullWide__inner {
 
-    & > .block-editor-inner-blocks > .block-editor-block-list__layout > :first-child {
+    > .block-editor-inner-blocks > .block-editor-block-list__layout > :first-child,
+    &.block-editor-block-list__layout > :first-child {
         margin-top: 0 !important;
 
-        & > :first-child {
+        > :first-child {
             margin-top: 0 !important;
         }
     }
@@ -40,10 +41,11 @@
 .swell-block-fullWide__inner {
 
     // 5.6からは選択中しか .block-list-appender が出てこなくなった。
-    .block-editor-inner-blocks > .block-editor-block-list__layout > :last-child {
+    .block-editor-inner-blocks > .block-editor-block-list__layout > :last-child,
+    &.block-editor-block-list__layout > :last-child {
         margin-bottom: 0 !important;
 
-        & > :last-child {
+        > :last-child {
             margin-bottom: 0 !important;
         }
     }
