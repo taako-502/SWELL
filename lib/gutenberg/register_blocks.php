@@ -42,9 +42,6 @@ function register_normal_blocks() {
 		'accordion-item',
 		'banner-link',
 		'button',
-		'dl',
-		'dl-dt',
-		'dl-dd',
 		'faq',
 		'faq-item',
 		'full-wide',
@@ -67,13 +64,15 @@ function register_normal_blocks() {
 			true
 		);
 
-		$block_name = str_replace( 'dl-', '', $block_name );
 		register_block_type( "loos/{$block_name}", [ 'editor_script' => $handle ] );
 	}
 
 	// リファクタリング済み
 	$blocks = [
 		'cap-block',
+		'dl',
+		'dl-dt',
+		'dl-dd',
 	];
 	foreach ( $blocks as $block_name ) {
 

@@ -1,66 +1,43 @@
 /**
  * @WordPress dependencies
  */
-// import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { registerBlockType } from '@wordpress/blocks';
-import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	InspectorControls,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
 
 /**
  * @SWELL dependencies
  */
-import example from './_example';
+import metadata from './block.json';
 import blockIcon from './_icon';
-import { iconColor } from '@swell-guten/config';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
+
+const ALLOWED_BLOCKS = ['loos/dt', 'loos/dd'];
+const TEMPLATE = [['loos/dt'], ['loos/dd'], ['loos/dt'], ['loos/dd']];
 
 /**
- * @Others dependencies
- */
-import classnames from 'classnames';
-
-/**
- * registerBlockType
+ * 説明リスト(DL)ブロック
  */
 const blockName = 'swell-block-dl';
-registerBlockType('loos/dl', {
-	title: '説明リスト(DL)',
-	description: '説明リストを簡単に使用できます。',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.dl,
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'dl'],
-	supports: {
-		anchor: true,
-		className: false,
-	},
-	example,
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
 	styles: [
 		{ name: 'default', label: 'デフォルト', isDefault: true },
 		{ name: 'border', label: '左に線' },
 		{ name: 'float', label: '横並び' },
 		{ name: 'vtabel', label: '縦並び表' },
 	],
-	attributes: {
-		dtWidth: {
-			type: 'number',
-		},
-		styleName: {
-			type: 'string',
-			selector: '',
-		},
-	},
-
-	edit: ({ className, attributes, setAttributes, clientId }) => {
+	edit: ({ attributes, setAttributes, clientId }) => {
 		const { dtWidth } = attributes;
-		const blockClass = classnames(className, blockName);
-
 		const nowClass = attributes.className || '';
 		const isFloat = -1 !== nowClass.indexOf('is-style-float');
-		// console.log(isFloat, nowClass);
 
 		// 横並びスタイル以外の時はdtWidthの指定を消す
 		useEffect(() => {
@@ -85,6 +62,22 @@ registerBlockType('loos/dl', {
 			});
 		}, [dtWidth, childBlocks]);
 
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: blockName,
+		});
+		const innerBlocksProps = useInnerBlocksProps(
+			{
+				className: 'swl-inner-blocks',
+			},
+			{
+				allowedBlocks: ALLOWED_BLOCKS,
+				template: TEMPLATE,
+				templateLock: false,
+				renderAppender: InnerBlocks.ButtonBlockAppender,
+			}
+		);
+
 		return (
 			<>
 				{isFloat && (
@@ -103,22 +96,21 @@ registerBlockType('loos/dl', {
 						</PanelBody>
 					</InspectorControls>
 				)}
-				<div className={blockClass}>
+				<div {...blockProps}>
 					<div className='swell-block-parentSelector'>親ブロックを選択</div>
-					<InnerBlocks
-						allowedBlocks={['loos/dt', 'loos/dd']}
-						templateLock={false}
-						template={[['loos/dt'], ['loos/dd'], ['loos/dt'], ['loos/dd']]}
-						renderAppender={InnerBlocks.ButtonBlockAppender}
-					/>
+					<div {...innerBlocksProps} />
 				</div>
 			</>
 		);
 	},
 
 	save: () => {
+		const blockProps = useBlockProps.save({
+			className: blockName,
+		});
+
 		return (
-			<dl className={blockName}>
+			<dl {...blockProps}>
 				<InnerBlocks.Content />
 			</dl>
 		);
