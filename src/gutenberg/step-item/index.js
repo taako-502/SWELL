@@ -9,21 +9,19 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	PanelColorSettings,
-	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 } from '@wordpress/block-editor';
 import { PanelBody, BaseControl, CheckboxControl, TextControl } from '@wordpress/components';
 
 /**
  * @SWELL dependencies
  */
-import metadata from './block.json';
 import blockIcon from './_icon';
-import getBlockIcon from '@swell-guten/utils/getBlockIcon';
+import { iconColor } from '@swell-guten/config';
 
+/**
+ * @Others dependencies
+ */
 import classnames from 'classnames';
-
-const TEMPLATE = [['core/paragraph']];
 
 /**
  * 各種データ生成
@@ -70,9 +68,64 @@ const getStepData = (stepClass, numColor, isShapeFill) => {
  * ステップ項目
  */
 const blockName = 'swell-block-step';
-registerBlockType(metadata.name, {
-	icon: getBlockIcon(blockIcon),
-	edit: ({ attributes, setAttributes }) => {
+registerBlockType('loos/step-item', {
+	apiVersion: 1,
+	title: 'ステップ項目',
+	icon: {
+		foreground: iconColor,
+		src: blockIcon.stepItem,
+	},
+	category: 'swell-blocks',
+	parent: ['loos/step'],
+	supports: {
+		anchor: true,
+		className: false, //.wp-block-[ブロック名]の削除
+	},
+	attributes: {
+		title: {
+			source: 'html',
+			selector: '.swell-block-step__title',
+		},
+		stepLabel: {
+			type: 'string',
+			default: '',
+		},
+		theLabel: {
+			type: 'string',
+			default: '',
+		},
+		theNum: {
+			type: 'string',
+			default: '',
+		},
+		numColor: {
+			type: 'string',
+			default: '',
+		},
+		stepClass: {
+			type: 'string',
+			default: 'default',
+		},
+
+		isHideLabel: {
+			type: 'boolean',
+			default: false,
+		},
+		isHideNum: {
+			type: 'boolean',
+			default: false,
+		},
+		isShapeFill: {
+			type: 'boolean',
+			default: false,
+		},
+		isPreview: {
+			type: 'boolean',
+			default: 'false',
+		},
+	},
+	edit: (props) => {
+		const { className, attributes, setAttributes } = props;
 		const {
 			title,
 			numColor,
@@ -86,6 +139,9 @@ registerBlockType(metadata.name, {
 			theLabel,
 		} = attributes;
 
+		// 子ブロックの設定
+		const blockClass = classnames(className, `${blockName}__item`);
+
 		// ステップデータ
 		const { ttlFz, numStyle, numClass, shapeStyle, shapeClass } = useMemo(
 			() => getStepData(stepClass, numColor, isShapeFill),
@@ -94,20 +150,6 @@ registerBlockType(metadata.name, {
 
 		const isShowShape = 'small' === stepClass || isPreview;
 		const thisBlockStepLabel = isHideLabel ? '' : theLabel || stepLabel;
-
-		// ブロックprops
-		const blockProps = useBlockProps({
-			className: `${blockName}__item swl-inner-blocks swl-has-margin--s`,
-		});
-
-		const innerBlocksProps = useInnerBlocksProps(
-			{
-				className: `${blockName}__body`,
-			},
-			{
-				template: TEMPLATE,
-			}
-		);
 
 		return (
 			<>
@@ -127,6 +169,7 @@ registerBlockType(metadata.name, {
 								onChange={(val) => setAttributes({ isHideLabel: val })}
 							/>
 						</BaseControl>
+
 						<TextControl
 							label={`番号部分のテキスト`}
 							value={theNum}
@@ -167,7 +210,7 @@ registerBlockType(metadata.name, {
 						]}
 					></PanelColorSettings>
 				</InspectorControls>
-				<div {...blockProps}>
+				<div className={blockClass}>
 					<div
 						className={numClass}
 						style={numStyle || null}
@@ -186,13 +229,16 @@ registerBlockType(metadata.name, {
 						) : null}
 					</div>
 					<RichText
+						// placeholder='タイトルを書く...'
 						placeholder={__('Title', 'swell') + '...'}
 						className={`${blockName}__title ${ttlFz}`}
 						tagName='div'
 						value={title}
 						onChange={(val) => setAttributes({ title: val })}
 					/>
-					<div {...innerBlocksProps} />
+					<div className={`${blockName}__body`}>
+						<InnerBlocks template={[['core/paragraph']]} />
+					</div>
 				</div>
 			</>
 		);
@@ -219,13 +265,8 @@ registerBlockType(metadata.name, {
 
 		const thisBlockStepLabel = isHideLabel ? '' : theLabel || stepLabel;
 
-		// ブロックprops
-		const blockProps = useBlockProps.save({
-			className: `${blockName}__item`,
-		});
-
 		return (
-			<div {...blockProps}>
+			<div className={`${blockName}__item`}>
 				<div
 					className={numClass}
 					style={numStyle || null}

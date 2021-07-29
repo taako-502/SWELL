@@ -1,41 +1,77 @@
 /**
  * @WordPress dependencies
  */
+import { __ } from '@wordpress/i18n';
 import { useEffect } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { registerBlockType } from '@wordpress/blocks';
-import {
-	InnerBlocks,
-	InspectorControls,
-	useBlockProps,
-	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
-} from '@wordpress/block-editor';
+import { InspectorControls, InnerBlocks } from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
+import { iconColor } from '@swell-guten/config';
 import StepSidebar from './_sidebar';
-import metadata from './block.json';
 import blockIcon from './_icon';
-import getBlockIcon from '@swell-guten/utils/getBlockIcon';
+import example from './_example';
 
-const ALLOWED_BLOCKS = ['loos/step-item'];
-const TEMPLATE = [['loos/step-item'], ['loos/step-item']];
+/**
+ * @Others dependencies
+ */
+import classnames from 'classnames';
 
 /**
  * STEPブロック
  */
 const blockName = 'swell-block-step';
-registerBlockType(metadata.name, {
-	icon: getBlockIcon(blockIcon),
+registerBlockType('loos/step', {
+	apiVersion: 1,
+	title: 'ステップ',
+	description: __('ステップ形式で流れを説明できます。', 'swell'),
+	icon: {
+		foreground: iconColor,
+		src: blockIcon.step,
+	},
+	category: 'swell-blocks',
+	keywords: ['swell', 'step'],
+	supports: {
+		anchor: true,
+		className: false, //ブロック要素を作成した際に付く .wp-block-[ブロック名]で自動生成されるクラス名の設定。
+	},
+	example,
 	styles: [
 		{ name: 'default', label: 'デフォルト', isDefault: true },
 		{ name: 'big', label: 'ビッグ' },
 		{ name: 'small', label: 'スモール' },
 	],
+	attributes: {
+		startNum: {
+			type: 'number',
+			default: 1,
+		},
+		numShape: {
+			type: 'string',
+			default: 'circle',
+		},
+		numLayout: {
+			type: 'string',
+			default: 'vertical',
+		},
+		stepLabel: {
+			type: 'string',
+			default: 'STEP',
+		},
+		stepClass: {
+			type: 'string',
+			default: 'default',
+		},
+	},
 
-	edit: ({ attributes, setAttributes, clientId }) => {
+	edit: (props) => {
+		const { attributes, setAttributes, className, clientId } = props;
 		const { stepLabel, stepClass, numShape, numLayout, startNum } = attributes;
+		const blockClass = classnames(className, blockName);
+
 		const nowClass = attributes.className || '';
 
 		// ブロックスタイルに応じた attribute
@@ -66,31 +102,23 @@ registerBlockType(metadata.name, {
 			});
 		}, [childBlocks, stepClass, stepLabel]);
 
-		// ブロックprops
-		const blockProps = useBlockProps({
-			className: blockName,
-			style: 1 < startNum ? { counterReset: `step ${startNum - 1}` } : null,
-		});
-		const innerBlocksProps = useInnerBlocksProps(
-			{
-				className: 'swl-inner-blocks',
-			},
-			{
-				allowedBlocks: ALLOWED_BLOCKS,
-				template: TEMPLATE,
-				templateLock: false,
-				renderAppender: InnerBlocks.ButtonBlockAppender,
-			}
-		);
-
 		return (
 			<>
 				<InspectorControls>
 					<StepSidebar {...{ attributes, setAttributes }} />
 				</InspectorControls>
-				<div {...blockProps} data-num-style={'big' === stepClass ? numLayout : numShape}>
+				<div
+					className={blockClass}
+					data-num-style={'big' === stepClass ? numLayout : numShape}
+					style={1 < startNum ? { counterReset: `step ${startNum - 1}` } : null}
+				>
 					<div className='swell-block-parentSelector'>親ブロックを選択</div>
-					<div {...innerBlocksProps} />
+					<InnerBlocks
+						templateLock={false}
+						allowedBlocks={['loos/step-item']}
+						template={[['loos/step-item'], ['loos/step-item']]}
+						renderAppender={InnerBlocks.ButtonBlockAppender}
+					/>
 				</div>
 			</>
 		);
@@ -98,15 +126,12 @@ registerBlockType(metadata.name, {
 
 	save: ({ attributes }) => {
 		const { startNum, stepClass, numLayout, numShape } = attributes;
-
-		// ブロックprops
-		const blockProps = useBlockProps.save({
-			className: blockName,
-			style: 1 < startNum ? { counterReset: `step ${startNum - 1}` } : null,
-		});
-
 		return (
-			<div {...blockProps} data-num-style={'big' === stepClass ? numLayout : numShape}>
+			<div
+				className={blockName}
+				data-num-style={'big' === stepClass ? numLayout : numShape}
+				style={1 < startNum ? { counterReset: `step ${startNum - 1}` } : null}
+			>
 				<InnerBlocks.Content />
 			</div>
 		);
