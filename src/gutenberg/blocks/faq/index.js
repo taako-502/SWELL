@@ -1,41 +1,36 @@
 /**
  * @WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	InspectorControls,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
-import blockIcon from './_icon';
-import example from './_example';
 import FaqSidebar from './_sidebar';
-import { iconColor } from '@swell-guten/config';
+import metadata from './block.json';
+import blockIcon from './_icon';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * @Others dependencies
  */
 import classnames from 'classnames';
 
+const ALLOWED_BLOCKS = ['loos/faq-item'];
+const TEMPLATE = [['loos/faq-item'], ['loos/faq-item']];
+
 /**
  * FAQブロック
  */
 const blockName = 'swell-block-faq';
-registerBlockType('loos/faq', {
-	title: 'FAQ',
-	description: __('Q&A形式のコンテンツを簡単に設置できます。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.faq,
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'faq', 'qa'],
-	supports: {
-		anchor: true,
-		className: false, //ブロック要素を作成した際に付く .wp-block-[ブロック名]で自動生成されるクラス名の設定。
-	},
-	example,
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
 	styles: [
 		// ブロック要素のスタイルを設定
 		{
@@ -56,56 +51,52 @@ registerBlockType('loos/faq', {
 			name: 'faq-stripe',
 		},
 	],
-	attributes: {
-		iconRadius: {
-			type: 'string',
-			default: '',
-		},
-		qIconStyle: {
-			type: 'string',
-			default: 'col-text',
-		},
-		aIconStyle: {
-			type: 'string',
-			default: 'col-text',
-		},
-	},
-
-	edit: ({ attributes, setAttributes, className }) => {
+	edit: ({ attributes, setAttributes }) => {
 		const { iconRadius, qIconStyle, aIconStyle } = attributes;
 
-		let blockClass = classnames(className, blockName);
-		if (iconRadius) {
-			blockClass = classnames(blockClass, `-icon-${iconRadius}`);
-		}
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: classnames(blockName, {
+				[`-icon-${iconRadius}`]: !!iconRadius,
+			}),
+		});
+		const innerBlocksProps = useInnerBlocksProps(
+			{
+				className: 'swl-inner-blocks',
+			},
+			{
+				allowedBlocks: ALLOWED_BLOCKS,
+				template: TEMPLATE,
+				templateLock: false,
+				renderAppender: InnerBlocks.ButtonBlockAppender,
+			}
+		);
 
 		return (
 			<>
 				<InspectorControls>
 					<FaqSidebar {...{ attributes, setAttributes }} />
 				</InspectorControls>
-				<div className={blockClass} data-q={qIconStyle} data-a={aIconStyle}>
+				<div {...blockProps} data-q={qIconStyle} data-a={aIconStyle}>
 					<div className='swell-block-parentSelector'>親ブロックを選択</div>
-					<InnerBlocks
-						allowedBlocks={['loos/faq-item', 'loos/faq-q', 'loos/faq-a']}
-						templateLock={false}
-						template={[['loos/faq-item'], ['loos/faq-item']]}
-						renderAppender={InnerBlocks.ButtonBlockAppender}
-					/>
+					<div {...innerBlocksProps} />
 				</div>
 			</>
 		);
 	},
 
-	save: (props) => {
-		const { iconRadius, qIconStyle, aIconStyle } = props.attributes;
+	save: ({ attributes }) => {
+		const { iconRadius, qIconStyle, aIconStyle } = attributes;
 
-		let blockClass = blockName;
-		if (iconRadius) {
-			blockClass = classnames(blockClass, `-icon-${iconRadius}`);
-		}
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: classnames(blockName, {
+				[`-icon-${iconRadius}`]: !!iconRadius,
+			}),
+		});
+
 		return (
-			<dl className={blockClass} data-q={qIconStyle} data-a={aIconStyle}>
+			<dl {...blockProps} data-q={qIconStyle} data-a={aIconStyle}>
 				<InnerBlocks.Content />
 			</dl>
 		);
