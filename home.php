@@ -16,7 +16,7 @@ $the_id = get_queried_object_id();
 				$queried_object = get_queried_object();
 				$the_content    = $queried_object->post_content ?? '';
 
-				SWELL_FUNC::get_parts( 'parts/page_head', $the_id );
+				SWELL_Theme::get_parts( 'parts/page_head' );
 
 				if ( ! empty( $the_content ) ) :
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -27,12 +27,12 @@ $the_id = get_queried_object_id();
 			// 投稿リスト
 			$cache_key = '';
 			$the_paged = (int) get_query_var( 'paged' );
-			if ( 0 === $the_paged && SWELL_FUNC::get_setting( 'cache_top' ) ) :
+			if ( 0 === $the_paged && SWELL_Theme::get_setting( 'cache_top' ) ) :
 				$cache_key = ( IS_MOBILE ) ? 'home_posts_sp' : 'home_posts';
 			endif;
 
 			echo '<div class="p-homeContent u-mt-40">';
-			SWELL_FUNC::get_parts( 'parts/home_content', '', $cache_key, 24 * HOUR_IN_SECONDS );
+			SWELL_Theme::get_parts( 'parts/home_content', '', $cache_key, 24 * HOUR_IN_SECONDS );
 			echo '</div>';
 		?>
 

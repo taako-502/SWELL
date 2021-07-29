@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 
 $the_id  = $variable ?: get_the_ID();
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 
 // 無視するリスト
 $not_in = [ $the_id ];
@@ -24,7 +24,7 @@ if ( $priority_posts ) {
 
 	ob_start();
 	foreach ( $priority_posts as $the_id ) {
-		SWELL_FUNC::get_parts( 'parts/post_list/related', [ 'post_id' => $the_id ] );
+		SWELL_Theme::get_parts( 'parts/post_list/related', [ 'post_id' => $the_id ] );
 	}
 	$priority_list = ob_get_clean();
 	wp_reset_postdata();
@@ -117,7 +117,7 @@ if ( 'category' === $SETTING['post_relation_type'] ) {
 
 				while ( $q->have_posts() ) :
 					$q->the_post();
-					SWELL_FUNC::get_parts( 'parts/post_list/related' );
+					SWELL_Theme::get_parts( 'parts/post_list/related' );
 				endwhile;
 
 				echo '</ul>';

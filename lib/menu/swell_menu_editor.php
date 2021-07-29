@@ -56,8 +56,8 @@ $now_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'colors'; //phpcs:ignore
 		</div>
 	</div>
 	<div class="swell_settings__body"
-		data-type-big="<?=esc_attr( \SWELL_FUNC::get_editor( 'iconbox_type' ) )?>"
-		data-type-small="<?=esc_attr( \SWELL_FUNC::get_editor( 'iconbox_s_type' ) )?>"
+		data-type-big="<?=esc_attr( \SWELL_Theme::get_editor( 'iconbox_type' ) )?>"
+		data-type-small="<?=esc_attr( \SWELL_Theme::get_editor( 'iconbox_s_type' ) )?>"
 	>
 		<form method="POST" action="options.php">
 		<?php

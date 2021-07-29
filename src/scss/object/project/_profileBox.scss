@@ -2,7 +2,6 @@
 .p-profileBox {
     padding: 4px;
     border: solid 1px var(--color_border);
-
 }
 
 .p-profileBox__bg {
@@ -62,7 +61,11 @@
 }
 
 .p-profileBox__btn {
-    margin: 1.5em auto .5em;
+
+    // [class*="is-style-btn_"]に負けないように優先度高くする
+    .p-profileBox & {
+        margin: 1.5em auto .5em;
+    }
 
     .p-profileBox__btnLink {
         color: #fff;

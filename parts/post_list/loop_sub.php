@@ -51,10 +51,10 @@ while ( $the_query->have_posts() ) :
 
 	// インフィード
 	if ( $infeed_interval && $loop_ct && ( 0 === $loop_ct % $infeed_interval ) ) :
-		SWELL_FUNC::get_parts( 'parts/post_list/infeed_ad', $loop_ct );
+		SWELL_Theme::get_parts( 'parts/post_list/infeed_ad', $loop_ct );
 		endif;
 
-	SWELL_FUNC::get_parts( 'parts/post_list/' . $parts_name, $li_args );
+	SWELL_Theme::get_parts( 'parts/post_list/' . $parts_name, $li_args );
 
 	$loop_ct++;
 endwhile;

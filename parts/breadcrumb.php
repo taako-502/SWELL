@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 // トップページでは何も出力しない
 if ( \SWELL_Theme::is_top() ) return false;
 
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = \SWELL_Theme::get_setting();
 
 $wp_obj    = get_queried_object();  // そのページのWPオブジェクトを取得
 $list_data = [];
@@ -39,17 +39,17 @@ if ( is_attachment() ) {
 	/**
 	 * 投稿ページ
 	 */
-	$post_id    = $wp_obj->ID;
-	$post_type  = $wp_obj->post_type;
-	$post_title = apply_filters( 'the_title', $wp_obj->post_title );
+	$the_id        = $wp_obj->ID;
+	$the_post_type = $wp_obj->post_type;
+	$post_title    = apply_filters( 'the_title', $wp_obj->post_title );
 
 	// カスタム投稿タイプかどうか
-	if ( $post_type !== 'post' ) {
+	if ( $the_post_type !== 'post' ) {
 
 		$the_tax = '';
 
 		// 投稿タイプに紐づいたタクソノミーを取得 (投稿フォーマットは除く)
-		$tax_array = get_object_taxonomies( $post_type, 'names' );
+		$tax_array = get_object_taxonomies( $the_post_type, 'names' );
 		foreach ( $tax_array as $tax_name ) {
 			if ( $tax_name !== 'post_format' ) {
 				$the_tax = $tax_name;
@@ -57,8 +57,8 @@ if ( is_attachment() ) {
 			}
 		}
 
-		$post_type_link  = get_post_type_archive_link( $post_type );
-		$post_type_label = get_post_type_object( $post_type )->label;
+		$post_type_link  = get_post_type_archive_link( $the_post_type );
+		$post_type_label = get_post_type_object( $the_post_type )->label;
 
 		// カスタム投稿タイプ名の表示
 		$list_data[] = [
@@ -77,7 +77,7 @@ if ( is_attachment() ) {
 	}
 
 	// 投稿に紐づくタームを全て取得
-	$terms = get_the_terms( $post_id, $the_tax );
+	$terms = get_the_terms( $the_id, $the_tax );
 
 	// タームーが紐づいていれば表示
 	if ( $terms !== false ) {
@@ -89,22 +89,26 @@ if ( is_attachment() ) {
 		$parents_list = [];
 
 		// 全タームの親IDを取得
-		foreach ( $terms as $term ) {
-			if ( $term->parent !== 0 ) $parents_list[] = $term->parent;
+		foreach ( $terms as $the_term ) {
+			if ( $the_term->parent !== 0 ) {
+				$parents_list[] = $the_term->parent;
+			}
 		}
 
 		// 親リストに含まれないタームのみ取得
-		foreach ( $terms as $term ) {
-			if ( ! in_array( $term->term_id, $parents_list ) ) $child_terms[] = $term;
+		foreach ( $terms as $the_term ) {
+			if ( ! in_array( $the_term->term_id, $parents_list, true ) ) {
+				$child_terms[] = $the_term;
+			}
 		}
 
 		// 最下層のターム配列から一つだけ取得
-		$term = $child_terms[0];
+		$the_term = $child_terms[0];
 
-		if ( $term->parent !== 0 ) {
+		if ( $the_term->parent !== 0 ) {
 
 			// 親タームのIDリストを取得
-			$parent_array = array_reverse( get_ancestors( $term->term_id, $the_tax ) );
+			$parent_array = array_reverse( get_ancestors( $the_term->term_id, $the_tax ) );
 
 			foreach ( $parent_array as $parent_id ) {
 				$parent_term = get_term( $parent_id, $the_tax );
@@ -119,8 +123,8 @@ if ( is_attachment() ) {
 		}
 
 		// 最下層のタームを表示
-		$term_link = get_term_link( $term->term_id, $the_tax );
-		$term_name = $term->name;
+		$term_link = get_term_link( $the_term->term_id, $the_tax );
+		$term_name = $the_term->name;
 
 		$list_data[] = [
 			'url'  => $term_link,
@@ -179,18 +183,18 @@ if ( is_attachment() ) {
 	/**
 	 * 日付アーカイブ ※ $wp_obj : null
 	 */
-	$year  = get_query_var( 'year' );
+	$y     = get_query_var( 'year' );
 	$month = get_query_var( 'monthnum' );
 	$day   = get_query_var( 'day' );
 
 	if ( $day !== 0 ) {
 		// 日別アーカイブ
 		$list_data[] = [
-			'url'  => get_year_link( $year ),
-			'name' => $year . '年',
+			'url'  => get_year_link( $y ),
+			'name' => $y . '年',
 		];
 		$list_data[] = [
-			'url'  => get_month_link( $year, $month ),
+			'url'  => get_month_link( $y, $month ),
 			'name' => $month . '月',
 		];
 		$list_data[] = [
@@ -201,8 +205,8 @@ if ( is_attachment() ) {
 	} elseif ( $month !== 0 ) {
 		// 月別アーカイブ
 		$list_data[] = [
-			'url'  => get_year_link( $year ),
-			'name' => $year . '年',
+			'url'  => get_year_link( $y ),
+			'name' => $y . '年',
 		];
 		$list_data[] = [
 			'url'  => '',
@@ -213,7 +217,7 @@ if ( is_attachment() ) {
 		// 年別アーカイブ
 		$list_data[] = [
 			'url'  => '',
-			'name' => $year . '年',
+			'name' => $y . '年',
 		];
 	}
 } elseif ( is_author() ) {
@@ -311,21 +315,21 @@ foreach ( $list_data as $data ) {
 
 		$list_html .= '<li class="p-breadcrumb__item">' .
 			'<a href="' . esc_url( $data['url'] ) . '" class="p-breadcrumb__text">' .
-				'<span>' . esc_html( strip_tags( $data['name'] ) ) . '</span>' .
+				'<span>' . esc_html( wp_strip_all_tags( $data['name'] ) ) . '</span>' .
 			'</a>' .
 		'</li>';
 
 	} else {
 
 		$list_html .= '<li class="p-breadcrumb__item">' .
-			'<span class="p-breadcrumb__text">' . esc_html( strip_tags( $data['name'] ) ) . '</span>' .
+			'<span class="p-breadcrumb__text">' . esc_html( wp_strip_all_tags( $data['name'] ) ) . '</span>' .
 		'</li>';
 
 	}
 }
 
 // HTMLの出力
-$add_class = SWELL_FUNC::get_setting( 'hide_bg_breadcrumb' ) ? '' : ' -bg-on';
+$add_class = \SWELL_Theme::get_setting( 'hide_bg_breadcrumb' ) ? '' : ' -bg-on';
 
 // phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 echo '<div id="breadcrumb" class="p-breadcrumb' . $add_class . '">' .

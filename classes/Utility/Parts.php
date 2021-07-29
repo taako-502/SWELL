@@ -88,7 +88,7 @@ trait Parts {
 				ob_start();
 				include $include_path;
 				$data = ob_get_clean();
-				$data = SWELL::minify_html_code( $data );
+				$data = self::minify_html_code( $data );
 
 				// キャッシュ保存期間
 				$expiration = $expiration ?: 30 * DAY_IN_SECONDS;

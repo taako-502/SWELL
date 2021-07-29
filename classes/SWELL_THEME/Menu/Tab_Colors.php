@@ -1,7 +1,7 @@
 <?php
 namespace SWELL_THEME\Menu;
 
-use \SWELL_Theme as SWELL;
+use SWELL as SWELL;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -24,7 +24,7 @@ class Tab_Colors {
 		add_settings_field(
 			'color_palette_dark', // フィールドID。何にも使わない
 			'カラーパレット【濃】',
-			['\SWELL_THEME\Menu\Tab_Colors', 'callback_for_palette' ],
+			[__CLASS__, 'callback_for_palette' ],
 			$page_name,
 			$section_name,
 			[
@@ -39,7 +39,7 @@ class Tab_Colors {
 		add_settings_field(
 			'color_palette_thin', // フィールドID。何にも使わない
 			'カラーパレット【淡】',
-			['\SWELL_THEME\Menu\Tab_Colors', 'callback_for_palette' ],
+			[__CLASS__, 'callback_for_palette' ],
 			$page_name,
 			$section_name,
 			[
@@ -62,17 +62,17 @@ class Tab_Colors {
 		$keys = $args['keys'];
 
 		// 使用するデータベース
-		$db = SWELL::DB_NAME_EDITORS;
+		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
 		foreach ( $keys as $key => $label ) :
 			$key = 'color_' . $key;
 
 			// 現在の値
-			$val = \SWELL_FUNC::get_editor( $key );
+			$val = \SWELL_Theme::get_editor( $key );
 			// デフォルト値
-			$dflt = SWELL::get_default_editor( $key );
+			$dflt = \SWELL_Theme::get_default_editor( $key );
 			// フォーム要素のname属性に渡す値。
-			$name = SWELL::DB_NAME_EDITORS . '[' . $key . ']';
+			$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
 			?>
 				<div class="swell-menu-palette">
 					<span class="__label"><?=$label?></span>
@@ -81,7 +81,7 @@ class Tab_Colors {
 						name="<?=$name?>"
 						value="<?=$val?>"
 						data-default-color="<?=$dflt?>"
-					 />
+					/>
 				</div>
 			<?php
 		endforeach;
@@ -112,7 +112,7 @@ class Tab_Colors {
 			add_settings_field(
 				'color_list_' . $key,
 				$label,
-				['\SWELL_THEME\Menu\Tab_Colors', 'callback_for_list' ],
+				[__CLASS__, 'callback_for_list' ],
 				$page_name,
 				$section_name,
 				[
@@ -131,20 +131,20 @@ class Tab_Colors {
 	public static function callback_for_list( $args ) {
 
 		// 使用するデータベース
-		$db = SWELL::DB_NAME_EDITORS;
+		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
 		// key
 		$key       = $args['key'];
 		$color_key = 'color_list_' . $key;
 
 		// 現在の値
-		$color_val = \SWELL_FUNC::get_editor( $color_key );
+		$color_val = \SWELL_Theme::get_editor( $color_key );
 
 		// デフォルト値
-		$dflt_color = SWELL::get_default_editor( $color_key );
+		$dflt_color = \SWELL_Theme::get_default_editor( $color_key );
 
 		// フォーム要素のname属性に渡す値。
-		$name = SWELL::DB_NAME_EDITORS . '[' . $color_key . ']';
+		$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $color_key . ']';
 
 		$tag   = $key === 'num' ? 'ol' : 'ul';
 		$class = $key === 'num' ? 'is-style-num_circle' : 'is-style-' . $key . '_list';
@@ -193,7 +193,7 @@ class Tab_Colors {
 			add_settings_field(
 				'color_capblock_' . $set,
 				'カラーセット' . $set,
-				['\SWELL_THEME\Menu\Tab_Colors', 'callback_for_capblock' ],
+				[__CLASS__, 'callback_for_capblock' ],
 				$page_name,
 				$section_name,
 				[
@@ -211,7 +211,7 @@ class Tab_Colors {
 	public static function callback_for_capblock( $args ) {
 
 		// 使用するデータベース
-		$db = SWELL::DB_NAME_EDITORS;
+		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
 		// key
 		$key       = $args['key'];
@@ -219,16 +219,16 @@ class Tab_Colors {
 		$key_light = 'color_' . $key . '_light';
 
 		// 現在の値
-		$val_dark  = \SWELL_FUNC::get_editor( $key_dark );
-		$val_light = \SWELL_FUNC::get_editor( $key_light );
+		$val_dark  = \SWELL_Theme::get_editor( $key_dark );
+		$val_light = \SWELL_Theme::get_editor( $key_light );
 
 		// デフォルト値
-		$dflt_dark  = SWELL::get_default_editor( $key_dark );
-		$dflt_light = SWELL::get_default_editor( $key_light );
+		$dflt_dark  = \SWELL_Theme::get_default_editor( $key_dark );
+		$dflt_light = \SWELL_Theme::get_default_editor( $key_light );
 
 		// フォーム要素のname属性に渡す値。
-		$name_dark  = SWELL::DB_NAME_EDITORS . '[' . $key_dark . ']';
-		$name_light = SWELL::DB_NAME_EDITORS . '[' . $key_light . ']';
+		$name_dark  = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key_dark . ']';
+		$name_light = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key_light . ']';
 		?>
 			<div class="swell-menu-capbox">
 				<div class="__settings">
@@ -276,7 +276,7 @@ class Tab_Colors {
 		add_settings_field(
 			'color_faq',
 			'カラー',
-			['\SWELL_THEME\Menu\Tab_Colors', 'callback_for_faq' ],
+			[__CLASS__, 'callback_for_faq' ],
 			$page_name,
 			$section_name,
 			[
@@ -293,7 +293,7 @@ class Tab_Colors {
 	public static function callback_for_faq( $args ) {
 
 		// 使用するデータベース
-		$db = SWELL::DB_NAME_EDITORS;
+		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
 		// key
 		// $key = $args['key'];
@@ -301,16 +301,16 @@ class Tab_Colors {
 		$color_key_a = 'color_faq_a';
 
 		// 現在の値
-		$color_val_q = \SWELL_FUNC::get_editor( $color_key_q );
-		$color_val_a = \SWELL_FUNC::get_editor( $color_key_a );
+		$color_val_q = \SWELL_Theme::get_editor( $color_key_q );
+		$color_val_a = \SWELL_Theme::get_editor( $color_key_a );
 
 		// デフォルト値
-		$dflt_color_q = SWELL::get_default_editor( $color_key_q );
-		$dflt_color_a = SWELL::get_default_editor( $color_key_a );
+		$dflt_color_q = \SWELL_Theme::get_default_editor( $color_key_q );
+		$dflt_color_a = \SWELL_Theme::get_default_editor( $color_key_a );
 
 		// フォーム要素のname属性に渡す値。
-		$name_q = SWELL::DB_NAME_EDITORS . '[' . $color_key_q . ']';
-		$name_a = SWELL::DB_NAME_EDITORS . '[' . $color_key_a . ']';
+		$name_q = \SWELL_Theme::DB_NAME_EDITORS . '[' . $color_key_q . ']';
+		$name_a = \SWELL_Theme::DB_NAME_EDITORS . '[' . $color_key_a . ']';
 
 		?>
 			<div class="swell-menu-faq">

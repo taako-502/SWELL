@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * ターム系アーカイブ用の独自テンプレートファイル
  */
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 $wp_obj  = get_queried_object();
 $term_id = $wp_obj->term_id;
 
@@ -39,7 +39,7 @@ $list_type = apply_filters( 'swell_post_list_type_on_term', $list_type, $term_id
 			endif;
 
 			// 説明文・アイキャッチ
-			SWELL_FUNC::get_parts( 'parts/archive/term_head', [
+			SWELL_Theme::get_parts( 'parts/archive/term_head', [
 				'term_id'     => $term_id,
 				'description' => $wp_obj->description,
 			] );
@@ -77,8 +77,8 @@ $list_type = apply_filters( 'swell_post_list_type_on_term', $list_type, $term_id
 				<div id="post_list_tab_1" class="c-tabBody__item" aria-hidden="false">
 				<?php
 				// 新着投稿一覧 ( Main loop )
-				SWELL_FUNC::get_parts( 'parts/post_list/loop_main', ['type' => $list_type ] );
-				SWELL_FUNC::get_parts( 'parts/post_list/item/pagination' );
+				SWELL_Theme::get_parts( 'parts/post_list/loop_main', ['type' => $list_type ] );
+				SWELL_Theme::get_parts( 'parts/post_list/item/pagination' );
 				?>
 				</div>
 				<?php if ( $is_show_tab ) : // 人気記事一覧タブ ?>
@@ -113,7 +113,7 @@ $list_type = apply_filters( 'swell_post_list_type_on_term', $list_type, $term_id
 								'query_args' => $q_args,
 								'list_args'  => ['type' => $list_type ],
 							];
-							SWELL_FUNC::get_parts( 'parts/post_list/loop_sub', $parts_args );
+							SWELL_Theme::get_parts( 'parts/post_list/loop_sub', $parts_args );
 						?>
 					</div>
 				<?php endif; ?>

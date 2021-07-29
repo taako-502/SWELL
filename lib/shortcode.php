@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 if ( ! function_exists( __NAMESPACE__ . '\echo_ad' ) ) :
 	function echo_ad( $args ) {
-		$ad = \SWELL_FUNC::get_setting( 'sc_ad_code' );
+		$ad = \SWELL_Theme::get_setting( 'sc_ad_code' );
 		return do_shortcode( $ad );
 	}
 endif;

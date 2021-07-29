@@ -1,6 +1,6 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 
 // タブリスト
 $tab_list = [];
@@ -63,8 +63,8 @@ if ( count( $tab_list ) > 1 ) {
 		<div id="post_list_tab_<?=esc_attr( (string) $newTabIndex )?>" class="c-tabBody__item" aria-hidden="<?=esc_attr( $is_hidden )?>">
 			<?php
 				// 新着投稿一覧 ( Main loop )
-				SWELL_FUNC::get_parts( 'parts/post_list/loop_main' );
-				SWELL_FUNC::get_parts( 'parts/post_list/item/pagination' );
+				SWELL_Theme::get_parts( 'parts/post_list/loop_main' );
+				SWELL_Theme::get_parts( 'parts/post_list/item/pagination' );
 			?>
 		</div>
 <?php
@@ -87,7 +87,7 @@ if ( count( $tab_list ) > 1 ) {
 				if ( ! empty( $exc_tag ) ) {
 					$q_args['tag__not_in'] = $exc_tag;
 				}
-				SWELL_FUNC::get_parts( 'parts/post_list/loop_sub', [ 'query_args' => $q_args ] );
+				SWELL_Theme::get_parts( 'parts/post_list/loop_sub', [ 'query_args' => $q_args ] );
 			?>
 		</div>
 <?php
@@ -127,7 +127,7 @@ if ( count( $tab_list ) > 1 ) {
 			$the_query_count = $the_query->post_count;
 
 			// 投稿リスト
-			SWELL_FUNC::get_parts( 'parts/post_list/loop_sub', [
+			SWELL_Theme::get_parts( 'parts/post_list/loop_sub', [
 				'query'    => $the_query,
 				'term_ppp' => $term_ppp,
 			] );

@@ -47,7 +47,7 @@ $list_class = $min === $list_count_pc ? 'sp_only' : 'pc_only';
 
 		$list_args['count'] = $loop_count;
 
-		\SWELL_FUNC::get_parts( 'parts/post_list/style/rss_' . $file_name, [
+		\SWELL_Theme::get_parts( 'parts/post_list/style/rss_' . $file_name, [
 			'list_args' => $list_args,
 			'feed_data' => $feed_data,
 		] );

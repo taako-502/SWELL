@@ -22,7 +22,7 @@ class Tab_Btn {
 		add_settings_field(
 			'swell_btn_color', // フィールドID
 			'カラー設定',
-			['\SWELL_THEME\Menu\Tab_Btn', 'callback_for_colors' ],
+			[__CLASS__, 'callback_for_colors' ],
 			$page_name,
 			$section_name,
 			[
@@ -38,7 +38,7 @@ class Tab_Btn {
 		add_settings_field(
 			'swell_btn_radius', // フィールドID
 			'ボタンの丸み',
-			['\SWELL_THEME\Menu\Tab_Btn', 'callback_for_radius' ],
+			[__CLASS__, 'callback_for_radius' ],
 			$page_name,
 			$section_name,
 			[
@@ -49,7 +49,7 @@ class Tab_Btn {
 		add_settings_field(
 			'swell_btn_preview', // フィールドID
 			'',
-			['\SWELL_THEME\Menu\Tab_Btn', 'callback_for_preview' ],
+			[__CLASS__, 'callback_for_preview' ],
 			$page_name,
 			$section_name,
 			[
@@ -64,7 +64,7 @@ class Tab_Btn {
 	 */
 	public static function callback_for_gradation( $args ) {
 		$key   = 'is_btn_gradation';
-		$val   = \SWELL_FUNC::get_editor( $key );
+		$val   = \SWELL_Theme::get_editor( $key );
 		$name  = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
 		$label = 'ボタンのグラデーションをオンにする';
 
@@ -90,7 +90,7 @@ class Tab_Btn {
 					$key = 'btn_radius_' . $style;
 
 					$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
-					$val  = \SWELL_FUNC::get_editor( $key );
+					$val  = \SWELL_Theme::get_editor( $key );
 
 					$choices = [
 						'0px'  => '丸みなし',
@@ -121,7 +121,7 @@ class Tab_Btn {
 		$db     = \SWELL_Theme::DB_NAME_EDITORS;
 		$colors = $args['colors'];
 
-		$is_gradation = \SWELL_FUNC::get_editor( 'is_btn_gradation' );
+		$is_gradation = \SWELL_Theme::get_editor( 'is_btn_gradation' );
 	?>
 
 		<div class="swell-menu-btn" data-is-grad="<?=$is_gradation?>">
@@ -131,12 +131,12 @@ class Tab_Btn {
 					$color2 = $color . '2';
 
 					$key  = 'color_btn_' . $color;
-					$val  = \SWELL_FUNC::get_editor( $key );
+					$val  = \SWELL_Theme::get_editor( $key );
 					$dflt = \SWELL_Theme::get_default_editor( $key );
 					$name = $db . '[' . $key . ']';
 
 					$key2  = 'color_btn_' . $color2;
-					$val2  = \SWELL_FUNC::get_editor( $key2 );
+					$val2  = \SWELL_Theme::get_editor( $key2 );
 					$dflt2 = \SWELL_Theme::get_default_editor( $key2 );
 					$name2 = $db . '[' . $key2 . ']';
 				?>
@@ -179,7 +179,7 @@ class Tab_Btn {
 	}
 
 	public static function callback_for_preview( $args ) {
-		$is_gradation = \SWELL_FUNC::get_editor( 'is_btn_gradation' );
+		$is_gradation = \SWELL_Theme::get_editor( 'is_btn_gradation' );
 
 		?>
 			<div class="swell-menu-btn -preview" data-is-grad="<?=$is_gradation?>">

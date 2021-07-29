@@ -1,7 +1,7 @@
-<?php 
+<?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 $mv_type = $SETTING['main_visual_type'];
 
 ?>

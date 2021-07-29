@@ -14,7 +14,7 @@ class Partial {
 	 * ヘッダーロゴ
 	 */
 	public static function head_logo() {
-		$logo = \SWELL_PARTS::head_logo( \SWELL_FUNC::get_setting( 'header_transparent' ), true );
+		$logo = \SWELL_PARTS::head_logo( \SWELL_Theme::get_setting( 'header_transparent' ), true );
 		return $logo;
 	}
 
@@ -23,7 +23,7 @@ class Partial {
 	 */
 	public static function breadcrumb() {
 		ob_start();
-		\SWELL_FUNC::get_parts( 'parts/breadcrumb' );
+		\SWELL_Theme::get_parts( 'parts/breadcrumb' );
 		return ob_get_clean();
 	}
 }

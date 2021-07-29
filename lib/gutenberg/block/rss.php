@@ -96,7 +96,7 @@ function cb_rss( $attrs, $content ) {
 	echo '<div class="' . esc_attr( $list_wrapper_class ) . '">';
 
 	// 投稿リスト
-	\SWELL_FUNC::get_parts( 'parts/post_list/rss', [
+	\SWELL_Theme::get_parts( 'parts/post_list/rss', [
 		'rss_items' => $rss_data['items'],
 		'list_args' => $list_args,
 	] );

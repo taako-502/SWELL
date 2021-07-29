@@ -92,7 +92,7 @@
 
 .comment-content {
 
-    & > * {
+    > * {
         margin-bottom: 1em;
     }
 
@@ -136,6 +136,7 @@
         margin: 1em 0 0;
         padding: .5em 1.5em;
         color: #fff;
+        background-color: var(--color_main);
         border: none;
         -webkit-appearance: none;
     }

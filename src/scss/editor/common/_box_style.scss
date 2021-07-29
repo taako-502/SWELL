@@ -9,12 +9,6 @@
 //     background: repeating-linear-gradient(180deg, #eee 0 1px, transparent 1px .5em);
 // }
 
-// :root {
-//     --color_custom02: #ffeaea;
-//     --color_custom04: #f1f8ff;
-//     --color_custom06: #f0fff0;
-// }
-
 .has-border {
 
     &.-border01 {
@@ -78,21 +72,6 @@ div.has-background,
     }
 }
 
-// p[class*="is-style-border_"],
-// p[class*="is-style-bg_"],
-// p.is-style-dent_box,
-// p.is-style-emboss_box,
-// p.is-style-kakko_box,
-// p.is-style-big_kakko_box,
-// p[class*="is-style-"]{
-//     padding: 1em 1.5em;
-// }
-
-// p.is-style-kakko_box,
-// p.is-style-big_kakko_box{
-//     padding: 2em;
-// }
-
 
 // 旧ボーダースタイル
 .is-style-border_sg {
@@ -104,11 +83,11 @@ div.has-background,
 }
 
 .is-style-border_sm {
-    border: solid 1px;
+    border: solid 1px var(--color_main);
 }
 
 .is-style-border_dm {
-    border: dashed 1px;
+    border: dashed 1px var(--color_main);
 }
 
 
@@ -202,21 +181,12 @@ div.has-background,
 
     @extend %bgfff;
     @extend %boxShadow;
-    border-top: solid 2px;
+    border-top: solid 2px var(--color_main);
 }
 
 .is-style-kakko_box {
     position: relative;
     padding: 2em;
-
-    &::before,
-    &::after {
-        position: absolute;
-        display: inline-block;
-        width: 2.25em;
-        height: 2em;
-        content: "";
-    }
 
     &::before {
         top: 0;
@@ -231,20 +201,22 @@ div.has-background,
         border-right: solid 1px;
         border-bottom: solid 1px;
     }
+
+    // border-colorがborderより後に来るように。
+    &::before,
+    &::after {
+        position: absolute;
+        display: inline-block;
+        width: 2.25em;
+        height: 2em;
+        border-color: var(--color_main);
+        content: "";
+    }
 }
 
 .is-style-big_kakko_box {
     position: relative;
     padding: 2em;
-
-    &::before,
-    &::after {
-        position: absolute;
-        display: inline-block;
-        width: .75em;
-        height: 100%;
-        content: "";
-    }
 
     &::before {
         bottom: 0;
@@ -261,12 +233,23 @@ div.has-background,
         border-right: solid 1px;
         border-bottom: solid 1px;
     }
+
+    // border-colorがborderより後に来るように。
+    &::before,
+    &::after {
+        position: absolute;
+        display: inline-block;
+        width: .75em;
+        height: 100%;
+        border-color: var(--color_main);
+        content: "";
+    }
 }
 
 //横棒
 .is-style-border_left {
     padding-left: 10px;
-    border-left: solid 2px;
+    border-left: solid 2px currentColor;
 }
 
 //付箋
@@ -276,7 +259,7 @@ div.has-background,
     min-width: 6em;
     padding: .75em 1em;
     line-height: 1.4;
-    border-left: solid 8px;
+    border-left: solid 8px var(--color_main);
     // box-shadow: 1px 2px 6px rgba(0, 0, 0, .1);
     @extend %boxShadow;
     @extend %bgfff;
@@ -288,9 +271,9 @@ div.has-background,
     width: fit-content;
     min-width: 6em;
     padding: .5em 1.25em;
-    //background: $color_main;
     color: #fff;
     line-height: 1.4;
+    background-color: var(--color_main);
     border-radius: 2px;
 
     &::before {
@@ -357,22 +340,14 @@ div.has-background,
 }
 
 
-// .is-style-left_line{
-
-// }
-// .is-style-check_icon{
-
-// }
-
 //---------------------------------------
 // アイコン付きテキスト
 //---------------------------------------
 // [class*="is-style-icontext_"] {
-
 // }
 // .is-style-icontext_check{
-
 // }
+
 
 //---------------------------------------
 // アイコンボックス（小）
@@ -502,13 +477,6 @@ div.has-background,
 // アイコンボックス（大）
 //---------------------------------------
 
-// $point_color: #ffa639;
-// $good_color: #86d67c;
-// $bad_color: #f36060;
-// $hatena_color: #5295cc;
-// $caution_color: #f7da38;
-// $memo_color: #84878a;
-
 [class*="is-style-big_icon_"] {
 
     @include tab {
@@ -623,7 +591,6 @@ div.has-background,
         height: 32px;
         padding: 0;
         background: #dfe1e5 url(../img/style/macdot.svg) no-repeat left 8px top 50% / auto 12px;
-        // border-radius: 2px 2px 0 0;
         content: "";
     }
 
@@ -648,7 +615,7 @@ div.has-background,
     }
 
     // & > figure > figcaption,
-    & > figcaption {
+    > figcaption {
         position: absolute;
         top: 6px;
         left: 72px;
@@ -724,7 +691,7 @@ div.has-background,
         content: "";
     }
 
-    & > figcaption {
+    > figcaption {
         order: 3;
     }
 

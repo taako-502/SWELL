@@ -130,8 +130,8 @@ function hook_walker_nav_menu_start_el( $item_output, $item, $depth, $args ) {
 		$img   = '';
 		$img_s = '';
 
-		$layout_pc = \SWELL_FUNC::get_setting( 'pickbnr_layout_pc' );
-		$layout_sp = \SWELL_FUNC::get_setting( 'pickbnr_layout_sp' );
+		$layout_pc = \SWELL_Theme::get_setting( 'pickbnr_layout_pc' );
+		$layout_sp = \SWELL_Theme::get_setting( 'pickbnr_layout_sp' );
 
 		$size = 'full';
 		if ( $menu_count !== 1 && $layout_sp === 'fix_col2' ) {

@@ -30,10 +30,7 @@ while ( have_posts() ) :
 
 			// 記事上シェアボタン
 			if ( $show_share_btns && $SETTING['show_share_btn_top'] ) :
-				SWELL_Theme::get_parts( 'parts/single/share_btns', [
-					'post_id'  => $the_id,
-					'position' => '-top',
-				] );
+				SWELL_Theme::get_parts( 'parts/single/share_btns', [ 'position' => '-top' ] );
 			endif;
 
 			// 記事上ウィジェット
@@ -81,24 +78,18 @@ while ( have_posts() ) :
 
 			// 下部シェアボタン
 			if ( $show_share_btns && $SETTING['show_share_btn_bottom'] ) :
-				SWELL_Theme::get_parts( 'parts/single/share_btns', [
-					'post_id'  => $the_id,
-					'position' => '-bottom',
-				] );
+				SWELL_Theme::get_parts( 'parts/single/share_btns', [ 'position' => '-bottom' ] );
 			endif;
 
 			// 固定シェアボタン
 			if ( $show_share_btns && $SETTING['show_share_btn_fix'] ) :
-				SWELL_Theme::get_parts( 'parts/single/share_btns', [
-					'post_id'  => $the_id,
-					'position' => '-fix',
-				] );
+				SWELL_Theme::get_parts( 'parts/single/share_btns', [ 'position' => '-fix' ] );
 			endif;
 		?>
 		<div id="after_article" class="l-articleBottom">
 			<?php
 				if ( ! \SWELL_Theme::is_use( 'ajax_after_post' ) ) :
-					SWELL_Theme::get_parts( 'parts/single/after_article', ['post_id' => $the_id ] );
+					SWELL_Theme::get_parts( 'parts/single/after_article' );
 				endif;
 			?>
 		</div>

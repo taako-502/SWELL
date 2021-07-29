@@ -54,7 +54,7 @@ $meta_args = [
 				echo esc_html( $feed_title );
 				echo '</' . esc_attr( $h_tag ) . '>';
 			?>
-			<?php \SWELL_FUNC::get_parts( 'parts/post_list/item/rss_meta', $meta_args ); ?>
+			<?php \SWELL_Theme::get_parts( 'parts/post_list/item/rss_meta', $meta_args ); ?>
 		</div>
 	</a>
 </li>

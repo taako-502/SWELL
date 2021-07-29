@@ -2,17 +2,14 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * sns_btns
- * @phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
  */
 
-$position = $variable['position'];
-$SETTEING = SWELL_FUNC::get_setting();
-
-
-$the_id      = $variable['post_id'] ?: get_the_ID();
+$position    = $variable['position'];
+$the_id      = get_the_ID();
 $share_url   = get_permalink( $the_id );
 $share_title = html_entity_decode( get_the_title( $the_id ) );
 
+$SETTEING      = SWELL_Theme::get_setting();
 $style         = $SETTEING['share_btn_style'];
 $hashtags      = $SETTEING['share_hashtags'];
 $via           = $SETTEING['share_via'];
@@ -89,7 +86,7 @@ if ( 'out' === $urlcopy_pos ) $share_btns_class .= ' has-big-copybtn';
 			if ( ! $SETTEING[ $data['check_key'] ] ) continue;
 
 			if ( 'pinterest' === $key ) {
-				\SWELL_Theme::$use['pinterest'] = true;
+				SWELL_Theme::$use['pinterest'] = true;
 			}
 
 			if ( isset( $data['querys'] ) ) :
@@ -117,20 +114,25 @@ if ( 'out' === $urlcopy_pos ) $share_btns_class .= ' has-big-copybtn';
 				$btn_attrs .= ' onclick="' . $onclick . '"';
 			endif;
 
+
+			$btn_attrs .= ' target="_blank" role="button"';
+
 			// 追加の属性があれば
 			if ( isset( $data['attrs'] ) ) $btn_attrs .= ' ' . $data['attrs'];
 
+			// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 			?>
-			<li class="c-shareBtns__item -<?=$key?>">
-				<a class="c-shareBtns__btn <?=$hov_class?>" <?=$btn_attrs?> target="_blank" role="button">
-					<i class="snsicon c-shareBtns__icon icon-<?=$key?>" role="presentation"></i>
+			<li class="c-shareBtns__item -<?=esc_attr( $key )?>">
+				<a class="c-shareBtns__btn <?=esc_attr( $hov_class )?>" <?=$btn_attrs?>>
+					<i class="snsicon c-shareBtns__icon icon-<?=esc_attr( $key )?>" role="presentation"></i>
 				</a>
 			</li>
 		<?php endforeach; ?>
+		<?php // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<?php if ( ( ! $is_fix && 'in' === $urlcopy_pos ) || ( $is_fix && 'none' !== $urlcopy_pos ) ) : ?>
-			<?php \SWELL_Theme::$use['clipboard'] = true; ?>
+			<?php SWELL_Theme::$use['clipboard'] = true; ?>
 			<li class="c-shareBtns__item -copy">
-				<div class="c-urlcopy c-shareBtns__btn <?=$hov_class?>" data-clipboard-text="<?=esc_url( $share_url )?>" title="<?=__( 'Copy the URL', 'swell' )?>">
+				<div class="c-urlcopy c-shareBtns__btn <?=esc_attr( $hov_class )?>" data-clipboard-text="<?=esc_url( $share_url )?>" title="<?=esc_attr__( 'Copy the URL', 'swell' )?>">
 					<div class="c-urlcopy__content">
 						<i class="c-shareBtns__icon icon-clipboard-copy -to-copy"></i>
 						<i class="c-shareBtns__icon icon-clipboard-copied -copied"></i>
@@ -142,21 +144,20 @@ if ( 'out' === $urlcopy_pos ) $share_btns_class .= ' has-big-copybtn';
 	</ul>
 
 	<?php if ( ! $is_fix && 'out' === $urlcopy_pos ) : ?>
-		<?php \SWELL_Theme::$use['clipboard'] = true; ?>
+		<?php SWELL_Theme::$use['clipboard'] = true; ?>
 		<div class="c-shareBtns__item -copy c-big-urlcopy">
-			<div class="c-urlcopy c-shareBtns__btn <?=$hov_class?>" data-clipboard-text="<?=esc_url( $share_url )?>" title="<?=__( 'Copy the URL', 'swell' )?>" role="button">
+			<div class="c-urlcopy c-shareBtns__btn <?=esc_attr( $hov_class )?>" data-clipboard-text="<?=esc_url( $share_url )?>" title="<?=esc_attr__( 'Copy the URL', 'swell' )?>" role="button">
 			<div class="c-urlcopy__content">
 				<div class="c-shareBtns__icon -to-copy">
 					<i class="icon-clipboard-copy"></i>
-					<span class="c-urlcopy__text"><?=__( 'Copy the URL', 'swell' )?></span>
+					<span class="c-urlcopy__text"><?=esc_html__( 'Copy the URL', 'swell' )?></span>
 				</div>
 				<div class="c-shareBtns__icon -copied">
 					<i class="icon-clipboard-copied"></i>
-					<span class="c-urlcopy__text"><?=__( 'Copied the URL!', 'swell' )?></span>
+					<span class="c-urlcopy__text"><?=esc_html__( 'Copied the URL!', 'swell' )?></span>
 				</div>
 			</div>
 			</div>
 		</div>
 	<?php endif; ?>
-
 </div>

@@ -41,7 +41,7 @@ add_action( 'after_setup_theme', function() {
 add_action( 'wp_loaded', __NAMESPACE__ . '\hook_wp_loaded', 11 );
 function hook_wp_loaded() {
 
-	$SETTING      = \SWELL_FUNC::get_setting();
+	$SETTING      = \SWELL_Theme::get_setting();
 	$is_customize = is_customize_preview();
 
 	// 高速化の設定

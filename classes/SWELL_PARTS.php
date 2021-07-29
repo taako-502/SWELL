@@ -1,8 +1,4 @@
 <?php
-
-use \SWELL_Theme as SWELL;
-use \SWELL_THEME\Parts\Post_List;
-
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 // @codingStandardsIgnoreStart
@@ -14,14 +10,14 @@ class SWELL_PARTS{
 	 * 3.0で消す
 	 */
 	public static function catchphrase() {
-		return apply_filters( 'swell_parts_catchphrase', SWELL::site_data( 'catchphrase' ) );
+		return apply_filters( 'swell_parts_catchphrase', \SWELL_Theme::site_data( 'catchphrase' ) );
 	}
 
 	/**
 	 * 3.0で消す
 	 */
 	public static function head_logo_img( $use_top_logo ) {
-		return SWELL::get_pluggable_parts( 'head_logo', [
+		return \SWELL_Theme::get_pluggable_parts( 'head_logo', [
 			'use_top_logo' => $use_top_logo,
 		] );
 	}
@@ -32,20 +28,20 @@ class SWELL_PARTS{
 	 */
 	public static function head_logo( $header_transparent, $is_fixbar = false ) {
 		
-		if ( SWELL::site_data( 'logo' ) ) {
+		if ( \SWELL_Theme::site_data( 'logo' ) ) {
 			// topロゴも取得するかどうか
-			$use_top_logo = ( SWELL::is_top() && ! is_paged() && $header_transparent !== 'no' );
+			$use_top_logo = ( \SWELL_Theme::is_top() && ! is_paged() && $header_transparent !== 'no' );
 			$logo = self::head_logo_img( $use_top_logo );
 			$logo_class = '-img';
 		} else {
 			// ロゴがない場合
-			$logo = SWELL::site_data( 'title' );
+			$logo = \SWELL_Theme::site_data( 'title' );
 			$logo_class = '-txt';
 		}
-		$tag = ( SWELL::is_top() && ! $is_fixbar ) ?  'h1' : 'div';
+		$tag = ( \SWELL_Theme::is_top() && ! $is_fixbar ) ?  'h1' : 'div';
 
 		$return = '<'. $tag .' class="c-headLogo '. $logo_class .'">'.
-					'<a href="'. SWELL::site_data( 'home' ) .'" title="'. SWELL::site_data( 'title' ) .'" class="c-headLogo__link" rel="home">'. $logo .'</a>'.
+					'<a href="'. \SWELL_Theme::site_data( 'home' ) .'" title="'. \SWELL_Theme::site_data( 'title' ) .'" class="c-headLogo__link" rel="home">'. $logo .'</a>'.
 				'</'. $tag .'>';
 
 		return apply_filters( 'swell_parts_head_logo', $return, $header_transparent, $is_fixbar  );
@@ -56,7 +52,7 @@ class SWELL_PARTS{
 	 * 3.0で消す
 	 */
 	public static function page_title( $page_id ) {
-		$title = SWELL::get_pluggable_parts( 'page_title', [
+		$title = \SWELL_Theme::get_pluggable_parts( 'page_title', [
 			'title'    => get_the_title( $page_id ),
 			'subtitle' => get_post_meta( $page_id, 'swell_meta_subttl', true ),
 			'nowrap'   => true,
@@ -69,9 +65,9 @@ class SWELL_PARTS{
 	 * 3.0で消す
 	 */
 	public static function term_title( $term_id ) {
-		$archive_data = SWELL::get_archive_data();
+		$archive_data = \SWELL_Theme::get_archive_data();
 
-		$title = SWELL::get_pluggable_parts( 'page_title', [
+		$title = \SWELL_Theme::get_pluggable_parts( 'page_title', [
 			'title'    => get_term_meta( $term_id, 'swell_term_meta_ttl', 1 ) ?: $archive_data['title'],
 			'subtitle' => get_term_meta( $term_id, 'swell_term_meta_subttl', 1 ) ?: $archive_data['type'],
 			'nowrap'   => true,
@@ -110,12 +106,12 @@ class SWELL_PARTS{
 
 		} else {
 
-			$thumb = SWELL::get_thumbnail( [
+			$thumb = \SWELL_Theme::get_thumbnail( [
 				'post_id'          => $post_id,
 				'class'            => 'p-articleThumb__img',
 				'placeholder_size' => 'medium',
 				'use_lazyload'     => true,
-				'use_noimg'        => is_single() && SWELL_FUNC::get_setting('show_noimg_thumb'),
+				'use_noimg'        => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
 			] );
 
 			if ( $thumb ) {
@@ -132,7 +128,7 @@ class SWELL_PARTS{
 	 * 3.0で消す
 	 */
 	public static function post_excerpt( $post_data, $length = null ) {
-		return SWELL::get_excerpt( $post_data, $length );
+		return \SWELL_Theme::get_excerpt( $post_data, $length );
 	}
 
 
@@ -142,11 +138,11 @@ class SWELL_PARTS{
 	public static function post_author( $author_id, $add_class = '', $is_link = false ) {
 
 		if ( $is_link ) {
-			return SWELL::get_pluggable_parts( 'the_post_author', [
+			return \SWELL_Theme::get_pluggable_parts( 'the_post_author', [
 				'author_id' => $author_id,
 			] );
 		} else {
-			return SWELL::get_pluggable_parts( 'post_list_author', [
+			return \SWELL_Theme::get_pluggable_parts( 'post_list_author', [
 				'author_id' => $author_id,
 			] );
 		}
@@ -199,7 +195,7 @@ class SWELL_PARTS{
 	 * 3.0で消す
 	 */
 	public static function mv_btn( $args ) {
-		return SWELL::get_pluggable_parts( 'mv_btn', $args );
+		return \SWELL_Theme::get_pluggable_parts( 'mv_btn', $args );
 	}
 
 
@@ -207,8 +203,8 @@ class SWELL_PARTS{
 	 * 3.0で消す
 	 */
 	public static function get_scroll_arrow( $type = 'slide' ) {
-		$color = ( 'video' === $type ) ? SWELL_FUNC::get_setting( 'movie_txtcol' ) : SWELL_FUNC::get_setting( 'slider1_txtcol' );
-		$return = SWELL::get_pluggable_parts( 'scroll_arrow', ['color' => $color ] ); 
+		$color = ( 'video' === $type ) ? \SWELL_Theme::get_setting( 'movie_txtcol' ) : \SWELL_Theme::get_setting( 'slider1_txtcol' );
+		$return = \SWELL_Theme::get_pluggable_parts( 'scroll_arrow', ['color' => $color ] ); 
 		return apply_filters( 'swell_parts_scroll_arrow', $return );
 	}
 
@@ -241,7 +237,7 @@ class SWELL_PARTS{
 	 * 目次広告
 	 */
 	public static function toc_ad() {
-		$toc_adcode = SWELL_FUNC::get_setting( 'before_h2_addcode' );
+		$toc_adcode = \SWELL_Theme::get_setting( 'before_h2_addcode' );
 		if ( empty( $toc_adcode ) ) return '';
 
 		// apply_filters( 'swell_parts_toc_ad' );
@@ -262,7 +258,7 @@ class SWELL_PARTS{
 
 		// tax名
 		$taxonomy = $term->taxonomy;
-		$show_term_navigation = 'category' === $taxonomy && \SWELL_FUNC::get_setting( 'show_category_nav' );
+		$show_term_navigation = 'category' === $taxonomy && \SWELL_Theme::get_setting( 'show_category_nav' );
 		if ( ! apply_filters( 'swell_show_term_navigation', $show_term_navigation, $taxonomy, $the_id  ) ) {
 			return;
 		}

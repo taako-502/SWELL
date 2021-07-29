@@ -1,9 +1,8 @@
-<?php 
-if( ! defined( 'ABSPATH' ) ) exit;
-$SETTING = SWELL_FUNC::get_setting(); //セッティング情報取得
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 $foot_widget = '';
-$widget_ct = 0;
+$widget_ct   = 0;
 
 if ( IS_MOBILE && is_active_sidebar( 'footer_sp' ) ) {
 	// スマホ用フッターウィジェット
@@ -36,13 +35,12 @@ if ( IS_MOBILE && is_active_sidebar( 'footer_sp' ) ) {
 	}
 	$foot_widget = ob_get_clean();
 }
-?>
 
+?>
 <?php if ( $foot_widget !== '' ) : ?>
 <div class="l-footer__widgetArea">
-	<div class="l-container w-footer <?='-col'.$widget_ct?>">
-		<?php echo $foot_widget; ?>
+	<div class="l-container w-footer <?=esc_attr( '-col' . $widget_ct )?>">
+		<?php echo $foot_widget; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 	</div>
 </div>
 <?php endif; ?>
-

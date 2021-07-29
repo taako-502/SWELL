@@ -9,7 +9,7 @@ class Top {
 
 	public static function init() {
 
-		$SETTING = \SWELL_FUNC::get_setting();
+		$SETTING = \SWELL_Theme::get_setting();
 
 		// コンテンツ上の余白量
 		Style::add( '.top #content', 'padding-top:' . $SETTING['top_content_mt'] );

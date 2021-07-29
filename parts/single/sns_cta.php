@@ -36,7 +36,7 @@ $tw_lang = ( 'ja' === $lang ) ? 'ja' : 'en'; // _x( 'en', 'tw', 'swell' );
 <div class="p-snsCta">
 	<?php
 	if ( $fb_url ) : // FBのscript
-		$fb_appID       = SWELL_FUNC::get_setting( 'fb_like_appID' ) ?: '';
+		$fb_appID       = SWELL_Theme::get_setting( 'fb_like_appID' ) ?: '';
 		$fb_appID_query = $fb_appID ? '&appId=' . $fb_appID . '&autoLogAppEvents=1' : '';
 	?>
 	<div id="fb-root"></div>

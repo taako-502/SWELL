@@ -11,7 +11,7 @@ class Others {
 	 * SPメニュー
 	 */
 	public static function spmenu() {
-		$SETTING = \SWELL_FUNC::get_setting();
+		$SETTING = \SWELL_Theme::get_setting();
 		Style::add( '.p-spMenu', 'color:' . $SETTING['color_spmenu_text'] );
 		Style::add( '.p-spMenu__inner::before', [
 			'background:' . $SETTING['color_spmenu_bg'],
