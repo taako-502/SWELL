@@ -23,7 +23,7 @@ class Tab_Border {
 			add_settings_field(
 				'border_set_0' . $i, // フィールドID。何にも使わない
 				'ボーダーセット 0' . $i,
-				['\SWELL_THEME\Menu\Tab_Border', 'callback' ],
+				[__CLASS__, 'callback' ],
 				$page_name,
 				$section_name,
 				[

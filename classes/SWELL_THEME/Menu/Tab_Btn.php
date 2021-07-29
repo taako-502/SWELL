@@ -22,7 +22,7 @@ class Tab_Btn {
 		add_settings_field(
 			'swell_btn_color', // フィールドID
 			'カラー設定',
-			['\SWELL_THEME\Menu\Tab_Btn', 'callback_for_colors' ],
+			[__CLASS__, 'callback_for_colors' ],
 			$page_name,
 			$section_name,
 			[
@@ -38,7 +38,7 @@ class Tab_Btn {
 		add_settings_field(
 			'swell_btn_radius', // フィールドID
 			'ボタンの丸み',
-			['\SWELL_THEME\Menu\Tab_Btn', 'callback_for_radius' ],
+			[__CLASS__, 'callback_for_radius' ],
 			$page_name,
 			$section_name,
 			[
@@ -49,7 +49,7 @@ class Tab_Btn {
 		add_settings_field(
 			'swell_btn_preview', // フィールドID
 			'',
-			['\SWELL_THEME\Menu\Tab_Btn', 'callback_for_preview' ],
+			[__CLASS__, 'callback_for_preview' ],
 			$page_name,
 			$section_name,
 			[

@@ -20,7 +20,7 @@ class Tab_Others {
 			$page_name
 		);
 
-		$cb = ['\SWELL_THEME\Menu\Tab_Others', 'callback_for_blogcard' ];
+		$cb = [__CLASS__, 'callback_for_blogcard' ];
 		add_settings_field(
 			'blocg_card_in', // フィールドID。何にも使わない
 			'ブログカード（内部）',
@@ -125,7 +125,7 @@ class Tab_Others {
 		add_settings_field(
 			'blockquote_style', // フィールドID。何にも使わない
 			'スタイル',
-			['\SWELL_THEME\Menu\Tab_Others', 'callback_for_blockquote' ],
+			[__CLASS__, 'callback_for_blockquote' ],
 			$page_name,
 			$section_name,
 			[

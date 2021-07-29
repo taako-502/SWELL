@@ -22,7 +22,7 @@ class Tab_Iconbox {
 		add_settings_field(
 			'iconbox_small_style',
 			'スタイル',
-			['\SWELL_THEME\Menu\Tab_Iconbox', 'callback_for_iconbox_type' ],
+			[__CLASS__, 'callback_for_iconbox_type' ],
 			$page_name,
 			$section_name,
 			[
@@ -49,7 +49,7 @@ class Tab_Iconbox {
 			add_settings_field(
 				'color_iconbox_small_' . $key,
 				$label,
-				['\SWELL_THEME\Menu\Tab_Iconbox', 'callback_for_iconbox_small_color' ],
+				[__CLASS__, 'callback_for_iconbox_small_color' ],
 				$page_name,
 				$section_name,
 				[
@@ -79,7 +79,7 @@ class Tab_Iconbox {
 		add_settings_field(
 			'iconbox_big_style',
 			'スタイル',
-			['\SWELL_THEME\Menu\Tab_Iconbox', 'callback_for_iconbox_type' ],
+			[__CLASS__, 'callback_for_iconbox_type' ],
 			$page_name,
 			$section_name,
 			[
@@ -105,7 +105,7 @@ class Tab_Iconbox {
 			add_settings_field(
 				'color_iconbox_big_' . $key,
 				$label,
-				['\SWELL_THEME\Menu\Tab_Iconbox', 'callback_for_iconbox_big_color' ],
+				[__CLASS__, 'callback_for_iconbox_big_color' ],
 				$page_name,
 				$section_name,
 				[

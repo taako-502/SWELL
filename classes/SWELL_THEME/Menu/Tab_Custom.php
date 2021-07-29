@@ -26,7 +26,7 @@ class Tab_Custom {
 			add_settings_field(
 				'custom_format_' . $i, // フィールドID。何にも使わない
 				$label,
-				['\SWELL_THEME\Menu\Tab_Custom', 'cb_format' ],
+				[__CLASS__, 'cb_format' ],
 				$page_name,
 				$section_name,
 				[
@@ -79,7 +79,7 @@ class Tab_Custom {
 		add_settings_field(
 			'custom_format_css', // フィールドID。何にも使わない
 			'',
-			['\SWELL_THEME\Menu\Tab_Custom', 'cb_format_css' ],
+			[__CLASS__, 'cb_format_css' ],
 			$page_name,
 			$section_name,
 			[

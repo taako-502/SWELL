@@ -22,7 +22,7 @@ class Tab_Marker {
 		add_settings_field(
 			'marker_type',
 			'スタイル',
-			['\SWELL_THEME\Menu\Tab_Marker', 'callback_for_marker_type' ],
+			[__CLASS__, 'callback_for_marker_type' ],
 			$page_name,
 			$section_name,
 			[
@@ -32,7 +32,7 @@ class Tab_Marker {
 		add_settings_field(
 			'marker_color',
 			'カラー',
-			['\SWELL_THEME\Menu\Tab_Marker', 'callback_for_marker_color' ],
+			[__CLASS__, 'callback_for_marker_color' ],
 			$page_name,
 			$section_name,
 			[
