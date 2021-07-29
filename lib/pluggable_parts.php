@@ -141,7 +141,7 @@ if ( ! function_exists( 'swl_parts__mv_btn' ) ) :
 				$props .= ' style="background-color:' . esc_attr( $btn_col ) . '"';
 			}
 		} elseif ( 'b' === $btn_type ) {
-			$btn_col = $btn_col ?: SWELL_FUNC::get_setting( 'color_main' );
+			$btn_col = $btn_col ?: SWELL::get_setting( 'color_main' );
 			if ( $btn_col ) {
 				$props .= ' style="color:' . esc_attr( $btn_col ) . '"';
 			}

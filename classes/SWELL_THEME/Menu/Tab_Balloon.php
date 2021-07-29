@@ -58,8 +58,8 @@ class Tab_Balloon {
 		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
 		// 現在の値
-		$val_bg     = \SWELL_FUNC::get_editor( $bg_id );
-		$val_border = \SWELL_FUNC::get_editor( $border_id );
+		$val_bg     = \SWELL_Theme::get_editor( $bg_id );
+		$val_border = \SWELL_Theme::get_editor( $border_id );
 
 		$dflt_bg     = \SWELL_Theme::get_default_editor( $bg_id );
 		$dflt_border = \SWELL_Theme::get_default_editor( $border_id );

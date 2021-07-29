@@ -119,7 +119,7 @@ function load_front_fa() {
  */
 function global_vars_on_front() {
 
-	$SETTING  = \SWELL_FUNC::get_setting();
+	$SETTING  = \SWELL_Theme::get_setting();
 	$is_bot   = \SWELL_Theme::is_bot() || is_robots();
 	$is_login = is_user_logged_in();
 

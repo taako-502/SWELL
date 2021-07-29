@@ -173,7 +173,7 @@ class SWELL_Popular_Posts extends WP_Widget {
 		];
 
 		// 人気記事一覧で除外指定が有効なのはタグのみ
-		$exc_tag = explode( ',', SWELL_FUNC::get_setting( 'exc_tag_id' ) );
+		$exc_tag = explode( ',', \SWELL_Theme::get_setting( 'exc_tag_id' ) );
 		if ( ! empty( $exc_tag ) ) {
 			$query_args['tag__not_in'] = $exc_tag;
 		}
@@ -184,7 +184,7 @@ class SWELL_Popular_Posts extends WP_Widget {
 		echo $args['before_title'] . apply_filters( 'widget_title', $widget_title ) . $args['after_title'];
 
 		// 投稿一覧
-		SWELL_FUNC::get_parts( 'parts/post_list/loop_by_widget', [
+		\SWELL_Theme::get_parts( 'parts/post_list/loop_by_widget', [
 			'query_args' => $query_args,
 			'list_args'  => $list_args,
 		] );

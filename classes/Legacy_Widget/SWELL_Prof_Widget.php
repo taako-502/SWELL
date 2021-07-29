@@ -126,7 +126,7 @@ class SWELL_Prof_Widget extends WP_Widget {
 		] );
 
 		echo $args['before_widget'];
-		SWELL_FUNC::get_parts( 'parts/profile_box', $instance );
+		\SWELL_Theme::get_parts( 'parts/profile_box', $instance );
 		echo $args['after_widget'];
 	}
 }

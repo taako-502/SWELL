@@ -11,7 +11,7 @@ add_action( 'admin_init', __NAMESPACE__ . '\hook_admin_init' );
  * 投稿タイプの登録
  */
 function hook_init() {
-	$OPTION = \SWELL_FUNC::get_option();
+	$OPTION = \SWELL_Theme::get_option();
 
 	/**
 	 * LPを追加

@@ -1,11 +1,10 @@
 <?php
-use \SWELL_THEME\Parts\Post_List;
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * 投稿一覧リストの出力テンプレート
  */
-$list_type      = $variable['list_type'] ?? \SWELL_Theme::$list_type;
+$list_type      = $variable['list_type'] ?? SWELL_Theme::$list_type;
 $thumb_sizes    = $variable['thumb_sizes'] ?? '';
 $cat_pos        = $variable['cat_pos'] ?? 'none';
 $show_title     = $variable['show_title'] ?? true;
@@ -28,7 +27,7 @@ if ( $show_modified && $show_date ) {
 }
 
 // 抜粋文
-$excerpt = \SWELL_Theme::get_excerpt( $post_data );
+$excerpt = SWELL_Theme::get_excerpt( $post_data );
 
 ?>
 <li class="p-postList__item">
@@ -43,7 +42,7 @@ $excerpt = \SWELL_Theme::get_excerpt( $post_data );
 			<?php endif; ?>
 		</div>
 		<?php
-			SWELL_FUNC::get_parts( 'parts/post_list/item/thumb', [
+			SWELL_Theme::get_parts( 'parts/post_list/item/thumb', [
 				'post_id'  => $the_id,
 				'cat_pos'  => $cat_pos,
 				'size'     => 'full',
@@ -57,19 +56,19 @@ $excerpt = \SWELL_Theme::get_excerpt( $post_data );
 				<?php endif; ?>
 				<?php
 					if ( 'beside_date' === $cat_pos ) :
-						\SWELL_Theme::pluggable_parts( 'post_list_category', [
+						SWELL_Theme::pluggable_parts( 'post_list_category', [
 							'post_id' => $the_id,
 						] );
 					endif;
 
 					if ( $show_pv ) :
-						\SWELL_Theme::pluggable_parts( 'post_list_pv', [
+						SWELL_Theme::pluggable_parts( 'post_list_pv', [
 							'post_id' => $the_id,
 						] );
 					endif;
 
 					if ( $show_author ) :
-						\SWELL_Theme::pluggable_parts( 'post_list_author', [
+						SWELL_Theme::pluggable_parts( 'post_list_author', [
 							'author_id' => $post_data->post_author,
 						] );
 					endif;

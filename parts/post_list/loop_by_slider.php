@@ -1,5 +1,4 @@
 <?php
-use \SWELL_THEME\Parts\Post_List;
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
@@ -8,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $query_args  = $variable['query_args'] ?? [];
 $thumb_sizes = $variable['thumb_sizes'] ?? '';
 
-$SETTING = SWELL_FUNC::get_setting();
+$SETTING = SWELL_Theme::get_setting();
 
 // 表示設定
 $show_date     = $SETTING['ps_show_date'];
@@ -35,7 +34,7 @@ $the_query = new WP_Query( apply_filters( 'swell_pickup_post_args', $query_args 
 	<li class="p-postList__item swiper-slide">
 		<a href="<?php the_permalink( $the_id ); ?>" class="p-postList__link">
 			<?php
-				SWELL_FUNC::get_parts(
+				SWELL_Theme::get_parts(
 					'parts/post_list/item/thumb',
 					[
 						'post_id'  => $the_id,
@@ -52,7 +51,7 @@ $the_query = new WP_Query( apply_filters( 'swell_pickup_post_args', $query_args 
 				<div class="p-postList__meta">
 					<?php
 						// 日付
-						SWELL_FUNC::get_parts(
+						SWELL_Theme::get_parts(
 							'parts/post_list/item/date',
 							[
 								'show_date'     => $show_date,
@@ -62,13 +61,13 @@ $the_query = new WP_Query( apply_filters( 'swell_pickup_post_args', $query_args 
 							]
 						);
 						if ( 'on_title' === $cat_pos ) :
-							\SWELL_Theme::pluggable_parts( 'post_list_category', [
+							SWELL_Theme::pluggable_parts( 'post_list_category', [
 								'post_id' => $the_id,
 							] );
 						endif;
 
 						if ( $show_author ) :
-							\SWELL_Theme::pluggable_parts( 'post_list_author', [
+							SWELL_Theme::pluggable_parts( 'post_list_author', [
 								'author_id' => $post_data->post_author,
 							] );
 						endif;

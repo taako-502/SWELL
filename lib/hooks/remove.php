@@ -32,7 +32,7 @@ function remove_oembed() {
 add_action( 'init', __NAMESPACE__ . '\remove_wp_func' );
 function remove_wp_func() {
 
-	$OPTION = \SWELL_FUNC::get_option();
+	$OPTION = \SWELL_Theme::get_option();
 
 	// HTMLチェックで「Bad value」になるやつ https://api.w.org/ を消す
 	if ( $OPTION['remove_rest_link'] ) {
@@ -124,7 +124,7 @@ function remove_wp_func() {
  */
 add_action( 'wp', __NAMESPACE__ . '\remove_swell_func', 11 );
 function remove_swell_func() {
-	$OPTION = \SWELL_FUNC::get_option();
+	$OPTION = \SWELL_Theme::get_option();
 
 	// 画像Lazyload
 	$lazyload_type = $OPTION['use_lazyload'];

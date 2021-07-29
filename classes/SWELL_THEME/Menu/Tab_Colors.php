@@ -1,7 +1,7 @@
 <?php
 namespace SWELL_THEME\Menu;
 
-use \SWELL_Theme as SWELL;
+use SWELL as SWELL;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -68,7 +68,7 @@ class Tab_Colors {
 			$key = 'color_' . $key;
 
 			// 現在の値
-			$val = \SWELL_FUNC::get_editor( $key );
+			$val = SWELL::get_editor( $key );
 			// デフォルト値
 			$dflt = SWELL::get_default_editor( $key );
 			// フォーム要素のname属性に渡す値。
@@ -81,7 +81,7 @@ class Tab_Colors {
 						name="<?=$name?>"
 						value="<?=$val?>"
 						data-default-color="<?=$dflt?>"
-					 />
+					/>
 				</div>
 			<?php
 		endforeach;
@@ -138,7 +138,7 @@ class Tab_Colors {
 		$color_key = 'color_list_' . $key;
 
 		// 現在の値
-		$color_val = \SWELL_FUNC::get_editor( $color_key );
+		$color_val = SWELL::get_editor( $color_key );
 
 		// デフォルト値
 		$dflt_color = SWELL::get_default_editor( $color_key );
@@ -219,8 +219,8 @@ class Tab_Colors {
 		$key_light = 'color_' . $key . '_light';
 
 		// 現在の値
-		$val_dark  = \SWELL_FUNC::get_editor( $key_dark );
-		$val_light = \SWELL_FUNC::get_editor( $key_light );
+		$val_dark  = SWELL::get_editor( $key_dark );
+		$val_light = SWELL::get_editor( $key_light );
 
 		// デフォルト値
 		$dflt_dark  = SWELL::get_default_editor( $key_dark );
@@ -301,8 +301,8 @@ class Tab_Colors {
 		$color_key_a = 'color_faq_a';
 
 		// 現在の値
-		$color_val_q = \SWELL_FUNC::get_editor( $color_key_q );
-		$color_val_a = \SWELL_FUNC::get_editor( $color_key_a );
+		$color_val_q = SWELL::get_editor( $color_key_q );
+		$color_val_a = SWELL::get_editor( $color_key_a );
 
 		// デフォルト値
 		$dflt_color_q = SWELL::get_default_editor( $color_key_q );

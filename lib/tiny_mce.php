@@ -105,8 +105,8 @@ function set_content_style( $mceInit ) {
  */
 function set_body_class( $mceInit ) {
 
-	$SETTING = \SWELL_FUNC::get_setting();
-	$EDITOR  = \SWELL_FUNC::get_editor();
+	$SETTING = \SWELL_Theme::get_setting();
+	$EDITOR  = \SWELL_Theme::get_editor();
 
 	$body_class = '';
 

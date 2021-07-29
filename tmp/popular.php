@@ -11,7 +11,7 @@ while ( have_posts() ) :
 ?>
 <main id="main_content" class="l-mainContent l-article">
 	<div class="l-mainContent__inner">
-		<?php SWELL_FUNC::get_parts( 'parts/page_head', $the_id ); ?>
+		<?php SWELL_Theme::get_parts( 'parts/page_head' ); ?>
 		<div class="<?=esc_attr( apply_filters( 'swell_post_content_class', 'post_content' ) )?>">
 			<?php the_content(); ?>
 		</div>
@@ -29,11 +29,11 @@ while ( have_posts() ) :
 				$the_query = new WP_Query( $args );
 
 				// 新着投稿一覧 ( Sub loop )
-				SWELL_FUNC::get_parts( 'parts/post_list/loop_sub', [
+				SWELL_Theme::get_parts( 'parts/post_list/loop_sub', [
 					'query'     => $the_query,
 					'list_args' => ['show_pv' => true ],
 				] );
-				SWELL_FUNC::get_parts( 'parts/post_list/item/pagination', [
+				SWELL_Theme::get_parts( 'parts/post_list/item/pagination', [
 					'pages' => $the_query->max_num_pages,
 					'paged' => $the_paged,
 				] );

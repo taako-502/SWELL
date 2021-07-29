@@ -145,8 +145,8 @@ class SWELL_New_Posts extends WP_Widget {
 		];
 
 		// 除外するカテゴリー・タグ
-		$exc_cat = explode( ',', SWELL_FUNC::get_setting( 'exc_cat_id' ) );
-		$exc_tag = explode( ',', SWELL_FUNC::get_setting( 'exc_tag_id' ) );
+		$exc_cat = explode( ',', \SWELL_Theme::get_setting( 'exc_cat_id' ) );
+		$exc_tag = explode( ',', \SWELL_Theme::get_setting( 'exc_tag_id' ) );
 
 		if ( ! empty( $exc_cat ) ) {
 			$query_args['category__not_in'] = $exc_cat;
@@ -167,7 +167,7 @@ class SWELL_New_Posts extends WP_Widget {
 		echo $args['before_title'] . apply_filters( 'widget_title', $widget_title ) . $args['after_title'];
 
 		// 投稿一覧
-		SWELL_FUNC::get_parts( 'parts/post_list/loop_by_widget', [
+		\SWELL_Theme::get_parts( 'parts/post_list/loop_by_widget', [
 			'query_args' => $query_args,
 			'list_args'  => $list_args,
 		] );

@@ -1,8 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$SETTING = SWELL_FUNC::get_setting();
-$the_id  = $variable ?: get_queried_object_id();
+$the_id = get_queried_object_id();
 
 // 記事タイトル
 if ( ! SWELL_Theme::is_show_ttltop() ) {
@@ -15,6 +14,7 @@ if ( ! SWELL_Theme::is_show_ttltop() ) {
 
 // アイキャッチ画像
 if ( SWELL_Theme::is_show_thumb( $the_id ) ) {
+	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo SWELL_PARTS::post_thumbnail( $the_id );
 }
 

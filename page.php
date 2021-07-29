@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 get_header();
 if ( is_front_page() ) :
-	SWELL_FUNC::get_parts( 'tmp/front' );
+	SWELL_Theme::get_parts( 'tmp/front' );
 else :
 	while ( have_posts() ) :
 		the_post();
@@ -10,7 +10,7 @@ else :
 	?>
 		<main id="main_content" class="l-mainContent l-article">
 			<div class="l-mainContent__inner">
-				<?php SWELL_FUNC::get_parts( 'parts/page_head', $the_id ); ?>
+				<?php SWELL_Theme::get_parts( 'parts/page_head' ); ?>
 				<div class="<?=esc_attr( apply_filters( 'swell_post_content_class', 'post_content' ) )?>">
 					<?php the_content(); ?>
 				</div>

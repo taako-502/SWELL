@@ -57,7 +57,7 @@ $filter_class = ( 'nofilter' === $filter_name ) ? '' : "c-filterLayer -$filter_n
 
 		elseif ( is_single() ) :
 
-			SWELL_FUNC::get_parts( 'parts/single/post_head' );
+			SWELL_Theme::get_parts( 'parts/single/post_head' );
 
 		elseif ( is_page() || is_home() ) :
 

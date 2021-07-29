@@ -19,7 +19,7 @@ class Post_List {
 	 */
 	public static function set_list_args( $args = [] ) {
 
-		$SETTING  = \SWELL_FUNC::get_setting();
+		$SETTING  = \SWELL_Theme::get_setting();
 		$defaults = [
 			'type'           => \SWELL_Theme::$list_type,
 			'max_col'        => $SETTING['max_column'],
@@ -156,7 +156,7 @@ class Post_List {
 		$parts_name = self::get_parts_name( $list_type );
 
 		// インフィード広告の間隔
-		$infeed_interval = $args['show_infeed'] ? (int) \SWELL_FUNC::get_setting( 'infeed_interval' ) : 0;
+		$infeed_interval = $args['show_infeed'] ? (int) \SWELL_Theme::get_setting( 'infeed_interval' ) : 0;
 
 		// liループに渡す情報を絞る
 		$li_args = [
@@ -381,7 +381,7 @@ class Post_List {
 		$block_args['ul_add_class'] = $ul_add_class;
 
 		// WP_Query
-		\SWELL_FUNC::get_parts( 'parts/post_list/loop_sub', [
+		\SWELL_Theme::get_parts( 'parts/post_list/loop_sub', [
 			'query_args' => $q_args,
 			'list_args'  => $block_args,
 		] );

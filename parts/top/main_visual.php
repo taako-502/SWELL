@@ -1,7 +1,7 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$SETTING  = SWELL_FUNC::get_setting();
+$SETTING  = SWELL_Theme::get_setting();
 $mv_type  = $SETTING['main_visual_type'];
 $mv_class = 'p-mainVisual';
 
@@ -51,7 +51,7 @@ if ( $SETTING['mv_on_margin'] ) {
 ?>
 <div id="main_visual" class="<?=esc_attr( $mv_class )?>">
 <?php
-	SWELL_FUNC::get_parts( $parts_name, $variable );
+	SWELL_Theme::get_parts( $parts_name, $variable );
 	do_action( 'swell_inner_main_visual' );
 ?>
 </div>

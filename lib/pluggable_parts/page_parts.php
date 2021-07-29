@@ -21,7 +21,7 @@ if ( ! function_exists( 'swl_parts__page_title' ) ) :
 			$title_style = '';
 			if ( $has_inner ) {
 				$title       = '<span class="c-pageTitle__inner">' . $title . '</span>';
-				$title_style = is_archive() ? \SWELL_FUNC::get_setting( 'archive_title_style' ) : \SWELL_FUNC::get_setting( 'page_title_style' );
+				$title_style = is_archive() ? SWELL::get_setting( 'archive_title_style' ) : SWELL::get_setting( 'page_title_style' );
 			}
 
 			if ( $title_style ) {

@@ -1,5 +1,4 @@
 <?php
-use \SWELL_THEME\Parts\Post_List;
 if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * 投稿一覧リスト（ シンプル型 ）の出力テンプレート
@@ -21,7 +20,7 @@ $the_id    = $post_data->ID;
 			<div class="p-postList__meta">
 				<?php
 					// 日付
-					SWELL_FUNC::get_parts(
+					SWELL_Theme::get_parts(
 						'parts/post_list/item/date',
 						[
 							'show_date'     => $show_date,
@@ -32,19 +31,19 @@ $the_id    = $post_data->ID;
 					);
 
 					if ( 'none' !== $cat_pos ) :
-						\SWELL_Theme::pluggable_parts( 'post_list_category', [
+						SWELL_Theme::pluggable_parts( 'post_list_category', [
 							'post_id' => $the_id,
 						] );
 					endif;
 
 					// if ( $show_pv ) :
-					// 	\SWELL_Theme::pluggable_parts( 'post_list_pv', [
+					// 	SWELL_Theme::pluggable_parts( 'post_list_pv', [
 					// 		'post_id' => $the_id,
 					// 	] );
 					// endif;
 
 					if ( $show_author ) :
-						\SWELL_Theme::pluggable_parts( 'post_list_author', [
+						SWELL_Theme::pluggable_parts( 'post_list_author', [
 							'author_id' => $post_data->post_author,
 						] );
 					endif;

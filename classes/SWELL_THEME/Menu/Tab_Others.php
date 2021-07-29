@@ -59,7 +59,7 @@ class Tab_Others {
 		// 使用するデータベース
 		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
-		$val  = \SWELL_FUNC::get_editor( $key );
+		$val  = \SWELL_Theme::get_editor( $key );
 		$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
 
 		$options = [
@@ -151,7 +151,7 @@ class Tab_Others {
 		// 使用するデータベース
 		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
-		$val  = \SWELL_FUNC::get_editor( $key );
+		$val  = \SWELL_Theme::get_editor( $key );
 		$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
 
 		$options = $args['choices'];

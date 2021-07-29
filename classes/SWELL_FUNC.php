@@ -1,6 +1,4 @@
 <?php
-use \SWELL_THEME\Parts\Post_List;
-use \SWELL_Theme\Style;
 use \SWELL_Theme as SWELL;
 
 if ( ! defined( 'ABSPATH' ) ) exit;

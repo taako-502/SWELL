@@ -28,7 +28,7 @@ if ( file_exists( $include_path_php ) ) {
 <meta name="viewport" content="width=device-width">
 <?php
 	wp_head();
-	$SETTING          = SWELL_FUNC::get_setting();
+	$SETTING          = SWELL_Theme::get_setting();
 	$the_id           = get_queried_object_id();
 	$body_style       = get_post_meta( $the_id, 'lp_body_style', true );
 	$thumb_pos        = get_post_meta( $the_id, 'lp_thumb_pos', true );
@@ -47,8 +47,8 @@ if ( file_exists( $include_path_php ) ) {
 
 // ヘッダー
 if ( '1' === $use_swell_header ) {
-	SWELL_FUNC::get_parts( 'parts/header/sp_menu' );
-	SWELL_FUNC::get_parts( 'parts/header/header_contents' );
+	SWELL_Theme::get_parts( 'parts/header/sp_menu' );
+	SWELL_Theme::get_parts( 'parts/header/header_contents' );
 }
 
 while ( have_posts() ) :
@@ -60,7 +60,7 @@ the_post();
 	<?php if ( 'top' === $thumb_pos ) : ?>
 		<figure class="lp-thumb">
 			<?php
-				\SWELL_Theme::get_thumbnail( [
+				SWELL_Theme::get_thumbnail( [
 					'post_id'          => $the_id,
 					'sizes'            => '100vw',
 					'class'            => 'lp-thumb__img',
@@ -78,7 +78,7 @@ the_post();
 			<?php if ( 'inner' === $thumb_pos ) : ?>
 				<figure class="lp-thumb u-mb-20">
 				<?php
-					\SWELL_Theme::get_thumbnail( [
+					SWELL_Theme::get_thumbnail( [
 						'post_id'          => $the_id,
 						'class'            => 'lp-thumb__img',
 						'placeholder_size' => 'medium',
@@ -106,19 +106,19 @@ the_post();
 
 <?php if ( '1' === $use_swell_footer ) : ?>
 	<footer id="footer" class="l-footer">
-		<?php if ( ! \SWELL_Theme::is_use( 'ajax_footer' ) ) SWELL_FUNC::get_parts( 'parts/footer/footer_contents' ); ?>
+		<?php if ( ! SWELL_Theme::is_use( 'ajax_footer' ) ) SWELL_Theme::get_parts( 'parts/footer/footer_contents' ); ?>
 	</footer>
 	<?php
 		// 固定フッターメニュー
 		if ( has_nav_menu( 'fix_bottom_menu' ) ) :
-		SWELL_FUNC::get_parts( 'parts/footer/fix_menu' );
+		SWELL_Theme::get_parts( 'parts/footer/fix_menu' );
 		endif;
 
 		// 固定ボタン
-		SWELL_FUNC::get_parts( 'parts/footer/fix_btns' );
+		SWELL_Theme::get_parts( 'parts/footer/fix_btns' );
 
 		// モーダル
-		SWELL_FUNC::get_parts( 'parts/footer/modals' );
+		SWELL_Theme::get_parts( 'parts/footer/modals' );
 	?>
 <?php endif; ?>
 

@@ -128,7 +128,7 @@ class Tab_Iconbox {
 		// 使用するデータベース
 		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
-		$val  = \SWELL_FUNC::get_editor( $key );
+		$val  = \SWELL_Theme::get_editor( $key );
 		$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
 
 		$options = $args['choices'];
@@ -166,8 +166,8 @@ class Tab_Iconbox {
 		$color_key_bg   = 'color_icon_' . $icon_name . '_bg';
 
 		// 現在の値
-		$color_val_icon = \SWELL_FUNC::get_editor( $color_key_icon );
-		$color_val_bg   = \SWELL_FUNC::get_editor( $color_key_bg );
+		$color_val_icon = \SWELL_Theme::get_editor( $color_key_icon );
+		$color_val_bg   = \SWELL_Theme::get_editor( $color_key_bg );
 
 		// デフォルト値
 		$dflt_col_icon = \SWELL_Theme::get_default_editor( $color_key_icon );
@@ -220,7 +220,7 @@ class Tab_Iconbox {
 		$color_key_icon = 'color_icon_' . $icon_name;
 
 		// 現在の値
-		$color_val_icon = \SWELL_FUNC::get_editor( $color_key_icon );
+		$color_val_icon = \SWELL_Theme::get_editor( $color_key_icon );
 		// デフォルト値
 		$dflt_col_icon = \SWELL_Theme::get_default_editor( $color_key_icon );
 

@@ -1,9 +1,8 @@
 <?php
-use \SWELL_THEME\Parts\Post_List;
 if ( ! defined( 'ABSPATH' ) ) exit;
-$SETTING = SWELL_FUNC::get_setting();
 
-$q_args = [
+$SETTING = SWELL_Theme::get_setting();
+$q_args  = [
 	'post_type'           => 'post',
 	'post_status'         => 'publish',
 	'no_found_rows'       => true,
@@ -82,13 +81,10 @@ $thumb_sizes = '(min-width: 960px) ' . $pc_size . ', ' . $sp_size;
 		<?php endif; ?>
 		<div class="p-postSlider__swiper swiper-container">
 			<?php
-				SWELL_FUNC::get_parts(
-					'parts/post_list/loop_by_slider',
-					[
-						'query_args'  => $q_args,
-						'thumb_sizes' => $thumb_sizes,
-					]
-				);
+				SWELL_Theme::get_parts( 'parts/post_list/loop_by_slider', [
+					'query_args'  => $q_args,
+					'thumb_sizes' => $thumb_sizes,
+				] );
 			?>
 			<?php if ( $SETTING['ps_on_pagination'] ) : ?>
 				<div class="swiper-pagination"></div>

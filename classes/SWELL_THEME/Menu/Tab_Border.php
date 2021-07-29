@@ -43,7 +43,7 @@ class Tab_Border {
 
 		$field_id = 'border' . $num;
 		$name     = \SWELL_Theme::DB_NAME_EDITORS . "[$field_id]";
-		$val      = \SWELL_FUNC::get_editor( $field_id );
+		$val      = \SWELL_Theme::get_editor( $field_id );
 
 		$borderData = explode( ' ', $val );
 		$style      = $borderData[0];

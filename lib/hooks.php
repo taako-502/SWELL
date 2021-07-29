@@ -28,7 +28,7 @@ add_filter( 'pre_term_description', 'wp_kses_post' );
  */
 add_filter( 'body_class', '\SWELL_Theme\Hooks\hook_body_class' );
 function hook_body_class( $classes ) {
-	$SETTING = \SWELL_FUNC::get_setting();
+	$SETTING = \SWELL_Theme::get_setting();
 
 	if ( ! $SETTING['to_site_flat'] ) {
 		$classes[] = '-body-solid';
@@ -81,7 +81,7 @@ function hook_pre_get_posts( $query ) {
 
 	if ( $query->is_home() ) {
 
-		$SETTING = \SWELL_FUNC::get_setting();
+		$SETTING = \SWELL_Theme::get_setting();
 		$exc_cat = explode( ',', $SETTING['exc_cat_id'] );
 		$exc_tag = explode( ',', $SETTING['exc_tag_id'] );
 		if ( ! empty( $exc_cat ) ) {

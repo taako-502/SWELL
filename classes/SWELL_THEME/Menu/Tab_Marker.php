@@ -54,7 +54,7 @@ class Tab_Marker {
 	public static function callback_for_marker_type( $args ) {
 
 		$type_key  = 'marker_type';
-		$type_val  = \SWELL_FUNC::get_editor( $type_key );
+		$type_val  = \SWELL_Theme::get_editor( $type_key );
 		$type_name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $type_key . ']';
 
 		$marker_types = [
@@ -88,7 +88,7 @@ class Tab_Marker {
 					<?php
 					foreach ( $colors as $color ) :
 						$key  = 'color_mark_' . $color;
-						$val  = \SWELL_FUNC::get_editor( $key );
+						$val  = \SWELL_Theme::get_editor( $key );
 						$dflt = \SWELL_Theme::get_default_editor( $key );
 						$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
 					?>

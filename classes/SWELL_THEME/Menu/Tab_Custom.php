@@ -42,7 +42,7 @@ class Tab_Custom {
 		$db   = \SWELL_Theme::DB_NAME_EDITORS;
 		$key  = 'format_title_' . $i;
 		$name = $db . '[' . $key . ']';
-		$val  = \SWELL_FUNC::get_editor( $key );
+		$val  = \SWELL_Theme::get_editor( $key );
 		?>
 			<div class="__settings">
 				<div class="__tr">
@@ -91,7 +91,7 @@ class Tab_Custom {
 	public static function cb_format_css( $args ) {
 		$key  = 'custom_format_css';
 		$name = \SWELL_Theme::DB_NAME_EDITORS . '[' . $key . ']';
-		$val  = \SWELL_FUNC::get_editor( $key );
+		$val  = \SWELL_Theme::get_editor( $key );
 		?>
 			<p class="description u-mb-10">ここに書いたCSSは、フロント側とエディター側の両方で読み込まれます。</p>
 			<div class="__settings -codemirror">

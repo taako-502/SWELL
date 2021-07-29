@@ -39,7 +39,7 @@ $meta_args = [
 <li class="<?php echo esc_attr( $list_class ); ?>">
 	<a href="<?php echo esc_url( $feed_link ); ?>" class="p-postList__link">
 		<div class="p-postList__body">
-			<?php \SWELL_FUNC::get_parts( 'parts/post_list/item/rss_meta', $meta_args ); ?>
+			<?php \SWELL_Theme::get_parts( 'parts/post_list/item/rss_meta', $meta_args ); ?>
 			<?php
 				echo '<' . esc_attr( $h_tag ) . ' class="p-postList__title">';
 				echo esc_html( $feed_title );

@@ -28,7 +28,7 @@ class Post {
 	 */
 	public static function btn() {
 
-		$EDITOR = \SWELL_FUNC::get_editor();
+		$EDITOR = \SWELL_Theme::get_editor();
 
 		$btn_red    = $EDITOR['color_btn_red'];
 		$btn_red2   = $EDITOR['color_btn_red2'];
@@ -80,7 +80,7 @@ class Post {
 	 */
 	public static function balloon() {
 
-		$EDITOR = \SWELL_FUNC::get_editor();
+		$EDITOR = \SWELL_Theme::get_editor();
 
 		$colors = [
 			'gray' => [

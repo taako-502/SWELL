@@ -18,7 +18,7 @@ function hook_enqueue_block_editor_assets() {
 	}
 
 	// カスタムフォーマット用CSS
-	$custom_format_css = \SWELL_FUNC::get_editor( 'custom_format_css' );
+	$custom_format_css = \SWELL_Theme::get_editor( 'custom_format_css' );
 	if ( $custom_format_css ) {
 		wp_add_inline_style( 'swell_block_style', $custom_format_css );
 	}

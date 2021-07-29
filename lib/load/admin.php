@@ -115,7 +115,7 @@ function global_vars_on_admin() {
 
 	$custom_formats = [];
 	for ( $i = 1; $i < 3; $i++ ) {
-		$format_title = \SWELL_FUNC::get_editor( 'format_title_' . $i );
+		$format_title = \SWELL_Theme::get_editor( 'format_title_' . $i );
 		if ( $format_title ) {
 			$custom_formats[] = [
 				'name'      => 'loos/custom-format' . $i,

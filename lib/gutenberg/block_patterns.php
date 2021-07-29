@@ -12,7 +12,7 @@ add_action( 'init', __NAMESPACE__ . '\register_custom_block_patterns' );
  */
 function register_block_patterns() {
 
-	if ( \SWELL_FUNC::get_option( 'remove_patterns' ) ) return;
+	if ( \SWELL_Theme::get_option( 'remove_patterns' ) ) return;
 
 	// SWELLのパターンカテゴリーを登録
 	register_block_pattern_category(
