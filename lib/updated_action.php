@@ -42,7 +42,7 @@ function updated_hook() {
  * SWELL用 transientキャッシュをすべて削除
  */
 function all_cache_delete() {
-	// \SWELL_Theme::clear_cache( [] );
+	\SWELL_Theme::clear_cache();
 	\SWELL_Theme::clear_all_parts_cache_by_wpdb(); // 念のため、query回して削除
 }
 
