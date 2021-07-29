@@ -22,9 +22,6 @@
 @import "layout/*.scss";
 @import "object/**";
 
-// カスタムスタイル
-@import "custom";
-
 // エディターコンテンツ
 @import "editor/front";
 @import "editor/block/**";
@@ -32,6 +29,7 @@
 @import "../gutenberg/blocks/**/_front.scss";
 
 
+// スマホメニューにアドセンスが被るのを防ぐ
 [data-spmenu="opened"] body > .adsbygoogle {
     top: -140px !important;
 }

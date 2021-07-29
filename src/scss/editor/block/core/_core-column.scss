@@ -4,12 +4,12 @@
 
     .border_gray & {
         padding: 1.5em;
-        border: solid 1px $color_border;
+        border: solid 1px var(--color_border);
     }
 
     .border_main & {
         padding: 1.5em;
-        border: solid 1px;
+        border: solid 1px var(--color_main);
     }
 
     .shadow_on & {
@@ -29,7 +29,7 @@
             margin-left: 0;
         }
 
-        & + .wp-block-column {
+        + .wp-block-column {
             margin-top: 2em;
 
             .sp_mb4_ & {
@@ -89,7 +89,7 @@
         &.sp_column2 {
             font-size: .9em;
 
-            & > .wp-block-column {
+            > .wp-block-column {
                 flex-basis: 48% !important; //5.3 のimportant対策
                 flex-grow: 0;
                 margin-top: 2% !important;

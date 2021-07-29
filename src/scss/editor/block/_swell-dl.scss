@@ -18,7 +18,7 @@
 
     > .swell-block-dl__dt {
         padding-left: .75em;
-        border-left: solid 1px;
+        border-left: solid 1px var(--color_main);
     }
 }
 
@@ -28,6 +28,7 @@
         margin-top: 0;
         padding: .5em 1em;
         color: #fff;
+        background-color: var(--color_main);
     }
 
     > .swell-block-dl__dd {

@@ -1,5 +1,4 @@
-.swell-block-accordion {
-}
+// .swell-block-accordion {}
 
 .swell-block-accordion__item {
 
@@ -48,12 +47,11 @@
 
 .is-style-simple,
 .is-style-border {
-    //& > .swell-block-accordion__item >
+
     .swell-block-accordion__title {
         background: none;
     }
 
-    //& > .swell-block-accordion__item >
     .swell-block-accordion__body {
         margin: 0 .5em;
         padding: 1em .5em;
@@ -62,9 +60,7 @@
 }
 
 .is-style-border {
-    // &.swell-block-accordion {}
 
-    //& >
     .swell-block-accordion__item {
         border: 1px solid var(--swl-color_border);
     }
@@ -72,9 +68,7 @@
 
 
 .is-style-simple {
-    // &.swell-block-accordion {}
 
-    //& >
     .swell-block-accordion__item {
         margin-bottom: 0;
         border-bottom: 1px solid var(--swl-color_border);
@@ -84,23 +78,21 @@
         }
     }
 
-    //& >
     .swell-block-accordion__item + .swell-block-accordion__item {
         margin-top: 0;
     }
 }
 
 .is-style-main {
-    // &.swell-block-accordion {}
 
-    //& > .swell-block-accordion__item >
     .swell-block-accordion__title {
         color: #fff;
+        background-color: var(--color_main);
     }
 
-    //& > .swell-block-accordion__item >
+
     .swell-block-accordion__body {
-        border: solid 1px;
+        border: solid 1px var(--color_main);
         border-top: none;
     }
 }
