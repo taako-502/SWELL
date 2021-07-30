@@ -43,8 +43,6 @@ function register_normal_blocks() {
 		'banner-link',
 		'button',
 		'full-wide',
-		'step',
-		'step-item',
 		'tab',
 		'tab-body',
 	];
@@ -73,6 +71,8 @@ function register_normal_blocks() {
 		'dl-dd',
 		'faq',
 		'faq-item',
+		'step',
+		'step-item',
 	];
 	foreach ( $blocks as $block_name ) {
 
