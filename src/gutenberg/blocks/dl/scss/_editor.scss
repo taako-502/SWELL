@@ -1,0 +1,48 @@
+
+[data-type="loos/dl"] {
+
+
+    [data-type="loos/dt"] {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    [data-type="loos/dd"] {
+        margin-top: 0;
+        margin-bottom: 0;
+        // margin-left: 1.5em;
+
+        > .block-list-appender {
+            margin: 0;
+        }
+    }
+
+    [data-type="loos/dd"] + [data-type="loos/dt"] {
+        margin-top: 1em;
+    }
+
+
+    > .block-list-appender {
+        margin-top: 1em;
+    }
+
+    // 横並び
+    &.is-style-float {
+
+        // clearfix用スタイルが原因で、エディタ側でブロックを選択した時の青枠が表示されないためスタイルを一部打ち消す
+        &::after {
+            height: auto;
+            visibility: visible;
+        }
+
+        [data-type="loos/dd"] {
+            clear: none; // .wp-blockに clear: both;つけてちゃってるのを打ち消す
+        }
+
+        > .block-list-appender {
+            clear: both;
+        }
+    }
+
+}
+

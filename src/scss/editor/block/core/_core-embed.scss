@@ -1,3 +1,4 @@
+// front用
 .post_content {
 
     iframe {
@@ -5,6 +6,10 @@
         max-width: 100%;
         margin-right: auto;
         margin-left: auto;
+    }
+
+    .wp-block-embed {
+        max-width: 100%;
     }
 
     // Embed
@@ -43,18 +48,14 @@
     }
 }
 
+
 // twitter-widget:not(.twitter-tweet-rendered) {
 //     display: none !important;
 // }
 
 
 .wp-block-embed {
-
-    &:not(.alignwide):not(.alignfull) {
-        max-width: 100%;
-    }
     // overflow: hidden; //ブログカードがおかしくなるよ
-
     // Youtubeとかには figcaption も設定できる
     > figcaption {
 

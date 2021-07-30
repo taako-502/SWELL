@@ -1,11 +1,6 @@
 .alignwide {
     position: relative;
-    max-width: 100vw; //initialにしたいが、IEで効かない
-
-    // @include sp {
-    //     left: -2vw;
-    //     width: calc(100% + 4vw);
-    // }
+    max-width: 100vw !important; //initial にしたいが、IEで効かない
 
     // 広いディスプレイの時
     @media (min-width: 1400px) {
@@ -14,8 +9,6 @@
     }
 
     @include pc {
-        // left: -48px;
-        // width: calc(100% + 96px);
         left: calc(50% - 50vw + 4vw);
         width: calc(100vw - 8vw);
 
@@ -30,7 +23,7 @@
     position: relative;
     left: calc(50% - 50vw);
     width: 100vw;
-    max-width: 100vw;
+    max-width: 100vw !important; //initial にしたいが、IEで効かない
 
     @supports (--css: variables) {
         left: calc(50% - ( 50vw - var(--swl-scrollbar_width, 0) / 2 ));
@@ -49,8 +42,8 @@
 
 
     // グループ・カバーブロックのインナーコンテンツの最大幅を他のコンテンツと揃える。
-    & > .wp-block-group__inner-container,
-    & > .wp-block-cover__inner-container {
+    > .wp-block-group__inner-container,
+    > .wp-block-cover__inner-container {
         max-width: var(--article_size);
         margin: 0 auto;
     }

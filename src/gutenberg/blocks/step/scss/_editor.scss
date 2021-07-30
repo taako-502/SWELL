@@ -1,0 +1,33 @@
+[data-type="loos/step"] {
+
+    [data-type="loos/step-item"] {
+        margin-top: 0 !important;
+
+        &:nth-last-child(2)::before {
+            content: none;
+        }
+    }
+
+    > .block-list-appender {
+        margin-top: 1em;
+    }
+
+    // titleがflexになっていることでプレースホルダーテキストがずれるのを防ぐ
+    &:not(.is-style-big):not(.is-style-small) .swell-block-step__title [data-rich-text-placeholder] {
+        position: absolute;
+    }
+
+    &.is-style-big .swell-block-parentSelector + [data-type="loos/step-item"] {
+        border-top: dashed 1px #dedede;
+    }
+
+}
+
+.block-editor-block-preview__container {
+    // スタイル切り替え時, プレビューエリア表示時のちらつき防止
+    .swell-block-step.is-style-big .swell-block-step__number,
+    .swell-block-step.is-style-small .swell-block-step__number {
+        background: none !important;
+    }
+}
+

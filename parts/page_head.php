@@ -6,7 +6,7 @@ $the_id = get_queried_object_id();
 // 記事タイトル
 if ( ! SWELL_Theme::is_show_ttltop() ) {
 	\SWELL_Theme::pluggable_parts( 'page_title', [
-		'title'     => get_the_title(),
+		'title'     => get_the_title( $the_id ), // home.php用に get_queried_object_id をしっかり渡す
 		'subtitle'  => get_post_meta( $the_id, 'swell_meta_subttl', true ),
 		'has_inner' => true,
 	] );

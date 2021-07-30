@@ -14,12 +14,12 @@
     }
 
     //各要素のマージン
-    & > * {
+    > * {
         clear: both;
         margin-bottom: 2em;
     }
 
-    & > a:hover {
+    > a:hover {
 
         img {
             opacity: .8;
@@ -39,12 +39,12 @@
     }
 
     //divの中身の調節
-    & > :first-child,
+    > :first-child,
     div > :first-child {
         margin-top: 0 !important;
     }
 
-    & > :last-child,
+    > :last-child,
     div > :last-child,
     dd > :last-child {
         margin-bottom: 0 !important;
@@ -97,7 +97,7 @@ div[class*="is-style-"], //tinyMCE と 昔の 「スタイルブロック」用
 .swell-block-step__body, //ステップブロック
 .faq_a {
 
-    & > * {
+    > * {
         margin-bottom: 1em;
     }
 }
@@ -108,7 +108,7 @@ div[class*="is-style-"], //tinyMCE と 昔の 「スタイルブロック」用
 .alignfull > .wp-block-group__inner-container,
 .alignfull > .wp-block-cover__inner-container {
 
-    & > * {
+    > * {
         margin-bottom: 2em;
     }
 }
@@ -116,16 +116,6 @@ div[class*="is-style-"], //tinyMCE と 昔の 「スタイルブロック」用
 /*
     フロントだけで使用するスタイル
  */
-
-//  ステップ
-.swell-block-step__item {
-    padding-bottom: 0;
-
-    &:last-child::before,
-    &:first-child::after {
-        content: none !important;
-    }
-}
 //  アコーディオン
 .swell-block-accordion__title {
     cursor: pointer;
