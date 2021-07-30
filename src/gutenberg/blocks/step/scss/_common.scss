@@ -1,5 +1,6 @@
 .swell-block-step {
     counter-reset: step;
+    --swl-step_arrow_color: #dedede;
 }
 
 .swell-block-step__item {
@@ -12,10 +13,14 @@
         top: 0;
         left: 23px;
         display: block;
-        // width: 0;
+        width: 0px;
         height: 100%;
-        border-left: 1px dashed $color_border;
+        border-left: 1px dashed var(--color_border);
         content: "";
+    }
+
+    &:last-child::before {
+        content: none;
     }
 }
 
@@ -83,14 +88,17 @@
 }
 
 .swell-block-step__body {
-    margin-top: 1em;
+
+    .swell-block-step__title + & {
+        margin-top: 1em;
+    }
 }
 
 // デフォルトスタイル(1行の時に番号とセンターが合うように)
 //.swell-block-step.is-style-default,
 .swell-block-step:not(.is-style-big):not(.is-style-small) {
 
-    & > .swell-block-step__item > .swell-block-step__title {
+    > .swell-block-step__item > .swell-block-step__title {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -99,11 +107,11 @@
 
     @include mobile {
 
-        & > .swell-block-step__item::before {
+        > .swell-block-step__item::before {
             display: none;
         }
 
-        & > .swell-block-step__item > .swell-block-step__body {
+        > .swell-block-step__item > .swell-block-step__body {
             margin-left: -48px;
         }
     }
@@ -112,40 +120,32 @@
 
 .is-style-big {
 
-    // .swell-block-step {}
-
-    & > .swell-block-step__item {
+    > .swell-block-step__item {
         padding: 2em;
-        border-bottom: dashed 1px #dedede;
+        border-bottom: dashed 1px var(--swl-step_arrow_color);
 
         @include mobile {
             padding: 2em 1em;
         }
 
         &:first-child {
-            border-top: dashed 1px #dedede;
+            border-top: dashed 1px var(--swl-step_arrow_color);
         }
 
         &::before {
-            content: none;
-        }
-
-        &::after {
-            position: absolute;
-            top: 0;
+            top: 100%;
             left: 50%;
+            display: block;
+            width: 0px;
+            height: 0px;
             border: solid 12px transparent;
-            border-top-color: #dedede;
-            transform: translateX(-50%) translateY(-1px);
-            content: "";
+            border-top-color: var(--swl-step_arrow_color);
+            transform: translateX(-50%);
         }
 
-        // & + .swell-block-step__item {
-        //     margin-top: 6em;
-        // }
     }
 
-    & > .swell-block-step__item > .swell-block-step__number {
+    > .swell-block-step__item > .swell-block-step__number {
         position: relative;
         width: auto;
         height: auto;
@@ -162,7 +162,7 @@
         }
     }
 
-    & .swell-block-step__title {
+    .swell-block-step__title {
         text-align: center;
     }
 
@@ -179,7 +179,7 @@
             top: 18px;
             left: 7px;
             height: calc(100% - 20px);
-            border-left: 2px solid $color_border;
+            border-left: 2px solid var(--color_border);
             // content: "" !important;
         }
     }
@@ -229,9 +229,7 @@
         }
     }
 
-    .swell-block-step__number[data-hide] {
-        // margin-bottom: calc(-16px - .4em);
-    }
+    // .swell-block-step__number[data-hide] {margin-bottom: calc(-16px - .4em);}
 
     [data-hide] + .swell-block-step__title {
         margin-top: -24px;
