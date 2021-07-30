@@ -582,7 +582,7 @@ trait Default_Settings {
 			'footer_no_mt'            => false,
 			'show_foot_icon_list'     => false,
 			'footer_title_type'       => 'b_bottom',
-			'copyright'               => '2019 ' . \SWELL_Theme::site_data( 'title' ) . '.',
+			'copyright'               => \SWELL_Theme::site_data( 'title' ) . '.',
 
 			'show_fbm_menu'           => true,
 			'show_fbm_search'         => false,
