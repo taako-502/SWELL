@@ -3,70 +3,73 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { RichText, InnerBlocks } from '@wordpress/block-editor';
+import {
+	RichText,
+	InnerBlocks,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
+import metadata from './block.json';
 import blockIcon from './_icon';
-import { iconColor } from '@swell-guten/config';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
+
+const TEMPLATE = [['core/paragraph']];
 
 /**
- * @Others dependencies
- */
-import classnames from 'classnames';
-
-/**
- * 子ブロック
+ * 項目ブロック
  */
 const blockName = 'swell-block-faq';
 const qClass = 'faq_q';
 const aClass = 'faq_a';
-registerBlockType('loos/faq-item', {
-	title: '項目',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.faqChild,
-	},
-	category: 'swell-blocks',
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
 	parent: ['loos/faq'],
-	supports: {
-		anchor: true,
-		className: false,
-		reusable: false,
-	},
-	attributes: {
-		contentQ: {
-			type: 'string',
-			source: 'html',
-			selector: `dt`,
-			default: '',
-		},
-	},
-	edit: ({ className, attributes, setAttributes }) => {
-		const blockClass = classnames(className, `${blockName}__item`);
+	edit: ({ attributes, setAttributes }) => {
+		const { contentQ } = attributes;
 
-		// const allowedBlocks = ['core/paragraph', 'core/list', 'core/image'];
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: `${blockName}__item`,
+		});
+
+		const innerBlocksProps = useInnerBlocksProps(
+			{
+				className: `${aClass} swl-inner-blocks swl-has-margin--s`,
+			},
+			{
+				template: TEMPLATE,
+				templateLock: false,
+			}
+		);
+
 		return (
-			<div className={blockClass}>
+			<div {...blockProps}>
 				<RichText
 					className={qClass}
 					tagName='div'
 					placeholder={__('Text…', 'swell')}
-					value={attributes.contentQ}
-					onChange={(contentQ) => setAttributes({ contentQ })}
+					value={contentQ}
+					onChange={(newContentQ) => setAttributes({ contentQ: newContentQ })}
 				/>
-				<div className={aClass}>
-					<InnerBlocks templateLock={false} template={[['core/paragraph']]} />
-				</div>
+				<div {...innerBlocksProps} />
 			</div>
 		);
 	},
 	save: ({ attributes }) => {
-		const blockClass = `${blockName}__item`;
+		const { contentQ } = attributes;
+
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: `${blockName}__item`,
+		});
+
 		return (
-			<div className={blockClass}>
-				<RichText.Content tagName='dt' className={qClass} value={attributes.contentQ} />
+			<div {...blockProps}>
+				<RichText.Content tagName='dt' className={qClass} value={contentQ} />
 				<dd className={aClass}>
 					<InnerBlocks.Content />
 				</dd>
