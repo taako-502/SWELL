@@ -14,7 +14,7 @@ function hook_render_block_data( $block, $source_block ) {
 	if ( 'loos/ab-test' !== $block['blockName'] ) return $block;
 
 	$abBlocks = $block['innerBlocks'];
-	$flag     = mt_rand( 1, 2 );
+	$flag     = wp_rand( 1, 2 );
 
 	if ( 1 === $flag ) {
 		// Aを削除
