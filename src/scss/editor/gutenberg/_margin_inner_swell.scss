@@ -60,7 +60,8 @@
 // インナーブロックの最初と最後のマージンを削除
 .swl-inner-blocks {
 
-    > :first-child {
+    > :first-child,
+    .swell-block-parentSelector + .wp-block {
         margin-top: 0 !important;
     }
 

@@ -64,12 +64,10 @@ registerBlockType(metadata.name, {
 
 		// ブロックprops
 		const blockProps = useBlockProps({
-			className: blockName,
+			className: `${blockName} swl-inner-blocks`,
 		});
 		const innerBlocksProps = useInnerBlocksProps(
-			{
-				className: 'swl-inner-blocks',
-			},
+			{},
 			{
 				allowedBlocks: ALLOWED_BLOCKS,
 				template: TEMPLATE,
@@ -98,7 +96,7 @@ registerBlockType(metadata.name, {
 				)}
 				<div {...blockProps}>
 					<div className='swell-block-parentSelector'>親ブロックを選択</div>
-					<div {...innerBlocksProps} />
+					{innerBlocksProps.children}
 				</div>
 			</>
 		);
