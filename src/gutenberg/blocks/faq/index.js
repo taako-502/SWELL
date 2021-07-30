@@ -56,14 +56,14 @@ registerBlockType(metadata.name, {
 
 		// ブロックprops
 		const blockProps = useBlockProps({
-			className: classnames(blockName, {
+			className: classnames(blockName, 'swl-inner-blocks', {
 				[`-icon-${iconRadius}`]: !!iconRadius,
 			}),
+			'data-q': qIconStyle,
+			'data-a': aIconStyle,
 		});
 		const innerBlocksProps = useInnerBlocksProps(
-			{
-				className: 'swl-inner-blocks',
-			},
+			{},
 			{
 				allowedBlocks: ALLOWED_BLOCKS,
 				template: TEMPLATE,
@@ -77,9 +77,9 @@ registerBlockType(metadata.name, {
 				<InspectorControls>
 					<FaqSidebar {...{ attributes, setAttributes }} />
 				</InspectorControls>
-				<div {...blockProps} data-q={qIconStyle} data-a={aIconStyle}>
+				<div {...blockProps}>
 					<div className='swell-block-parentSelector'>親ブロックを選択</div>
-					<div {...innerBlocksProps} />
+					{innerBlocksProps.children}
 				</div>
 			</>
 		);
@@ -93,10 +93,12 @@ registerBlockType(metadata.name, {
 			className: classnames(blockName, {
 				[`-icon-${iconRadius}`]: !!iconRadius,
 			}),
+			'data-q': qIconStyle,
+			'data-a': aIconStyle,
 		});
 
 		return (
-			<dl {...blockProps} data-q={qIconStyle} data-a={aIconStyle}>
+			<dl {...blockProps}>
 				<InnerBlocks.Content />
 			</dl>
 		);
