@@ -74,6 +74,8 @@
             position: absolute;
             top: 0;
             left: 0;
+            height: 0px;
+            overflow: hidden;
             transform: translateY(8px);
             visibility: hidden;
             opacity: 0;
