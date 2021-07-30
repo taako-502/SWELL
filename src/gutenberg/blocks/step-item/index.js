@@ -97,12 +97,12 @@ registerBlockType(metadata.name, {
 
 		// ブロックprops
 		const blockProps = useBlockProps({
-			className: `${blockName}__item swl-inner-blocks swl-has-margin--s`,
+			className: `${blockName}__item`,
 		});
 
 		const innerBlocksProps = useInnerBlocksProps(
 			{
-				className: `${blockName}__body`,
+				className: `${blockName}__body swl-inner-blocks swl-has-margin--s`,
 			},
 			{
 				template: TEMPLATE,

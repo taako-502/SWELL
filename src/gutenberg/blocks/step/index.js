@@ -68,13 +68,12 @@ registerBlockType(metadata.name, {
 
 		// ブロックprops
 		const blockProps = useBlockProps({
-			className: blockName,
+			className: `${blockName} swl-inner-blocks`,
 			style: 1 < startNum ? { counterReset: `step ${startNum - 1}` } : null,
+			'data-num-style': 'big' === stepClass ? numLayout : numShape,
 		});
 		const innerBlocksProps = useInnerBlocksProps(
-			{
-				className: 'swl-inner-blocks',
-			},
+			{},
 			{
 				allowedBlocks: ALLOWED_BLOCKS,
 				template: TEMPLATE,
@@ -88,9 +87,9 @@ registerBlockType(metadata.name, {
 				<InspectorControls>
 					<StepSidebar {...{ attributes, setAttributes }} />
 				</InspectorControls>
-				<div {...blockProps} data-num-style={'big' === stepClass ? numLayout : numShape}>
+				<div {...blockProps}>
 					<div className='swell-block-parentSelector'>親ブロックを選択</div>
-					<div {...innerBlocksProps} />
+					{innerBlocksProps.children}
 				</div>
 			</>
 		);
@@ -103,10 +102,11 @@ registerBlockType(metadata.name, {
 		const blockProps = useBlockProps.save({
 			className: blockName,
 			style: 1 < startNum ? { counterReset: `step ${startNum - 1}` } : null,
+			'data-num-style': 'big' === stepClass ? numLayout : numShape,
 		});
 
 		return (
-			<div {...blockProps} data-num-style={'big' === stepClass ? numLayout : numShape}>
+			<div {...blockProps}>
 				<InnerBlocks.Content />
 			</div>
 		);
