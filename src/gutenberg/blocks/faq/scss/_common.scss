@@ -1,6 +1,16 @@
 // FAQ
 .swell-block-faq {
 
+    --swl-faq_icon_radius: 0;
+
+    &.-icon-rounded {
+        --swl-faq_icon_radius: 10%;
+    }
+
+    &.-icon-circle {
+        --swl-faq_icon_radius: 50%;
+    }
+
     .swell-block-faq__item {
         margin-bottom: 1em;
     }
@@ -21,6 +31,7 @@
             font-family: Arial, sans-serif;
             line-height: 2;
             text-align: center;
+            border-radius: var(--swl-faq_icon_radius);
             content: "Q";
         }
     }
@@ -29,10 +40,6 @@
         position: relative;
         padding: 1em 1em 1em 3em;
         line-height: 1.5;
-
-        // & > *:not(:last-child) {
-        //     margin-bottom: 1em;
-        // }
 
         &::before {
             position: absolute;
@@ -43,6 +50,7 @@
             font-family: Arial, sans-serif;
             line-height: 2;
             text-align: center;
+            border-radius: var(--swl-faq_icon_radius);
             content: "A";
         }
     }
@@ -57,31 +65,25 @@
 
         + .swell-block-faq__item {
             padding-top: 1em;
-            border-top: solid 1px $color_border;
+            border-top: solid 1px var(--color_border);
         }
     }
-
-    // .faq_a {
-    //     margin-bottom: 1em;
-    //     padding-bottom: 2em;
-    //     border-bottom: solid 1px $color_border;
-    // }
 }
 
 // ボックス
 .is-style-faq-box {
 
     .swell-block-faq__item {
-        border: solid 1px $color_border;
+        border: solid 1px var(--color_border);
     }
 
     .faq_q {
-        border-bottom: dashed 1px $color_border;
+        border-bottom: dashed 1px var(--color_border);
     }
 
 }
 
-// ストライプ
+// ボックス＆ストライプ
 .is-style-faq-box,
 .is-style-faq-stripe {
 
@@ -97,6 +99,7 @@
     }
 }
 
+// ストライプ
 .is-style-faq-stripe {
 
     .swell-block-faq__item:not(:last-child) {
@@ -106,18 +109,6 @@
     .faq_q {
         background-color: var(--color_gray);
     }
-
-}
-
-
-.-icon-rounded .faq_q::before,
-.-icon-rounded .faq_a::before {
-    border-radius: 10%;
-}
-
-.-icon-circle .faq_q::before,
-.-icon-circle .faq_a::before {
-    border-radius: 50%;
 }
 
 
