@@ -54,13 +54,12 @@
     .swell-block-faq__item {
         padding-right: .5em;
         padding-left: .5em;
-    }
 
-    .swell-block-faq__item:not(:last-child) {
-        padding-bottom: 1em;
-        border-bottom: solid 1px $color_border;
+        + .swell-block-faq__item {
+            padding-top: 1em;
+            border-top: solid 1px $color_border;
+        }
     }
-
 
     // .faq_a {
     //     margin-bottom: 1em;
