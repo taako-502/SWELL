@@ -1,16 +1,13 @@
 /**
  * @WordPress dependencies
  */
-// import { __ } from '@wordpress/i18n';
 import {
 	MediaUpload,
 	MediaUploadCheck,
-	// MediaPlaceholder,
 	AlignmentToolbar,
 	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
-// import { useState } from '@wordpress/element';
 
 export default ({ imageID, imageUrl, alignment, verticalAlignment, setAttributes }) => {
 	return (

@@ -9,16 +9,17 @@ import {
 	MediaPlaceholder,
 	BlockControls,
 	InspectorControls,
+	useBlockProps,
 } from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
-import { iconColor } from '@swell-guten/config';
+import metadata from './block.json';
 import blockIcon from './_icon';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 import BannerLinkSidebar from './_sidebar';
 import BannerLinkToolbar from './_toolbar';
-import example from './_example';
 
 /**
  * @Others dependencies
@@ -26,8 +27,6 @@ import example from './_example';
 import classnames from 'classnames';
 import hexToRgba from 'hex-to-rgba';
 
-//
-const blockName = 'swell-block-bannerLink';
 const isMobile = 600 > window.innerWidth;
 
 /**
@@ -70,118 +69,13 @@ const getBannerStyle = (attributes) => {
 	return style;
 };
 
-// カスタムブロックの登録
-registerBlockType('loos/banner-link', {
-	title: 'バナーリンク',
-	description: __('簡易的なバナー型のリンクを作成できます。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: blockIcon,
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'banner-link'],
-	supports: {
-		anchor: true,
-		className: false,
-	},
-	example,
-	attributes: {
-		alignment: {
-			type: 'string',
-			default: 'center',
-		},
-		verticalAlignment: {
-			type: 'string',
-			default: 'center',
-		},
-		hrefUrl: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'a',
-			attribute: 'href',
-		},
-		bannerTitle: {
-			type: 'string',
-			source: 'html',
-			selector: '.c-bannerLink__title',
-		},
-		bannerDescription: {
-			type: 'string',
-			source: 'html',
-			selector: '.c-bannerLink__description',
-		},
-		imageUrl: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'img',
-			attribute: 'src',
-			// default: '',
-		},
-		imageAlt: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'img',
-			attribute: 'alt',
-			default: '',
-		},
-		imageID: {
-			type: 'number',
-			default: 0,
-		},
-		isBlank: {
-			type: 'boolean',
-			default: false,
-		},
-		isBlurON: {
-			type: 'boolean',
-			default: false,
-		},
-		isShadowON: {
-			type: 'boolean',
-			default: false,
-		},
-		bgColor: {
-			type: 'string',
-			default: '#000',
-		},
-		bgOpacity: {
-			type: 'number',
-			default: 50,
-		},
-		imgRadius: {
-			type: 'number',
-			default: 0,
-		},
-		textColor: {
-			type: 'string',
-			default: '',
-		},
-		bannerWidth: {
-			type: 'string',
-			default: '',
-		},
-		bannerHeightPC: {
-			type: 'string',
-			default: '',
-		},
-		bannerHeightSP: {
-			type: 'string',
-			default: '',
-		},
-		rel: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'a',
-			attribute: 'rel',
-		},
-	},
-
-	// getEditWrapperProps(attributes) {
-	//     const { contentSize } = attributes;
-	//     return { 'data-align': 'full', 'data-content-size': contentSize };
-	// },
-
-	edit: ({ attributes, setAttributes, className, isSelected }) => {
+/**
+ * バナーリンク
+ */
+const blockName = 'swell-block-bannerLink';
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
+	edit: ({ attributes, setAttributes, isSelected }) => {
 		const {
 			alignment,
 			verticalAlignment,
@@ -191,17 +85,13 @@ registerBlockType('loos/banner-link', {
 			bannerTitle,
 			bannerDescription,
 			textColor,
-			// isBlank,
 			isBlurON,
 			isShadowON,
-			// imgRadius,
 			bannerHeightPC,
 			bannerHeightSP,
 		} = attributes;
 
 		// クラス名
-		const blockClass = classnames(blockName, className);
-
 		let bannerClass = 'c-bannerLink';
 		if (isBlurON) {
 			bannerClass = classnames(bannerClass, '-blur-on');
@@ -231,6 +121,11 @@ registerBlockType('loos/banner-link', {
 			textStyle.color = textColor;
 		}
 
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: blockName,
+		});
+
 		return (
 			<>
 				<BlockControls>
@@ -255,28 +150,14 @@ registerBlockType('loos/banner-link', {
 							setAttributes({
 								imageUrl: newURL,
 								imageID: 0,
-								// imageAlt: media.alt,
 							});
 						}}
-						// onDoubleClick={() => {alert('double click');}}
-						// onCancel={() => {alert('on cancel');}}
 						accept='image/*'
 						allowedTypes={['image']}
-						// multiple={false}
-						// dropZoneUIOnly={false}
-						// notices={noticeUI}
-						// onError={this.onUploadError}
-						// value={{ id, src }}
-						// mediaPreview={mediaPreview}
-						// disableMediaButtons={!isEditing && url}
 					/>
 				) : (
-					<div className={blockClass}>
-						<div
-							// href={hrefUrl}
-							className={bannerClass}
-							style={bannerStyle || null}
-						>
+					<div {...blockProps}>
+						<div className={bannerClass} style={bannerStyle || null}>
 							<figure className='c-bannerLink__figure' style={figureStyle || null}>
 								<img src={imageUrl} className='c-bannerLink__img' alt='' />
 							</figure>
@@ -305,7 +186,6 @@ registerBlockType('loos/banner-link', {
 						</div>
 					</div>
 				)}
-
 				{isSelected && (
 					<div className='swl-input--url'>
 						<span className='__label'>href = </span>
@@ -314,8 +194,6 @@ registerBlockType('loos/banner-link', {
 							className='__input'
 							onChange={(value) => setAttributes({ hrefUrl: value })}
 							disableSuggestions={!isSelected}
-							// id={linkId}
-							// autoFocus={false}
 							isFullWidth
 							hasBorder
 						/>
@@ -325,7 +203,7 @@ registerBlockType('loos/banner-link', {
 		);
 	},
 
-	save: ({ attributes, className }) => {
+	save: ({ attributes }) => {
 		const {
 			alignment,
 			verticalAlignment,
@@ -344,7 +222,6 @@ registerBlockType('loos/banner-link', {
 		} = attributes;
 
 		// クラス名
-		const blockClass = classnames(blockName, className);
 		let bannerClass = 'c-bannerLink';
 		if (isBlurON) {
 			bannerClass = classnames(bannerClass, '-blur-on');
@@ -381,8 +258,13 @@ registerBlockType('loos/banner-link', {
 
 		const BannerTag = hrefUrl ? 'a' : 'div';
 
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: blockName,
+		});
+
 		return (
-			<div className={blockClass}>
+			<div {...blockProps}>
 				<BannerTag
 					href={hrefUrl || null}
 					className={bannerClass}
