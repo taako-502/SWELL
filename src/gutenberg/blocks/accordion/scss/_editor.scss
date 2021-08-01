@@ -1,5 +1,5 @@
 // アコーディオン
-.editor-styles-wrapper {
+[data-type="loos/accordion"] {
 
     .swell-block-accordion__item {
         margin: 0;
@@ -9,11 +9,15 @@
         }
     }
 
+    > .block-list-appender {
+        margin-top: 1em;
+    }
+
     .swell-block-accordion__body {
         overflow: visible;
     }
 
-    .is-style-simple .swell-block-parentSelector + .swell-block-accordion__item {
+    &.is-style-simple .swell-block-parentSelector + .swell-block-accordion__item {
         border-top: 1px solid var(--swl-color_border);
     }
 }
