@@ -3,7 +3,9 @@
     "name": "loos/ab-test-b",
     "title": "Bブロック",
     "category": "swell-blocks",
-    "parent": [ "loos/ab-test" ],
+    "parent": [
+        "loos/ab-test"
+    ],
     "supports": {
         "className": false,
         "customClassName": false,

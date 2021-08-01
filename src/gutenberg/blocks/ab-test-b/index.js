@@ -26,7 +26,7 @@ registerBlockType(metadata.name, {
 	edit: () => {
 		// ブロックprops
 		const blockProps = useBlockProps({
-			className: `${blockName}__b u-block-guide`,
+			className: `${blockName}__b swl-inner-blocks u-block-guide`,
 		});
 
 		const innerBlocksProps = useInnerBlocksProps(blockProps, {
