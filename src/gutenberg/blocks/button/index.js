@@ -87,26 +87,6 @@ registerBlockType(metadata.name, {
 
 		const hasHtml = !!htmlTags;
 
-		let isDoubleRegisterdId = false;
-		if (!window.swlBtnsData) window.swlBtnsData = {};
-
-		if (!!btnId) {
-			window.swlBtnsData[clientId] = btnId;
-
-			// 他のブロックにも同じbtnIdがセットされていれば、2重登録ということになる。
-			const swlBtnsDataKeys = Object.keys(window.swlBtnsData);
-			swlBtnsDataKeys.forEach((blockID) => {
-				if (blockID !== clientId && window.swlBtnsData[blockID] === btnId) {
-					// かつ、後ろ側のブロックにだけアラート。
-					const otherBlockNum = swlBtnsDataKeys.indexOf(blockID);
-					const thisBlockNum = swlBtnsDataKeys.indexOf(clientId);
-					if (otherBlockNum < thisBlockNum) {
-						isDoubleRegisterdId = true;
-					}
-				}
-			});
-		}
-
 		// アイコン
 		const iconTag = useMemo(() => {
 			if (!iconName) return null;
@@ -119,7 +99,11 @@ registerBlockType(metadata.name, {
 		}, [iconName]);
 
 		useEffect(() => {
-			console.log(useEffect);
+			const sameKeyBlocks = document.querySelectorAll(`[data-id="${btnId}"]`);
+			if (sameKeyBlocks.length > 1) {
+				const newID = clientId.split('-');
+				setAttributes({ btnId: newID[0] || '' });
+			}
 		}, [clientId]);
 
 		// ブロックprops
@@ -128,6 +112,7 @@ registerBlockType(metadata.name, {
 				'-prev': hasHtml,
 			}),
 			'data-align': btnAlign || null,
+			'data-id': btnId || null,
 		});
 
 		return (
@@ -157,11 +142,6 @@ registerBlockType(metadata.name, {
 					) : (
 						// 通常モード
 						<>
-							{isDoubleRegisterdId && (
-								<div className='swell-button-alert'>
-									※ 別のボタンIDを指定してください。
-								</div>
-							)}
 							<div className={`${blockName}__wrapper`}>
 								<a
 									className={`${blockName}__link`}

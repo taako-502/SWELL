@@ -128,34 +128,15 @@ export default ({ attributes, setAttributes, clientId }) => {
 				checked={isCount}
 				onChange={(value) => {
 					setAttributes({ isCount: value });
-					// trueの時、ブロックIDもセットする。
 					if (value && !btnId) {
-						let theBtnId = clientId.split('-');
-						theBtnId = theBtnId[0];
-						setAttributes({ btnId: theBtnId });
+						// trueの時、計測用のIDも自動生成する。
+						const newID = clientId.split('-');
+						setAttributes({ btnId: newID[0] || '' });
+					} else if (!value) {
+						setAttributes({ btnId: '' });
 					}
 				}}
 			/>
-			{isCount && (
-				<>
-					<TextControl
-						label='ボタンID'
-						placeholder='計測用ID'
-						help='※ 他のボタンブロックと同じ値にならないように設定してください。'
-						value={btnId || ''}
-						onChange={(value) => {
-							setAttributes({ btnId: value });
-							if (!value) {
-								setAttributes({ isCount: false });
-							}
-						}}
-					/>
-					<div className='swell-button-data'>
-						<div className='__title'>このボタンの計測結果</div>
-						{btnClickedData}
-					</div>
-				</>
-			)}
 		</>
 	);
 
