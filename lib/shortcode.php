@@ -514,9 +514,8 @@ if ( ! function_exists( __NAMESPACE__ . '\full_custom_banner' ) ) :
 		$target = ( strpos( $link, SWELL::site_data( 'home' ) ) !== false ) ? '' : ' rel="noopener" target="_blank"';
 
 		if ( ! $link ) {
-			$banner_start  = 'div';
-			$banner_end    = 'div';
-			$banner_class .= ' -hov-off';
+			$banner_start = 'div';
+			$banner_end   = 'div';
 		} else {
 			$banner_start = 'a href="' . esc_url( $link ) . '"' . $target;
 			$banner_end   = 'a';

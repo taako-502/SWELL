@@ -37,7 +37,6 @@ function register_swell_blocks() {
  */
 function register_normal_blocks() {
 	$blocks = [
-		'banner-link',
 		'button',
 		'full-wide',
 		'tab',
@@ -67,6 +66,7 @@ function register_normal_blocks() {
 		'ab-test',
 		'ab-test-a',
 		'ab-test-b',
+    'banner-link',
 		'cap-block',
 		'dl',
 		'dl-dt',

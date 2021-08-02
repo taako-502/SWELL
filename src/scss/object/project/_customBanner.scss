@@ -1,34 +1,11 @@
-//---------------------------------------
-// カスタムバナー
-//---------------------------------------
+// カスタムバナー　(ショートコード)
 .p-customBanner {
-    position: relative;
-    margin: 1em 0;
 
-    .c-bannerLink {
-        margin: 0 auto;
+    .c-bannerLink::before {
+        background: rgba(0, 0, 0, .2);
+    }
 
-        &::before {
-            background: rgba(0, 0, 0, .2);
-        }
-
-        &__img {
-
-            @extend %objFitCover;
-        }
-
-        &__text {
-            text-shadow: 1px 1px 0 rgba(0, 0, 0, .12);
-        }
-
-        &__title {
-
-            #main_content & {
-
-                @include tab {
-                    font-size: 24px;
-                }
-            }
-        }
+    .c-bannerLink__text {
+        text-shadow: 1px 1px 0 rgba(0, 0, 0, .12);
     }
 }
