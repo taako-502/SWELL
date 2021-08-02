@@ -132,8 +132,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 						// trueの時、計測用のIDも自動生成する。
 						const newID = clientId.split('-');
 						setAttributes({ btnId: newID[0] || '' });
-					} else if (!value) {
-						setAttributes({ btnId: '' });
 					}
 				}}
 			/>
