@@ -9,6 +9,8 @@ entries.fa = './src/gutenberg/fa.js';
 
 const blocks = [
 	'ab-test',
+	'ab-test-a',
+	'ab-test-b',
 	'accordion',
 	'accordion-item',
 	'ad-tag',

@@ -3,61 +3,47 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { RichText, InnerBlocks, InspectorControls } from '@wordpress/block-editor';
+import {
+	RichText,
+	InnerBlocks,
+	InspectorControls,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
 import { PanelBody, ToggleControl } from '@wordpress/components';
-// import { PanelBody, RadioControl } from '@wordpress/components';
 
 /**
  * @SWELL dependencies
  */
+import metadata from './block.json';
 import blockIcon from './_icon';
-import { iconColor } from '@swell-guten/config';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
-/**
- * @Others dependencies
- */
-import classnames from 'classnames';
+const TEMPLATE = [['core/paragraph']];
 
 /**
  * アコーディオン項目ブロック
  */
 const blockName = 'swell-block-accordion';
-registerBlockType('loos/accordion-item', {
-	title: '項目',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.accordionItem,
-	},
-	category: 'swell-blocks',
-	parent: ['loos/accordion'],
-	supports: {
-		className: false,
-		reusable: false,
-	},
-	attributes: {
-		title: {
-			type: 'string',
-			source: 'html',
-			selector: '.swell-block-accordion__label',
-			default: '',
-		},
-		iconOpened: {
-			type: 'string',
-			default: 'icon-arrow_drop_up',
-		},
-		iconClosed: {
-			type: 'string',
-			default: 'icon-arrow_drop_down',
-		},
-		isDefultOpen: {
-			type: 'boolean',
-			default: false,
-		},
-	},
-	edit: (props) => {
-		const { className, attributes, setAttributes } = props;
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
+	edit: ({ attributes, setAttributes }) => {
 		const { isDefultOpen } = attributes;
-		const blockClass = classnames(className, `${blockName}__item`);
+
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: `${blockName}__item`,
+			'aria-expanded': true,
+		});
+
+		const innerBlocksProps = useInnerBlocksProps(
+			{
+				className: `${blockName}__body swl-inner-blocks swl-has-margin--s`,
+			},
+			{
+				template: TEMPLATE,
+			}
+		);
 
 		return (
 			<>
@@ -72,7 +58,7 @@ registerBlockType('loos/accordion-item', {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				<div className={blockClass} aria-expanded='true'>
+				<div {...blockProps}>
 					<div className={`${blockName}__title`}>
 						<RichText
 							tagName='div'
@@ -90,9 +76,7 @@ registerBlockType('loos/accordion-item', {
 							<i className={`__icon--opened ${attributes.iconOpened}`}></i>
 						</span>
 					</div>
-					<div className={`${blockName}__body`}>
-						<InnerBlocks />
-					</div>
+					<div {...innerBlocksProps} />
 				</div>
 			</>
 		);
@@ -100,8 +84,14 @@ registerBlockType('loos/accordion-item', {
 	save: ({ attributes }) => {
 		const { isDefultOpen } = attributes;
 
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: `${blockName}__item`,
+			'aria-expanded': isDefultOpen ? true : false,
+		});
+
 		return (
-			<div className={`${blockName}__item`} aria-expanded={isDefultOpen ? 'true' : 'false'}>
+			<div {...blockProps}>
 				<div className={`${blockName}__title`} data-onclick='toggleAccordion'>
 					<span className={`${blockName}__label`}>
 						<RichText.Content value={attributes.title} />
