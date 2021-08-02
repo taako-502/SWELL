@@ -2,7 +2,7 @@
  * @WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { useMemo, RawHTML } from '@wordpress/element';
+import { useEffect, useMemo, RawHTML } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
 import {
 	RichText,
@@ -10,14 +10,17 @@ import {
 	BlockControls,
 	BlockAlignmentToolbar,
 	InspectorControls,
+	useBlockProps,
 } from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
-import example from './_example';
+import metadata from './block.json';
+import deprecated from './deprecated';
+import blockIcon from './_icon';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 import ButtonSidebar from './_sidebar';
-import { iconColor } from '@swell-guten/config';
 
 /**
  * @others dependencies
@@ -48,22 +51,8 @@ const sliceIconData = (iconClass) => {
  * ボタンブロック
  */
 const blockName = 'swell-block-button';
-
-registerBlockType('loos/button', {
-	title: 'SWELLボタン',
-	description: __('カスタマイザーのデータと連携する特殊なボタンブロックです。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: 'button',
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'button'],
-	supports: {
-		anchor: true,
-		className: false,
-		// align: ['left', 'right'],
-	},
-	example,
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
 	styles: [
 		// ブロック要素のスタイルを設定
 		{
@@ -88,67 +77,13 @@ registerBlockType('loos/button', {
 			label: 'MOREボタン',
 		},
 	],
-	attributes: {
-		content: {
-			type: 'string',
-			source: 'html',
-			selector: '.swell-block-button__link > span',
-		},
-		hrefUrl: {
-			type: 'string',
-			default: '',
-		},
-		isNewTab: {
-			type: 'boolean',
-			default: false,
-		},
-		rel: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'a',
-			attribute: 'rel',
-		},
-		imgUrl: {
-			type: 'string',
-			source: 'attribute',
-			selector: 'img',
-			attribute: 'src',
-		},
-		btnAlign: {
-			type: 'string',
-			default: '',
-		},
-		htmlTags: {
-			type: 'string',
-			source: 'html',
-			selector: '.swell-block-button.-html',
-			default: '',
-		},
-		isCount: {
-			type: 'boolean',
-			default: false,
-		},
-		btnId: {
-			type: 'string',
-			source: 'attribute',
-			selector: '.swell-block-button',
-			attribute: 'data-id',
-		},
-		iconName: {
-			type: 'string',
-			default: '',
-		},
-	},
-
 	edit: (props) => {
-		const { attributes, className, setAttributes, isSelected, clientId } = props;
+		const { attributes, setAttributes, isSelected, clientId } = props;
 
-		const { hrefUrl, content, btnAlign, htmlTags, btnId, iconName } = attributes;
+		const { className, hrefUrl, content, btnAlign, htmlTags, btnId, iconName } = attributes;
 
 		// デフォルトのクラスをnormalにセット。
 		if (!className) setAttributes({ className: 'is-style-btn_normal' });
-
-		const blockClass = classnames(blockName, className);
 
 		const hasHtml = !!htmlTags;
 
@@ -172,22 +107,6 @@ registerBlockType('loos/button', {
 			});
 		}
 
-		// HTML直接入力時
-		if (hasHtml) {
-			return (
-				<>
-					<InspectorControls>
-						<ButtonSidebar {...{ attributes, setAttributes, clientId }} />
-					</InspectorControls>
-					<div className={classnames(blockClass, '-prev')} data-align={btnAlign || null}>
-						<RawHTML>{htmlTags}</RawHTML>
-						{/* <div dangerouslySetInnerHTML={{ __html: htmlTags }}></div> */}
-						{isSelected && <div className='__prevLabel'>※ HTMLタグ直接入力中</div>}
-					</div>
-				</>
-			);
-		}
-
 		// アイコン
 		const iconTag = useMemo(() => {
 			if (!iconName) return null;
@@ -199,61 +118,86 @@ registerBlockType('loos/button', {
 			return <FontAwesomeIcon icon={iconData} className='__icon' />;
 		}, [iconName]);
 
-		// 通常モード
+		useEffect(() => {
+			console.log(useEffect);
+		}, [clientId]);
+
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: classnames(blockName, {
+				'-prev': hasHtml,
+			}),
+			'data-align': btnAlign || null,
+		});
+
 		return (
 			<>
-				<BlockControls>
-					<BlockAlignmentToolbar
-						value={btnAlign}
-						onChange={(val) => {
-							val = val || '';
-							setAttributes({ btnAlign: val });
-						}}
-						controls={['left', 'right']}
-					/>
-				</BlockControls>
+				{!hasHtml && (
+					<BlockControls>
+						<BlockAlignmentToolbar
+							value={btnAlign}
+							onChange={(val) => {
+								val = val || '';
+								setAttributes({ btnAlign: val });
+							}}
+							controls={['left', 'right']}
+						/>
+					</BlockControls>
+				)}
 				<InspectorControls>
 					<ButtonSidebar {...{ attributes, setAttributes, clientId }} />
 				</InspectorControls>
-				<div className={blockClass} data-align={btnAlign || null}>
-					{isDoubleRegisterdId && (
-						<div className='swell-button-alert'>※ 別のボタンIDを指定してください。</div>
-					)}
-					{/* <div>このボタンのクリック数 : {thisBtnData}</div> */}
-					<div className={`${blockName}__wrapper`}>
-						<a
-							className={`${blockName}__link`}
-							data-has-icon={iconTag ? '1' : null}
-							href='###'
-						>
-							{iconTag}
-							<RichText
-								tagName='span'
-								placeholder={__('Text…', 'swell')}
-								value={content}
-								withoutInteractiveFormatting={false}
-								onChange={(newContent) => {
-									setAttributes({
-										content: newContent,
-									});
-								}}
-							/>
-						</a>
-					</div>
-					{isSelected && (
-						<div className='swl-input--url'>
-							<span className='__label'>href = </span>
-							<URLInput
-								className='__input'
-								value={hrefUrl}
-								onChange={(url) => {
-									setAttributes({ hrefUrl: url });
-								}}
-								disableSuggestions={!isSelected}
-								autoFocus={false}
-								isFullWidth
-							/>
-						</div>
+				<div {...blockProps}>
+					{hasHtml ? (
+						// HTML編集モード
+						<>
+							<RawHTML>{htmlTags}</RawHTML>
+							{isSelected && <div className='__prevLabel'>※ HTMLタグ直接入力中</div>}
+						</>
+					) : (
+						// 通常モード
+						<>
+							{isDoubleRegisterdId && (
+								<div className='swell-button-alert'>
+									※ 別のボタンIDを指定してください。
+								</div>
+							)}
+							<div className={`${blockName}__wrapper`}>
+								<a
+									className={`${blockName}__link`}
+									data-has-icon={iconTag ? '1' : null}
+									href='###'
+								>
+									{iconTag}
+									<RichText
+										tagName='span'
+										placeholder={__('Text…', 'swell')}
+										value={content}
+										withoutInteractiveFormatting={false}
+										onChange={(newContent) => {
+											setAttributes({
+												content: newContent,
+											});
+										}}
+									/>
+								</a>
+							</div>
+							{isSelected && (
+								<div className='swl-input--url'>
+									<span className='__label'>href = </span>
+									<URLInput
+										className='__input'
+										value={hrefUrl}
+										onChange={(url) => {
+											setAttributes({ hrefUrl: url });
+										}}
+										disableSuggestions={!isSelected}
+										autoFocus={false}
+										isFullWidth
+									/>
+								</div>
+							)}
+						</>
 					)}
 				</div>
 			</>
@@ -261,31 +205,10 @@ registerBlockType('loos/button', {
 	},
 
 	save: ({ attributes }) => {
-		const {
-			hrefUrl,
-			isNewTab,
-			rel,
-			content,
-			imgUrl,
-			btnAlign,
-			htmlTags,
-			btnId,
-			iconName,
-		} = attributes;
-		const hasHtml = !!htmlTags;
+		const { hrefUrl, isNewTab, rel, content, imgUrl, btnAlign, htmlTags, btnId, iconName } =
+			attributes;
 
-		// タグ直接入力モード
-		if (hasHtml) {
-			return (
-				<div
-					className={classnames('swell-block-button', '-html')}
-					data-align={btnAlign || null}
-					data-id={btnId || null}
-				>
-					<RawHTML>{htmlTags}</RawHTML>
-				</div>
-			);
-		}
+		const hasHtml = !!htmlTags;
 
 		let iconTag = null;
 		if (iconName) {
@@ -297,131 +220,44 @@ registerBlockType('loos/button', {
 			}
 		}
 
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: blockName,
+			'data-align': btnAlign || null,
+			'data-id': btnId || null,
+		});
+
 		return (
-			<div
-				className='swell-block-button'
-				data-align={btnAlign || null}
-				data-id={btnId || null}
-			>
-				<a
-					href={hrefUrl}
-					target={isNewTab ? '_blank' : null}
-					rel={rel || null}
-					className='swell-block-button__link'
-					data-has-icon={iconTag ? '1' : null}
-				>
-					{iconTag}
-					<RichText.Content tagName='span' value={content} />
-				</a>
-				{imgUrl && (
-					<img
-						src={imgUrl}
-						className='swell-block-button__img'
-						width='1'
-						height='1'
-						alt=''
-					/>
+			<div {...blockProps}>
+				{hasHtml ? (
+					// タグ直接入力モード
+					<RawHTML>{htmlTags}</RawHTML>
+				) : (
+					// 通常モード
+					<>
+						<a
+							href={hrefUrl}
+							target={isNewTab ? '_blank' : null}
+							rel={rel || null}
+							className='swell-block-button__link'
+							data-has-icon={iconTag ? '1' : null}
+						>
+							{iconTag}
+							<RichText.Content tagName='span' value={content} />
+						</a>
+						{imgUrl && (
+							<img
+								src={imgUrl}
+								className='swell-block-button__img'
+								width='1'
+								height='1'
+								alt=''
+							/>
+						)}
+					</>
 				)}
 			</div>
 		);
 	},
-
-	deprecated: [
-		{
-			attributes: {
-				content: {
-					type: 'array',
-					source: 'children',
-					selector: 'a',
-				},
-				hrefUrl: {
-					type: 'string',
-					default: '',
-				},
-				isNewTab: {
-					type: 'boolean',
-					default: false,
-				},
-				rel: {
-					type: 'string',
-					source: 'attribute',
-					selector: 'a',
-					attribute: 'rel',
-				},
-				imgUrl: {
-					type: 'string',
-					source: 'attribute',
-					selector: 'img',
-					attribute: 'src',
-				},
-				btnAlign: {
-					type: 'string',
-					default: '',
-				},
-				htmlTags: {
-					type: 'string',
-					source: 'html',
-					selector: '.swell-block-button.-html',
-					default: '',
-				},
-				isCount: {
-					type: 'boolean',
-					default: false,
-				},
-				btnId: {
-					type: 'string',
-					source: 'attribute',
-					selector: '.swell-block-button',
-					attribute: 'data-id',
-				},
-			},
-			supports: {
-				className: false,
-			},
-			save: ({ attributes }) => {
-				const { btnAlign, htmlTags, btnId } = attributes;
-				const hasHtml = !!htmlTags;
-				let saveHTML = '';
-				if (hasHtml) {
-					saveHTML = (
-						<div
-							className={classnames('swell-block-button', '-html')}
-							data-align={btnAlign || null}
-							data-id={btnId || null}
-							// dangerouslySetInnerHTML={{ __html: htmlTags }}
-						>
-							<RawHTML>{htmlTags}</RawHTML>
-						</div>
-					);
-				} else {
-					saveHTML = (
-						<div
-							className='swell-block-button'
-							data-align={btnAlign || null}
-							data-id={btnId || null}
-						>
-							<RichText.Content
-								tagName='a'
-								className='swell-block-button__link'
-								value={attributes.content}
-								href={attributes.hrefUrl}
-								target={attributes.isNewTab ? '_blank' : null}
-								rel={attributes.rel || null}
-							/>
-							{attributes.imgUrl && (
-								<img
-									src={attributes.imgUrl}
-									className='swell-block-button__img'
-									width='1'
-									height='1'
-									alt=''
-								/>
-							)}
-						</div>
-					);
-				}
-				return saveHTML;
-			},
-		},
-	],
+	deprecated,
 });

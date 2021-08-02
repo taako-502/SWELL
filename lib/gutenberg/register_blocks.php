@@ -41,7 +41,6 @@ function register_normal_blocks() {
 		'accordion',
 		'accordion-item',
 		'banner-link',
-		'button',
 		'full-wide',
 		'tab',
 		'tab-body',
@@ -65,6 +64,7 @@ function register_normal_blocks() {
 
 	// リファクタリング済み
 	$blocks = [
+		'button',
 		'cap-block',
 		'dl',
 		'dl-dt',

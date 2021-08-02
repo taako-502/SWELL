@@ -13,9 +13,18 @@
     }
 
     .swell-block-button {
+        // [data-align="left/right"]時に、WordPressコアのheight:0が当たるのを阻止
+        height: auto;
+
+        // [data-align="left/right"]時に、WordPressコアのfloatが当たるのを阻止
+        > * {
+            float: none;
+            width: 100%;
+            margin: 0;
+        }
 
         // HTML直接入力時
-        &.-prev {
+        .-prev {
             pointer-events: none;
         }
 
@@ -25,12 +34,7 @@
             font-size: 12px;
         }
 
-        .swell-block-button__wrapper {
-            width: 100%;
-        }
-
         .swell-block-button__link {
-            // display: inline-block;
             margin-bottom: 8px !important;
             cursor: text;
 
@@ -45,10 +49,6 @@
             &:not([data-has-icon]) .rich-text {
                 display: block;
             }
-
-            // i {
-            //     vertical-align: middle;
-            // }
         }
 
         .is-style-btn_solid .swell-block-button__link {
