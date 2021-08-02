@@ -37,10 +37,6 @@ function register_swell_blocks() {
  */
 function register_normal_blocks() {
 	$blocks = [
-		'ab-test',
-		'accordion',
-		'accordion-item',
-		'banner-link',
 		'button',
 		'full-wide',
 		'tab',
@@ -65,6 +61,12 @@ function register_normal_blocks() {
 
 	// リファクタリング済み
 	$blocks = [
+		'accordion',
+		'accordion-item',
+		'ab-test',
+		'ab-test-a',
+		'ab-test-b',
+    'banner-link',
 		'cap-block',
 		'dl',
 		'dl-dt',

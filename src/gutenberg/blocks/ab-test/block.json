@@ -1,0 +1,44 @@
+{
+    "apiVersion": 2,
+    "name": "loos/ab-test",
+    "title": "ABテスト",
+    "description": "2つのブロックをランダムに表示します。",
+    "category": "swell-blocks",
+    "keywords": [
+        "swell",
+        "ab",
+        "test"
+    ],
+    "supports": {
+        "className": false
+    },
+    "example": {
+        "innerBlocks": [
+            {
+                "name": "loos/ab-test-a",
+                "innerBlocks": [
+                    {
+                        "name": "core/paragraph",
+                        "attributes": {
+                            "align": "center",
+                            "content": "A"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "loos/ab-test-b",
+                "innerBlocks": [
+                    {
+                        "name": "core/paragraph",
+                        "attributes": {
+                            "align": "center",
+                            "content": "B"
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    "textdomain": "swell"
+}

@@ -3,12 +3,16 @@
 // ウィジェット基本
 .c-widget {
 
-    & + .c-widget {
+    + .c-widget {
         margin-top: 2em;
     }
 
     p:empty::before {
         content: none;
+    }
+
+    .textwidget > :not(:last-child) {
+        margin-bottom: 1em;
     }
 }
 

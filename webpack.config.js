@@ -19,6 +19,8 @@ if (localEntries) {
 	const srcDir = './src/gutenberg/blocks';
 	const blocks = [
 		'ab-test',
+		'ab-test-a',
+		'ab-test-b',
 		'accordion',
 		'accordion-item',
 		'ad-tag',

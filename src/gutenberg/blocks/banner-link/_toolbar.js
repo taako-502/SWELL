@@ -1,23 +1,20 @@
 /**
  * @WordPress dependencies
  */
-// import { __ } from '@wordpress/i18n';
 import {
 	MediaUpload,
 	MediaUploadCheck,
-	// MediaPlaceholder,
 	AlignmentToolbar,
 	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
 import { ToolbarButton, ToolbarGroup } from '@wordpress/components';
-// import { useState } from '@wordpress/element';
 
 export default ({ imageID, imageUrl, alignment, verticalAlignment, setAttributes }) => {
 	return (
 		<>
 			<AlignmentToolbar
 				value={alignment}
-				onChange={(value) => setAttributes({ alignment: value })}
+				onChange={(value) => setAttributes({ alignment: value || 'center' })}
 			/>
 			<BlockVerticalAlignmentToolbar
 				onChange={(value) => setAttributes({ verticalAlignment: value })}

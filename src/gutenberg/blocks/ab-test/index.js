@@ -1,17 +1,20 @@
 /**
  * @WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { useState } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
-import { InnerBlocks } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
-import example from './_example';
+import metadata from './block.json';
 import blockIcon from './_icon';
-import { iconColor } from '@swell-guten/config';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 import SwellTab from '@swell-guten/components/SwellTab';
 
 /**
@@ -19,38 +22,36 @@ import SwellTab from '@swell-guten/components/SwellTab';
  */
 import classnames from 'classnames';
 
+const ALLOWED_BLOCKS = ['loos/ab-test-a', 'loos/ab-test-b'];
+const TEMPLATE = [['loos/ab-test-a'], ['loos/ab-test-b']];
+
 /**
- * ABテスト
+ * ABテストブロック
  */
 const blockName = 'swell-block-abTest';
-registerBlockType('loos/ab-test', {
-	title: 'ABテスト',
-	description: __('2つのブロックをランダムに表示します。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.abTest,
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'ab', 'test'],
-	supports: {
-		className: false,
-	},
-	attributes: {},
-	example,
-	edit: ({ className }) => {
-		// 許可されるブロックを登録
-		const allowedBlocks = ['loos/ab-test-a', 'loos/ab-test-b'];
-
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
+	edit: () => {
 		// タブ用のステート
 		const defaultTab = 'tab-a';
 		const [tabKey, setTabKey] = useState(defaultTab);
 
-		// ブロッククラス
-		const blockClass = classnames(className, blockName, tabKey);
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: classnames(blockName, tabKey, 'swl-inner-blocks'),
+		});
+		const innerBlocksProps = useInnerBlocksProps(
+			{},
+			{
+				allowedBlocks: ALLOWED_BLOCKS,
+				template: TEMPLATE,
+				templateLock: true,
+			}
+		);
 
 		return (
 			<>
-				<div className={blockClass}>
+				<div {...blockProps}>
 					<SwellTab
 						className='-ab-test'
 						tabs={[
@@ -60,74 +61,12 @@ registerBlockType('loos/ab-test', {
 						state={tabKey}
 						setState={setTabKey}
 					></SwellTab>
-					<InnerBlocks
-						allowedBlocks={allowedBlocks}
-						templateLock={true}
-						template={[['loos/ab-test-a'], ['loos/ab-test-b']]}
-					/>
+					{innerBlocksProps.children}
 				</div>
 			</>
 		);
 	},
 
-	save: () => {
-		return <InnerBlocks.Content />;
-	},
-});
-
-/**
- * A
- */
-registerBlockType('loos/ab-test-a', {
-	title: 'Aブロック',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.a,
-	},
-	category: 'swell-blocks',
-	parent: ['loos/ab-test'],
-	supports: {
-		className: false,
-		customClassName: false,
-	},
-	attributes: {},
-	edit: ({ className }) => {
-		const blockClass = classnames(className, 'swell-block-abTest__a', 'u-block-guide');
-		return (
-			<div className={blockClass}>
-				<InnerBlocks templateLock={false} template={[['core/paragraph']]} />
-			</div>
-		);
-	},
-	save: () => {
-		return <InnerBlocks.Content />;
-	},
-});
-
-/**
- * B
- */
-registerBlockType('loos/ab-test-b', {
-	title: 'Bブロック',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.b,
-	},
-	category: 'swell-blocks',
-	parent: ['loos/ab-test'],
-	supports: {
-		className: false,
-		customClassName: false,
-	},
-	attributes: {},
-	edit: ({ className }) => {
-		const blockClass = classnames(className, 'swell-block-abTest__b', 'u-block-guide');
-		return (
-			<div className={blockClass}>
-				<InnerBlocks templateLock={false} template={[['core/paragraph']]} />
-			</div>
-		);
-	},
 	save: () => {
 		return <InnerBlocks.Content />;
 	},

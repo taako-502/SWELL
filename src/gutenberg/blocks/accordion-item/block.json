@@ -1,0 +1,32 @@
+{
+    "apiVersion": 2,
+    "name": "loos/accordion-item",
+    "title": "項目",
+    "category": "swell-blocks",
+    "parent": [ "loos/accordion" ],
+    "supports": {
+        "className": false,
+        "reusable": false
+    },
+    "attributes": {
+        "title": {
+            "type": "string",
+            "source": "html",
+            "selector": ".swell-block-accordion__label",
+            "default": ""
+        },
+        "iconOpened": {
+            "type": "string",
+            "default": "icon-arrow_drop_up"
+        },
+        "iconClosed": {
+            "type": "string",
+            "default": "icon-arrow_drop_down"
+        },
+        "isDefultOpen": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "textdomain": "swell"
+}
