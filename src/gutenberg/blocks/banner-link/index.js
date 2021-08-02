@@ -16,58 +16,19 @@ import {
  * @SWELL dependencies
  */
 import metadata from './block.json';
+import deprecated from './deprecated';
 import blockIcon from './_icon';
-import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 import BannerLinkSidebar from './_sidebar';
 import BannerLinkToolbar from './_toolbar';
+import { getBannerStyle } from './_helper';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * @Others dependencies
  */
 import classnames from 'classnames';
-import hexToRgba from 'hex-to-rgba';
 
 const isMobile = 600 > window.innerWidth;
-
-/**
- * 背景色
- */
-const getBgColor = (attributes) => {
-	const { bgColor, bgOpacity } = attributes;
-	if (0 === bgOpacity) {
-		// backgroundColorなし
-		return '';
-	} else if (100 === bgOpacity) {
-		return bgColor;
-	}
-	return hexToRgba(bgColor, bgOpacity / 100);
-};
-
-/**
- * スタイルをセットする関数
- */
-const getBannerStyle = (attributes) => {
-	const { textColor, imgRadius } = attributes;
-
-	const style = {};
-
-	// textColorがセットされているか
-	if (textColor) {
-		style.color = textColor;
-	}
-
-	// 背景色
-	const bgColor = getBgColor(attributes);
-	if (bgColor) {
-		style.backgroundColor = bgColor;
-	}
-
-	if (0 !== imgRadius) {
-		style.borderRadius = imgRadius + 'px';
-	}
-
-	return style;
-};
 
 /**
  * バナーリンク
@@ -92,21 +53,18 @@ registerBlockType(metadata.name, {
 		} = attributes;
 
 		// クラス名
-		let bannerClass = 'c-bannerLink';
-		if (isBlurON) {
-			bannerClass = classnames(bannerClass, '-blur-on');
-		}
-		if (isShadowON) {
-			bannerClass = classnames(bannerClass, '-shadow-on');
-		}
-		let textClass = 'c-bannerLink__text';
-		if ('center' !== alignment) {
-			textClass = classnames(textClass, `has-text-align-${alignment}`);
-		}
-		if ('center' !== verticalAlignment) {
-			textClass = classnames(textClass, `is-vertically-aligned-${verticalAlignment}`);
-		}
+		const bannerClass = classnames('c-bannerLink', {
+			'-blur-on': isBlurON,
+			'-shadow-on': isShadowON,
+			'has-link': hrefUrl,
+		});
 
+		const textClass = classnames('c-bannerLink__text', {
+			[`has-text-align-${alignment}`]: 'center' !== alignment,
+			[`is-vertically-aligned-${verticalAlignment}`]: 'center' !== verticalAlignment,
+		});
+
+		// Style
 		const bannerStyle = getBannerStyle(attributes);
 
 		const figureStyle = {};
@@ -136,69 +94,72 @@ registerBlockType(metadata.name, {
 				<InspectorControls>
 					<BannerLinkSidebar {...{ attributes, setAttributes }} />
 				</InspectorControls>
-				{!imageUrl ? (
-					<MediaPlaceholder
-						labels={{ title: __('Image') }}
-						onSelect={(media) => {
-							setAttributes({
-								imageUrl: media.url,
-								imageID: media.id,
-								imageAlt: media.alt,
-							});
-						}}
-						onSelectURL={(newURL) => {
-							setAttributes({
-								imageUrl: newURL,
-								imageID: 0,
-							});
-						}}
-						accept='image/*'
-						allowedTypes={['image']}
-					/>
-				) : (
-					<div {...blockProps}>
-						<div className={bannerClass} style={bannerStyle || null}>
-							<figure className='c-bannerLink__figure' style={figureStyle || null}>
-								<img src={imageUrl} className='c-bannerLink__img' alt='' />
-							</figure>
-							<div className={textClass} style={textStyle || null}>
-								<RichText
-									placeholder='タイトル...'
-									tagName='div'
-									className='c-bannerLink__title'
-									value={bannerTitle}
-									onChange={(value) => {
-										setAttributes({ bannerTitle: value });
-									}}
-								/>
-								<RichText
-									placeholder='テキスト...'
-									tagName='div'
-									className='c-bannerLink__description'
-									value={bannerDescription}
-									onChange={(value) => {
-										setAttributes({
-											bannerDescription: value,
-										});
-									}}
-								/>
-							</div>
-						</div>
-					</div>
-				)}
-				{isSelected && (
-					<div className='swl-input--url'>
-						<span className='__label'>href = </span>
-						<URLInput
-							value={hrefUrl}
-							className='__input'
-							onChange={(value) => setAttributes({ hrefUrl: value })}
-							disableSuggestions={!isSelected}
-							isFullWidth
-							hasBorder
+				<div {...blockProps}>
+					{!imageUrl ? (
+						<MediaPlaceholder
+							labels={{ title: __('Image') }}
+							onSelect={(media) => {
+								setAttributes({
+									imageUrl: media.url,
+									imageID: media.id,
+									imageAlt: media.alt,
+								});
+							}}
+							onSelectURL={(newURL) => {
+								setAttributes({
+									imageUrl: newURL,
+									imageID: 0,
+								});
+							}}
+							accept='image/*'
+							allowedTypes={['image']}
 						/>
-					</div>
-				)}
+					) : (
+						<>
+							<div className={bannerClass} style={bannerStyle || null}>
+								<figure
+									className='c-bannerLink__figure'
+									style={figureStyle || null}
+								>
+									<img src={imageUrl} className='c-bannerLink__img' alt='' />
+								</figure>
+								<div className={textClass} style={textStyle || null}>
+									<RichText
+										placeholder='タイトル...'
+										tagName='div'
+										className='c-bannerLink__title'
+										value={bannerTitle}
+										onChange={(value) => {
+											setAttributes({ bannerTitle: value });
+										}}
+									/>
+									<RichText
+										placeholder='サブテキスト...'
+										tagName='div'
+										className='c-bannerLink__description'
+										value={bannerDescription}
+										onChange={(value) => {
+											setAttributes({ bannerDescription: value });
+										}}
+									/>
+								</div>
+							</div>
+							{isSelected && (
+								<div className='swl-input--url'>
+									<span className='__label'>href = </span>
+									<URLInput
+										value={hrefUrl}
+										className='__input'
+										onChange={(value) => setAttributes({ hrefUrl: value })}
+										disableSuggestions={!isSelected}
+										isFullWidth
+										hasBorder
+									/>
+								</div>
+							)}
+						</>
+					)}
+				</div>
 			</>
 		);
 	},
@@ -208,6 +169,7 @@ registerBlockType(metadata.name, {
 			alignment,
 			verticalAlignment,
 			hrefUrl,
+			imageID,
 			imageUrl,
 			imageAlt,
 			bannerTitle,
@@ -222,24 +184,20 @@ registerBlockType(metadata.name, {
 		} = attributes;
 
 		// クラス名
-		let bannerClass = 'c-bannerLink';
-		if (isBlurON) {
-			bannerClass = classnames(bannerClass, '-blur-on');
-		}
-		if (isShadowON) {
-			bannerClass = classnames(bannerClass, '-shadow-on');
-		}
-		if (!hrefUrl) {
-			bannerClass = classnames(bannerClass, '-hov-off');
-		}
-		let textClass = 'c-bannerLink__text';
-		if ('center' !== alignment) {
-			textClass = classnames(textClass, `has-text-align-${alignment}`);
-		}
-		if ('center' !== verticalAlignment) {
-			textClass = classnames(textClass, `is-vertically-aligned-${verticalAlignment}`);
-		}
+		const bannerClass = classnames('c-bannerLink', {
+			'-blur-on': isBlurON,
+			'-shadow-on': isShadowON,
+		});
 
+		const textClass = classnames('c-bannerLink__text', {
+			[`has-text-align-${alignment}`]: 'center' !== alignment,
+			[`is-vertically-aligned-${verticalAlignment}`]: 'center' !== verticalAlignment,
+		});
+		const imgClass = classnames('c-bannerLink__img -no-lb', {
+			[`wp-image-${imageID}`]: imageID,
+		});
+
+		// Style
 		const bannerStyle = getBannerStyle(attributes);
 
 		let figureStylePC = '';
@@ -277,7 +235,7 @@ registerBlockType(metadata.name, {
 						data-tab-style={figureStylePC || null}
 						data-mobile-style={figureStyleSP || null}
 					>
-						<img src={imageUrl} className='c-bannerLink__img -no-lb' alt={imageAlt} />
+						<img src={imageUrl} className={imgClass} alt={imageAlt} />
 					</figure>
 					<div className={textClass} style={textStyle || null}>
 						<RichText.Content
@@ -297,4 +255,5 @@ registerBlockType(metadata.name, {
 			</div>
 		);
 	},
+	deprecated,
 });

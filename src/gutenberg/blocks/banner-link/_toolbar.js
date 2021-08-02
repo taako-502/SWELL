@@ -14,7 +14,7 @@ export default ({ imageID, imageUrl, alignment, verticalAlignment, setAttributes
 		<>
 			<AlignmentToolbar
 				value={alignment}
-				onChange={(value) => setAttributes({ alignment: value })}
+				onChange={(value) => setAttributes({ alignment: value || 'center' })}
 			/>
 			<BlockVerticalAlignmentToolbar
 				onChange={(value) => setAttributes({ verticalAlignment: value })}
