@@ -83,7 +83,7 @@ const getBlockStyle = (attributes, bgColor) => {
  * フルワイドブロック
  */
 registerBlockType(metadata.name, {
-	icon: getBlockIcon(blockIcon),
+	icon: getBlockIcon(blockIcon.icon),
 	edit: ({ attributes, setAttributes }) => {
 		const {
 			bgImageUrl,

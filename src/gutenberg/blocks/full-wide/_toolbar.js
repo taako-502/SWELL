@@ -1,14 +1,8 @@
 /**
  * @WordPress dependencies
  */
-// import { __ } from '@wordpress/i18n';
-// import { useState } from '@wordpress/element';
 import { useMemo } from '@wordpress/element';
-import {
-	MediaUpload,
-	MediaUploadCheck,
-	// MediaPlaceholder,
-} from '@wordpress/block-editor';
+import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
 /**
