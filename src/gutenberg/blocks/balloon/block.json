@@ -1,4 +1,5 @@
 {
+    "apiVersion": 2,
     "name": "loos/balloon",
     "title": "Balloon",
     "category": "swell-blocks",
@@ -8,6 +9,14 @@
     ],
     "supports": {
         "className": false
+    },
+    "example": {
+        "attributes": {
+            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "balloonName": "name",
+            "balloonCol": "blue",
+            "balloonIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0AQMAAADfKmdSAAAAA1BMVEXPz896MPgHAAAAHklEQVRYw+3BMQEAAADCIPuntsYOYAAAAAAAAABhBxzUAAEYBjd2AAAAAElFTkSuQmCC"
+        }
     },
     "attributes": {
         "className": {
