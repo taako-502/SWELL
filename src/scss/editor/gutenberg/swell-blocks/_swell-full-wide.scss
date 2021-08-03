@@ -1,13 +1,13 @@
 .swell-block-fullWide {
 
-    [data-content-size="full"] & {
+    &[data-content-size="full"] {
 
         .wp-block {
             max-width: 100% !important;
         }
     }
 
-    [data-content-size="container"] & {
+    &[data-content-size="container"] {
 
         .wp-block:not(.wp-block-separator) {
             max-width: 1080px !important;

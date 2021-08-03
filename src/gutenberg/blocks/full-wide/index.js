@@ -1,26 +1,34 @@
 /**
  * @WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { useMemo } from '@wordpress/element';
-import { InspectorControls, InnerBlocks, BlockControls } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	InnerBlocks,
+	BlockControls,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
-import { iconColor } from '@swell-guten/config';
+import metadata from './block.json';
+import deprecated from './deprecated';
+import blockIcon from './_icon';
 import { FullWideSVG } from './_svg';
 import FullWideSidebar from './_sidebar';
 import FullWideToolbar from './_toolbar';
-import deprecated from './_deprecated';
-import example from './_example';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * @Others dependencies
  */
 import classnames from 'classnames';
 import hexToRgba from 'hex-to-rgba';
+
+const TEMPLATE = [['core/heading', { className: 'is-style-section_ttl' }]];
 
 /**
  * ブロック名
@@ -33,21 +41,11 @@ const blockName = 'swell-block-fullWide';
 const getBlockClass = (attributes) => {
 	const { bgImageUrl, isFixBg, isParallax, pcPadding, spPadding } = attributes;
 
-	let blockClass = blockName;
-	if (bgImageUrl) {
-		blockClass = classnames(blockClass, 'has-bg-img');
-		// かつ、固定背景がオンの時
-		if (isFixBg) {
-			blockClass = classnames(blockClass, '-fixbg');
-		}
-		if (isParallax) {
-			blockClass = classnames(blockClass, '-parallax');
-		}
-	}
-
-	blockClass = classnames(blockClass, `pc-py-${pcPadding}`);
-	blockClass = classnames(blockClass, `sp-py-${spPadding}`);
-	return blockClass;
+	return classnames(`pc-py-${pcPadding}`, `sp-py-${spPadding}`, {
+		'has-bg-img': bgImageUrl || null,
+		'-fixbg': (bgImageUrl && isFixBg) || null,
+		'-parallax': (bgImageUrl && isParallax) || null,
+	});
 };
 
 /**
@@ -71,10 +69,8 @@ const getBlockStyle = (attributes, bgColor) => {
 	const { bgImageUrl, bgFocalPoint, textColor } = attributes;
 
 	const style = {};
-	if (bgImageUrl) {
-		if (bgFocalPoint) {
-			style.backgroundPosition = `${bgFocalPoint.x * 100}% ${bgFocalPoint.y * 100}%`;
-		}
+	if (bgImageUrl && bgFocalPoint) {
+		style.backgroundPosition = `${bgFocalPoint.x * 100}% ${bgFocalPoint.y * 100}%`;
 	}
 
 	if (textColor) style.color = textColor;
@@ -83,102 +79,15 @@ const getBlockStyle = (attributes, bgColor) => {
 	return style;
 };
 
-// カスタムブロックの登録
-registerBlockType('loos/full-wide', {
-	title: 'フルワイド',
-	description: __('フルワイド幅でコンテンツを配置できます。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: 'align-wide',
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'fullwide'],
-	supports: {
-		anchor: true,
-		className: false,
-	},
-	example,
-	attributes: {
-		align: {
-			type: 'string',
-			default: 'full',
-		},
-		bgColor: {
-			type: 'string',
-			default: '#f7f7f7',
-		},
-		textColor: {
-			type: 'string',
-			default: '',
-		},
-		bgImageUrl: {
-			type: 'string',
-			default: '',
-		},
-		bgImageID: {
-			type: 'number',
-			default: 0,
-		},
-		bgOpacity: {
-			type: 'number',
-			default: 100,
-		},
-		contentSize: {
-			type: 'string',
-			default: 'article',
-		},
-		pcPadding: {
-			type: 'string',
-			default: '60',
-		},
-		spPadding: {
-			type: 'string',
-			default: '40',
-		},
-		bgFocalPoint: {
-			type: 'object',
-		},
-		isFixBg: {
-			type: 'boolean',
-			default: false,
-		},
-		isParallax: {
-			type: 'boolean',
-			default: false,
-		},
-		topSvgType: {
-			type: 'string',
-			default: 'line',
-		},
-		topSvgLevel: {
-			type: 'number',
-			default: 0,
-		},
-		bottomSvgType: {
-			type: 'string',
-			default: 'line',
-		},
-		bottomSvgLevel: {
-			type: 'number',
-			default: 0,
-		},
-		isReTop: {
-			type: 'boolean',
-			default: false,
-		},
-		isReBottom: {
-			type: 'boolean',
-			default: false,
-		},
-	},
-	getEditWrapperProps(attributes) {
-		const { contentSize } = attributes;
-		return { 'data-align': 'full', 'data-content-size': contentSize };
-	},
-
-	edit: ({ attributes, setAttributes, className }) => {
+/**
+ * フルワイドブロック
+ */
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
+	edit: ({ attributes, setAttributes }) => {
 		const {
 			bgImageUrl,
+			contentSize,
 			topSvgLevel,
 			bottomSvgLevel,
 			topSvgType,
@@ -186,10 +95,6 @@ registerBlockType('loos/full-wide', {
 			isReTop,
 			isReBottom,
 		} = attributes;
-
-		// クラス名
-		let blockClass = getBlockClass(attributes);
-		blockClass = classnames(blockClass, className);
 
 		// 背景色
 		const bgColor = useMemo(() => getBgColor(attributes), [attributes]);
@@ -203,6 +108,22 @@ registerBlockType('loos/full-wide', {
 			return _style;
 		}, [bgColor, attributes]);
 
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: getBlockClass(attributes),
+			style: style || null,
+			'data-align': 'full',
+			'data-content-size': contentSize,
+		});
+		const innerBlocksProps = useInnerBlocksProps(
+			{
+				className: classnames(`${blockName}__inner`, 'swl-inner-blocks'),
+			},
+			{
+				template: TEMPLATE,
+			}
+		);
+
 		return (
 			<>
 				<InspectorControls>
@@ -211,7 +132,7 @@ registerBlockType('loos/full-wide', {
 				<BlockControls>
 					<FullWideToolbar {...{ attributes, setAttributes }} />
 				</BlockControls>
-				<div className={blockClass} style={style || null}>
+				<div {...blockProps}>
 					{0 !== topSvgLevel && !bgImageUrl && (
 						<FullWideSVG
 							position='top'
@@ -222,18 +143,7 @@ registerBlockType('loos/full-wide', {
 							isEdit={true}
 						/>
 					)}
-					<div className={`${blockName}__inner`}>
-						<InnerBlocks
-							template={[
-								[
-									'core/heading',
-									{
-										className: 'is-style-section_ttl',
-									},
-								],
-							]}
-						/>
-					</div>
+					<div {...innerBlocksProps}>{innerBlocksProps.children}</div>
 					{0 !== bottomSvgLevel && !bgImageUrl && (
 						<FullWideSVG
 							position='bottom'
@@ -265,21 +175,22 @@ registerBlockType('loos/full-wide', {
 		// styleデータ
 		const style = getBlockStyle(attributes, bgColor);
 
-		// クラス名
-		let blockClass = getBlockClass(attributes);
-		blockClass = classnames(blockClass, 'alignfull');
-		if (bgImageUrl) {
-			blockClass = classnames(blockClass, 'lazyload');
-		}
-
 		// inner要素のクラス名
-		let innerClass = `${blockName}__inner`;
-		if ('full' !== contentSize) {
-			innerClass = classnames(innerClass, `l-${contentSize}`);
-		}
+		const innerClass = classnames(`${blockName}__inner`, {
+			[`l-${contentSize}`]: 'full' !== contentSize || null,
+		});
+
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: classnames(getBlockClass(attributes), 'alignfull', {
+				lazyload: bgImageUrl || null,
+			}),
+			style: style || null,
+			'data-bg': bgImageUrl || null,
+		});
 
 		return (
-			<div className={blockClass} style={style || null} data-bg={bgImageUrl || null}>
+			<div {...blockProps}>
 				{0 !== topSvgLevel && !bgImageUrl && (
 					<FullWideSVG
 						position='top'

@@ -11,8 +11,8 @@
 // .swell-block-dl__dd,
 // .swell-block-abTest__a,
 // .swell-block-abTest__b,
-.swell-block-tab__body,
-.swell-block-fullWide__inner {
+// .swell-block-fullWide__inner,
+.swell-block-tab__body {
 
     > .block-editor-inner-blocks > .block-editor-block-list__layout > :first-child,
     &.block-editor-block-list__layout > :first-child {
@@ -37,8 +37,8 @@
 // .swell-block-dl__dd,
 // .swell-block-abTest__a,
 // .swell-block-abTest__b,
-.swell-block-tab__body,
-.swell-block-fullWide__inner {
+// .swell-block-fullWide__inner,
+.swell-block-tab__body {
 
     // 5.6からは選択中しか .block-list-appender が出てこなくなった。
     .block-editor-inner-blocks > .block-editor-block-list__layout > :last-child,
