@@ -6,41 +6,22 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * 関連記事ブロック
  */
-$block_name = 'ad-tag';
-$handle     = 'swell-block/' . $block_name;
+$asset = include T_DIRE . '/build/blocks/ad-tag/index.asset.php';
 wp_register_script(
-	$handle,
-	T_DIRE_URI . '/build/blocks/' . $block_name . '/index.js',
-	['swell_blocks' ],
+	'swell-block/rss',
+	T_DIRE_URI . '/build/blocks/ad-tag/index.js',
+	array_merge( $asset['dependencies'], [ 'swell_blocks' ] ),
 	SWELL_VERSION,
 	true
 );
 
-register_block_type(
-	'loos/ad-tag',
-	[
-		'editor_script'   => $handle,
-		'attributes'      => [
-			// JS側と合わせないと「ブロック読み込みエラー: 無効なパラメーター: attributes」が出たりする
-			'className' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'adTitle' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'adID' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-		],
-		'render_callback' => 'SWELL_THEME\Block\cb_ad_tag',
-	]
-);
+register_block_type_from_metadata( T_DIRE . '/src/gutenberg/blocks/ad-tag', [
+	'editor_script'   => 'swell-block/rss',
+	'render_callback' => 'SWELL_THEME\Block\cb_ad_tag',
+]);
 
-function cb_ad_tag( $attributes ) {
+function cb_ad_tag( $attrs ) {
 	ob_start();
-	echo do_shortcode( '[ad_tag id="' . $attributes['adID'] . '" class="' . $attributes['className'] . '"]' );
+	echo do_shortcode( '[ad_tag id="' . $attrs['adID'] . '"]' );
 	return ob_get_clean();
 }

@@ -1,16 +1,18 @@
 /**
  * @WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { memo } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps } from '@wordpress/block-editor';
 import { SelectControl } from '@wordpress/components';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
- * @SWELL dependencies
+ * @Internal dependencies
  */
-import { iconColor } from '@swell-guten/config';
+import metadata from './block.json';
+import blockIcon from './_icon';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * @Others dependencies
@@ -74,7 +76,6 @@ Object.keys(swellAdTags).forEach(function (key) {
  * Selectコンポーネント
  */
 const SelectControls = memo(({ adID, setAttributes }) => {
-	// console.log('memo', normalList);
 	return (
 		<div className='swellBlock__selectList'>
 			<SelectControl
@@ -112,29 +113,19 @@ const SelectControls = memo(({ adID, setAttributes }) => {
 /**
  * 広告タグ
  */
-registerBlockType('loos/ad-tag', {
-	title: '広告タグ',
-	description: __('登録済みの広告タグを呼び出すことができます。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: 'tickets-alt',
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'ad', 'tag'],
-	// example,
-	attributes: {
-		adID: {
-			type: 'string',
-			default: '',
-		},
-	},
-
-	edit: ({ attributes, className, setAttributes }) => {
+const blockName = 'swell-block-ad-tag';
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
+	edit: ({ attributes, setAttributes }) => {
 		const { adID } = attributes;
-		const blockClass = classnames(className, 'swellBlock--getContent');
+
+		// ブロックProps
+		const blockProps = useBlockProps({
+			className: classnames(blockName, 'swellBlock--getContent'),
+		});
 
 		return (
-			<div className={blockClass}>
+			<div {...blockProps}>
 				<SelectControls adID={adID} setAttributes={setAttributes} />
 				<div className='swellBlock__preview'>
 					{adID ? (
@@ -148,6 +139,9 @@ registerBlockType('loos/ad-tag', {
 	},
 
 	save: ({ attributes }) => {
-		return <div>{'[ad_tag id="' + attributes.adID + '"]'}</div>;
+		// ブロックProps
+		const blockProps = useBlockProps.save();
+
+		return <div {...blockProps}>{'[ad_tag id="' + attributes.adID + '"]'}</div>;
 	},
 });

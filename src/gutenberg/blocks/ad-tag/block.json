@@ -1,0 +1,19 @@
+{
+    "apiVersion": 2,
+    "name": "loos/ad-tag",
+    "title": "広告タグ",
+    "description": "登録済みの広告タグを呼び出すことができます。",
+    "category": "swell-blocks",
+    "keywords": [
+        "swell",
+        "ad",
+        "tag"
+    ],
+    "attributes": {
+        "adID": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "textdomain": "swell"
+}
