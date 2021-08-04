@@ -4,13 +4,16 @@
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { SelectControl } from '@wordpress/components';
+import { useBlockProps } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 import { memo, useState } from '@wordpress/element';
 
 /**
- * @SWELL dependencies
+ * @Internal dependencies
  */
-import { iconColor } from '@swell-guten/config';
+import metadata from './block.json';
+import blockIcon from './_icon';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * @Others dependencies
@@ -99,39 +102,24 @@ const SelectControls = memo(({ partsID, setAttributes, selectedTerm, setSelected
 /**
  * ブログパーツ
  */
-registerBlockType('loos/blog-parts', {
-	title: 'ブログパーツ',
-	description: __('登録済みのブログパーツを呼び出すことができます。', 'swell'),
-	icon: {
-		foreground: iconColor,
-		src: 'welcome-widgets-menus',
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'blogparts', 'parts'],
-	// example,
-	attributes: {
-		partsTitle: {
-			type: 'string',
-			default: '',
-		},
-		partsID: {
-			type: 'string',
-			default: '',
-		},
-	},
-
-	edit: ({ attributes, className, setAttributes }) => {
+const blockName = 'swell-block-blog-parts';
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
+	edit: ({ attributes, setAttributes }) => {
 		const { partsID } = attributes;
-
-		const blockClass = classnames(className, 'swellBlock--getContent');
 
 		let nowSelectedTerm = swellBlogParts[partsID] ? swellBlogParts[partsID].term : '';
 		nowSelectedTerm = nowSelectedTerm || 'normal';
 
 		const [selectedTerm, setSelectedTerm] = useState(nowSelectedTerm);
 
+		// ブロックProps
+		const blockProps = useBlockProps({
+			className: classnames(blockName, 'swellBlock--getContent'),
+		});
+
 		return (
-			<div className={blockClass}>
+			<div {...blockProps}>
 				<SelectControls {...{ partsID, setAttributes, selectedTerm, setSelectedTerm }} />
 				<div className='swellBlock__preview'>
 					{partsID ? (
@@ -143,8 +131,10 @@ registerBlockType('loos/blog-parts', {
 			</div>
 		);
 	},
-
 	save: ({ attributes }) => {
-		return <div>{'[blog_parts id="' + attributes.partsID + '"]'}</div>;
+		// ブロックProps
+		const blockProps = useBlockProps.save();
+
+		return <div {...blockProps}>{'[blog_parts id="' + attributes.partsID + '"]'}</div>;
 	},
 });

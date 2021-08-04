@@ -1,0 +1,23 @@
+{
+    "apiVersion": 2,
+    "name": "loos/blog-parts",
+    "title": "ブログパーツ",
+    "description": "登録済みのブログパーツを呼び出すことができます。",
+    "category": "swell-blocks",
+    "keywords": [
+        "swell",
+        "blogparts",
+        "partss"
+    ],
+    "attributes": {
+        "partsTitle": {
+            "type": "string",
+            "default": ""
+        },
+        "partsID": {
+            "type": "string",
+            "default": ""
+        }
+    },
+    "textdomain": "swell"
+}

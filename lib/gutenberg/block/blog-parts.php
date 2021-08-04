@@ -6,37 +6,19 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * ブログパーツブロック
  */
-$block_name = 'blog-parts';
-$handle     = 'swell-block/' . $block_name;
+$asset = include T_DIRE . '/build/blocks/blog-parts/index.asset.php';
 wp_register_script(
-	$handle,
-	T_DIRE_URI . '/build/blocks/' . $block_name . '/index.js',
-	['swell_blocks' ],
+	'swell-block/blog-parts',
+	T_DIRE_URI . '/build/blocks/blog-parts/index.js',
+	array_merge( $asset['dependencies'], [ 'swell_blocks' ] ),
 	SWELL_VERSION,
 	true
 );
 
-register_block_type(
-	'loos/blog-parts',
-	[
-		'editor_script'   => $handle,
-		'attributes'      => [
-			'className' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'partsTitle' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-			'partsID' => [
-				'type'    => 'string',
-				'default' => '',
-			],
-		],
-		'render_callback' => 'SWELL_THEME\Block\cb_blog_parts',
-	]
-);
+register_block_type_from_metadata( T_DIRE . '/src/gutenberg/blocks/blog-parts', [
+	'editor_script'   => 'swell-block/blog-parts',
+	'render_callback' => 'SWELL_THEME\Block\cb_blog_parts',
+]);
 
 function cb_blog_parts( $attrs ) {
 
@@ -44,9 +26,6 @@ function cb_blog_parts( $attrs ) {
 	$content  = \SWELL_Theme::get_blog_parts_content( [ 'id' => $parts_id ] );
 
 	$bp_class = 'p-blogParts post_content';
-	if ( $attrs['className'] ) {
-		$bp_class .= ' ' . $attrs['className'];
-	}
 
 	if ( \SWELL_Theme::is_rest() ) {
 		// エディター上のプレビュー表示
@@ -56,5 +35,4 @@ function cb_blog_parts( $attrs ) {
 	}
 
 	return '<div class="' . esc_attr( $bp_class ) . '" data-partsID="' . esc_attr( $parts_id ) . '">' . $content . '</div>';
-
 }
