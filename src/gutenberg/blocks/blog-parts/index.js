@@ -12,13 +12,9 @@ import { memo, useState } from '@wordpress/element';
  * @Internal dependencies
  */
 import metadata from './block.json';
+import deprecated from './deprecated';
 import blockIcon from './_icon';
 import getBlockIcon from '@swell-guten/utils/getBlockIcon';
-
-/**
- * @Others dependencies
- */
-import classnames from 'classnames';
 
 /**
  * ブログパーツ選択肢
@@ -115,7 +111,7 @@ registerBlockType(metadata.name, {
 
 		// ブロックProps
 		const blockProps = useBlockProps({
-			className: classnames(blockName, 'swellBlock--getContent'),
+			className: `${blockName} swellBlock--getContent`,
 		});
 
 		return (
@@ -131,10 +127,8 @@ registerBlockType(metadata.name, {
 			</div>
 		);
 	},
-	save: ({ attributes }) => {
-		// ブロックProps
-		const blockProps = useBlockProps.save();
-
-		return <div {...blockProps}>{'[blog_parts id="' + attributes.partsID + '"]'}</div>;
+	save: () => {
+		return null;
 	},
+	deprecated,
 });

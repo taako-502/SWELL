@@ -17,15 +17,17 @@ wp_register_script(
 
 register_block_type_from_metadata( T_DIRE . '/src/gutenberg/blocks/blog-parts', [
 	'editor_script'   => 'swell-block/blog-parts',
-	'render_callback' => 'SWELL_THEME\Block\cb_blog_parts',
+	'render_callback' => __NAMESPACE__ . '\cb_blog_parts',
 ]);
 
 function cb_blog_parts( $attrs ) {
-
 	$parts_id = $attrs['partsID'] ?: 0;
 	$content  = \SWELL_Theme::get_blog_parts_content( [ 'id' => $parts_id ] );
 
 	$bp_class = 'p-blogParts post_content';
+	if ( $attrs['className'] ) {
+		$bp_class .= ' ' . $attrs['className'];
+	}
 
 	if ( \SWELL_Theme::is_rest() ) {
 		// エディター上のプレビュー表示

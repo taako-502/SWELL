@@ -4,12 +4,19 @@
     "title": "ブログパーツ",
     "description": "登録済みのブログパーツを呼び出すことができます。",
     "category": "swell-blocks",
+    "supports": {
+        "className": false
+    },
     "keywords": [
         "swell",
         "blogparts",
-        "partss"
+        "parts"
     ],
     "attributes": {
+        "className": {
+            "type": "string",
+            "default": ""
+        },
         "partsTitle": {
             "type": "string",
             "default": ""
