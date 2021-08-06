@@ -1,7 +1,7 @@
 {
     "apiVersion": 2,
     "name": "loos/balloon",
-    "title": "Balloon",
+    "title": "ふきだし",
     "category": "swell-blocks",
     "keywords": [
         "swell",
@@ -15,7 +15,7 @@
             "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
             "balloonName": "name",
             "balloonCol": "blue",
-            "balloonIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAC0AQMAAADfKmdSAAAAA1BMVEXPz896MPgHAAAAHklEQVRYw+3BMQEAAADCIPuntsYOYAAAAAAAAABhBxzUAAEYBjd2AAAAAElFTkSuQmCC"
+            "balloonIcon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQAQMAAAC032DuAAAAA1BMVEXPz896MPgHAAAAEElEQVQoz2MYBaNgFNANAAADcAABJi8F7gAAAABJRU5ErkJggg=="
         }
     },
     "attributes": {

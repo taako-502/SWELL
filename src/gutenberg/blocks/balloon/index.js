@@ -25,7 +25,7 @@ import classnames from 'classnames';
  */
 const blockName = 'swell-block-balloon';
 registerBlockType(metadata.name, {
-	icon: getBlockIcon('screenoptions'),
+	icon: getBlockIcon('format-chat'),
 	edit: ({ attributes, setAttributes }) => {
 		const {
 			balloonID,
