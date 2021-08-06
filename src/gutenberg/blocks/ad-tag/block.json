@@ -4,12 +4,19 @@
     "title": "広告タグ",
     "description": "登録済みの広告タグを呼び出すことができます。",
     "category": "swell-blocks",
+    "supports": {
+        "className": false
+    },
     "keywords": [
         "swell",
         "ad",
         "tag"
     ],
     "attributes": {
+        "className": {
+            "type": "string",
+            "default": ""
+        },
         "adID": {
             "type": "string",
             "default": ""

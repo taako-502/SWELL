@@ -11,13 +11,9 @@ import ServerSideRender from '@wordpress/server-side-render';
  * @Internal dependencies
  */
 import metadata from './block.json';
+import deprecated from './deprecated';
 import blockIcon from './_icon';
 import getBlockIcon from '@swell-guten/utils/getBlockIcon';
-
-/**
- * @Others dependencies
- */
-import classnames from 'classnames';
 
 // ブログパーツ選択肢
 const normalList = [
@@ -121,7 +117,7 @@ registerBlockType(metadata.name, {
 
 		// ブロックProps
 		const blockProps = useBlockProps({
-			className: classnames(blockName, 'swellBlock--getContent'),
+			className: `${blockName} swellBlock--getContent`,
 		});
 
 		return (
@@ -138,10 +134,8 @@ registerBlockType(metadata.name, {
 		);
 	},
 
-	save: ({ attributes }) => {
-		// ブロックProps
-		const blockProps = useBlockProps.save();
-
-		return <div {...blockProps}>{'[ad_tag id="' + attributes.adID + '"]'}</div>;
+	save: () => {
+		return null;
 	},
+	deprecated,
 });
