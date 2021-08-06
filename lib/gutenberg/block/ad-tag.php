@@ -17,7 +17,7 @@ wp_register_script(
 
 register_block_type_from_metadata( T_DIRE . '/src/gutenberg/blocks/ad-tag', [
 	'editor_script'   => 'swell-block/rss',
-	'render_callback' => 'SWELL_THEME\Block\cb_ad_tag',
+	'render_callback' => __NAMESPACE__ . '\cb_ad_tag',
 ]);
 
 function cb_ad_tag( $attrs ) {
