@@ -52,7 +52,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 	const isBlockParts = 'wp_block' === postType || 'blog_parts' === postType;
 
 	// クリックデータを取得
-	const [meta, setMeta] = useEntityProp('postType', postType, 'meta');
+	const [meta, setMeta] = useEntityProp('postType', postType, 'meta'); // eslint-disable-line no-unused-vars
 	const btnClickedData = useMemo(() => {
 		let btnData = null;
 		if (meta) {
@@ -135,6 +135,12 @@ export default ({ attributes, setAttributes, clientId }) => {
 					}
 				}}
 			/>
+			{isCount && (
+				<div className='swell-button-data'>
+					<div className='__title'>このボタンの計測結果</div>
+					{btnClickedData}
+				</div>
+			)}
 		</>
 	);
 
@@ -227,7 +233,11 @@ export default ({ attributes, setAttributes, clientId }) => {
 					/>
 				</>
 			</PanelBody>
-			<PanelBody title='アイコン設定' initialOpen={true}>
+			<PanelBody
+				title='アイコン設定'
+				initialOpen={true}
+				className={hasHtml ? 'u-none' : null}
+			>
 				<SwellIconPicker iconName={iconName} onClick={onIconClick} />
 				<BaseControl>
 					<TextControl
@@ -242,7 +252,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</BaseControl>
 			</PanelBody>
 			<PanelBody title='広告タグ設定' initialOpen={true}>
-				{!hasHtml && (
+				<div data-swl-disable={hasHtml || null}>
 					<TextControl
 						label='計測用imgタグの画像URL'
 						placeholder='計測用imgタグのsrc属性値を入力'
@@ -252,7 +262,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 							setAttributes({ imgUrl: value });
 						}}
 					/>
-				)}
+				</div>
 				<TextareaControl
 					label='広告タグを直接入力'
 					help='テキストリンクの広告タグをそのままペーストしてご利用いただけます。'

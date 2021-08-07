@@ -1,0 +1,75 @@
+
+// ボタンブロック
+[data-type="loos/button"] {
+    // [data-align="left/right"]時に、WordPressコアのheight:0が当たるのを阻止
+    height: auto !important;
+
+    // [data-align="left/right"]時に、WordPressコアのfloatが当たるのを阻止
+    > * {
+        float: none !important;
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    // HTML直接入力時
+    .-prev {
+        pointer-events: none;
+    }
+
+    .__prevLabel {
+        margin-top: 8px;
+        color: #666;
+        font-size: 12px;
+    }
+
+    .swell-block-button__link {
+        margin-bottom: 8px !important;
+        cursor: text;
+
+        .rich-text {
+            min-width: 1em;
+        }
+
+        &[data-has-icon] .rich-text {
+            padding-right: 4px;
+        }
+
+        &:not([data-has-icon]) .rich-text {
+            display: block;
+        }
+    }
+
+    &.is-style-btn_solid .swell-block-button__link {
+        border-bottom: none !important;
+    }
+
+    &.is-style-more_btn .swell-block-button__link {
+        min-width: 64%;
+    }
+
+    // hover時にリンク色に変わるのを阻止
+    &.is-style-btn_normal,
+    &.is-style-btn_solid,
+    &.is-style-btn_shiny {
+
+        a {
+            color: #fff;
+        }
+    }
+
+}
+
+
+// 計測結果の表示
+.swell-button-data {
+
+    .__title {
+        margin-bottom: 8px;
+        font-weight: bold;
+        font-size: 1.1em;
+    }
+
+    .__data {
+        margin-bottom: 4px;
+    }
+}

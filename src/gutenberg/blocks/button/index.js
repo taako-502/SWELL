@@ -80,7 +80,8 @@ registerBlockType(metadata.name, {
 	edit: (props) => {
 		const { attributes, setAttributes, isSelected, clientId } = props;
 
-		const { className, hrefUrl, content, btnAlign, htmlTags, btnId, iconName } = attributes;
+		const { className, hrefUrl, content, btnAlign, htmlTags, btnId, isCount, iconName } =
+			attributes;
 
 		// デフォルトのクラスをnormalにセット。
 		if (!className) setAttributes({ className: 'is-style-btn_normal' });
@@ -99,7 +100,12 @@ registerBlockType(metadata.name, {
 		}, [iconName]);
 
 		useEffect(() => {
-			const sameKeyBlocks = document.querySelectorAll(`[data-id="${btnId}"]`);
+			if (!btnId) return;
+
+			const sameKeyBlocks = document.querySelectorAll(
+				`.swell-block-button[data-id="${btnId}"]`
+			);
+
 			if (sameKeyBlocks.length > 1) {
 				const newID = clientId.split('-');
 				setAttributes({ btnId: newID[0] || '' });
@@ -112,23 +118,21 @@ registerBlockType(metadata.name, {
 				'-prev': hasHtml,
 			}),
 			'data-align': btnAlign || null,
-			'data-id': btnId || null,
+			'data-id': isCount ? btnId : null,
 		});
 
 		return (
 			<>
-				{!hasHtml && (
-					<BlockControls>
-						<BlockAlignmentToolbar
-							value={btnAlign}
-							onChange={(val) => {
-								val = val || '';
-								setAttributes({ btnAlign: val });
-							}}
-							controls={['left', 'right']}
-						/>
-					</BlockControls>
-				)}
+				<BlockControls>
+					<BlockAlignmentToolbar
+						value={btnAlign}
+						onChange={(val) => {
+							val = val || '';
+							setAttributes({ btnAlign: val });
+						}}
+						controls={['left', 'right']}
+					/>
+				</BlockControls>
 				<InspectorControls>
 					<ButtonSidebar {...{ attributes, setAttributes, clientId }} />
 				</InspectorControls>
@@ -153,11 +157,10 @@ registerBlockType(metadata.name, {
 										tagName='span'
 										placeholder={__('Text…', 'swell')}
 										value={content}
-										withoutInteractiveFormatting={false}
+										withoutInteractiveFormatting // リンクボタン非表示にできる
+										// identifier='text' // コアのボタンブロックはこれも指定してた
 										onChange={(newContent) => {
-											setAttributes({
-												content: newContent,
-											});
+											setAttributes({ content: newContent });
 										}}
 									/>
 								</a>
@@ -185,10 +188,36 @@ registerBlockType(metadata.name, {
 	},
 
 	save: ({ attributes }) => {
-		const { hrefUrl, isNewTab, rel, content, imgUrl, btnAlign, htmlTags, btnId, iconName } =
-			attributes;
+		const {
+			hrefUrl,
+			isNewTab,
+			rel,
+			content,
+			imgUrl,
+			btnAlign,
+			htmlTags,
+			isCount,
+			btnId,
+			iconName,
+		} = attributes;
 
 		const hasHtml = !!htmlTags;
+
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			className: classnames(blockName, { '-html': hasHtml }),
+			'data-align': btnAlign || null,
+			'data-id': isCount ? btnId : null,
+		});
+
+		// タグ直接入力モード
+		if (hasHtml) {
+			return (
+				<div {...blockProps}>
+					<RawHTML>{htmlTags}</RawHTML>
+				</div>
+			);
+		}
 
 		let iconTag = null;
 		if (iconName) {
@@ -200,41 +229,27 @@ registerBlockType(metadata.name, {
 			}
 		}
 
-		// ブロックprops
-		const blockProps = useBlockProps.save({
-			className: blockName,
-			'data-align': btnAlign || null,
-			'data-id': btnId || null,
-		});
-
+		/* eslint react/jsx-no-target-blank: 0 */
 		return (
 			<div {...blockProps}>
-				{hasHtml ? (
-					// タグ直接入力モード
-					<RawHTML>{htmlTags}</RawHTML>
-				) : (
-					// 通常モード
-					<>
-						<a
-							href={hrefUrl}
-							target={isNewTab ? '_blank' : null}
-							rel={rel || null}
-							className='swell-block-button__link'
-							data-has-icon={iconTag ? '1' : null}
-						>
-							{iconTag}
-							<RichText.Content tagName='span' value={content} />
-						</a>
-						{imgUrl && (
-							<img
-								src={imgUrl}
-								className='swell-block-button__img'
-								width='1'
-								height='1'
-								alt=''
-							/>
-						)}
-					</>
+				<a
+					href={hrefUrl}
+					target={isNewTab ? '_blank' : null}
+					rel={rel || null}
+					className='swell-block-button__link'
+					data-has-icon={iconTag ? '1' : null}
+				>
+					{iconTag}
+					<RichText.Content tagName='span' value={content} />
+				</a>
+				{imgUrl && (
+					<img
+						src={imgUrl}
+						className='swell-block-button__img'
+						width='1'
+						height='1'
+						alt=''
+					/>
 				)}
 			</div>
 		);
