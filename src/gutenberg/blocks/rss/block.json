@@ -1,7 +1,7 @@
 {
     "apiVersion": 2,
     "name": "loos/rss",
-    "title": "RSS",
+    "title": "RSS (SWELL)",
     "description": "RSSフィードのリストを作成します。",
     "category": "swell-blocks",
     "keywords": [
