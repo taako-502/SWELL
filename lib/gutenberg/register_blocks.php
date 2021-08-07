@@ -66,7 +66,7 @@ function register_normal_blocks() {
 		'ab-test',
 		'ab-test-a',
 		'ab-test-b',
-    'banner-link',
+		'banner-link',
 		'cap-block',
 		'dl',
 		'dl-dt',
