@@ -4,29 +4,24 @@ namespace SWELL_THEME\Block;
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * ブログパーツブロック
+ * ふきだしブロック
  */
-$block_name = 'balloon';
-$handle     = 'swell-block/' . $block_name;
-wp_register_script( $handle, T_DIRE_URI . '/build/blocks/' . $block_name . '/index.js', [ 'swell_blocks' ], SWELL_VERSION, true );
-
-// block.json読み込み
-$block_json = T_DIRE . '/src/gutenberg/blocks/' . $block_name . '/block.json';
-$metadata   = json_decode( file_get_contents( $block_json ), true );
-if ( ! is_array( $metadata ) ) return;
-
-register_block_type(
-	$metadata['name'],
-	[
-		'editor_script'   => $handle,
-		'attributes'      => $metadata['attributes'],
-		'render_callback' => 'SWELL_THEME\Block\cb_balloon',
-	]
+$asset = include T_DIRE . '/build/blocks/post-link/index.asset.php';
+wp_register_script(
+	'swell-block/balloon',
+	T_DIRE_URI . '/build/blocks/balloon/index.js',
+	array_merge( $asset['dependencies'], [ 'swell_blocks' ] ),
+	SWELL_VERSION,
+	true
 );
+
+register_block_type_from_metadata( T_DIRE . '/src/gutenberg/blocks/balloon', [
+	'editor_script'   => 'swell-block/balloon',
+	'render_callback' => 'SWELL_THEME\Block\cb_balloon',
+] );
 
 function cb_balloon( $attrs, $content = '' ) {
 
-	// $balloonTitle  = $attrs['balloonTitle'];
 	$balloonID     = $attrs['balloonID'];
 	$balloonIcon   = $attrs['balloonIcon'];
 	$balloonName   = $attrs['balloonName'];
@@ -39,12 +34,6 @@ function cb_balloon( $attrs, $content = '' ) {
 
 	$props = '';
 
-	// echo '<pre style="margin-left: 100px;">';
-	// var_dump(  );
-	// echo '</pre>';
-	// $attrs['className']
-
-	// if ($balloonTitle) $props  .= ' set="' . $balloonTitle . '"';
 	if ($balloonID) $props     .= ' id="' . $balloonID . '"';
 	if ($balloonIcon) $props   .= ' icon="' . $balloonIcon . '"';
 	if ($balloonAlign) $props  .= ' align="' . $balloonAlign . '"';
@@ -68,14 +57,15 @@ function cb_balloon( $attrs, $content = '' ) {
 
 	} else {
 
-		// 新しい方 : $content には p タグ でテキスト入っていて、クラスもpタグについてしまうことに注意。
+		// 新:  $content には p タグ でテキスト入っている
 		$block_class = 'swell-block-balloon';
 		if ( $attrs['className'] ) {
 			$block_class .= ' ' . $attrs['className'];
-			$content      = str_replace( 'p class="' . $attrs['className'] . '"', 'p', $content );
+
+			// API v1 時代のものは $content の pタグにクラスがついているので消す
+			$content = str_replace( 'p class="' . $attrs['className'] . '"', 'p', $content );
 		}
 		$content = '[speech_balloon' . $props . ']' . $content . '[/speech_balloon]';
 		return '<div class="' . esc_attr( $block_class ) . '">' . do_shortcode( $content ) . '</div>';
 	}
-
 }

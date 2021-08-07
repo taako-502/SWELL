@@ -2,7 +2,6 @@
  * @WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-// import { memo } from '@wordpress/element';
 import {
 	PanelBody,
 	Button,
@@ -11,12 +10,7 @@ import {
 	CheckboxControl,
 	TextControl,
 } from '@wordpress/components';
-import {
-	// InspectorControls,
-	ColorPalette,
-	MediaUpload,
-	MediaUploadCheck,
-} from '@wordpress/block-editor';
+import { ColorPalette, MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 
 /**
  * @Self dependencies
