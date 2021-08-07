@@ -1,6 +1,9 @@
+// バナーリンクブロック・カスタムバナーショートコード・ピックアップバナーから利用される。
 .c-bannerLink {
     position: relative;
     display: block;
+    margin-right: auto;
+    margin-left: auto;
     overflow: hidden;
     text-align: center;
 
@@ -23,89 +26,93 @@
         z-index: 1;
         background-color: inherit;
     }
+}
 
-    &__figure {
-        position: relative;
-        z-index: 0;
-        margin: 0;
-        overflow: hidden;
-        backface-visibility: hidden;
-        transition: opacity .25s;
+a.c-bannerLink:hover {
+
+    .c-bannerLink__figure {
+        opacity: .8;
     }
 
-    &__img {
-        display: block;
-        width: 100%;
-        // transform: scale(1.02);
-        backface-visibility: hidden;
-        transition: transform .25s;
+    .c-bannerLink__img {
+        transform: scale(1.04);
+    }
+}
 
-        .c-bannerLink.-blur-on & {
-            transform: scale(1.1);
-            filter: blur(4px);
-            // transform: scale(1.01);
-        }
+.c-bannerLink__figure {
+    position: relative;
+    z-index: 0;
+    margin: 0;
+    overflow: hidden;
+    backface-visibility: hidden;
+    transition: opacity .25s;
+}
+
+.c-bannerLink__img {
+    display: block;
+    width: 100%;
+    backface-visibility: hidden;
+    transition: transform .25s;
+
+    @extend %objFitCover;
+
+    .c-bannerLink.-blur-on & {
+        transform: scale(1.08);
+        filter: blur(4px);
     }
 
-    &__label {
-        position: absolute;
-        z-index: 2;
-        display: block;
-        font-size: 3.4vw;
-        line-height: 1.4;
+    a.c-bannerLink.-blur-on:hover & {
+        transform: scale(1.12);
+    }
+}
 
-        @include tab {
-            font-size: 14px;
-        }
+.c-bannerLink__label {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    font-size: 3.4vw;
+    line-height: 1.4;
+
+    @include tab {
+        font-size: 14px;
+    }
+}
+
+.c-bannerLink__text {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5em;
+    color: #fff;
+
+    @extend %absLayer;
+
+    &.is-vertically-aligned-top {
+        justify-content: flex-start;
     }
 
-    &__text {
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5em;
-        color: #fff;
-
-        @extend %absLayer;
-
-        &.is-vertically-aligned-top {
-            justify-content: flex-start;
-        }
-
-        &.is-vertically-aligned-bottom {
-            justify-content: flex-end;
-        }
+    &.is-vertically-aligned-bottom {
+        justify-content: flex-end;
     }
+}
 
-    &__title {
-        width: 100%;
-        font-size: 1.4em;
-        line-height: 1.25;
+.c-bannerLink__title {
+    width: 100%;
+    font-size: 1.4em;
+    line-height: 1.25;
 
-        &::before {
-            // カスタムバナーでのicon設定
-            margin-right: .25em;
-        }
+    &::before {
+        // カスタムバナーでのicon設定
+        margin-right: .25em;
     }
+}
 
-    &__description {
-        width: 100%;
-        margin-top: .5em;
-        font-size: .95em;
-    }
-
-    &:not(.-hov-off):hover {
-
-        .c-bannerLink__figure {
-            opacity: .8;
-        }
-
-        .c-bannerLink__img {
-            transform: scale(1.025);
-        }
-    }
+.c-bannerLink__description {
+    width: 100%;
+    margin-top: .5em;
+    font-size: .95em;
 }
 
 //ボーダー内側つけるかどうか
@@ -131,6 +138,7 @@
         background-color: rgba(0, 0, 0, .2);
     }
 }
+
 //キャプションスタイル
 .-cap-none {
 

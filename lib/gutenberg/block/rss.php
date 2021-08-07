@@ -6,29 +6,19 @@ defined( 'ABSPATH' ) || exit;
 /**
  * RSSブロック
  */
-$block_name = 'rss';
-$handle     = 'swell-block/' . $block_name;
+$asset = include T_DIRE . '/build/blocks/rss/index.asset.php';
 wp_register_script(
-	$handle,
-	T_DIRE_URI . '/build/blocks/' . $block_name . '/index.js',
-	['swell_blocks' ],
+	'swell-block/rss',
+	T_DIRE_URI . '/build/blocks/rss/index.js',
+	array_merge( $asset['dependencies'], [ 'swell_blocks' ] ),
 	SWELL_VERSION,
 	true
 );
 
-// block.json読み込み
-$block_json = T_DIRE . '/src/gutenberg/blocks/' . $block_name . '/block.json';
-$metadata   = json_decode( file_get_contents( $block_json ), true );
-if ( ! is_array( $metadata ) ) return;
-
-register_block_type(
-	$metadata['name'],
-	[
-		'editor_script'   => $handle,
-		'attributes'      => $metadata['attributes'],
-		'render_callback' => 'SWELL_THEME\Block\cb_rss',
-	]
-);
+register_block_type_from_metadata( T_DIRE . '/src/gutenberg/blocks/rss', [
+	'editor_script'   => 'swell-block/rss',
+	'render_callback' => __NAMESPACE__ . '\cb_rss',
+]);
 
 
 function cb_rss( $attrs, $content ) {
@@ -53,7 +43,7 @@ function cb_rss( $attrs, $content ) {
 
 	if ( empty( $rss_data ) ) {
 		// 取得可能な最大件数の10件を予め取得してキャッシュしておく。
-		$rss_data = \SWELL_THEME\Block\get_rss( $attrs['rssUrl'] );
+		$rss_data = get_rss( $attrs['rssUrl'] );
 
 		$chache_time = apply_filters( 'swell_blocks_rss_cache_time', 1 * DAY_IN_SECONDS, $rss_url );
 		if ( $use_cache ) set_transient( $chache_key, $rss_data, $chache_time );
@@ -74,9 +64,6 @@ function cb_rss( $attrs, $content ) {
 		'show_date'      => $attrs['showDate'],
 		'show_author'    => $attrs['showAuthor'],
 		'show_thumb'     => $attrs['showThumb'],
-
-		// 'show_modified'  => $attrs['showModified'],
-
 		'pc_col'         => $attrs['pcCol'],
 		'sp_col'         => $attrs['spCol'],
 		'h_tag'          => $attrs['hTag'],
@@ -157,7 +144,7 @@ function get_rss( $rss_url = '' ) {
 
 		// それでもなければ、OGPから取得
 		if ( '' === $thumbnail ) {
-			$thumbnail = \SWELL_THEME\Block\get_remote_thumb( $item_link );
+			$thumbnail = get_remote_thumb( $item_link );
 		}
 
 		// 著者名
@@ -170,7 +157,6 @@ function get_rss( $rss_url = '' ) {
 			'title'     => $item->get_title(),
 			'link'      => $item->get_permalink(),
 			'date'      => $item->get_date( 'Y.m.d' ),
-			// 'modified'  => $item->get_updated_date( 'Y.m.d' ),
 			'author'    => $author,
 			'thumbnail' => $thumbnail,
 		];
@@ -182,9 +168,7 @@ function get_rss( $rss_url = '' ) {
 		'favicon' => $rss->get_image_url() ?: '',
 		'items'   => $rss_item_data,
 	];
-
 }
-
 
 /**
  * RSS記事のサムネイル取得
