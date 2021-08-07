@@ -3,17 +3,74 @@
  */
 import { RichText } from '@wordpress/block-editor';
 
-/**
- * @SWELL dependencies
- */
-import metadata from './block.json';
+const oldAttributes = {
+	className: {
+		type: 'string',
+		default: '',
+	},
+	content: {
+		type: 'string',
+		source: 'html',
+		selector: 'p',
+		default: 'ここにテキストを入力',
+	},
+	balloonID: {
+		type: 'string',
+		default: '0',
+	},
+	balloonTitle: {
+		type: 'string',
+		default: '',
+	},
+	balloonIcon: {
+		type: 'string',
+		default: '',
+	},
+	balloonName: {
+		type: 'string',
+		default: '',
+	},
+	balloonCol: {
+		type: 'string',
+		default: '',
+	},
+	balloonType: {
+		type: 'string',
+		default: '',
+	},
+	balloonAlign: {
+		type: 'string',
+		default: '',
+	},
+	balloonBorder: {
+		type: 'string',
+		default: '',
+	},
+	balloonShape: {
+		type: 'string',
+		default: '',
+	},
+	spVertical: {
+		type: 'string',
+		default: '',
+	},
+};
 
 /**
  * deprecated
  */
 export default [
 	{
-		attributes: metadata.blockAttributes,
+		// api v1時代
+		attributes: oldAttributes,
+		supports: { className: false },
+		save: ({ attributes }) => {
+			// 単純に p タグとして内容は保存しておく
+			return <RichText.Content tagName='p' value={attributes.content} />;
+		},
+	},
+	{
+		attributes: oldAttributes,
 		supports: { className: false },
 		save: ({ attributes }) => {
 			const {
@@ -51,7 +108,7 @@ export default [
 		},
 	},
 	{
-		attributes: metadata.blockAttributes,
+		attributes: oldAttributes,
 		save: ({ attributes }) => {
 			const {
 				balloonTitle,

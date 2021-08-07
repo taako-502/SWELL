@@ -28,15 +28,19 @@
 
 .c-balloon__iconImg {
     display: block;
-    width: 60px;
-    height: 60px;
     margin: 0 auto;
     object-fit: cover;
     font-family: "object-fit: cover;";
 
-    @include tab {
-        width: 80px;
-        height: 80px;
+    // 詳細度あげる(エディターでコアのCSSに負けるのを防ぐ)
+    .c-balloon & {
+        width: 60px;
+        height: 60px;
+
+        @include tab {
+            width: 80px;
+            height: 80px;
+        }
     }
 
     .-circle > & {

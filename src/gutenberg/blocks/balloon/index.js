@@ -43,7 +43,7 @@ registerBlockType(metadata.name, {
 		const swellBalloons = window.swellBalloons || {};
 
 		// ふきだしの各種設定データ
-		const balloonData = useMemo(() => {
+		const bllnData = useMemo(() => {
 			const data = {
 				class: '',
 				icon: '',
@@ -77,7 +77,7 @@ registerBlockType(metadata.name, {
 			if (balloonShape) data.shape = balloonShape;
 
 			// クラス生成
-			data.class = classnames('c-balloon', `-bln-${data.align}`, {
+			data.class = classnames(`c-balloon -bln-${data.align}`, {
 				'-sp-vertical': '' !== spVertical,
 			});
 
@@ -106,30 +106,21 @@ registerBlockType(metadata.name, {
 				</InspectorControls>
 				<div {...blockProps}>
 					<div className='balloon_prev'>
-						<div className={balloonData.class} data-col={balloonData.col}>
-							{balloonData.icon && (
-								<div
-									className={classnames(
-										'c-balloon__icon',
-										'-' + balloonData.shape
-									)}
-								>
+						<div className={bllnData.class} data-col={bllnData.col}>
+							{bllnData.icon && (
+								<div className={`c-balloon__icon -${bllnData.shape}`}>
 									<img
 										className='c-balloon__iconImg'
-										src={balloonData.icon}
+										src={bllnData.icon}
 										width='80px'
 										height='80px'
 										alt=''
 									/>
-									<span className='c-balloon__iconName'>{balloonData.name}</span>
+									<span className='c-balloon__iconName'>{bllnData.name}</span>
 								</div>
 							)}
 							<div
-								className={classnames(
-									'c-balloon__body',
-									'-' + balloonData.type,
-									'-border-' + balloonData.border
-								)}
+								className={`c-balloon__body -${bllnData.type} -border-${bllnData.border}`}
 							>
 								<div className='c-balloon__text'>
 									<RichText

@@ -57,11 +57,13 @@ function cb_balloon( $attrs, $content = '' ) {
 
 	} else {
 
-		// 新しい方 : $content には p タグ でテキスト入っていて、クラスもpタグについてしまうことに注意。
+		// 新:  $content には p タグ でテキスト入っている
 		$block_class = 'swell-block-balloon';
 		if ( $attrs['className'] ) {
 			$block_class .= ' ' . $attrs['className'];
-			$content      = str_replace( 'p class="' . $attrs['className'] . '"', 'p', $content );
+
+			// API v1 時代のものは $content の pタグにクラスがついているので消す
+			$content = str_replace( 'p class="' . $attrs['className'] . '"', 'p', $content );
 		}
 		$content = '[speech_balloon' . $props . ']' . $content . '[/speech_balloon]';
 		return '<div class="' . esc_attr( $block_class ) . '">' . do_shortcode( $content ) . '</div>';
