@@ -1,8 +1,7 @@
 export default {
 	icon: (
 		<svg viewBox='0 0 56 56'>
-			<rect x='18' y='18' className='st0' width='20' height='20' />
-			<path d='M14,14h28V8.4H14V14z M47.6,36.4V19.6H8.4v16.8H47.6z M14,47.6h28V42H14V47.6z' />
+			<path d='M13.7,13.7h28.6V8H13.7V13.7z M50,37V19H6v18H50z M13.7,48h28.6v-5.7H13.7V48z' />
 		</svg>
 	),
 	article: (

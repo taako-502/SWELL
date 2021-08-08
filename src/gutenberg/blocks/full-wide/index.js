@@ -143,7 +143,7 @@ registerBlockType(metadata.name, {
 							isEdit={true}
 						/>
 					)}
-					<div {...innerBlocksProps}>{innerBlocksProps.children}</div>
+					<div {...innerBlocksProps} />
 					{0 !== bottomSvgLevel && !bgImageUrl && (
 						<FullWideSVG
 							position='bottom'
