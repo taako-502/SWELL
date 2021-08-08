@@ -1,4 +1,12 @@
-import DOM from './data/domData';
+// import DOM from './data/domData';
+
+window.isSwlAdCtConnecting = false;
+
+const observerOptions = {
+	root: null,
+	rootMargin: '-20% 0px',
+	threshold: 0,
+};
 
 /**
  * 広告タグのクリックを計測
@@ -73,11 +81,24 @@ const buttonCount = () => {
 			if (entry.isIntersecting) {
 				const button = entry.target;
 				const buttonID = button.getAttribute('data-id');
-				ctButtonData(buttonID, 'imp');
-				buttonObserver.unobserve(button); //表示計測は一度だけ。
+				console.log('view!', buttonID);
+
+				window.isSwlAdCtConnecting = true;
+				setTimeout(() => {
+					window.isSwlAdCtConnecting = false;
+				}, 100);
+
+				// 少しだけ遅らせてpvカウントや他の計測とのバッティングを回避
+				const delayTime = window.isSwlAdCtConnecting ? 120 : 10;
+				setTimeout(() => {
+					ctButtonData(buttonID, 'imp');
+				}, delayTime);
+
+				//表示計測は一度だけでいいので、一回処理されれば削除
+				buttonObserver.unobserve(button);
 			}
 		});
-	});
+	}, observerOptions);
 
 	// ボタン計測
 	swlButtons.forEach((button) => {
@@ -137,11 +158,23 @@ const adBoxCount = () => {
 			if (entry.isIntersecting) {
 				const adBpx = entry.target;
 				const adID = adBpx.getAttribute('data-id');
-				countAdBoxImp(adID);
-				adBoxObserver.unobserve(adBpx); //表示計測は一度だけ
+
+				window.isSwlAdCtConnecting = true;
+				setTimeout(() => {
+					window.isSwlAdCtConnecting = false;
+				}, 100);
+
+				// 少しだけ遅らせてpvカウントや他の計測とのバッティングを回避
+				const delayTime = window.isSwlAdCtConnecting ? 120 : 10;
+				setTimeout(() => {
+					countAdBoxImp(adID);
+				}, delayTime);
+
+				//表示計測は一度だけでいいので、一回処理されれば削除
+				adBoxObserver.unobserve(adBpx);
 			}
 		});
-	});
+	}, observerOptions);
 
 	// 広告タグ
 	adBoxs.forEach((adBox) => {

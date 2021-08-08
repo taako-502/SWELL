@@ -233,6 +233,9 @@ export default ({ attributes, setAttributes, clientId }) => {
 					/>
 				</>
 			</PanelBody>
+			<PanelBody title='ボタンの計測設定' initialOpen={true}>
+				{cvSetting}
+			</PanelBody>
 			<PanelBody
 				title='アイコン設定'
 				initialOpen={true}
@@ -279,9 +282,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 						}
 					}}
 				/>
-			</PanelBody>
-			<PanelBody title='ボタンの計測設定' initialOpen={true}>
-				{cvSetting}
 			</PanelBody>
 		</>
 	);
