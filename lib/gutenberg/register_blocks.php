@@ -37,7 +37,6 @@ function register_swell_blocks() {
  */
 function register_normal_blocks() {
 	$blocks = [
-		'full-wide',
 		'tab',
 		'tab-body',
 	];
@@ -73,6 +72,7 @@ function register_normal_blocks() {
 		'dl-dd',
 		'faq',
 		'faq-item',
+		'full-wide',
 		'step',
 		'step-item',
 	];

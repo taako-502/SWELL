@@ -1,26 +1,22 @@
-.swell-block-fullWide {
+[data-type="loos/full-wide"] {
+    z-index: 1;
 
-    [data-content-size="full"] & {
+    &.is-selected::before {
+        z-index: 1;
+    }
+
+    &[data-content-size="full"] {
 
         .wp-block {
             max-width: 100% !important;
         }
     }
 
-    [data-content-size="container"] & {
+    &[data-content-size="container"] {
 
         .wp-block:not(.wp-block-separator) {
             max-width: 1080px !important;
         }
-    }
-}
-
-
-[data-type="loos/full-wide"] {
-    z-index: 1;
-
-    &.is-selected::before {
-        z-index: 1;
     }
 
     .swell-block-fullWide__SVG {
@@ -53,30 +49,23 @@
 // サイドバー
 .components-base-control.-fullWideBgColor {
 
-    .components-circular-option-picker {
-        margin-right: 0; // 5.6から -10px されるの防ぐ
-    }
-
-    .components-circular-option-picker__option-wrapper {
-        margin-bottom: 0;
-    }
-
     .__body {
         display: flex;
         align-items: center;
     }
 
-    .__color {
-        // flex-shrink: 0;
-        margin-right: 8px;
+    .components-circular-option-picker {
+        min-width: 0 !important;
+    }
 
-        .components-color-palette__item-wrapper {
-            margin-bottom: 0 !important;
-        }
+    .components-circular-option-picker__option-wrapper {
+        margin-bottom: 0 !important;
+    }
 
-        .components-color-palette__clear {
-            display: none;
-        }
+    // .__color {}
+
+    .__label {
+        margin-left: 1em;
     }
 
 }
