@@ -7,18 +7,18 @@
  */
 // import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { InnerBlocks } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
 
 /**
  * @SWELL dependencies
  */
-import { iconColor } from '@swell-guten/config';
 import blockIcon from './_icon';
-
-/**
- * @others dependencies
- */
-import classnames from 'classnames';
+import metadata from './block.json';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * ブロッククラス名
@@ -28,56 +28,32 @@ const blockName = 'swell-block-tab';
 /**
  * 子ブロック
  */
-registerBlockType('loos/tab-body', {
-	title: 'タブコンテンツ',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.tabBody,
-	},
-	category: 'swell-blocks',
-	parent: ['loos/tab'],
-	supports: {
-		className: false,
-		customClassName: false,
-		// multiple: false,
-		reusable: false,
-		html: false,
-	},
-	attributes: {
-		id: {
-			//並び順
-			type: 'number',
-			default: 0,
-		},
-		tabId: {
-			//Tab自体のid
-			type: 'string',
-			default: '',
-		},
-		activeTab: {
-			type: 'number',
-			default: 0,
-		},
-	},
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
+	edit: () => {
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: `${blockName}__body c-tabBody__item swl-inner-blocks swl-has-margin--s`,
+		});
+		const innerBlocksProps = useInnerBlocksProps(blockProps, {
+			template: [['core/paragraph']],
+			templateLock: false,
+		});
 
-	edit: ({ className }) => {
-		const tabBodyClass = classnames(`${blockName}__body c-tabBody__item`, className);
-		return (
-			<>
-				<div className={tabBodyClass}>
-					<InnerBlocks template={[['core/paragraph']]} templateLock={false} />
-				</div>
-			</>
-		);
+		return <div {...innerBlocksProps} />;
 	},
 	save: ({ attributes }) => {
 		const { tabId, id, activeTab } = attributes;
+
+		// ブロックprops
+		const blockProps = useBlockProps.save({
+			id: `tab-${tabId}-${id}`,
+			className: 'c-tabBody__item',
+			'aria-hidden': activeTab === id ? 'false' : 'true',
+		});
+
 		return (
-			<div
-				id={`tab-${tabId}-${id}`}
-				className='c-tabBody__item'
-				aria-hidden={activeTab === id ? 'false' : 'true'}
-			>
+			<div {...blockProps}>
 				<InnerBlocks.Content />
 			</div>
 		);

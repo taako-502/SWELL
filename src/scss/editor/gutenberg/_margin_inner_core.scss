@@ -7,15 +7,15 @@
 .wp-block-cover__inner-container,
 .wp-block-group__inner-container {
 
-    & > :first-child {
+    > :first-child {
         margin-top: 0 !important;
     }
 
-    & > :last-child {
+    > :last-child {
         margin-bottom: 0 !important;
     }
 
-    & > .block-list-appender {
+    > .block-list-appender {
         margin-top: 0;
         margin-bottom: 0;
 
