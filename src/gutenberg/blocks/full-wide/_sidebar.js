@@ -2,11 +2,7 @@
  * @WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import {
-	MediaUpload,
-	MediaUploadCheck,
-	// MediaPlaceholder,
-} from '@wordpress/block-editor';
+import { MediaUpload, MediaUploadCheck } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	ToggleControl,
@@ -15,7 +11,6 @@ import {
 	ColorPalette,
 	BaseControl,
 	RangeControl,
-	// RadioControl,
 	CheckboxControl,
 	ButtonGroup,
 	Button,

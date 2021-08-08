@@ -1,7 +1,5 @@
 /**
  * スクロールイベントを登録
- *
- * @param {*} bodyWrap スクロールしたことを伝えるhtml要素
  */
 export default function setScrollEvent() {
 	// IntersectionObserverをブラウザがサポートしているかどうか

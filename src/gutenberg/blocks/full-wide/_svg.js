@@ -25,14 +25,7 @@ const getCirclePath = (position) => {
 	return 'M50,100c27.61,0,50-44.77,50-100H0C0,55.23,22.39,100,50,100z';
 };
 
-export const FullWideSVG = ({
-	position,
-	heightLevel,
-	fillColor,
-	type,
-	isEdit,
-	isRe,
-}) => {
+export const FullWideSVG = ({ position, heightLevel, fillColor, type, isEdit, isRe }) => {
 	// let height = `${heightLevel * 10}px`;
 	let height = `${heightLevel}vw`;
 	let bgSVG;
@@ -78,7 +71,7 @@ export const FullWideSVG = ({
 			role='presentation'
 			style={{ height }}
 		>
-			<path d={path} strokewidth='0' fill={fillColor} />
+			<path d={path} strokeWidth='0' fill={fillColor} />
 		</svg>
 	);
 };
