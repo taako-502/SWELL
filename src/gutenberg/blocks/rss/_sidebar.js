@@ -7,7 +7,6 @@ import {
 	PanelBody,
 	TextControl,
 	BaseControl,
-	// CheckboxControl,
 	RadioControl,
 	ButtonGroup,
 	Button,
@@ -89,7 +88,6 @@ export default function ({ attributes, setAttributes }) {
 		hTag,
 		pcCol,
 		spCol,
-		// excerptLength,
 	} = attributes;
 
 	// トグルコントロール
@@ -212,7 +210,6 @@ export default function ({ attributes, setAttributes }) {
 							const isSlected = btn.val === hTag;
 							return (
 								<Button
-									// isSecondary={ ! isSlected }
 									isPrimary={isSlected}
 									onClick={() => {
 										setAttributes({ hTag: btn.val });
@@ -231,9 +228,7 @@ export default function ({ attributes, setAttributes }) {
 							<BaseControl.VisualLabel>
 								{__('最大カラム数', 'swell') + '（PC）'}
 							</BaseControl.VisualLabel>
-							<small className='button_group_help'>
-								※ カード型またはサムネイル型でのみ有効
-							</small>
+							<small className='button_group_help'>※ カード型でのみ有効</small>
 							<ButtonGroup className='swl-btns--minWidth'>
 								{pcColbuttonData.map((btn) => {
 									const isSlected = btn.val === pcCol;

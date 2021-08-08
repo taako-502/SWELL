@@ -464,11 +464,12 @@ trait Get {
 
 		// キャッシュがなければ
 		if ( ! $card_data ) {
-
 			$post_data = get_post( $post_id );
-			$title     = get_the_title( $post_id );
-			$url       = get_permalink( $post_id );
-			$excerpt   = self::get_excerpt( $post_data, 80 );
+			if ( ! $post_data ) return 'Not found the post.';
+
+			$title   = get_the_title( $post_id );
+			$url     = get_permalink( $post_id );
+			$excerpt = self::get_excerpt( $post_data, 80 );
 
 			if ( mb_strwidth( $title, 'UTF-8' ) > 100 ) {
 				$title = mb_strimwidth( $title, 0, 100, '...', 'UTF-8' );
