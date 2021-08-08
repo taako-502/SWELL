@@ -14,7 +14,7 @@ import {
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 } from '@wordpress/block-editor';
 
-import { RawHTML, useEffect, useState, useCallback, useMemo } from '@wordpress/element';
+import { RawHTML, useEffect, useState, useCallback } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
@@ -59,9 +59,7 @@ function moveAt(array, index, at) {
 // clientIdからタブIDを生成する （split使うよりsubstring+indexOfの方が速いっぽい）
 function generateTabId(clientId) {
 	const theId = clientId.substring(0, clientId.indexOf('-'));
-	console.log(theId);
 	return theId;
-
 	// const newID = clientId.split('-');
 	// return newID[0];
 }
