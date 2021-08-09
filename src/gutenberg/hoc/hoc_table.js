@@ -6,13 +6,10 @@ import { InspectorControls } from '@wordpress/block-editor';
 import { useEffect } from '@wordpress/element';
 import {
 	PanelBody,
-	// RadioControl,
 	ToggleControl,
-	// TextControl,
 	CheckboxControl,
 	SelectControl,
 	Flex,
-	// FlexBlock,
 	FlexItem,
 } from '@wordpress/components';
 
@@ -49,7 +46,7 @@ const minWidthOptions = [
 /**
  * テーブルブロック用HOC
  */
-export default ({ attributes, setAttributes }) => {
+export default ({ attributes, setAttributes, clientId }) => {
 	const { head, swlMaxWidth, swlScrollable, swlFixedHead, swlIsFixedLeft } = attributes;
 	const nowClass = attributes.className || '';
 
@@ -89,6 +86,16 @@ export default ({ attributes, setAttributes }) => {
 	// 		break;
 	// 	}
 	// }
+	useEffect(() => {
+		const scrollableTable = document.querySelector(`[data-block="${clientId}"] table`);
+		if ('' === swlScrollable || 'sp' === swlScrollable) {
+			scrollableTable.style.width = null;
+			scrollableTable.style.maxWidth = null;
+		} else {
+			scrollableTable.style.width = `${swlMaxWidth}px`;
+			scrollableTable.style.maxWidth = `${swlMaxWidth}px`;
+		}
+	}, [clientId, swlScrollable, swlMaxWidth]);
 
 	return (
 		<InspectorControls>
@@ -157,7 +164,7 @@ export default ({ attributes, setAttributes }) => {
 							newAttrs.swlFixedHead = '';
 							if ('sp' === val) {
 								newAttrs.swlMaxWidth = 800;
-							} else if ('both' === val) {
+							} else if ('pc' === val || 'both' === val) {
 								newAttrs.swlMaxWidth = 1200;
 							}
 						}
