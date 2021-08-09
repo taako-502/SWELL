@@ -57,7 +57,7 @@ const getIconTag = (iconName) => {
 };
 
 /**
- * キャプション付きブロック
+ * キャプションボックス
  */
 const blockName = 'swell-block-capbox';
 registerBlockType(metadata.name, {

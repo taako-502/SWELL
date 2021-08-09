@@ -9,3 +9,42 @@
     width: 16px !important;
     height: 16px !important;
 }
+
+
+// SWELLマークをつける
+// .components-autocomplete__result[id*="block-loos/"],
+// .block-editor-block-types-list [class*="editor-block-list-item-loos-"]
+.components-autocomplete__result[id*="block-loos/rss"],
+.editor-block-list-item-loos-rss {
+    position: relative;
+
+    &::after {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        display: block;
+        padding: 2px;
+        color: #04384c;
+        font-weight: 400;
+        font-size: 10px;
+        font-family: icomoon !important;
+        font-style: normal;
+        font-variant: normal;
+        line-height: 1;
+        text-transform: none;
+        border: solid 1px currentColor;
+        border-radius: 20px;
+        content: "\e936";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+// .editor-block-list-item-cocoon-blocks-faq::before,
+// [id*="block-cocoon-blocks/faq"]::before,
+// .components-dropdown-menu__menu > .cocoon-donation-privilege::before {
+//     color: #777;
+//     background-color: #fff;
+//     border: 1px solid #777;
+//     content: "特典";
+// }

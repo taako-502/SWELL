@@ -1,8 +1,8 @@
 {
     "apiVersion": 2,
     "name": "loos/cap-block",
-    "title": "キャプション付きブロック",
-    "description": "キャプションタイトル付けのコンテンツを作成できます。",
+    "title": "キャプションボックス",
+    "description": "キャプション付きのボックスコンテンツを作成できます。",
     "category": "swell-blocks",
     "keywords": [
         "swell"
