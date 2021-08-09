@@ -28,8 +28,7 @@
                     {
                         "name": "core/paragraph",
                         "attributes": {
-                            "content":
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         }
                     }
                 ]
@@ -43,8 +42,7 @@
                     {
                         "name": "core/paragraph",
                         "attributes": {
-                            "content":
-                                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                            "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
                         }
                     }
                 ]
@@ -63,6 +61,10 @@
         "aIconStyle": {
             "type": "string",
             "default": "col-text"
+        },
+        "outputJsonLd": {
+            "type": "boolean",
+            "default": false
         }
     },
     "textdomain": "swell"
