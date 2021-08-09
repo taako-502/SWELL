@@ -207,3 +207,42 @@
         display: none;
     }
 }
+
+
+// サイドバーのタブ
+.swell-tab-panel {
+
+    .components-panel__body:last-child {
+        margin-bottom: 0;
+    }
+
+    .components-tab-panel__tabs {
+        display: flex;
+        border-top: 1px solid #e2e4e7;
+
+        .components-button {
+            display: block;
+            width: 100%;
+            height: auto;
+            padding: 8px 0;
+            font-weight: 400;
+            border-radius: 0;
+            transition: none !important;
+
+            // 5.5から一瞬丈夫にバーが表示されるのを防ぐ
+            &:focus:not(.is-active) {
+                box-shadow: none !important;
+            }
+        }
+    }
+
+    .components-button {
+
+        .dashicons-before {
+            display: block;
+            margin: auto;
+            margin-bottom: 4px;
+        }
+    }
+
+}
