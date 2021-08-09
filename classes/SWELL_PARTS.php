@@ -95,7 +95,7 @@ class SWELL_PARTS{
 			$caption = '<figcaption class="p-articleThumb__caption">' . esc_html( $caption ) . '</figcaption>';
 		}
 
-		//Youtubeの指定があれば動画を返す
+		//YouTubeの指定があれば動画を返す
 		if ( $youtube_id ) {
 
 			$is_youtube = true;

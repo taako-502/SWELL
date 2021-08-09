@@ -56,7 +56,7 @@
 
 .wp-block-embed {
     // overflow: hidden; //ブログカードがおかしくなるよ
-    // Youtubeとかには figcaption も設定できる
+    // YouTube とかには figcaption も設定できる
     > figcaption {
 
         @extend %figcaption;

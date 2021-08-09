@@ -14,7 +14,7 @@ function LOOS_add_user_meta( $prof_items ) {
 	$prof_items['room_url']      = '楽天ROOM URL';
 	$prof_items['pinterest_url'] = 'Pinterest URL';
 	$prof_items['github_url']    = 'Github URL';
-	$prof_items['youtube_url']   = 'Youtube URL';
+	$prof_items['youtube_url']   = 'YouTube URL';
 	$prof_items['amazon_url']    = 'Amazon欲しいものリストURL';
 
 	return $prof_items;
