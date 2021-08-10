@@ -1,61 +1,69 @@
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const path = require('path');
-// const HardSourceWebpackPlugin = require( 'hard-source-webpack-plugin' );
+const defaultConfig = require('@wordpress/scripts/config/webpack.config');
 
+/**
+ * CleanWebpackPlugin （ビルド先のほかのファイルを勝手に削除するやつ） はオフに。
+ */
+defaultConfig.plugins.shift();
+
+for (let i = 0; i < defaultConfig.plugins.length; i++) {
+	const pluginInstance = defaultConfig.plugins[i];
+	if ('DependencyExtractionWebpackPlugin' === pluginInstance.constructor.name) {
+		defaultConfig.plugins.splice(i, i);
+	}
+}
+
+let entryFiles = {};
+let srcDir = 'js';
+let distDir = 'js';
+if ('front' === process.env.TYPE) {
+	entryFiles = ['main', 'main_with_pjax', 'prefetch'];
+} else if ('admin' === process.env.TYPE) {
+	srcDir = 'js/admin';
+	distDir = 'js/admin';
+	entryFiles = [
+		'admin_script',
+		'ad_tag',
+		'balloon',
+		'colorpicker',
+		'count_title',
+		'mediauploader',
+		'settings',
+		'tinymce',
+	];
+} else if ('customizer' === process.env.TYPE) {
+	srcDir = 'js/customizer';
+	distDir = 'js/customizer';
+	entryFiles = ['customizer-controls', 'responsive-device-preview'];
+}
+
+const entryPoints = {};
+entryFiles.forEach((name) => {
+	entryPoints[name] = path.resolve('./src', srcDir, `${name}.js`);
+});
+
+/**
+ * exports
+ */
 module.exports = {
-	mode: 'production',
+	...defaultConfig, //@wordpress/scriptを引き継ぐ
 
-	// メインとなるJavaScriptファイル（エントリーポイント）
-	entry: {
-		main: './src/js/main.js',
-		main_with_pjax: './src/js/main_with_pjax.js',
-		set_prefetch: './src/js/set_prefetch.js',
-	},
+	mode: 'production', // より圧縮させる
 
-	// ファイルの出力設定
+	entry: entryPoints,
+
 	output: {
-		path: path.resolve(__dirname, 'build/js'),
-		filename: '[name].js',
+		path: path.resolve('./build', distDir),
+		filename: '[name].min.js',
 	},
-	module: {
-		rules: [
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				// query: {
-				//     presets: ['react', 'es2015']
-				// },
-				use: [
-					{
-						// Babel を利用する
-						loader: 'babel-loader',
-						// Babel のオプションを指定する
-						options: {
-							presets: [
-								[
-									'@babel/preset-env',
-									{
-										modules: false,
-										useBuiltIns: 'usage', //core-js@3から必要なpolyfillだけを読み込む
-										corejs: 3,
-										// targets: {
-										//     esmodules: true,
-										// },
-									},
-								],
-							],
-						},
-					},
-				],
-			},
-		],
-	},
+
 	resolve: {
 		alias: {
 			'@swell-js': path.resolve(__dirname, 'src/js/'),
 		},
 	},
-
-	// plugins: [ new HardSourceWebpackPlugin() ],
-	performance: { hints: false },
+	plugins: [...defaultConfig.plugins, new webpack.EnvironmentPlugin(['TYPE'])],
+	// performance: { hints: false },
+	devtool: 'none',
 };

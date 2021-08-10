@@ -2,7 +2,7 @@
 @import "../foundation/variable";
 @import "../foundation/mixin/media";
 @import "../foundation/placeholder";
-@import "../foundation/plugins/icomoon";
+@import "../foundation/plugins/icomoon"; //@extend を使うため。→ アイコンフォントが404になるがそれはadmin.cssから読み込めてる。
 @import "../foundation/base/keyframes";
 @import "../editor/common/color_palette";
 

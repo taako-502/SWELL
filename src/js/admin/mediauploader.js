@@ -1,5 +1,5 @@
 // 画像選択処理
-console.log('Loaded media-uploader.js.');
+console.log('SWELL: Loaded mediauploader.');
 
 (function ($) {
 	let customUploader = null;
@@ -45,9 +45,7 @@ console.log('Loaded media-uploader.js.');
 
 			// プレビューエリアを更新
 			// previewArea.empty();
-			previewArea.html(
-				'<img style="max-width:100%;" src="' + theImage.url + '" />'
-			);
+			previewArea.html('<img style="max-width:100%;" src="' + theImage.url + '" />');
 
 			// クローズ
 			// $('.media-modal-close').click();

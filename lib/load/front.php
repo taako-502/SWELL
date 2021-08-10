@@ -38,20 +38,20 @@ function load_front_scripts() {
 	wp_enqueue_script( 'swell_plugins', $assets . '/js/plugins.js', [], SWELL_VERSION, true );
 
 	// mainスクリプト
-	$main_script_path = ( \SWELL_Theme::is_use( 'pjax' ) ) ? '/js/main_with_pjax.js' : '/js/main.js';
-	wp_enqueue_script( 'swell_script', $build . $main_script_path, [], SWELL_VERSION, true );
+	$main_script = ( \SWELL_Theme::is_use( 'pjax' ) ) ? '/js/main_with_pjax' : '/js/main';
+	wp_enqueue_script( 'swell_script', $build . $main_script . '.min.js', [], SWELL_VERSION, true );
 
 	// フロント側に渡すグローバル変数
 	wp_localize_script( 'swell_script', 'swellVars', global_vars_on_front() );
 
 	// prefetch使用時の追加スクリプト
 	if ( \SWELL_Theme::is_use( 'prefetch' ) ) {
-		wp_enqueue_script( 'swell_prefetch_script', $build . '/js/set_prefetch.js', [], SWELL_VERSION, true );
+		wp_enqueue_script( 'swell_prefetch', $build . '/js/prefetch.min.js', [], SWELL_VERSION, true );
 	}
 
 	// 管理画面用をログイン時のみ読み込む（ツールバーのキャッシュクリア処理に使用）
 	if ( is_user_logged_in() ) {
-		wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.js', [], SWELL_VERSION, true );
+		wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.min.js', [], SWELL_VERSION, true );
 	}
 }
 
