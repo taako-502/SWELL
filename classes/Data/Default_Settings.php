@@ -7,76 +7,72 @@ trait Default_Settings {
 	public static function set_default_options() {
 		return [
 			// CORE機能の停止
-			'remove_wpver'          => '1',
-			'remove_wpver'          => '1',
-			'remove_rel_link'       => '1',
-			'remove_wlwmanifest'    => '1',
-			'remove_rsd_link'       => '1',
-			'remove_emoji'          => '1',
-			'remove_rest_link'      => '',
-			'remove_robots_image'   => '',
-			'remove_sitemap'        => '1',
-			'remove_img_srcset'     => '',
-			'remove_wptexturize'    => '',
-			'remove_self_pingbacks' => '',
-			'remove_feed_link'      => '',
+			'remove_wpver'           => '1',
+			'remove_wpver'           => '1',
+			'remove_rel_link'        => '1',
+			'remove_wlwmanifest'     => '1',
+			'remove_rsd_link'        => '1',
+			'remove_emoji'           => '1',
+			'remove_rest_link'       => '',
+			'remove_robots_image'    => '',
+			'remove_sitemap'         => '1',
+			'remove_media_inf_scrll' => '',
+			'remove_img_srcset'      => '',
+			'remove_wptexturize'     => '',
+			'remove_self_pingbacks'  => '',
+			'remove_feed_link'       => '',
 
 			// SWELL機能の停止
-			'remove_url2card'       => '',
-			'remove_delete_empp'    => '',
-			'remove_page_fade'      => '',
-			'remove_luminous'       => '',
-			'remove_patterns'       => '',
-			'remove_lp'             => '',
-			'remove_blog_parts'     => '',
-			'remove_ad_tag'         => '',
-			'remove_balloon'        => '',
+			'remove_url2card'        => '',
+			'remove_delete_empp'     => '',
+			'remove_page_fade'       => '',
+			'remove_luminous'        => '',
+			'remove_patterns'        => '',
+			'remove_lp'              => '',
+			'remove_blog_parts'      => '',
+			'remove_ad_tag'          => '',
+			'remove_balloon'         => '',
 
-			// CSSインライン
-			'load_style_inline'     => '',
-
-			// jQuery
-			'jquery_to_foot'        => '1',
-			'remove_jqmigrate'      => '1',
-			'load_jquery'           => '',
-
-			// FA
-			'load_font_awesome'     => '',
+			'load_style_inline'      => '',
+			'jquery_to_foot'         => '1',
+			'remove_jqmigrate'       => '1',
+			'load_jquery'            => '',
+			'load_font_awesome'      => '',
 
 			// キャッシュ機能
-			'cache_style'           => '1',
-			'cache_header'          => '',
-			'cache_sidebar'         => '',
-			'cache_top'             => '',
-			'cache_spmenu'          => '',
-			'cache_bottom_menu'     => '',
+			'cache_style'            => '1',
+			'cache_header'           => '',
+			'cache_sidebar'          => '',
+			'cache_top'              => '',
+			'cache_spmenu'           => '',
+			'cache_bottom_menu'      => '',
 
 			// ブログカード
-			'cache_blogcard_in'     => '',
-			'cache_blogcard_ex'     => '1',
-			'cache_card_time'       => '30',
+			'cache_blogcard_in'      => '',
+			'cache_blogcard_ex'      => '1',
+			'cache_card_time'        => '30',
 
 			// 遅延読み込み機能
 			// 'use_ajax'           => '',
-			'ajax_after_post'       => '',
-			'ajax_footer'           => '',
-			'use_lazyload'          => 'swell',
+			'ajax_after_post'        => '',
+			'ajax_footer'            => '',
+			'use_lazyload'           => 'swell',
 
 			// Pjax
-			'use_pjax'              => 'off',
-			'pjax_prevent_pages'    => '',
-			'prefetch_prevent_keys' => '',
+			'use_pjax'               => 'off',
+			'pjax_prevent_pages'     => '',
+			'prefetch_prevent_keys'  => '',
 
 			// JSON-LD
-			'use_json_ld'           => '1',
+			'use_json_ld'            => '1',
 
 			// 広告設定
-			'sc_ad_code'            => '',
-			'auto_ad_code'          => '',
-			'before_h2_addcode'     => '',
-			'infeed_code_pc'        => '',
-			'infeed_code_sp'        => '',
-			'infeed_interval'       => 4,
+			'sc_ad_code'             => '',
+			'auto_ad_code'           => '',
+			'before_h2_addcode'      => '',
+			'infeed_code_pc'         => '',
+			'infeed_code_sp'         => '',
+			'infeed_interval'        => 4,
 		];
 	}
 

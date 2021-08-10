@@ -107,6 +107,10 @@ function remove_wp_func() {
 		remove_filter( 'wp_robots', 'wp_robots_max_image_preview_large' );
 	}
 
+	if ( ! $OPTION['remove_media_inf_scrll'] ) {
+		add_filter( 'media_library_infinite_scrolling', '__return_true' );
+	}
+
 	/**
 	 * script/styleタグで不要なtype属性を非表示
 	 */
