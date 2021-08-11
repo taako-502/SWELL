@@ -113,6 +113,7 @@ function load_plugins() {
 	// 登録だけしておく
 	wp_register_script( 'swell_luminous', T_DIRE_URI . '/assets/js/plugins/luminous.min.js', [], SWELL_VERSION, true );
 	wp_register_script( 'swell_swiper', T_DIRE_URI . '/assets/js/plugins/swiper.min.js', [], SWELL_VERSION, true );
+	wp_register_script( 'swell_rellax', T_DIRE_URI . '/assets/js/plugins/rellax.min.js', [], SWELL_VERSION, true );
 
 	// pjax使うかどうか
 	$pjax = SWELL::is_use( 'pjax' );

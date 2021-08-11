@@ -62,28 +62,27 @@ function hook_wp_footer_1() {
 
 	$pjax = SWELL::is_use( 'pjax' );
 
-	// clipboard.js
-	if ( $pjax || SWELL::is_use( 'clipboard' ) ) {
-		// wp_enqueue_script( 'clipboard' );
-		wp_enqueue_script( 'swell_set_urlcopy', T_DIRE_URI . '/build/js/front/set_urlcopy.min.js', [ 'clipboard' ], SWELL_VERSION, true );
-	}
-
-	// pinit.js
-	if ( SWELL::is_use( 'pinterest' ) ) {
-		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
-		echo '<script async defer src="//assets.pinterest.com/js/pinit.js"></script>';
+	if ( $pjax || SWELL::is_use( 'ol_start' ) ) {
+		wp_enqueue_script( 'swell_set_olstart', T_DIRE_URI . '/build/js/front/set_olstart.min.js', [], SWELL_VERSION, true );
 	}
 
 	if ( $pjax || SWELL::is_use( 'rellax' ) ) {
-		wp_enqueue_script( 'swell_set_rellax', T_DIRE_URI . '/build/js/front/set_rellax.min.js', [ 'swell_script' ], SWELL_VERSION, true );
-	}
-
-	if ( $pjax || SWELL::is_use( 'ol_start' ) ) {
-		wp_enqueue_script( 'swell_set_olstart', T_DIRE_URI . '/build/js/front/set_olstart.min.js', [ 'swell_script' ], SWELL_VERSION, true );
+		wp_enqueue_script( 'swell_set_rellax', T_DIRE_URI . '/build/js/front/set_rellax.min.js', [ 'swell_rellax' ], SWELL_VERSION, true );
 	}
 
 	if ( ! $pjax && SWELL::is_use( 'fix_thead' ) ) {
 		echo "<script>document.documentElement.setAttribute('data-has-theadfix', '1');</script>";
+	}
+
+	// clipboard.js
+	if ( $pjax || SWELL::is_use( 'clipboard' ) ) {
+		wp_enqueue_script( 'swell_set_urlcopy', T_DIRE_URI . '/build/js/front/set_urlcopy.min.js', [ 'clipboard' ], SWELL_VERSION, true );
+	}
+
+	// pinit.js
+	if ( $pjax || SWELL::is_use( 'pinterest' ) ) {
+		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
+		echo '<script async defer src="//assets.pinterest.com/js/pinit.js"></script>';
 	}
 }
 

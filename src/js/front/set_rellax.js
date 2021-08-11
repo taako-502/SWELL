@@ -1,13 +1,15 @@
-import Rellax from 'rellax';
 /* eslint no-undef: 0 */
-// console.log('SWELL: setParallax');
+// console.log('SWELL: set_rellax');
 
 /**
  * パララックスへの処理
  */
 function setParallax() {
+	if (!window.Rellax) return;
+
 	const hasParallaxBlocks = document.querySelectorAll('.-parallax');
 	if (0 === hasParallaxBlocks.length) return;
+
 	for (let i = 0; i < hasParallaxBlocks.length; i++) {
 		const block = hasParallaxBlocks[i];
 		const bgImg = block.getAttribute('data-bg');
@@ -19,22 +21,19 @@ function setParallax() {
 
 		const parallaxLayer = document.createElement('div');
 		parallaxLayer.classList.add('__parallaxLayer');
-		parallaxLayer.setAttribute('role', 'presentation');
+		parallaxLayer.setAttribute('aria-hidden', 'true');
 		parallaxLayer.style.backgroundImage = `url(${bgImg})`;
 
 		block.appendChild(parallaxLayer);
 	}
 
-	// ほんのちょっと送らせて発火
-	setTimeout(() => {
-		new Rellax('.__parallaxLayer', {
-			speed: -3,
-			center: true,
-			// round: true,
-			// vertical: true,
-			// horizontal: false,
-		});
-	}, 100);
+	new Rellax('.__parallaxLayer', {
+		speed: -3,
+		center: true,
+		// round: true,
+		// vertical: true,
+		// horizontal: false,
+	});
 }
 
 // 実行
