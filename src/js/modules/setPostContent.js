@@ -40,9 +40,7 @@ export function setBlockStyle() {
 	}
 }
 
-/**
- * olのstart属性に対応する
- */
+/*
 export function setOlStartNum() {
 	const olWithStart = document.querySelectorAll('ol[start]');
 	for (let i = 0; i < olWithStart.length; i++) {
@@ -56,15 +54,16 @@ export function setOlStartNum() {
 		}
 	}
 }
+*/
 
 /**
- * SP表示でスクロールさせる表への処理。（wp5.3以前用）
+ * SP表示でスクロールさせる表への処理。
  */
-export function setTableScroll() {
+export function checkTheadFix() {
 	// ヘッダー固定テーブルがある場合の処理
 	const fixHeadTables = document.querySelectorAll('.wp-block-table[data-theadfix]');
 	if (0 < fixHeadTables.length) {
-		document.documentElement.setAttribute('data-has-fixtable', '1');
+		document.documentElement.setAttribute('data-has-theadfix', '1');
 	}
 }
 
@@ -84,9 +83,7 @@ export function removeNoreferrer() {
 	}
 }
 
-/**
- * パララックスへの処理
- */
+/*
 export function setParallax() {
 	const hasParallaxBlocks = document.querySelectorAll('.-parallax');
 	if (0 === hasParallaxBlocks.length) return;
@@ -118,10 +115,9 @@ export function setParallax() {
 		});
 	}, 10);
 }
+*/
 
-/**
- * URLコピー
- */
+/*
 export function setUrlCopy() {
 	if (!window.ClipboardJS) return;
 	const clipboard = new ClipboardJS('.c-urlcopy');
@@ -133,3 +129,4 @@ export function setUrlCopy() {
 		}, 3000);
 	});
 }
+*/

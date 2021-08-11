@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+
 /**
  * モジュール読み込み
  */
@@ -5,24 +7,14 @@ import DOM from '@swell-js/modules/data/domData';
 import setState, { isPC, isSP, smoothOffset } from '@swell-js/modules/data/stateData';
 import setDomData from '@swell-js/modules/setDomData';
 import setIndexList from '@swell-js/modules/setIndexList';
-import setPostSlider from '@swell-js/modules/setPostSlider';
 import setFixWidget from '@swell-js/modules/setFixWidget';
-import setLuminous from '@swell-js/modules/setLuminous';
 import setGnavClass from '@swell-js/modules/setGnavClass';
 import { ajaxToLoadContents } from '@swell-js/modules/wpAjax';
 import addClickEvents from '@swell-js/modules/addClickEvents';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
-import { mvSet } from '@swell-js/modules/setMainVisual';
 import setSpHeader from '@swell-js/modules/setSpHeader';
 import adClick from '@swell-js/modules/adClick';
-import {
-	setBlockStyle,
-	setOlStartNum,
-	setTableScroll,
-	removeNoreferrer,
-	setParallax,
-	setUrlCopy,
-} from '@swell-js/modules/setPostContent';
+import { setBlockStyle, checkTheadFix, removeNoreferrer } from '@swell-js/modules/setPostContent';
 
 /**
  * afterでの処理
@@ -197,12 +189,6 @@ export function resetSwellScript({ newBody, next }) {
 	// スマホヘッダー
 	if (isSP) setSpHeader();
 
-	// メインスライダー
-	if (null !== DOM.mainVisual) mvSet(DOM.mainVisual);
-
-	// 記事スライダー処理
-	if (null !== DOM.postSlider) setPostSlider(DOM.postSlider);
-
 	//グロナビに -current つける
 	setGnavClass();
 
@@ -223,15 +209,6 @@ export function resetSwellScript({ newBody, next }) {
 	// デバイスサイズによるブロックスタイルのセット
 	setBlockStyle();
 
-	// olのstart属性に対応する
-	setOlStartNum();
-
-	// パララックスセット
-	setParallax();
-
-	// URLコピーセット
-	setUrlCopy();
-
 	/**
 	 * mainでは onload でやってる処理
 	 */
@@ -242,7 +219,7 @@ export function resetSwellScript({ newBody, next }) {
 	addSmoothScrollEvent(document);
 
 	// テーブルを横にスクロール可能に
-	setTableScroll();
+	checkTheadFix();
 
 	// #つきリンクでページ遷移してきたときに明示的にスクロールさせる
 	const urlHash = next.url.hash;
@@ -255,7 +232,7 @@ export function resetSwellScript({ newBody, next }) {
 	}
 
 	// luminousをセット
-	if (window.Luminous && window.swellVars.useLuminous) setLuminous();
+	// if (window.Luminous && window.swellVars.useLuminous) setLuminous();
 
 	if (!!window.Prism) Prism.highlightAll();
 

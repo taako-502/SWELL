@@ -44,7 +44,7 @@ window.SWELLHOOK.barbaAfter = new Set();
  */
 const barbaWrapper = document.querySelector('[data-barba="wrapper"]');
 if (barbaWrapper && isPromiseSupported && isObserveSupported) {
-	console.log('[SWELL] Barba on');
+	console.log('[SWELL] Barba on'); // eslint-disable-line no-console
 
 	barbaInit();
 

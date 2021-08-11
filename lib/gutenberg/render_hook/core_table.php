@@ -50,7 +50,8 @@ function render_table( $block_content, $block ) {
 		$theadfix = 'sp';
 	}
 	if ( $theadfix ) {
-		$props .= ' data-theadfix="' . esc_attr( $theadfix ) . '"';
+		$props .= ' data-theadfix="' . esc_attr( $theadfix ) . '"'; // phpcs:ignore Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+		\SWELL_Theme::$use['fix_thead'] = true;
 	}
 
 	if ( $props ) {

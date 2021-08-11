@@ -81,7 +81,7 @@ const buttonCount = () => {
 			if (entry.isIntersecting) {
 				const button = entry.target;
 				const buttonID = button.getAttribute('data-id');
-				console.log('view!', buttonID);
+				// console.log('view!', buttonID);
 
 				window.isSwlAdCtConnecting = true;
 				setTimeout(() => {

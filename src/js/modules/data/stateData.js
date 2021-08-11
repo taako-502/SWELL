@@ -23,7 +23,7 @@ export default {
 	headH: (header) => {
 		if (null !== header) {
 			headH = header.offsetHeight;
-			// document.documentElement.style.setProperty('--swl-header_height', headH + 'px');
+			document.documentElement.style.setProperty('--swl-headerH', headH + 'px');
 		}
 	},
 	fixBarH: (fixBar) => {

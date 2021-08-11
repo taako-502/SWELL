@@ -18,7 +18,17 @@ let entryFiles = {};
 let srcDir = 'js';
 let distDir = 'js';
 if ('front' === process.env.TYPE) {
-	entryFiles = ['main', 'main_with_pjax', 'prefetch'];
+	entryFiles = [
+		'main',
+		'main_with_pjax',
+		'prefetch',
+		'front/set_luminous',
+		'front/set_rellax',
+		'front/set_olstart',
+		'front/set_urlcopy',
+		'front/set_mv',
+		'front/set_post_slider',
+	];
 } else if ('admin' === process.env.TYPE) {
 	srcDir = 'js/admin';
 	distDir = 'js/admin';
