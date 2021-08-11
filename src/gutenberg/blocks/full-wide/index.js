@@ -41,7 +41,7 @@ const blockName = 'swell-block-fullWide';
 const getBlockClass = (attributes) => {
 	const { bgImageUrl, isFixBg, isParallax, pcPadding, spPadding } = attributes;
 
-	return classnames(`pc-py-${pcPadding}`, `sp-py-${spPadding}`, {
+	return classnames(blockName, `pc-py-${pcPadding}`, `sp-py-${spPadding}`, {
 		'has-bg-img': bgImageUrl || null,
 		'-fixbg': (bgImageUrl && isFixBg) || null,
 		'-parallax': (bgImageUrl && isParallax) || null,
