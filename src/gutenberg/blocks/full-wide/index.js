@@ -186,7 +186,7 @@ registerBlockType(metadata.name, {
 				lazyload: bgImageUrl || null,
 			}),
 			style: style || null,
-			'data-bg': bgImageUrl || null,
+			'data-bg': bgImageUrl || null, // set_rellaxはこれを取得することに注意
 		});
 
 		return (
