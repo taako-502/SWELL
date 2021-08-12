@@ -35,14 +35,13 @@ trait Parts {
 		$src         = $args['src'] ?? '';
 		$alt         = $args['alt'] ?? '';
 		$class       = $args['class'] ?? '';
-		$placeholder = $args['placeholder'] ?? self::$placeholder;
+		$placeholder = $args['placeholder'] ?? '';
 
-		if ( self::is_rest() || self::is_iframe() ) {
-			echo '<img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
-		} else {
-			$class .= ' lazyload';
-			echo '<img src="' . esc_url( $placeholder ) . '" data-src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
-		}
+		$img       = '<img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
+		$lazy_type = self::is_use( 'lazysizes' ) ? 'lazysizes' : 'lazy';
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo self::set_lazyload( $img, $lazy_type, $placeholder );
 	}
 
 

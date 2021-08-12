@@ -65,6 +65,7 @@ class Theme_Data {
 
 	// プレースホルダー
 	public static $placeholder = T_DIRE_URI . '/assets/img/placeholder.png';
+	// data:image/gif;base64,R0lGODlhBgACAPAAAP///wAAACH5BAEAAAAALAAAAAAGAAIAAAIDhI9WADs=
 
 	// 目次の生成フックがすでに処理されたかどうか
 	public static $added_toc = false;

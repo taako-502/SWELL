@@ -11,12 +11,11 @@ $cat_data = $variable['cat_data'] ?? []; // 後方互換用
 	<figure class="c-postThumb__figure">
 		<?php
 			\SWELL_Theme::get_thumbnail( [
-				'post_id'      => $the_id,
-				'size'         => $size,
-				'sizes'        => $sizes,
-				'class'        => 'c-postThumb__img',
-				'use_lazyload' => true,
-				'echo'         => true,
+				'post_id' => $the_id,
+				'size'    => $size,
+				'sizes'   => $sizes,
+				'class'   => 'c-postThumb__img',
+				'echo'    => true,
 			] );
 		?>
 	</figure>

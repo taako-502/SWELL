@@ -54,12 +54,11 @@ $tw_lang = ( 'ja' === $lang ) ? 'ja' : 'en'; // _x( 'en', 'tw', 'swell' );
 	<figure class="p-snsCta__figure">
 		<?php
 			\SWELL_Theme::get_thumbnail( [
-				'post_id'      => get_the_ID(),
-				'size'         => 'medium_large',
-				'sizes'        => '(min-width: 600px) 320px, 50vw',
-				'class'        => 'p-snsCta__img',
-				'use_lazyload' => true,
-				'echo'         => true,
+				'post_id' => get_the_ID(),
+				'size'    => 'medium_large',
+				'sizes'   => '(min-width: 600px) 320px, 50vw',
+				'class'   => 'p-snsCta__img',
+				'echo'    => true,
 			] );
 		?>
 	</figure>

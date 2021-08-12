@@ -115,6 +115,11 @@ function load_plugins() {
 	wp_register_script( 'swell_swiper', T_DIRE_URI . '/assets/js/plugins/swiper.min.js', [], SWELL_VERSION, true );
 	wp_register_script( 'swell_rellax', T_DIRE_URI . '/assets/js/plugins/rellax.min.js', [], SWELL_VERSION, true );
 
+	// スマホヘッダーナビ
+	if ( SWELL::is_use( 'sp_head_nav' ) ) {
+		wp_enqueue_script( 'swell_set_sp_head_nav', T_DIRE_URI . '/build/js/front/set_sp_head_nav.min.js', [ 'swell_swiper' ], SWELL_VERSION, true );
+	}
+
 	// pjax使うかどうか
 	$pjax = SWELL::is_use( 'pjax' );
 

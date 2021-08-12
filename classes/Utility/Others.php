@@ -105,6 +105,32 @@ trait Others {
 
 
 	/**
+	 * 画像にlazyloadを適用
+	 */
+	public static function set_lazyload( $image, $lazy_type, $placeholder = '' ) {
+
+		if ( $lazy_type === 'lazy' || self::is_rest() || self::is_iframe() ) {
+
+			$image = str_replace( ' src="', ' loading="lazy" src="', $image );
+
+		} elseif ( $lazy_type === 'lazysizes' ) {
+			$placeholder = $placeholder ?: self::$placeholder;
+			$image       = str_replace( ' src="', ' src="' . esc_url( $placeholder, ['http', 'https', 'data' ] ) . '" data-src="', $image );
+			$image       = str_replace( ' srcset="', ' data-srcset="', $image );
+			$image       = str_replace( ' class="', ' class="lazyload ', $image );
+
+			$image = preg_replace_callback( '/<img([^>]*)>/', function( $matches ) {
+				$props = rtrim( $matches[1], '/' );
+				$props = self::set_aspectratio( $props );
+				return '<img' . $props . '>';
+			}, $image );
+		}
+
+		return $image;
+	}
+
+
+	/**
 	 * width,height から aspectratio を指定
 	 */
 	public static function set_aspectratio( $props, $src = '' ) {

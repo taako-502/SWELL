@@ -325,6 +325,7 @@ if ( ! function_exists( __NAMESPACE__ . '\balloon' ) ) :
 				'src="' . esc_url( $bln_icon ) . '"' :
 				'src="' . SWELL::$placeholder . '" data-src="' . esc_url( $bln_icon ) . '"';
 
+			// ここ、 set_lazyload?
 			$icon_img = '<div class="c-balloon__icon -' . esc_attr( $bln_icon_shape ) . '">' .
 				'<img ' . $src . ' alt="" class="c-balloon__iconImg lazyload -no-lb" width="80px" height="80px">' .
 				$name_src .
@@ -395,8 +396,8 @@ add_shortcode( 'full_wide_content', __NAMESPACE__ . '\full_wide_content' );
 /**
  * カスタムバナー
  */
-if ( ! function_exists( __NAMESPACE__ . '\full_custom_banner' ) ) :
-	function full_custom_banner( $args, $content = null ) {
+if ( ! function_exists( __NAMESPACE__ . '\custom_banner' ) ) :
+	function custom_banner( $args, $content = null ) {
 
 		$id           = 0;
 		$img          = SWELL::get_noimg( 'url' );
@@ -412,7 +413,6 @@ if ( ! function_exists( __NAMESPACE__ . '\full_custom_banner' ) ) :
 
 		// バナーc-bannerLinkに付与するスタイル
 		if ( isset( $args['width'] ) ) $banner_style  .= 'width:' . $args['width'] . ';';
-		if ( isset( $args['radius'] ) ) $banner_style .= 'border-radius:' . $args['radius'] . ';';
 		if ( isset( $args['radius'] ) ) $banner_style .= 'border-radius:' . $args['radius'] . ';';
 
 		// クラスの追加
@@ -458,13 +458,15 @@ if ( ! function_exists( __NAMESPACE__ . '\full_custom_banner' ) ) :
 		} elseif ( $id ) {
 			if ( $is_term ) {
 				$thumb = \SWELL_Theme::get_thumbnail( [
-					'term_id' => $id,
-					'class'   => 'c-bannerLink__img',
+					'term_id'       => $id,
+					'class'         => 'c-bannerLink__img',
+					'use_lazysizes' => false,
 				] );
 			} else {
 				$thumb = \SWELL_Theme::get_thumbnail( [
-					'post_id' => $id,
-					'class'   => 'c-bannerLink__img',
+					'post_id'       => $id,
+					'class'         => 'c-bannerLink__img',
+					'use_lazysizes' => false,
 				] );
 			}
 		}
@@ -522,7 +524,7 @@ if ( ! function_exists( __NAMESPACE__ . '\full_custom_banner' ) ) :
 		}
 
 		$banner = '<div class="p-customBanner">' .
-			'<' . $banner_start . ' class="c-bannerLink' . esc_attr( $banner_class ) . '" style="' . esc_attr( $banner_style ) . '">' .
+			'<' . $banner_start . ' class="c-bannerLink' . $banner_class . '" style="' . $banner_style . '">' .
 				'<figure class="c-bannerLink__figure"' . $figure_style . '>' . $thumb . '</figure>' .
 				'<div class="c-bannerLink__text">' .
 					'<div class="c-bannerLink__title ' . $icon . '">' . $title . '</div>' . $sub_text .
@@ -533,8 +535,8 @@ if ( ! function_exists( __NAMESPACE__ . '\full_custom_banner' ) ) :
 		return $banner;
 	}
 endif;
-add_shortcode( 'カスタムバナー', __NAMESPACE__ . '\full_custom_banner' );
-add_shortcode( 'custom_banner', __NAMESPACE__ . '\full_custom_banner' );
+add_shortcode( 'カスタムバナー', __NAMESPACE__ . '\custom_banner' );
+add_shortcode( 'custom_banner', __NAMESPACE__ . '\custom_banner' );
 
 
 /**
@@ -573,10 +575,10 @@ add_shortcode( 'post_list', __NAMESPACE__ . '\post_list' );
  */
 if ( ! function_exists( __NAMESPACE__ . '\only_login' ) ) :
 function only_login( $args, $content = null ) {
-		if ( is_user_logged_in() ) {
-			return do_shortcode( shortcode_unautop( $content ) );
-			}
-		return '';
+	if ( is_user_logged_in() ) {
+		return do_shortcode( shortcode_unautop( $content ) );
+	}
+	return '';
 }
 endif;
 add_shortcode( 'only_login', __NAMESPACE__ . '\only_login' );
@@ -586,11 +588,11 @@ add_shortcode( 'only_login', __NAMESPACE__ . '\only_login' );
  * ログアウト中だけの表示
  */
 if ( ! function_exists( __NAMESPACE__ . '\only_logout' ) ) :
-	function only_logout( $args, $content = null ) {
-		if ( ! is_user_logged_in() ) {
-			return do_shortcode( shortcode_unautop( $content ) );
-		}
-		return '';
+function only_logout( $args, $content = null ) {
+	if ( ! is_user_logged_in() ) {
+		return do_shortcode( shortcode_unautop( $content ) );
 	}
+	return '';
+}
 endif;
 add_shortcode( 'only_logout', __NAMESPACE__ . '\only_logout' );

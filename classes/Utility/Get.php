@@ -304,14 +304,17 @@ trait Get {
 		$class            = $args['class'] ?? '';
 		$placeholder      = $args['placeholder'] ?? ''; // 後方互換用
 		$placeholder_size = $args['placeholder_size'] ?? '';
-		$use_lazyload     = $args['use_lazyload'] ?? false;
+		$use_lazysizes    = $args['use_lazysizes'] ?? self::is_use( 'lazysizes' );
 		$use_noimg        = $args['use_noimg'] ?? true;
 		$echo             = $args['echo'] ?? false;
 
+		$class .= ' -no-lb';
+
 		$attachment_args = [
-			'class' => $class . ' -no-lb',
+			'class' => $class,
 			'title' => '',
-			// 'alt' => '',
+			'alt'   => '',
+			'sizes' => $sizes,
 		];
 
 		$thumb            = '';
@@ -351,26 +354,16 @@ trait Get {
 		}
 
 		// ソース置換
-		if ( $is_default_noimg ) {
+		if ( ! $is_default_noimg ) {
 			$thumb = str_replace( ' title=""', '', $thumb );
-			if ( $sizes ) {
-				$thumb = preg_replace( '/ sizes="([^"]*)"/', ' sizes="' . $sizes . '"', $thumb );
-			}
+			// if ( $sizes ) {
+			// 	$thumb = preg_replace( '/ sizes="([^"]*)"/', ' sizes="' . $sizes . '"', $thumb );
+			// }
 		}
 
-		// lazyload準備
-		if ( $use_lazyload && ! self::is_rest() && ! self::is_iframe() ) {
-			$placeholder = $placeholder ?: self::$placeholder;
-			$thumb       = str_replace( ' src="', ' src="' . esc_url( $placeholder ) . '" data-src="', $thumb );
-			$thumb       = str_replace( ' srcset="', ' data-srcset="', $thumb );
-			$thumb       = str_replace( ' class="', ' class="lazyload ', $thumb );
-
-			$thumb = preg_replace_callback( '/<img([^>]*)>/', function( $matches ) {
-				$props = rtrim( $matches[1], '/' );
-				$props = self::set_aspectratio( $props );
-				return '<img' . $props . '>';
-			}, $thumb );
-		}
+		// lazyload
+		$lazy_type = $use_lazysizes ? 'lazysizes' : 'lazy';
+		$thumb     = self::set_lazyload( $thumb, $lazy_type, $placeholder );
 
 		if ( $echo ) {
 			echo $thumb; // phpcs:ignore
@@ -792,6 +785,38 @@ trait Get {
 		// }
 
 		// return false;
+	}
+
+
+	/**
+	 * ピックアップバナーの画像sizesを取得
+	 */
+	public static function get_pickup_banner_sizes( $menu_count = 1 ) {
+
+		// キャッシュ取得
+		$cached_data = wp_cache_get( 'pickup_banner_sizes', 'swell' );
+		if ( $cached_data ) return $cached_data;
+
+		// レイアウトに合わせてsizes取得
+		$layout_pc = self::get_setting( 'pickbnr_layout_pc' );
+		$layout_sp = self::get_setting( 'pickbnr_layout_sp' );
+
+		// pcサイズ
+		$sizes_pc = '320px';
+		if ( $layout_pc === 'fix_col3' || $layout_pc === 'flex' && $menu_count === 3 ) {
+			$sizes_pc = '400px';
+		} elseif ( $layout_pc === 'fix_col2' || $layout_pc === 'flex' && $menu_count === 2 ) {
+			$sizes_pc = '600px';
+		} elseif ( $layout_pc === 'flex' && $menu_count === 1 ) {
+			$sizes_pc = '960px';
+		}
+
+		// spサイズ
+		$sizes_sp = $layout_sp === 'fix_col2' ? '50vw' : '100vw';
+		$sizes    = "(min-width: 960px) {$sizes_pc}, {$sizes_sp}";
+
+		wp_cache_set( 'pickup_banner_sizes', $sizes, 'swell' );
+		return $sizes;
 	}
 
 

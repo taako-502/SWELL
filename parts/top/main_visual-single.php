@@ -3,20 +3,38 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * メインビジュアル (画像１枚の時)
  */
-$SETTING = SWELL_Theme::get_setting();
-
-// PC画像
-$pc_img    = $SETTING['slider1_img'];
-$pc_img_id = attachment_url_to_postid( $pc_img );
-$pc_img_s  = ( $pc_img_id ) ? wp_get_attachment_image_url( $pc_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
-
-// SP画像
-$sp_img    = $SETTING['slider1_img_sp'] ?: $pc_img;
-$sp_img_id = attachment_url_to_postid( $sp_img );
-$sp_img_s  = ( $sp_img_id ) ? wp_get_attachment_image_url( $sp_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
+$SETTING       = SWELL_Theme::get_setting();
+$use_lazysizes = SWELL_Theme::is_use( 'lazysizes' );
 
 // altテキスト
 $img_alt = $SETTING['slider1_alt'] ?: '';
+
+// PC画像
+$picture_img = '';
+$pc_img      = $SETTING['slider1_img'] ?: '';
+if ( $use_lazysizes ) {
+	$pc_img_id = attachment_url_to_postid( $pc_img );
+	$pc_img_s  = ( $pc_img_id ) ? wp_get_attachment_image_url( $pc_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
+
+	$picture_img = '<img src="' . esc_url( $pc_img_s ) . '" data-src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img lazyload">';
+} else {
+	$picture_img = '<img src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img" loading="lazy">';
+}
+
+
+// SP画像
+$source = '';
+$sp_img = $SETTING['slider1_img_sp'] ?: '';
+if ( $sp_img ) {
+	if ( $use_lazysizes ) {
+		$sp_img_id = attachment_url_to_postid( $sp_img );
+		$sp_img_s  = ( $sp_img_id ) ? wp_get_attachment_image_url( $sp_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
+		$source    = '<source media="(max-width: 959px)" srcset="' . esc_attr( $sp_img_s ) . '" data-srcset="' . esc_attr( $sp_img ) . '">';
+	} else {
+		$source = '<source media="(max-width: 959px)" srcset="' . esc_attr( $sp_img ) . '">';
+	}
+}
+
 
 // テキストやボタン
 $slide_title = $SETTING['slider1_title'];
@@ -33,10 +51,8 @@ $parts_id = (int) $SETTING['slider1_parts_id'];
 <div class="p-mainVisual__inner">
 
 	<div class="p-mainVisual__slide c-filterLayer -<?=esc_attr( $SETTING['mv_img_filter'] )?>">
-
 		<picture class="p-mainVisual__imgLayer c-filterLayer__img">
-			<source media="(max-width: 959px)" srcset="<?=esc_attr( $sp_img_s )?>" data-srcset="<?=esc_attr( $sp_img )?>">
-			<img src="<?=esc_url( $pc_img_s )?>" data-src="<?=esc_attr( $pc_img )?>" alt="<?=esc_attr( $img_alt )?>" class="p-mainVisual__img lazyload">
+		<?php echo $source . $picture_img; //phpcs:ignore ?>
 		</picture>
 		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 		<?php
@@ -57,13 +73,13 @@ $parts_id = (int) $SETTING['slider1_parts_id'];
 
 			// ボタン or スライド全体をリンク
 			if ( '' !== $slide_url && '' !== $btn_text ) :
-				$btn_args = [
-					'href'     => $slide_url,
-					'text'     => $btn_text,
-					'btn_type' => $SETTING['slider1_btntype'],
-					'btn_col'  => $SETTING['slider1_btncol'],
-				];
-				\SWELL_Theme::pluggable_parts( 'mv_btn', $btn_args );
+			$btn_args = [
+				'href'     => $slide_url,
+				'text'     => $btn_text,
+				'btn_type' => $SETTING['slider1_btntype'],
+				'btn_col'  => $SETTING['slider1_btncol'],
+			];
+			\SWELL_Theme::pluggable_parts( 'mv_btn', $btn_args );
 
 			elseif ( $slide_url ) :
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

@@ -84,9 +84,14 @@ if ( ! function_exists( 'swl_parts__pnlink' ) ) :
 function swl_parts__pnlink( $args ) {
 		?>
 	<a href="<?=esc_url( get_permalink( $args['id'] ) )?>" rel="<?=esc_attr( $args['type'] )?>" class="p-pnLinks__link">
-		<?php if ( $args['thumb'] ) : ?>
-			<img src="<?=esc_url( SWELL::$placeholder )?>" data-src="<?=esc_url( $args['thumb'] )?>" alt="<?=esc_attr( $args['title'] )?>" class="p-pnLinks__thumb lazyload">
-		<?php endif; ?>
+		<?php
+			if ( $args['thumb'] ) :
+				\SWELL_Theme::lazyimg([
+					'src'   => $args['thumb'],
+					'class' => 'p-pnLinks__thumb',
+				]);
+			endif;
+		?>
 		<span class="p-pnLinks__title"><?=esc_html( $args['title'] )?></span>
 	</a>
 		<?php

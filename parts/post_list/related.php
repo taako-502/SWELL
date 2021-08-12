@@ -17,12 +17,11 @@ $date      = mysql2date( 'Y.m.d', $post_data->post_date );
 			<figure class="c-postThumb__figure">
 			<?php
 				\SWELL_Theme::get_thumbnail( [
-					'post_id'      => $the_id,
-					'size'         => 'medium',
-					'sizes'        => '(min-width: 600px) 320px, 50vw',
-					'class'        => 'c-postThumb__img',
-					'use_lazyload' => true,
-					'echo'         => true,
+					'post_id' => $the_id,
+					'size'    => 'medium',
+					'sizes'   => '(min-width: 600px) 320px, 50vw',
+					'class'   => 'c-postThumb__img',
+					'echo'    => true,
 				] );
 			?>
 			</figure>

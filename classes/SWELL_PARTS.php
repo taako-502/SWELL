@@ -101,17 +101,16 @@ class SWELL_PARTS{
 			$is_youtube = true;
 			$return = '<figure class="p-articleThumb -youtube">' .
 				'<div class="p-articleThumb__youtube">' .
-				'<iframe class="lazyload" data-src="https://www.youtube.com/embed/' . $youtube_id . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>' . $caption .
+				'<iframe src="https://www.youtube.com/embed/' . $youtube_id . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' . $caption .
 			'</figure>';
 
 		} else {
 
 			$thumb = \SWELL_Theme::get_thumbnail( [
-				'post_id'          => $post_id,
-				'class'            => 'p-articleThumb__img',
-				'placeholder_size' => 'medium',
-				'use_lazyload'     => true,
-				'use_noimg'        => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
+				'post_id'       => $post_id,
+				'class'         => 'p-articleThumb__img',
+				'use_lazysizes' => false,
+				'use_noimg'     => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
 			] );
 
 			if ( $thumb ) {

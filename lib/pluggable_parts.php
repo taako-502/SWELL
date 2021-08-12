@@ -17,7 +17,7 @@ if ( ! function_exists( 'swl_parts__pr_banner' ) ) :
 	?>
 		<div class="c-prBanner">
 			<a href="https://swell-theme.com" target="_blank" rel="noopener" class="c-prBanner__link">
-			<img src="<?=esc_url( T_DIRE_URI )?>/assets/img/swell2_pr_banner_lq.jpg" data-src="<?=esc_url( T_DIRE_URI )?>/assets/img/swell2_pr_banner.jpg" class="c-prBanner__img lazyload" alt="シンプル美と機能性を両立させた、国内最高峰のWordPressテーマ『SWELL』" width="900" height="750">
+			<img src="<?=esc_url( T_DIRE_URI )?>/assets/img/swell2_pr_banner.jpg" class="c-prBanner__img" alt="シンプル美と機能性を両立させた、国内最高峰のWordPressテーマ『SWELL』" width="900" height="750" loading="lazy">
 			</a>
 		</div>
 	<?php
@@ -170,5 +170,72 @@ if ( ! function_exists( 'swl_parts__scroll_arrow' ) ) :
 			<span class="p-mainVisual__scrollLabel">Scroll</span>
 		</div>
 		<?php
+	}
+endif;
+
+
+/**
+ * ピックアップバナー
+ */
+if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
+	function swl_parts__pickup_banner( $args ) {
+		$item       = $args['item'] ?? null;
+		$menu_count = $args['menu_count'] ?? 1;
+		if ( ! $item ) return;
+
+		// aタグの属性値
+		$a_props = 'href="' . $item->url . '"';
+		if ( $item->target === '_blank' ) {
+			$a_props .= ' target="_blank" rel="noopener noreferrer"';
+		}
+
+		// レイアウトに合わせてsizes取得
+		$sizes = SWELL::get_pickup_banner_sizes( $menu_count );
+
+		// 説明欄に直接画像URLがある場合
+		$img_url = $item->description;
+		if ( $img_url ) {
+
+			$img_id = attachment_url_to_postid( $img_url ) ?: 0;
+			$thumb  = wp_get_attachment_image( $img_id, 'full', false, [
+				'class' => 'c-bannerLink__img',
+				'sizes' => $sizes,
+			] );
+			$thumb  = SWELL::set_lazyload( $thumb, 'lazy' );
+
+		} elseif ( $item->type === 'post_type' ) {
+
+			$post_id = $item->object_id;
+			$thumb   = SWELL::get_thumbnail( [
+				'post_id'          => $post_id,
+				'size'             => 'full',
+				'sizes'            => $sizes,
+				'class'            => 'c-bannerLink__img',
+				// 'placeholder_size' => 'medium',
+				'use_lazysizes'    => false,
+			] );
+
+		} elseif ( $item->type === 'taxonomy' ) {
+			$thumb = SWELL::get_thumbnail( [
+				'term_id'          => $item->object_id,
+				'size'             => 'full',
+				'sizes'            => $sizes,
+				'class'            => 'c-bannerLink__img',
+				// 'placeholder_size' => 'medium',
+				'use_lazysizes'    => false,
+			] );
+		}
+
+		// 画像なければ NO IMAGE
+		if ( ! $thumb ) {
+			$thumb = '<img src="' . esc_url( SWELL::get_noimg( 'url' ) ) . '" alt="" class="c-bannerLink__img" loading="lazy">';
+		}
+
+	?>
+		<a <?=$a_props?> class="c-bannerLink">
+			<figure class="c-bannerLink__figure"><?=$thumb?></figure>
+			<span class="c-bannerLink__label"><?=esc_html( $item->title )?></span>
+		</a>
+	<?php
 	}
 endif;

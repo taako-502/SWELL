@@ -64,8 +64,7 @@ the_post();
 					'post_id'          => $the_id,
 					'sizes'            => '100vw',
 					'class'            => 'lp-thumb__img',
-					'placeholder_size' => 'medium',
-					'use_lazyload'     => true,
+					'use_lazysizes'    => false,
 					'echo'             => true,
 				] );
 			?>
@@ -81,8 +80,7 @@ the_post();
 					SWELL_Theme::get_thumbnail( [
 						'post_id'          => $the_id,
 						'class'            => 'lp-thumb__img',
-						'placeholder_size' => 'medium',
-						'use_lazyload'     => true,
+						'use_lazysizes'    => false,
 						'echo'             => true,
 					] );
 				?>
