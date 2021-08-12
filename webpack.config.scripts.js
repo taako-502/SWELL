@@ -28,6 +28,7 @@ if ('front' === process.env.TYPE) {
 		'front/set_urlcopy',
 		'front/set_mv',
 		'front/set_post_slider',
+		'front/set_sp_head_nav',
 	];
 } else if ('admin' === process.env.TYPE) {
 	srcDir = 'js/admin';

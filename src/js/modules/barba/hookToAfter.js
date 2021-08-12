@@ -4,7 +4,7 @@
  * モジュール読み込み
  */
 import DOM from '@swell-js/modules/data/domData';
-import setState, { isPC, isSP, smoothOffset } from '@swell-js/modules/data/stateData';
+import setState, { smoothOffset } from '@swell-js/modules/data/stateData';
 import setDomData from '@swell-js/modules/setDomData';
 import setIndexList from '@swell-js/modules/setIndexList';
 import setFixWidget from '@swell-js/modules/setFixWidget';
@@ -12,7 +12,6 @@ import setGnavClass from '@swell-js/modules/setGnavClass';
 import { ajaxToLoadContents } from '@swell-js/modules/wpAjax';
 import addClickEvents from '@swell-js/modules/addClickEvents';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
-import setSpHeader from '@swell-js/modules/setSpHeader';
 import adClick from '@swell-js/modules/adClick';
 import { setBlockStyle, checkTheadFix, removeNoreferrer } from '@swell-js/modules/setPostContent';
 
@@ -185,9 +184,6 @@ export function resetSwellScript({ newBody, next }) {
 
 	// スクロールバーの幅
 	setState.scrollbarW();
-
-	// スマホヘッダー
-	if (isSP) setSpHeader();
 
 	//グロナビに -current つける
 	setGnavClass();

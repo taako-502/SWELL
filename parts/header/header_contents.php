@@ -33,8 +33,8 @@ if ( $SETTING['info_bar_pos'] === 'head_top' ) SWELL_Theme::get_parts( 'parts/he
 		<?php SWELL_Theme::get_parts( 'parts/header/sp_btns' ); // メニューボタン & カスタムボタン ?>
 	</div>
 	<?php
-	if ( has_nav_menu( 'sp_head_menu' ) ) : // SP用ヘッダーメニュー
-		SWELL_Theme::get_parts( 'parts/header/sp_head_nav', $SETTING['sp_head_nav_loop'] );
+	if ( SWELL_Theme::is_use( 'sp_head_nav' ) ) :
+		SWELL_Theme::get_parts( 'parts/header/sp_head_nav' );
 	endif;
 	?>
 </header>

@@ -44,7 +44,6 @@ function hook_wp_loaded() {
 	$SETTING      = \SWELL_Theme::get_setting();
 	$is_customize = is_customize_preview();
 
-	// 高速化の設定
 	SWELL::$use['pjax']            = ( 'pjax' === $SETTING['use_pjax'] && ! $is_customize );
 	SWELL::$use['prefetch']        = ( 'prefetch' === $SETTING['use_pjax'] && ! $is_customize );
 	SWELL::$use['ajax_footer']     = ( $SETTING['ajax_footer'] && ! $is_customize );
@@ -52,6 +51,8 @@ function hook_wp_loaded() {
 	SWELL::$use['card_cache__in']  = $SETTING['cache_blogcard_in'];
 	SWELL::$use['card_cache__ex']  = $SETTING['cache_blogcard_ex'];
 	SWELL::$use['acc_submenu']     = $SETTING['acc_submenu'];
+	SWELL::$use['lazysizes']       = 1; // $SETTING['lazysizes'];
+	SWELL::$use['sp_head_nav']     = has_nav_menu( 'sp_head_menu' );
 
 	// NO IMAGE画像
 	$noimg_url             = $SETTING['no_image'] ?: '';
