@@ -105,11 +105,6 @@ function load_plugins() {
 
 	if ( SWELL::is_widget_iframe() ) return;
 
-	// lazysizes
-	if ( 1 ) {
-		wp_enqueue_script( 'swell_lazysizes', T_DIRE_URI . '/assets/js/plugins/lazysizes.min.js', [], SWELL_VERSION, true );
-	}
-
 	// 登録だけしておく
 	wp_register_script( 'swell_luminous', T_DIRE_URI . '/assets/js/plugins/luminous.min.js', [], SWELL_VERSION, true );
 	wp_register_script( 'swell_swiper', T_DIRE_URI . '/assets/js/plugins/swiper.min.js', [], SWELL_VERSION, true );
@@ -122,6 +117,11 @@ function load_plugins() {
 
 	// pjax使うかどうか
 	$pjax = SWELL::is_use( 'pjax' );
+
+	// lazysizes
+	if ( $pjax || SWELL::is_use( 'lazysizes' ) ) {
+		wp_enqueue_script( 'swell_lazysizes', T_DIRE_URI . '/assets/js/plugins/lazysizes.min.js', [], SWELL_VERSION, true );
+	}
 
 	// Luminous
 	$is_luminous_page = is_single() || is_page() || is_category() || is_tag() || is_tax();

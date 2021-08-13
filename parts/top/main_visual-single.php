@@ -3,38 +3,29 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * メインビジュアル (画像１枚の時)
  */
-$SETTING       = SWELL_Theme::get_setting();
-$use_lazysizes = SWELL_Theme::is_use( 'lazysizes' );
+$SETTING = SWELL_Theme::get_setting();
 
 // altテキスト
 $img_alt = $SETTING['slider1_alt'] ?: '';
 
+// lazy_type
+$lazy_type = apply_filters( 'swell_mv_single_lazy_type', 'lazysizes' );
+
 // PC画像
-$picture_img = '';
 $pc_img      = $SETTING['slider1_img'] ?: '';
-if ( $use_lazysizes ) {
-	$pc_img_id = attachment_url_to_postid( $pc_img );
-	$pc_img_s  = ( $pc_img_id ) ? wp_get_attachment_image_url( $pc_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
-
-	$picture_img = '<img src="' . esc_url( $pc_img_s ) . '" data-src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img lazyload">';
-} else {
-	$picture_img = '<img src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img" loading="lazy">';
-}
-
+$picture_img = '<img src="' . esc_url( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img">';
+$picture_img = SWELL_Theme::set_lazyload( $picture_img, $lazy_type );
 
 // SP画像
 $source = '';
 $sp_img = $SETTING['slider1_img_sp'] ?: '';
 if ( $sp_img ) {
-	if ( $use_lazysizes ) {
-		$sp_img_id = attachment_url_to_postid( $sp_img );
-		$sp_img_s  = ( $sp_img_id ) ? wp_get_attachment_image_url( $sp_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
-		$source    = '<source media="(max-width: 959px)" srcset="' . esc_attr( $sp_img_s ) . '" data-srcset="' . esc_attr( $sp_img ) . '">';
+	if ( 'lazysizes' === $lazy_type ) {
+		$source = '<source media="(max-width: 959px)" srcset="' . esc_url( SWELL_Theme::$placeholder, ['http', 'https', 'data' ] ) . '" data-srcset="' . esc_url( $sp_img ) . '">';
 	} else {
-		$source = '<source media="(max-width: 959px)" srcset="' . esc_attr( $sp_img ) . '">';
+		$source = '<source media="(max-width: 959px)" srcset="' . esc_url( $sp_img ) . '">';
 	}
 }
-
 
 // テキストやボタン
 $slide_title = $SETTING['slider1_title'];

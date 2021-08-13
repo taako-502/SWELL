@@ -44,15 +44,14 @@ function hook_wp_loaded() {
 	$SETTING      = \SWELL_Theme::get_setting();
 	$is_customize = is_customize_preview();
 
-	SWELL::$use['pjax']            = ( 'pjax' === $SETTING['use_pjax'] && ! $is_customize );
-	SWELL::$use['prefetch']        = ( 'prefetch' === $SETTING['use_pjax'] && ! $is_customize );
-	SWELL::$use['ajax_footer']     = ( $SETTING['ajax_footer'] && ! $is_customize );
-	SWELL::$use['ajax_after_post'] = ( $SETTING['ajax_after_post'] && ! $is_customize );
-	SWELL::$use['card_cache__in']  = $SETTING['cache_blogcard_in'];
-	SWELL::$use['card_cache__ex']  = $SETTING['cache_blogcard_ex'];
-	SWELL::$use['acc_submenu']     = $SETTING['acc_submenu'];
-	SWELL::$use['lazysizes']       = 1; // $SETTING['lazysizes'];
-	SWELL::$use['sp_head_nav']     = has_nav_menu( 'sp_head_menu' );
+	SWELL::set_use( 'pjax', ( 'pjax' === $SETTING['use_pjax'] && ! $is_customize ) );
+	SWELL::set_use( 'prefetch', ( 'prefetch' === $SETTING['use_pjax'] && ! $is_customize ) );
+	SWELL::set_use( 'ajax_footer', ( $SETTING['ajax_footer'] && ! $is_customize ) );
+	SWELL::set_use( 'ajax_after_post', ( $SETTING['ajax_after_post'] && ! $is_customize ) );
+	SWELL::set_use( 'card_cache__in', $SETTING['cache_blogcard_in'] );
+	SWELL::set_use( 'card_cache__ex', $SETTING['cache_blogcard_ex'] );
+	SWELL::set_use( 'acc_submenu', $SETTING['acc_submenu'] );
+	SWELL::set_use( 'sp_head_nav', has_nav_menu( 'sp_head_menu' ) );
 
 	// NO IMAGE画像
 	$noimg_url             = $SETTING['no_image'] ?: '';
@@ -80,13 +79,23 @@ function hook_wp_loaded() {
 
 	// 後方互換用
 	define( 'PLACEHOLDER', SWELL::$placeholder );
-	define( 'USE_AJAX_FOOTER', SWELL::$use['ajax_footer'] );
-	define( 'USE_AJAX_AFTER_POST', SWELL::$use['ajax_after_post'] );
+	define( 'USE_AJAX_FOOTER', SWELL::is_use( 'ajax_footer' ) );
+	define( 'USE_AJAX_AFTER_POST', SWELL::is_use( 'ajax_after_post' ) );
 	define( 'LOGO', SWELL::$site_data['logo'] );
 	define( 'LIST_TYPE', SWELL::$list_type );
 	define( 'NOIMG', $noimg_url );
 	define( 'NOIMG_S', $noimg_m_url );
 	// define( 'NOIMG_ID', $noimg_id );
+
+	// lazyload
+	if ( 'swell' === $SETTING['use_lazyload'] ) {
+		SWELL::$lazy_type = 'lazysizes';
+		SWELL::set_use( 'lazysizes', true );
+	} elseif ( 'core' === $SETTING['use_lazyload'] ) {
+		SWELL::$lazy_type = 'lazy';
+	} else {
+		SWELL::$lazy_type = $SETTING['use_lazyload'];
+	}
 }
 
 

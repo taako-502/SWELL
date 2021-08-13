@@ -109,7 +109,11 @@ trait Others {
 	 */
 	public static function set_lazyload( $image, $lazy_type, $placeholder = '' ) {
 
-		if ( $lazy_type === 'lazy' || self::is_rest() || self::is_iframe() ) {
+		if ( $lazy_type === 'eager' ) {
+
+			$image = str_replace( ' src="', ' loading="eager" src="', $image );
+
+		} elseif ( $lazy_type === 'lazy' || self::is_rest() || self::is_iframe() ) {
 
 			$image = str_replace( ' src="', ' loading="lazy" src="', $image );
 

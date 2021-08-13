@@ -192,6 +192,8 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 		// レイアウトに合わせてsizes取得
 		$sizes = SWELL::get_pickup_banner_sizes( $menu_count );
 
+		$lazy_type = apply_filters( 'swell_pickup_banner_lazy_type', 'lazy' );
+
 		// 説明欄に直接画像URLがある場合
 		$img_url = $item->description;
 		if ( $img_url ) {
@@ -201,7 +203,7 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 				'class' => 'c-bannerLink__img',
 				'sizes' => $sizes,
 			] );
-			$thumb  = SWELL::set_lazyload( $thumb, 'lazy' );
+			$thumb  = SWELL::set_lazyload( $thumb, $lazy_type );
 
 		} elseif ( $item->type === 'post_type' ) {
 
@@ -211,8 +213,7 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 				'size'             => 'full',
 				'sizes'            => $sizes,
 				'class'            => 'c-bannerLink__img',
-				// 'placeholder_size' => 'medium',
-				'use_lazysizes'    => false,
+				'lazy_type'        => $lazy_type,
 			] );
 
 		} elseif ( $item->type === 'taxonomy' ) {
@@ -221,8 +222,7 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 				'size'             => 'full',
 				'sizes'            => $sizes,
 				'class'            => 'c-bannerLink__img',
-				// 'placeholder_size' => 'medium',
-				'use_lazysizes'    => false,
+				'lazy_type'        => $lazy_type,
 			] );
 		}
 

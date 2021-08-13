@@ -320,20 +320,16 @@ if ( ! function_exists( __NAMESPACE__ . '\balloon' ) ) :
 
 		$icon_img = '';
 		if ( ! empty( $bln_icon ) ) {
-
-			$src = SWELL::is_rest() ?
-				'src="' . esc_url( $bln_icon ) . '"' :
-				'src="' . SWELL::$placeholder . '" data-src="' . esc_url( $bln_icon ) . '"';
-
-			// ここ、 set_lazyload?
-			$icon_img = '<div class="c-balloon__icon -' . esc_attr( $bln_icon_shape ) . '">' .
-				'<img ' . $src . ' alt="" class="c-balloon__iconImg lazyload -no-lb" width="80px" height="80px">' .
+			$icon_img = '<img src="' . esc_url( $bln_icon ) . '" alt="" class="c-balloon__iconImg -no-lb" width="80px" height="80px">';
+			$icon_img = SWELL::set_lazyload( $icon_img, SWELL::$lazy_type );
+			$icon_src = '<div class="c-balloon__icon -' . esc_attr( $bln_icon_shape ) . '">' .
+				$icon_img .
 				$name_src .
 			'</div>';
 		}
 
 		return '<div class="c-balloon' . esc_attr( $bln_class ) . '" data-col="' . esc_attr( $bln_col ) . '">' .
-				$icon_img .
+				$icon_src .
 				'<div class="c-balloon__body -' . esc_attr( $bln_type ) . ' -border-' . esc_attr( $bln_border ) . '">' .
 					'<div class="c-balloon__text">' . do_shortcode( $content ) .
 						'<span class="c-balloon__shapes">' .
@@ -364,6 +360,7 @@ if ( ! function_exists( __NAMESPACE__ . '\full_wide_content' ) ) :
 
 			$class    .= ' lazyload';
 			$add_attr .= 'data-bg="' . $args['bgimg'] . '"';
+			SWELL::set_use( 'lazysizes', true );
 
 		} elseif ( isset( $args['bg'] ) ) {
 
@@ -460,13 +457,11 @@ if ( ! function_exists( __NAMESPACE__ . '\custom_banner' ) ) :
 				$thumb = \SWELL_Theme::get_thumbnail( [
 					'term_id'       => $id,
 					'class'         => 'c-bannerLink__img',
-					'use_lazysizes' => false,
 				] );
 			} else {
 				$thumb = \SWELL_Theme::get_thumbnail( [
 					'post_id'       => $id,
 					'class'         => 'c-bannerLink__img',
-					'use_lazysizes' => false,
 				] );
 			}
 		}
@@ -545,6 +540,8 @@ add_shortcode( 'custom_banner', __NAMESPACE__ . '\custom_banner' );
 if ( ! function_exists( __NAMESPACE__ . '\post_list' ) ) :
 	function post_list( $args ) {
 
+		if ( ! $args ) $args = [];
+
 		// ショートコード用だけにある設定の処理
 		if ( ! isset( $args['excerpt'] ) && ! isset( $args['excerpt_length'] ) ) {
 			$args['excerpt_length'] = 0;
@@ -575,10 +572,10 @@ add_shortcode( 'post_list', __NAMESPACE__ . '\post_list' );
  */
 if ( ! function_exists( __NAMESPACE__ . '\only_login' ) ) :
 function only_login( $args, $content = null ) {
-	if ( is_user_logged_in() ) {
-		return do_shortcode( shortcode_unautop( $content ) );
-	}
-	return '';
+		if ( is_user_logged_in() ) {
+			return do_shortcode( shortcode_unautop( $content ) );
+			}
+		return '';
 }
 endif;
 add_shortcode( 'only_login', __NAMESPACE__ . '\only_login' );
@@ -589,10 +586,10 @@ add_shortcode( 'only_login', __NAMESPACE__ . '\only_login' );
  */
 if ( ! function_exists( __NAMESPACE__ . '\only_logout' ) ) :
 function only_logout( $args, $content = null ) {
-	if ( ! is_user_logged_in() ) {
-		return do_shortcode( shortcode_unautop( $content ) );
-	}
-	return '';
+		if ( ! is_user_logged_in() ) {
+			return do_shortcode( shortcode_unautop( $content ) );
+			}
+		return '';
 }
 endif;
 add_shortcode( 'only_logout', __NAMESPACE__ . '\only_logout' );

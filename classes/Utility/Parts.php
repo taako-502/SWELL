@@ -37,11 +37,10 @@ trait Parts {
 		$class       = $args['class'] ?? '';
 		$placeholder = $args['placeholder'] ?? '';
 
-		$img       = '<img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
-		$lazy_type = self::is_use( 'lazysizes' ) ? 'lazysizes' : 'lazy';
+		$img = '<img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
 
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo self::set_lazyload( $img, $lazy_type, $placeholder );
+		echo self::set_lazyload( $img, self::$lazy_type, $placeholder );
 	}
 
 

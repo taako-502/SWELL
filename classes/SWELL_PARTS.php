@@ -106,11 +106,12 @@ class SWELL_PARTS{
 
 		} else {
 
+			
 			$thumb = \SWELL_Theme::get_thumbnail( [
-				'post_id'       => $post_id,
-				'class'         => 'p-articleThumb__img',
-				'use_lazysizes' => false,
-				'use_noimg'     => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
+				'post_id'   => $post_id,
+				'class'     => 'p-articleThumb__img',
+				'lazy_type' => apply_filters( 'swell_post_thumbnail_lazy_type', 'lazy' ),
+				'use_noimg' => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
 			] );
 
 			if ( $thumb ) {

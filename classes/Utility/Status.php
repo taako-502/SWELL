@@ -24,6 +24,13 @@ trait Status {
 		return self::$use[ $key ];
 	}
 
+	/**
+	 * $use の値を取得
+	 */
+	public static function set_use( $key, $val ) {
+		self::$use[ $key ] = $val;
+	}
+
 
 	/**
 	 * モバイル判定

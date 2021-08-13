@@ -86,7 +86,7 @@ if ( 'out' === $urlcopy_pos ) $share_btns_class .= ' has-big-copybtn';
 			if ( ! $SETTEING[ $data['check_key'] ] ) continue;
 
 			if ( 'pinterest' === $key ) {
-				SWELL_Theme::$use['pinterest'] = true;
+				SWELL_Theme::set_use( 'pinterest', true );
 			}
 
 			if ( isset( $data['querys'] ) ) :
@@ -130,7 +130,7 @@ if ( 'out' === $urlcopy_pos ) $share_btns_class .= ' has-big-copybtn';
 		<?php endforeach; ?>
 		<?php // phpcs:enable WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<?php if ( ( ! $is_fix && 'in' === $urlcopy_pos ) || ( $is_fix && 'none' !== $urlcopy_pos ) ) : ?>
-			<?php SWELL_Theme::$use['clipboard'] = true; ?>
+			<?php SWELL_Theme::set_use( 'clipboard', true ); ?>
 			<li class="c-shareBtns__item -copy">
 				<div class="c-urlcopy c-shareBtns__btn <?=esc_attr( $hov_class )?>" data-clipboard-text="<?=esc_url( $share_url )?>" title="<?=esc_attr__( 'Copy the URL', 'swell' )?>">
 					<div class="c-urlcopy__content">
@@ -144,7 +144,7 @@ if ( 'out' === $urlcopy_pos ) $share_btns_class .= ' has-big-copybtn';
 	</ul>
 
 	<?php if ( ! $is_fix && 'out' === $urlcopy_pos ) : ?>
-		<?php SWELL_Theme::$use['clipboard'] = true; ?>
+		<?php SWELL_Theme::set_use( 'clipboard', true ); ?>
 		<div class="c-shareBtns__item -copy c-big-urlcopy">
 			<div class="c-urlcopy c-shareBtns__btn <?=esc_attr( $hov_class )?>" data-clipboard-text="<?=esc_url( $share_url )?>" title="<?=esc_attr__( 'Copy the URL', 'swell' )?>" role="button">
 			<div class="c-urlcopy__content">

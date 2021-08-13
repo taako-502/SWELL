@@ -304,7 +304,7 @@ trait Get {
 		$class            = $args['class'] ?? '';
 		$placeholder      = $args['placeholder'] ?? ''; // 後方互換用
 		$placeholder_size = $args['placeholder_size'] ?? '';
-		$use_lazysizes    = $args['use_lazysizes'] ?? self::is_use( 'lazysizes' );
+		$lazy_type        = $args['lazy_type'] ?? self::$lazy_type;
 		$use_noimg        = $args['use_noimg'] ?? true;
 		$echo             = $args['echo'] ?? false;
 
@@ -362,8 +362,7 @@ trait Get {
 		}
 
 		// lazyload
-		$lazy_type = $use_lazysizes ? 'lazysizes' : 'lazy';
-		$thumb     = self::set_lazyload( $thumb, $lazy_type, $placeholder );
+		$thumb = self::set_lazyload( $thumb, $lazy_type, $placeholder );
 
 		if ( $echo ) {
 			echo $thumb; // phpcs:ignore
