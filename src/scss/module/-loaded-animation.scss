@@ -42,7 +42,7 @@
 }
 
 .c-infoBar__text.-flow-off {
-    left: -8px;
+    transform: translateX(-8px);
     opacity: 0;
     animation: FadeInFromX .75s ease .5s 1 normal both;
 }

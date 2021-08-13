@@ -21,8 +21,8 @@
 @keyframes FadeInFromX {
 
     100% {
-        left: 0;
         opacity: 1;
+        transform: translateX(0);
     }
 }
 
