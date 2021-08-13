@@ -9,7 +9,7 @@ $SETTING = SWELL_Theme::get_setting();
 $img_alt = $SETTING['slider1_alt'] ?: '';
 
 // lazy_type
-$lazy_type = apply_filters( 'swell_mv_single_lazy_type', 'lazysizes' );
+$lazy_type = apply_filters( 'swell_mv_single_lazy_type', 'none' );
 
 // PC画像
 $pc_img      = $SETTING['slider1_img'] ?: '';

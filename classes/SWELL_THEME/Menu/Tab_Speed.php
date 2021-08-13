@@ -126,11 +126,11 @@ class Tab_Speed {
 			[
 				'id'      => 'use_lazyload',
 				'type'    => 'radio',
-				'desc'    => $note_text . 'このLazyloadの設定は、投稿コンテンツ内の画像や動画などが対象です。',
+				// 'desc'    => $note_text . 'このLazyloadの設定は、投稿コンテンツ内の画像や動画などが対象です。',
 				'choices' => [
 					'off'   => '使用しない',
-					'core'  => 'コアの lazyload を使用する<br><small>' . $note_text . 'WordPress5.5.からの機能で、画像などにloading="lazy"が追加されます。</small>',
-					'swell' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img,video,iframeタグに適用されます。<br>' . $note_text . 'WordPress5.5から標準実装されるloading属性だけで十分な場合はオフにしてください。</small>',
+					'core'  => '<code>loading="lazy"</code>を使用する',
+					'swell' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img,video,iframeタグに適用されます。',
 				],
 			]
 		);
