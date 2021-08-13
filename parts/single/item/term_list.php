@@ -11,7 +11,7 @@ $tag_data = $show_tag ? SWELL_Theme::get_the_terms_data( $the_id, 'post_tag' ) :
 <?php if ( ! empty( $cat_data ) ) : ?>
 	<div class="p-articleMetas__termList c-categoryList">
 		<?php foreach ( $cat_data as $data ) : ?>
-			<a class="c-categoryList__link hov-flash-up" href="<?=esc_url( $data['url'] )?>'" data-cat-id="<?=esc_attr( $data['id'] )?>">
+			<a class="c-categoryList__link hov-flash-up" href="<?=esc_url( $data['url'] )?>" data-cat-id="<?=esc_attr( $data['id'] )?>">
 				<?=esc_html( $data['name'] )?>
 			</a>
 		<?php endforeach; ?>
