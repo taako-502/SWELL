@@ -62,8 +62,11 @@ function hook_wp_loaded() {
 	SWELL::$noimg['small'] = $noimg_m_url;
 
 	// ロゴ画像
-	SWELL::$site_data['logo']     = $SETTING['logo'];
-	SWELL::$site_data['logo_top'] = $SETTING['logo_top'];
+	$logo_id                         = $SETTING['logo_id'];
+	$logo_url                        = wp_get_attachment_url( $logo_id );
+	SWELL::$site_data['logo_id']     = $logo_id;
+	SWELL::$site_data['logo_url']    = $logo_url;
+	SWELL::$site_data['logo_top_id'] = $SETTING['logo_top_id'];
 
 	// キャッチフレーズ
 	SWELL::$site_data['catchphrase'] = get_option( 'blogdescription' );
@@ -81,7 +84,7 @@ function hook_wp_loaded() {
 	define( 'PLACEHOLDER', SWELL::$placeholder );
 	define( 'USE_AJAX_FOOTER', SWELL::is_use( 'ajax_footer' ) );
 	define( 'USE_AJAX_AFTER_POST', SWELL::is_use( 'ajax_after_post' ) );
-	define( 'LOGO', SWELL::$site_data['logo'] );
+	define( 'LOGO', $logo_url );
 	define( 'LIST_TYPE', SWELL::$list_type );
 	define( 'NOIMG', $noimg_url );
 	define( 'NOIMG_S', $noimg_m_url );

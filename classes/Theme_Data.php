@@ -224,7 +224,6 @@ class Theme_Data {
 		self::$site_data = [
 			'home'  => home_url( '/' ),
 			'title' => get_option( 'blogname' ),
-			'logo'  => '', // wp_loadedで
 		];
 	}
 

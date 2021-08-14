@@ -188,8 +188,10 @@ trait Default_Settings {
 			'no_image'                => T_DIRE_URI . '/assets/img/no_img.png',
 			'ttlbg_default_img'       => '',
 			// ヘッダー設定
-			'logo'                    => '',
-			'logo_top'                => '',
+			'logo'                    => '', // 3.0で消す
+			'logo_top'                => '', // 3.0で消す
+			'logo_id'                 => 0,
+			'logo_top_id'             => 0,
 			'logo_size_pc'            => 40,
 			'logo_size_pcfix'         => 32,
 			'logo_size_sp'            => 48,

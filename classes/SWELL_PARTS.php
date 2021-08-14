@@ -16,22 +16,18 @@ class SWELL_PARTS{
 	/**
 	 * 3.0で消す
 	 */
-	public static function head_logo_img( $use_top_logo ) {
-		return \SWELL_Theme::get_pluggable_parts( 'head_logo', [
-			'use_top_logo' => $use_top_logo,
-		] );
+	public static function head_logo_img() {
+		return \SWELL_Theme::get_pluggable_parts( 'head_logo' );
 	}
 
 
 	/**
 	 * ヘッダーロゴ
 	 */
-	public static function head_logo( $header_transparent, $is_fixbar = false ) {
+	public static function head_logo( $is_fixbar = false ) {
 		
-		if ( \SWELL_Theme::site_data( 'logo' ) ) {
-			// topロゴも取得するかどうか
-			$use_top_logo = ( \SWELL_Theme::is_top() && ! is_paged() && $header_transparent !== 'no' );
-			$logo = self::head_logo_img( $use_top_logo );
+		if ( \SWELL_Theme::site_data( 'logo_id' ) ) {
+			$logo = \SWELL_Theme::get_pluggable_parts( 'head_logo' );
 			$logo_class = '-img';
 		} else {
 			// ロゴがない場合
@@ -44,7 +40,7 @@ class SWELL_PARTS{
 					'<a href="'. \SWELL_Theme::site_data( 'home' ) .'" title="'. \SWELL_Theme::site_data( 'title' ) .'" class="c-headLogo__link" rel="home">'. $logo .'</a>'.
 				'</'. $tag .'>';
 
-		return apply_filters( 'swell_parts_head_logo', $return, $header_transparent, $is_fixbar  );
+		return apply_filters( 'swell_parts_head_logo', $return, $is_fixbar  );
 	}
 
 

@@ -39,10 +39,10 @@ Customizer::big_title( $section, 'header_logo', [
 ] );
 
 // ロゴ画像の設定
-Customizer::add( $section, 'logo', [
+Customizer::add( $section, 'logo_id', [
 	'label'       => 'ロゴ画像の設定',
 	// 'description' => 'ロゴ画像を設定してください。',
-	'type'        => 'image',
+	'type'        => 'media',
 	'partial'     => [
 		'selector'            => '.c-headLogo',
 		'container_inclusive' => true,
@@ -148,10 +148,10 @@ Customizer::add( $section, 'header_transparent', [
 ] );
 
 // 透過時のロゴ画像
-Customizer::add( $section, 'logo_top', [
+Customizer::add( $section, 'logo_top_id', [
 	'classname'   => '-top-header-setting',
 	'label'       => '透過時のロゴ画像',
-	'type'        => 'image',
+	'type'        => 'media',
 	'partial'     => [
 		'selector'            => '.c-headLogo',
 		'container_inclusive' => true,
