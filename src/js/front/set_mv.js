@@ -77,6 +77,10 @@ function setMvSlider(mainVisual, mvInner) {
 
 	const swiperOpt = {
 		loop: true,
+		preloadImages: false,
+		lazy: {
+			loadPrevNext: true,
+		},
 		autoplay: {
 			delay: parseInt(swellVars.mvSlideDelay) || 10000,
 			disableOnInteraction: false,
@@ -110,6 +114,7 @@ function setMvSlider(mainVisual, mvInner) {
 		swiperOpt.effect = 'slider';
 		swiperOpt.spaceBetween = 8;
 		swiperOpt.centeredSlides = true;
+		swiperOpt.watchSlidesVisibility = true;
 		if (!mainVisual.classList.contains('-margin-on')) {
 			mvInner.style.paddingTop = '8px';
 			mvInner.style.paddingBottom = '8px';

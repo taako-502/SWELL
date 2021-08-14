@@ -29,11 +29,18 @@ $mv_img_filter = $SETTING['mv_img_filter']
 			$sp_img_s  = ( $sp_img_id ) ? wp_get_attachment_image_url( $sp_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
 
 			$img_alt = $SETTING[ 'slider' . $i . '_alt' ] ?: '';
+
+			if ( 1 === $i ) {
+				$picture_img = '<source media="(max-width: 959px)" srcset="' . esc_attr( $sp_img ) . '">' .
+				'<img src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img">';
+			} else {
+				$picture_img = '<source media="(max-width: 959px)" data-srcset="' . esc_attr( $sp_img ) . '">' .
+				'<img data-src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img swiper-lazy">';
+			}
 	?>
 		<div class="p-mainVisual__slide swiper-slide c-filterLayer -<?=esc_attr( $mv_img_filter )?>">
 			<picture class="p-mainVisual__imgLayer c-filterLayer__img">
-				<source media="(max-width: 959px)" srcset="<?=esc_attr( $sp_img_s )?>" data-srcset="<?=esc_attr( $sp_img )?>">
-				<img src="<?=esc_url( $pc_img_s )?>" data-src="<?=esc_attr( $pc_img )?>" alt="<?=esc_attr( $img_alt )?>" class="p-mainVisual__img lazyload">
+				<?php echo $picture_img; // phpcs:ignore?>
 			</picture>
 			<?php
 				// 固定テキスト設定でなければ、各スライドにテキストを出力
