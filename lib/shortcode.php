@@ -440,28 +440,32 @@ if ( ! function_exists( __NAMESPACE__ . '\custom_banner' ) ) :
 
 		}
 
+		$img_class = 'c-bannerLink__img u-obf-cover';
+
 		// 画像の直接指定
 		if ( isset( $args['img_id'] ) ) {
 
 			$img_id = $args['img_id'];
-			$img    = wp_get_attachment_image_url( $img_id, 'full' );
-			$thumb  = '<img src="' . $img . '" class="c-bannerLink__img" alt="">';
+			$thumb  = wp_get_attachment_image( $img_id, 'full', false, [
+				'class' => $img_class,
+				'alt'   => '',
+			] );
 
 		} elseif ( isset( $args['img_url'] ) ) {
 
 			$img   = $args['img_url'];
-			$thumb = '<img src="' . $img . '" class="c-bannerLink__img" alt="">';
+			$thumb = '<img src="' . $img . '" class="' . $img_class . '" alt="">';
 
 		} elseif ( $id ) {
 			if ( $is_term ) {
 				$thumb = \SWELL_Theme::get_thumbnail( [
 					'term_id'       => $id,
-					'class'         => 'c-bannerLink__img',
+					'class'         => $img_class,
 				] );
 			} else {
 				$thumb = \SWELL_Theme::get_thumbnail( [
 					'post_id'       => $id,
-					'class'         => 'c-bannerLink__img',
+					'class'         => $img_class,
 				] );
 			}
 		}

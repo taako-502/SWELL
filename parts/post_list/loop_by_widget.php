@@ -53,7 +53,7 @@ while ( $the_query->have_posts() ) :
 							'post_id' => $the_id,
 							'size'    => 'medium_large',
 							'sizes'   => '(min-width: 600px) 320px, 50vw',
-							'class'   => 'c-postThumb__img',
+							'class'   => 'c-postThumb__img u-obf-cover',
 							'echo'    => true,
 						] );
 					?>

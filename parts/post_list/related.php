@@ -20,7 +20,7 @@ $date      = mysql2date( 'Y.m.d', $post_data->post_date );
 					'post_id' => $the_id,
 					'size'    => 'medium',
 					'sizes'   => '(min-width: 600px) 320px, 50vw',
-					'class'   => 'c-postThumb__img',
+					'class'   => 'c-postThumb__img u-obf-cover',
 					'echo'    => true,
 				] );
 			?>

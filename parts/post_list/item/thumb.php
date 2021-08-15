@@ -14,7 +14,7 @@ $cat_data = $variable['cat_data'] ?? []; // 後方互換用
 				'post_id' => $the_id,
 				'size'    => $size,
 				'sizes'   => $sizes,
-				'class'   => 'c-postThumb__img',
+				'class'   => 'c-postThumb__img u-obf-cover',
 				'echo'    => true,
 			] );
 		?>

@@ -22,8 +22,8 @@
     border-radius: 50%;
 
     .avatar {
-
-        @extend %objFitCover;
+        display: block;
+        object-fit: cover;
     }
 }
 

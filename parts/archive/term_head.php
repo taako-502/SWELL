@@ -25,12 +25,14 @@ if ( ! $term_thumb && ! $description ) return '';
 			<?php
 				\SWELL_Theme::lazyimg([
 					'src'   => $term_thumb,
-					'class' => 'p-termHead__thumbImg',
+					'class' => 'p-termHead__thumbImg u-obf-cover', // obfはdescription長い時用
 				]);
 			?>
 		</figure>
 	<?php endif; ?>
 	<?php if ( $description ) : ?>
-		<div class="p-termHead__desc"><?=do_shortcode( $description )?></div>
+		<div class="p-termHead__desc">
+			<?=wp_kses( do_shortcode( nl2br( $description ) ), SWELL_Theme::$allowed_text_html )?>
+		</div>
 	<?php endif; ?>
 </div>

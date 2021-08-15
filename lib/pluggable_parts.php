@@ -92,7 +92,7 @@ if ( ! function_exists( 'swl_parts__blog_card' ) ) :
 			$card_class .= ' -noimg';
 		} else {
 			$card_thumb = '<div class="p-blogCard__thumb c-postThumb"><figure class="c-postThumb__figure">' .
-				'<img src="' . esc_url( $thumb ) . '" alt="" class="c-postThumb__img -no-lb">' .
+				'<img src="' . esc_url( $thumb ) . '" alt="" class="c-postThumb__img u-obf-cover -no-lb">' .
 				'</figure></div>';
 		}
 
@@ -193,14 +193,16 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 		$sizes = SWELL::get_pickup_banner_sizes( $menu_count );
 
 		$lazy_type = apply_filters( 'swell_pickup_banner_lazy_type', 'lazy' );
+		$img_class = 'c-bannerLink__img'; // u-obf-cover
 
 		// 説明欄に直接画像URLがある場合
 		$img_url = $item->description;
 		if ( $img_url ) {
 
+			// キャッシュ
 			$img_id = attachment_url_to_postid( $img_url ) ?: 0;
 			$thumb  = wp_get_attachment_image( $img_id, 'full', false, [
-				'class' => 'c-bannerLink__img',
+				'class' => $img_class,
 				'sizes' => $sizes,
 			] );
 			$thumb  = SWELL::set_lazyload( $thumb, $lazy_type );
@@ -209,26 +211,26 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 
 			$post_id = $item->object_id;
 			$thumb   = SWELL::get_thumbnail( [
-				'post_id'          => $post_id,
-				'size'             => 'full',
-				'sizes'            => $sizes,
-				'class'            => 'c-bannerLink__img',
-				'lazy_type'        => $lazy_type,
+				'post_id'   => $post_id,
+				'size'      => 'full',
+				'sizes'     => $sizes,
+				'class'     => $img_class,
+				'lazy_type' => $lazy_type,
 			] );
 
 		} elseif ( $item->type === 'taxonomy' ) {
 			$thumb = SWELL::get_thumbnail( [
-				'term_id'          => $item->object_id,
-				'size'             => 'full',
-				'sizes'            => $sizes,
-				'class'            => 'c-bannerLink__img',
-				'lazy_type'        => $lazy_type,
+				'term_id'   => $item->object_id,
+				'size'      => 'full',
+				'sizes'     => $sizes,
+				'class'     => $img_class,
+				'lazy_type' => $lazy_type,
 			] );
 		}
 
 		// 画像なければ NO IMAGE
 		if ( ! $thumb ) {
-			$thumb = '<img src="' . esc_url( SWELL::get_noimg( 'url' ) ) . '" alt="" class="c-bannerLink__img" loading="lazy">';
+			$thumb = '<img src="' . esc_url( SWELL::get_noimg( 'url' ) ) . '" alt="" class="' . esc_attr( $img_class ) . '" loading="lazy">';
 		}
 
 	?>

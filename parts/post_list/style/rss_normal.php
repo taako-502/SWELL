@@ -43,7 +43,7 @@ $meta_args = [
 		<?php if ( $show_thumb && $feed_thumb ) : ?>
 			<div class="p-postList__thumb c-postThumb">
 				<figure class="c-postThumb__figure">
-					<img class="c-postThumb__img" src="<?php echo esc_url( $feed_thumb ); ?>" alt="">
+					<img class="c-postThumb__img u-obf-cover" src="<?php echo esc_url( $feed_thumb ); ?>" alt="">
 				</figure>
 			</div>
 		<?php endif; ?>
