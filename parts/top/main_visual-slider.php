@@ -32,10 +32,10 @@ $mv_img_filter = $SETTING['mv_img_filter']
 
 			if ( 1 === $i ) {
 				$picture_img = '<source media="(max-width: 959px)" srcset="' . esc_attr( $sp_img ) . '">' .
-				'<img src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img">';
+				'<img src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img u-obf-cover">';
 			} else {
 				$picture_img = '<source media="(max-width: 959px)" data-srcset="' . esc_attr( $sp_img ) . '">' .
-				'<img data-src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img swiper-lazy">';
+				'<img data-src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img u-obf-cover swiper-lazy">';
 			}
 	?>
 		<div class="p-mainVisual__slide swiper-slide c-filterLayer -<?=esc_attr( $mv_img_filter )?>">

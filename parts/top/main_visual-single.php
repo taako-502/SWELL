@@ -13,7 +13,7 @@ $lazy_type = apply_filters( 'swell_mv_single_lazy_type', 'none' );
 
 // PC画像
 $pc_img      = $SETTING['slider1_img'] ?: '';
-$picture_img = '<img src="' . esc_url( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img">';
+$picture_img = '<img src="' . esc_url( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img u-obf-cover">';
 $picture_img = SWELL_Theme::set_lazyload( $picture_img, $lazy_type );
 
 // SP画像
@@ -43,7 +43,7 @@ $parts_id = (int) $SETTING['slider1_parts_id'];
 
 	<div class="p-mainVisual__slide c-filterLayer -<?=esc_attr( $SETTING['mv_img_filter'] )?>">
 		<picture class="p-mainVisual__imgLayer c-filterLayer__img">
-		<?php echo $source . $picture_img; //phpcs:ignore ?>
+			<?php echo $source . $picture_img; //phpcs:ignore ?>
 		</picture>
 		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 		<?php
