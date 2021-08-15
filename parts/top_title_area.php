@@ -28,13 +28,8 @@ if ( SWELL_Theme::is_term() ) {
 $filter_name  = $SETTING['title_bg_filter'];
 $filter_class = ( 'nofilter' === $filter_name ) ? '' : "c-filterLayer -$filter_name";
 
-
-if ( apply_filters( 'swell_top_area_lazysizes', false ) ) {
-	SWELL_Theme::set_use( 'lazysizes', true );
-	$ttlbg = '<div class="l-topTitleArea__img c-filterLayer__img lazyload" data-bg="' . esc_attr( $ttlbg ) . '"></div>';
-} else {
-	$ttlbg = '<div class="l-topTitleArea__img c-filterLayer__img" style="background-image:url(' . esc_attr( $ttlbg ) . ')"></div>';
-}
+$ttlbg = '<img class="l-topTitleArea__img c-filterLayer__img u-obf-cover" src="' . esc_attr( $ttlbg ) . '" alt="" aria-hidden="true">';
+$ttlbg = SWELL_Theme::set_lazyload( $ttlbg, apply_filters( 'swell_top_area_lazy_type', 'none' ) );
 
 ?>
 <div id="top_title_area" class="l-topTitleArea <?=esc_attr( $filter_class )?>">
