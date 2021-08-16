@@ -3,10 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 use \SWELL_Theme as SWELL;
 
-// add_filter( 'swell_head_logo', function() {
-// 	return 'https://wemo.tech/wp-content/themes/swell_wemo/assets/img/logo.svg';
-// } );
-
 /**
  * ヘッダーロゴ
  */
@@ -41,17 +37,19 @@ if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 			// 通常時
 
 			$return = wp_get_attachment_image( $logo_id, 'full', false, [
-				'class' => 'c-headLogo__img',
-				'sizes' => $logo_sizes,
-				'alt'   => SWELL::site_data( 'title' ),
+				'class'   => 'c-headLogo__img',
+				'sizes'   => $logo_sizes,
+				'alt'     => SWELL::site_data( 'title' ),
+				'loading' => 'eager',
 			] );
 
 		} else {
 			// ヘッダーオーバーレイ有効時
 			$logo_top = wp_get_attachment_image( $logo_top_id, 'full', false, [
-				'class' => 'c-headLogo__img -top',
-				'sizes' => $logo_sizes,
-				'alt'   => SWELL::site_data( 'title' ),
+				'class'   => 'c-headLogo__img -top',
+				'sizes'   => $logo_sizes,
+				'alt'     => SWELL::site_data( 'title' ),
+				'loading' => 'eager',
 			] );
 
 			$common_logo = wp_get_attachment_image( $logo_id, 'full', false, [
