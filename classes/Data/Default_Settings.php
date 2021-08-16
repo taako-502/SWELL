@@ -186,7 +186,7 @@ trait Default_Settings {
 	public static function set_default_customizer() {
 		return [
 			'noimg_id'                => 0,
-			'ttlbg_default_imgid'     => '',
+			'ttlbg_default_img'       => '',
 			// 'ttlbg_dflt_imgid'        => 0,
 
 			// ヘッダー設定

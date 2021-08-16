@@ -334,7 +334,7 @@ trait Get {
 				'class'   => $class,
 				'alt'     => '',
 				'size'    => $args['size'] ?? 'full',
-				'sizes'   => $args['sizes'] ?? '(min-width: 960px) 960px, 100vw',
+				'srcset'  => $args['srcset'] ?? false,
 				'loading' => $lazy_type,
 			]);
 

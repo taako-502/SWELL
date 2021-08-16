@@ -318,7 +318,7 @@ if ( ! function_exists( __NAMESPACE__ . '\balloon' ) ) :
 
 		$name_src = $bln_name ? '<span class="c-balloon__iconName">' . esc_html( $bln_name ) . '</span>' : '';
 
-		$icon_img = '';
+		$icon_src = '';
 		if ( ! empty( $bln_icon ) ) {
 			$icon_img = '<img src="' . esc_url( $bln_icon ) . '" alt="" class="c-balloon__iconImg -no-lb" width="80px" height="80px">';
 			$icon_img = SWELL::set_lazyload( $icon_img, SWELL::$lazy_type );
