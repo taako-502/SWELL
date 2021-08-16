@@ -64,8 +64,8 @@ class Theme_Data {
 	public static $excerpt_length = 120;
 
 	// プレースホルダー
-	public static $placeholder = T_DIRE_URI . '/assets/img/placeholder.png';
-	// data:image/gif;base64,R0lGODlhBgACAPAAAP///wAAACH5BAEAAAAALAAAAAAGAAIAAAIDhI9WADs=
+	public static $placeholder = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+	// 6:2 data:image/gif;base64,R0lGODlhBgACAPAAAP///wAAACH5BAEAAAAALAAAAAAGAAIAAAIDhI9WADs=
 
 	// lazyloadの種類
 	public static $lazy_type = 'none';
