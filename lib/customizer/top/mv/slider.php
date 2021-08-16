@@ -187,22 +187,24 @@ for ( $i = 1; $i < 6; $i++ ) {
 	// スライド画像 PC
 	Customizer::add(
 		$section,
-		'slider' . $i . '_img',
+		'slider' . $i . '_imgid',
 		[
 			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
 			'label'       => 'スライド画像 [' . $i . ']（PC用）',
-			'type'        => 'image',
+			'type'        => 'media',
+			'mime_type'   => 'image',
 		]
 	);
 
 	// スライド画像 SP
 	Customizer::add(
 		$section,
-		'slider' . $i . '_img_sp',
+		'slider' . $i . '_imgid_sp',
 		[
 			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
 			'label'       => 'スライド画像 [' . $i . ']（スマホ用）',
-			'type'        => 'image',
+			'type'        => 'media',
+			'mime_type'   => 'image',
 		]
 	);
 

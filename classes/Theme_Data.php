@@ -250,7 +250,7 @@ class Theme_Data {
 	public static function get_default_setting( $key = null ) {
 
 		if ( null !== $key ) {
-			return self::$default_setting[ $key ];
+			return self::$default_setting[ $key ] ?? '';
 		}
 		return self::$default_setting;
 	}

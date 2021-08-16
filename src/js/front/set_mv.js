@@ -130,6 +130,7 @@ function setMvSlider(mainVisual, mvInner) {
 
 /**
  * 動画セット
+ * videoタグは<source>のmediaが効かない。
  */
 function setMvVideo(mainVisual) {
 	const mvVideo = mainVisual.querySelector('.p-mainVisual__video');
@@ -138,11 +139,13 @@ function setMvVideo(mainVisual) {
 	const media = isPC ? 'pc' : 'sp';
 	const videoPoster = mvVideo.getAttribute(`data-poster-${media}`);
 	if (videoPoster) mvVideo.setAttribute('poster', videoPoster);
+
 	const videoSource = mvVideo.querySelector('source');
 	const videoSrc = videoSource.getAttribute(`data-src-${media}`);
 	videoSource.setAttribute('src', videoSrc);
 	mvVideo.load();
 	mvVideo.play();
+
 	setTimeout(() => {
 		if (mvVideo.paused) {
 			mvVideo.play();

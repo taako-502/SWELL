@@ -18,29 +18,10 @@ $mv_img_filter = $SETTING['mv_img_filter']
 		foreach ( $slider_images as $i => $value ) :
 			++$i;
 			++$ct;
-
-			// スライダー画像
-			$pc_img    = $SETTING[ 'slider' . $i . '_img' ];
-			$pc_img_id = ( 1 === $ct ) ? attachment_url_to_postid( $pc_img ) : 0; // １枚目の時だけsrcにはmediumサイズ
-			$pc_img_s  = ( $pc_img_id ) ? wp_get_attachment_image_url( $pc_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
-
-			$sp_img    = $SETTING[ 'slider' . $i . '_img_sp' ] ?: $pc_img;
-			$sp_img_id = ( 1 === $ct ) ? attachment_url_to_postid( $sp_img ) : 0;
-			$sp_img_s  = ( $sp_img_id ) ? wp_get_attachment_image_url( $sp_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
-
-			$img_alt = $SETTING[ 'slider' . $i . '_alt' ] ?: '';
-
-			if ( 1 === $i ) {
-				$picture_img = '<source media="(max-width: 959px)" srcset="' . esc_attr( $sp_img ) . '">' .
-				'<img src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img u-obf-cover">';
-			} else {
-				$picture_img = '<source media="(max-width: 959px)" data-srcset="' . esc_attr( $sp_img ) . '">' .
-				'<img data-src="' . esc_attr( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img u-obf-cover swiper-lazy">';
-			}
 	?>
 		<div class="p-mainVisual__slide swiper-slide c-filterLayer -<?=esc_attr( $mv_img_filter )?>">
 			<picture class="p-mainVisual__imgLayer c-filterLayer__img">
-				<?php echo $picture_img; // phpcs:ignore?>
+				<?php echo SWELL_Theme::get_mv_slide_img( $i ); // phpcs:ignore?>
 			</picture>
 			<?php
 				// 固定テキスト設定でなければ、各スライドにテキストを出力
@@ -59,15 +40,15 @@ $mv_img_filter = $SETTING['mv_img_filter']
 			?>
 				<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 					<?php
-						$slide_ttl = '';
+						// キャッチコピー
+						if ( '' !== $slide_title ) {
+							echo '<div class="p-mainVisual__slideTitle">' . wp_kses( $slide_title, SWELL_Theme::$allowed_text_html ) . '</div>';
+						}
 
-						if ( '' !== $slide_title )
-							$slide_ttl .= '<div class="p-mainVisual__slideTitle">' . $slide_title . '</div>';
-
-						if ( '' !== $slide_text )
-							$slide_ttl .= '<div class="p-mainVisual__slideText">' . nl2br( $slide_text ) . '</div>';
-
-						echo wp_kses_post( $slide_ttl );
+						// サブコピー
+						if ( '' !== $slide_text ) {
+							echo '<div class="p-mainVisual__slideText">' . wp_kses( nl2br( $slide_text ), SWELL_Theme::$allowed_text_html ) . '</div>';
+						}
 
 						// ブログパーツ
 						if ( $parts_id ) echo do_shortcode( '[blog_parts id="' . $parts_id . '"]' );
@@ -127,15 +108,15 @@ $mv_img_filter = $SETTING['mv_img_filter']
 	?>
 		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 			<?php
-				$slide_ttl = '';
+				// キャッチコピー
+				if ( '' !== $slide_title ) {
+					echo '<div class="p-mainVisual__slideTitle">' . wp_kses( $slide_title, SWELL_Theme::$allowed_text_html ) . '</div>';
+				}
 
-				if ( '' !== $slide_title )
-					$slide_ttl .= '<div class="p-mainVisual__slideTitle">' . $slide_title . '</div>';
-
-				if ( '' !== $slide_text )
-					$slide_ttl .= '<div class="p-mainVisual__slideText">' . nl2br( $slide_text ) . '</div>';
-
-				echo wp_kses_post( $slide_ttl );
+				// サブコピー
+				if ( '' !== $slide_text ) {
+					echo '<div class="p-mainVisual__slideText">' . wp_kses( nl2br( $slide_text ), SWELL_Theme::$allowed_text_html ) . '</div>';
+				}
 
 				if ( $btn_text && $slide_url ) :
 					// ボタンあり

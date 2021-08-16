@@ -243,8 +243,19 @@ class Updated_Action {
 		$is_changed = 0;
 
 		$switch_keys = [
-			'logo'     => 'logo_id',
-			'logo_top' => 'logo_top_id',
+			'logo'           => 'logo_id',
+			'logo_top'       => 'logo_top_id',
+			'slider1_img'    => 'slider1_imgid',
+			'slider1_img_sp' => 'slider1_imgid_sp',
+			'slider2_img'    => 'slider2_imgid',
+			'slider2_img_sp' => 'slider2_imgid_sp',
+			'slider3_img'    => 'slider3_imgid',
+			'slider3_img_sp' => 'slider3_imgid_sp',
+			'slider4_img'    => 'slider4_imgid',
+			'slider4_img_sp' => 'slider4_imgid_sp',
+			'slider5_img'    => 'slider5_imgid',
+			'slider5_img_sp' => 'slider5_imgid_sp',
+
 		];
 		foreach ( $switch_keys as $url_key => $id_key ) {
 			if ( isset( $SETTINGS[ $url_key ] ) ) {

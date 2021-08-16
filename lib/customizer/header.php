@@ -43,6 +43,7 @@ Customizer::add( $section, 'logo_id', [
 	'label'       => 'ロゴ画像の設定',
 	// 'description' => 'ロゴ画像を設定してください。',
 	'type'        => 'media',
+	'mime_type'   => 'image',
 	'partial'     => [
 		'selector'            => '.c-headLogo',
 		'container_inclusive' => true,
@@ -152,6 +153,7 @@ Customizer::add( $section, 'logo_top_id', [
 	'classname'   => '-top-header-setting',
 	'label'       => '透過時のロゴ画像',
 	'type'        => 'media',
+	'mime_type'   => 'image',
 	'partial'     => [
 		'selector'            => '.c-headLogo',
 		'container_inclusive' => true,

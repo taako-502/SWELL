@@ -10,22 +10,7 @@ $img_alt = $SETTING['slider1_alt'] ?: '';
 
 // lazy_type
 $lazy_type = apply_filters( 'swell_mv_single_lazy_type', 'none' );
-
-// PC画像
-$pc_img      = $SETTING['slider1_img'] ?: '';
-$picture_img = '<img src="' . esc_url( $pc_img ) . '" alt="' . esc_attr( $img_alt ) . '" class="p-mainVisual__img u-obf-cover">';
-$picture_img = SWELL_Theme::set_lazyload( $picture_img, $lazy_type );
-
-// SP画像
-$source = '';
-$sp_img = $SETTING['slider1_img_sp'] ?: '';
-if ( $sp_img ) {
-	if ( 'lazysizes' === $lazy_type ) {
-		$source = '<source media="(max-width: 959px)" srcset="' . esc_url( SWELL_Theme::$placeholder, ['http', 'https', 'data' ] ) . '" data-srcset="' . esc_url( $sp_img ) . '">';
-	} else {
-		$source = '<source media="(max-width: 959px)" srcset="' . esc_url( $sp_img ) . '">';
-	}
-}
+$slide_img = SWELL_Theme::get_mv_slide_img( 1, $lazy_type );
 
 // テキストやボタン
 $slide_title = $SETTING['slider1_title'];
@@ -43,21 +28,19 @@ $parts_id = (int) $SETTING['slider1_parts_id'];
 
 	<div class="p-mainVisual__slide c-filterLayer -<?=esc_attr( $SETTING['mv_img_filter'] )?>">
 		<picture class="p-mainVisual__imgLayer c-filterLayer__img">
-			<?php echo $source . $picture_img; //phpcs:ignore ?>
+			<?php echo $slide_img; //phpcs:ignore ?>
 		</picture>
 		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 		<?php
-			$slide_ttl = '';
-
 			// キャッチコピー
-			if ( '' !== $slide_title )
-				$slide_ttl .= '<div class="p-mainVisual__slideTitle">' . $slide_title . '</div>';
+			if ( '' !== $slide_title ) {
+				echo '<div class="p-mainVisual__slideTitle">' . wp_kses( $slide_title, SWELL_Theme::$allowed_text_html ) . '</div>';
+			}
 
 			// サブコピー
-			if ( '' !== $slide_text )
-				$slide_ttl .= '<div class="p-mainVisual__slideText">' . nl2br( $slide_text ) . '</div>';
-
-			echo wp_kses_post( $slide_ttl );
+			if ( '' !== $slide_text ) {
+				echo '<div class="p-mainVisual__slideText">' . wp_kses( nl2br( $slide_text ), SWELL_Theme::$allowed_text_html ) . '</div>';
+			}
 
 			// ブログパーツ
 			if ( $parts_id ) echo do_shortcode( '[blog_parts id="' . $parts_id . '"]' );

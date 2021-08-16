@@ -819,4 +819,86 @@ trait Get {
 	}
 
 
+	/**
+	 * 画像IDからsourceタグを生成
+	 */
+	public static function get_img_source( $img_id, $args = [] ) {
+		$lazy_type   = $args['lazy_type'] ?? 'none';
+		$placeholder = $args['placeholder'] ?? self::$placeholder;
+		$media       = $args['media'] ?? '(max-width: 959px)';
+		$sizes       = $args['sizes'] ?? '100vw';
+
+		$img_data = wp_get_attachment_image_src( $img_id, 'full' );
+		if ( ! $img_data) return '';
+
+		$src    = $img_data[0];
+		$width  = $img_data[1];
+		$height = $img_data[2];
+		$srcset = wp_get_attachment_image_srcset( $img_id, 'full' );
+
+		$source_props = 'media="' . esc_attr( $media ) . '" sizes="' . esc_attr( $sizes ) . '"';
+
+		if ( 'lazysizes' === $lazy_type ) {
+			$source_props .= ' src="' . esc_url( $placeholder, [ 'http', 'https', 'data' ] ) . '"';
+			$source_props .= ' data-src="' . esc_attr( $src ) . '"';
+		} else {
+			$source_props .= ' src="' . esc_attr( $src ) . '"';
+
+			if ( 'lazy' === $lazy_type ) {
+				$source_props .= ' loading="lazy"';
+			}
+		}
+
+		if ( $srcset ) {
+			$source_props .= ' srcset="' . esc_attr( $srcset ) . '"';
+		}
+		if ( $width ) {
+			$source_props .= ' width="' . esc_attr( $width ) . '"';
+		}
+		if ( $height ) {
+			$source_props .= ' height="' . esc_attr( $height ) . '"';
+		}
+		return '<source ' . $source_props . '>';
+	}
+
+
+	/**
+	 * メインビジュアルのスライダー画像
+	 */
+	public static function get_mv_slide_img( $i, $lazy_type = 'none' ) {
+		// PC画像
+		$picture_img = '';
+		$pc_imgid    = self::get_setting( "slider{$i}_imgid" );
+		$img_alt     = self::get_setting( "slider{$i}_alt" );
+
+		if ( 1 === $i && $pc_imgid ) {
+			$picture_img = wp_get_attachment_image( $pc_imgid, 'full', false, [
+				'class'   => 'p-mainVisual__img u-obf-cover',
+				'alt'     => $img_alt,
+				'loading' => 'lazy' === $lazy_type ? 'lazy' : 'eager',
+			] );
+
+			if ( 'lazysizes' === $lazy_type ) {
+				$picture_img = self::set_lazyload( $picture_img, 'lazysizes' );
+			}
+		} elseif ( 1 === $i ) {
+			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="p-mainVisual__img u-obf-cover">';
+		} elseif ( $pc_imgid ) {
+			$picture_img = wp_get_attachment_image( $pc_imgid, 'full', false, [
+				'class'   => 'p-mainVisual__img u-obf-cover swiper-lazy',
+				'alt'     => $img_alt,
+				'loading' => 'auto',
+			] );
+		}
+
+		// SP画像
+		$source         = '';
+		$sp_imgid       = self::get_setting( "slider{$i}_imgid_sp" );
+		$picture_source = $sp_imgid ? self::get_img_source( $sp_imgid, [
+			'lazy_type' => $lazy_type,
+		] ) : '';
+
+		return $picture_source . $picture_img;
+	}
+
 }

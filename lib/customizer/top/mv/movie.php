@@ -21,7 +21,6 @@ Customizer::add(
 		'label'       => '動画(PC / Tab) ',
 		'type'        => 'media',
 		'mime_type'   => 'video',
-		'sanitize'    => ['\SWELL_THEME\Customizer\Sanitize', 'video' ],
 	]
 );
 
@@ -46,7 +45,6 @@ Customizer::add(
 		'label'       => '動画(SP)',
 		'type'        => 'media',
 		'mime_type'   => 'video',
-		'sanitize'    => ['\SWELL_THEME\Customizer\Sanitize', 'video' ],
 	]
 );
 
