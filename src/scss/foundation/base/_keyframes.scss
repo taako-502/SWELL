@@ -29,16 +29,13 @@
 @keyframes FadeInFromY {
 
     100% {
-        top: 0;
         opacity: 1;
+        transform: translateY(0);
     }
 }
 
 
 @keyframes flowing_text {
-    // 0%{
-    //   transform: translateX(0);
-    // }
     100% {
         transform: translateX(-100%);
     }
