@@ -93,6 +93,10 @@
         width: 100%;
         margin: 0;
     }
+
+    .c-postThumb__figure::before {
+        padding-top: 56.25%;
+    }
 }
 
 .p-blogCard__body {

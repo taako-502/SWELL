@@ -88,12 +88,12 @@ function swl_parts__pnlink( $args ) {
 		<?php
 			if ( $args['show_thumb'] ) :
 				\SWELL_Theme::get_image( get_post_thumbnail_id( $post_id ), [
-					'size'    => 'medium',
-					'class'   => 'p-pnLinks__thumb',
-					'width'   => '160',
-					'height'  => '90',
-					'srcset'  => '',
-					'echo'  => true,
+					'size'   => 'medium',
+					'class'  => 'p-pnLinks__thumb',
+					'width'  => '160',
+					'height' => '90',
+					'srcset' => '',
+					'echo'   => true,
 				]);
 			endif;
 

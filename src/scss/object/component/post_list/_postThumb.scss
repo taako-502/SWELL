@@ -23,7 +23,7 @@
 
 
     // リスト型の比率
-    .p-blogCard &::before,
+    // .p-blogCard &::before,
     .-type-list &::before,
     .-type-list2 &::before {
         padding-top: var(--list_posts_thumb_ratio);

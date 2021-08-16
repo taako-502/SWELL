@@ -91,9 +91,9 @@ if ( ! function_exists( 'swl_parts__blog_card' ) ) :
 		if ( '' === $thumb || $noimg ) {
 			$card_class .= ' -noimg';
 		} else {
+			$card_img   = '<img src="' . esc_url( $thumb ) . '" alt="" class="c-postThumb__img u-obf-cover -no-lb" width="320" height="180">';
 			$card_thumb = '<div class="p-blogCard__thumb c-postThumb"><figure class="c-postThumb__figure">' .
-				'<img src="' . esc_url( $thumb ) . '" alt="" class="c-postThumb__img u-obf-cover -no-lb">' .
-				'</figure></div>';
+			$card_img . '</figure></div>';
 		}
 
 		$card_excerpt = $nodesc ? '' : '<span class="p-blogCard__excerpt">' . esc_html( $excerpt ) . '</span>';
@@ -210,7 +210,6 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 			$post_id = $item->object_id;
 			$thumb   = SWELL::get_thumbnail( [
 				'post_id'   => $post_id,
-				'size'      => 'full',
 				'sizes'     => $sizes,
 				'class'     => $img_class,
 				'lazy_type' => $lazy_type,
@@ -219,7 +218,6 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 		} elseif ( $item->type === 'taxonomy' ) {
 			$thumb = SWELL::get_thumbnail( [
 				'term_id'   => $item->object_id,
-				'size'      => 'full',
 				'sizes'     => $sizes,
 				'class'     => $img_class,
 				'lazy_type' => $lazy_type,

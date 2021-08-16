@@ -19,14 +19,15 @@ if ( ! is_admin() ) {
 	// SEOプラグインのディスクリプション生成時に発火しないように、登録を遅らせる。
 	add_action('wp_head', function () {
 		add_filter( 'the_content', __NAMESPACE__ . '\add_toc', 12 );
-		if ( 'lazysizes' === \SWELL_Theme::$lazy_type ) {
-			add_filter( 'the_content', __NAMESPACE__ . '\add_lazysizes', 12 );
-		}
 
 		// URLの自動ブログカード化機能: プラグインなどで不具合があるページだけオフにしたりできるように apply_filters 付き
 		$remove_url_to_card = apply_filters( 'swell_remove_url_to_card', \SWELL_Theme::get_option( 'remove_url2card' ) );
 		if ( ! $remove_url_to_card ) {
 			add_filter( 'the_content', __NAMESPACE__ . '\url_to_blog_card', 12 );
+		}
+
+		if ( 'lazysizes' === \SWELL_Theme::$lazy_type ) {
+			add_filter( 'the_content', __NAMESPACE__ . '\add_lazysizes', 12 );
 		}
 
 	}, 99 );

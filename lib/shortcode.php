@@ -446,7 +446,7 @@ if ( ! function_exists( __NAMESPACE__ . '\custom_banner' ) ) :
 		if ( isset( $args['img_id'] ) ) {
 
 			$img_id = $args['img_id'];
-			$thumb  = wp_get_attachment_image( $img_id, 'full', false, [
+			$thumb  = \SWELL_Theme::get_image( $img_id, [
 				'class' => $img_class,
 				'alt'   => '',
 			] );
@@ -459,13 +459,13 @@ if ( ! function_exists( __NAMESPACE__ . '\custom_banner' ) ) :
 		} elseif ( $id ) {
 			if ( $is_term ) {
 				$thumb = \SWELL_Theme::get_thumbnail( [
-					'term_id'       => $id,
-					'class'         => $img_class,
+					'term_id' => $id,
+					'class'   => $img_class,
 				] );
 			} else {
 				$thumb = \SWELL_Theme::get_thumbnail( [
-					'post_id'       => $id,
-					'class'         => $img_class,
+					'post_id' => $id,
+					'class'   => $img_class,
 				] );
 			}
 		}

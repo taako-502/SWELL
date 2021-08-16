@@ -55,7 +55,7 @@ $tw_lang = ( 'ja' === $lang ) ? 'ja' : 'en'; // _x( 'en', 'tw', 'swell' );
 		<?php
 			\SWELL_Theme::get_thumbnail( [
 				'post_id' => get_the_ID(),
-				'size'    => 'medium_large',
+				'size'    => 'medium',
 				'sizes'   => '(min-width: 600px) 320px, 50vw',
 				'class'   => 'p-snsCta__img u-obf-cover',
 				'echo'    => true,

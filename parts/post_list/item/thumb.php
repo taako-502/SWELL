@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 $the_id   = $variable['post_id'] ?? get_the_ID();
 $sizes    = $variable['sizes'] ?? '(min-width: 960px) 960px, 100vw';
-$size     = $variable['size'] ?? '';
+$size     = $variable['size'] ?? 'full';
 $cat_pos  = $variable['cat_pos'] ?? 'none';
 $cat_data = $variable['cat_data'] ?? []; // 後方互換用
 ?>

@@ -23,10 +23,12 @@ if ( ! $term_thumb && ! $description ) return '';
 	<?php if ( $term_thumb ) : ?>
 		<figure class="p-termHead__thumbWrap">
 			<?php
+				$lazy_type     = apply_filters( 'swell_term_head_lazy_type', 'none' );
 				$term_thumb_id = attachment_url_to_postid( $term_thumb ) ?: 0;
 				\SWELL_Theme::get_image( $term_thumb_id, [
-					'class' => 'p-termHead__thumbImg u-obf-cover', // obfはdescription長い時用
-					'echo'  => true,
+					'class'   => 'p-termHead__thumbImg u-obf-cover', // obfはdescription長い時用
+					'loading' => $lazy_type,
+					'echo'    => true,
 				]);
 			?>
 		</figure>

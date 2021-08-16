@@ -297,72 +297,55 @@ trait Get {
 	 * memo : image_downsize( $img_id, 'medium' );
 	 */
 	public static function get_thumbnail( $args ) {
-		$post_id          = $args['post_id'] ?? 0;
-		$term_id          = $args['term_id'] ?? 0;
-		$size             = $args['size'] ?? 'full';
-		$sizes            = $args['sizes'] ?? '(min-width: 960px) 960px, 100vw';
-		$class            = $args['class'] ?? '';
-		$placeholder      = $args['placeholder'] ?? ''; // 後方互換用
-		$placeholder_size = $args['placeholder_size'] ?? '';
-		$lazy_type        = $args['lazy_type'] ?? self::$lazy_type;
-		$use_noimg        = $args['use_noimg'] ?? true;
-		$echo             = $args['echo'] ?? false;
+		$post_id   = $args['post_id'] ?? 0;
+		$term_id   = $args['term_id'] ?? 0;
+		$class     = $args['class'] ?? '';
+		$lazy_type = $args['lazy_type'] ?? self::$lazy_type;
+		$use_noimg = $args['use_noimg'] ?? true;
+		$echo      = $args['echo'] ?? false;
+		// $placeholder = $args['placeholder'] ?? ''; // 後方互換用
 
 		$class .= ' -no-lb';
 
-		$attachment_args = [
-			'class' => $class,
-			'title' => '',
-			'alt'   => '',
-			'sizes' => $sizes,
-		];
-
-		$thumb            = '';
-		$is_default_noimg = false;
+		$thumb_id  = 0;
+		$thumb_url = '';
 
 		if ( $term_id ) {
-			// タームページのサムネイルを取得したい時
 
-			$img_url = get_term_meta( $term_id, 'swell_term_meta_image', 1 );
-			$img_id  = attachment_url_to_postid( $img_url ) ?: 0;
-			$thumb   = wp_get_attachment_image( $img_id, $size, false, $attachment_args );
-			if ( $placeholder_size ) {
-				$placeholder = wp_get_attachment_image_url( $img_id, $placeholder_size ) ?: '';
-			}
+			$img_url  = get_term_meta( $term_id, 'swell_term_meta_image', 1 );
+			$thumb_id = attachment_url_to_postid( $img_url ) ?: 0;
+
 		} elseif ( has_post_thumbnail( $post_id ) ) {
-			// アイキャッチ画像の設定がある場合はそれを取得
 
-			$thumb = get_the_post_thumbnail( $post_id, $size, $attachment_args );
-			if ( $placeholder_size ) {
-				$placeholder = get_the_post_thumbnail_url( $post_id, $placeholder_size ) ?: '';
-			}
+			$thumb_id = get_post_thumbnail_id( $post_id );
+
 		} elseif ( $use_noimg ) {
-			$noimg_id = self::get_noimg( 'id' );
 
-			// NO-IMG設定があればそのIDから指定されたサイズの画像を取得
-			if ( $noimg_id ) {
-				$thumb = wp_get_attachment_image( $noimg_id, $size, false, $attachment_args );
-				if ( $placeholder_size ) {
-					$placeholder = wp_get_attachment_image_url( $noimg_id, $placeholder_size ) ?: '';
-				}
-			} else {
-				$thumb            = '<img src="' . esc_url( self::get_noimg( 'url' ) ) . '" class="' . esc_attr( $class ) . '">';
-				$is_default_noimg = true;
+			$thumb_id = self::get_noimg( 'id' );
+			if ( ! $thumb_id ) {
+				$thumb_url = self::get_noimg( 'url' );
 			}
-		} else {
-			return '';
 		}
 
 		// ソース置換
-		if ( ! $is_default_noimg ) {
-			$thumb = str_replace( ' title=""', '', $thumb );
-			// if ( $sizes ) {
-			// 	$thumb = preg_replace( '/ sizes="([^"]*)"/', ' sizes="' . $sizes . '"', $thumb );
-			// }
-		}
+		if ( $thumb_id ) {
 
-		// lazyload
-		$thumb = self::set_lazyload( $thumb, $lazy_type, $placeholder );
+			$thumb = self::get_image( $thumb_id, [
+				'class'   => $class,
+				'alt'     => '',
+				'size'    => $args['size'] ?? 'full',
+				'sizes'   => $args['sizes'] ?? '(min-width: 960px) 960px, 100vw',
+				'loading' => $lazy_type,
+			]);
+
+		} elseif ( $thumb_url ) {
+
+			$thumb = '<img src="' . esc_url( $thumb_url ) . '" alt="" class="' . esc_attr( $class ) . '">';
+			$thumb = self::set_lazyload( $thumb, self::$lazy_type );
+
+		} else {
+			return '';
+		}
 
 		if ( $echo ) {
 			echo $thumb; // phpcs:ignore
@@ -883,12 +866,12 @@ trait Get {
 			}
 		}
 
-		// layzload
+		// lazyload
 		$loading = $args['loading'] ?? \SWELL_Theme::$lazy_type;
 		if ( 'lazy' === $loading || 'eager' === $loading ) {
 			$attrs['loading'] = $loading;
 		} elseif ( 'lazysizes' === $loading ) {
-			$attrs['class']   .= ' layzload';
+			$attrs['class']   .= ' lazyload';
 			$attrs['data-src'] = $attrs['src'];
 			$attrs['src']      = $args['placeholder'] ?? self::$placeholder;
 			if ( isset( $attrs['srcset'] ) ) {
