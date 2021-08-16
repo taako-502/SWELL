@@ -185,8 +185,10 @@ trait Default_Settings {
 
 	public static function set_default_customizer() {
 		return [
-			'no_image'                => T_DIRE_URI . '/assets/img/no_img.png',
-			'ttlbg_default_img'       => '',
+			'noimg_id'                => 0,
+			'ttlbg_default_imgid'     => '',
+			// 'ttlbg_dflt_imgid'        => 0,
+
 			// ヘッダー設定
 			'logo'                    => '', // 3.0で消す
 			'logo_top'                => '', // 3.0で消す

@@ -54,8 +54,8 @@ function hook_wp_loaded() {
 	SWELL::set_use( 'sp_head_nav', has_nav_menu( 'sp_head_menu' ) );
 
 	// NO IMAGE画像
-	$noimg_url             = $SETTING['no_image'] ?: '';
-	$noimg_id              = attachment_url_to_postid( $noimg_url ) ?: 0;
+	$noimg_id              = $SETTING['noimg_id'];
+	$noimg_url             = wp_get_attachment_url( $noimg_id ) ?: T_DIRE_URI . '/assets/img/no_img.png';
 	$noimg_m_url           = $noimg_id ? wp_get_attachment_image_url( $noimg_id, 'medium' ) : $noimg_url;
 	SWELL::$noimg['id']    = $noimg_id;
 	SWELL::$noimg['url']   = $noimg_url;
