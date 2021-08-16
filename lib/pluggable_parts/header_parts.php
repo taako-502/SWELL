@@ -31,12 +31,12 @@ if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 			return;
 		}
 
-		$logo_sizes = apply_filters( 'swell_head_logo_sizes', '(max-width: 999px) 50vw, 800px' );
+		$logo_sizes = apply_filters( 'swell_head_logo_sizes', '(max-width: 959px) 50vw, 800px' );
 
 		if ( ! $use_overlay_header ) {
 			// 通常時
 
-			$return = wp_get_attachment_image( $logo_id, 'full', false, [
+			$return = SWELL::get_image( $logo_id, [
 				'class'   => 'c-headLogo__img',
 				'sizes'   => $logo_sizes,
 				'alt'     => SWELL::site_data( 'title' ),
@@ -45,14 +45,14 @@ if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 
 		} else {
 			// ヘッダーオーバーレイ有効時
-			$logo_top = wp_get_attachment_image( $logo_top_id, 'full', false, [
+			$logo_top = SWELL::get_image( $logo_top_id, [
 				'class'   => 'c-headLogo__img -top',
 				'sizes'   => $logo_sizes,
 				'alt'     => SWELL::site_data( 'title' ),
 				'loading' => 'eager',
 			] );
 
-			$common_logo = wp_get_attachment_image( $logo_id, 'full', false, [
+			$common_logo = SWELL::get_image( $logo_id, [
 				'class'   => 'c-headLogo__img -common',
 				'sizes'   => $logo_sizes,
 				'alt'     => '',

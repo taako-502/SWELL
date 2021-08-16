@@ -82,18 +82,24 @@ endif;
  */
 if ( ! function_exists( 'swl_parts__pnlink' ) ) :
 function swl_parts__pnlink( $args ) {
-		?>
-	<a href="<?=esc_url( get_permalink( $args['id'] ) )?>" rel="<?=esc_attr( $args['type'] )?>" class="p-pnLinks__link">
+	$post_id = $args['id'];
+	?>
+	<a href="<?=esc_url( get_permalink( $post_id ) )?>" rel="<?=esc_attr( $args['type'] )?>" class="p-pnLinks__link">
 		<?php
-			if ( $args['thumb'] ) :
-				\SWELL_Theme::lazyimg([
-					'src'   => $args['thumb'],
-					'class' => 'p-pnLinks__thumb',
+			if ( $args['show_thumb'] ) :
+				\SWELL_Theme::get_image( get_post_thumbnail_id( $post_id ), [
+					'size'    => 'medium',
+					'class'   => 'p-pnLinks__thumb',
+					'width'   => '160',
+					'height'  => '90',
+					'srcset'  => '',
+					'echo'  => true,
 				]);
 			endif;
+
 		?>
 		<span class="p-pnLinks__title"><?=esc_html( $args['title'] )?></span>
 	</a>
-		<?php
+	<?php
 }
 endif;

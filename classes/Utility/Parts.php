@@ -29,22 +29,6 @@ trait Parts {
 
 
 	/**
-	 * lazyload画像
-	 */
-	public static function lazyimg( $args = [] ) {
-		$src         = $args['src'] ?? '';
-		$alt         = $args['alt'] ?? '';
-		$class       = $args['class'] ?? '';
-		$placeholder = $args['placeholder'] ?? '';
-
-		$img = '<img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
-
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo self::set_lazyload( $img, self::$lazy_type, $placeholder );
-	}
-
-
-	/**
 	 * テンプレート読み込み
 	 * $path       : 読み込むファイルのパス
 	 * $variable   : 引数として利用できるようにする変数

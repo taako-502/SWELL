@@ -23,9 +23,10 @@ if ( ! $term_thumb && ! $description ) return '';
 	<?php if ( $term_thumb ) : ?>
 		<figure class="p-termHead__thumbWrap">
 			<?php
-				\SWELL_Theme::lazyimg([
-					'src'   => $term_thumb,
+				$term_thumb_id = attachment_url_to_postid( $term_thumb ) ?: 0;
+				\SWELL_Theme::get_image( $term_thumb_id, [
 					'class' => 'p-termHead__thumbImg u-obf-cover', // obfはdescription長い時用
+					'echo'  => true,
 				]);
 			?>
 		</figure>

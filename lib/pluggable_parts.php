@@ -198,14 +198,12 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 		// 説明欄に直接画像URLがある場合
 		$img_url = $item->description;
 		if ( $img_url ) {
-
-			// キャッシュ
-			$img_id = attachment_url_to_postid( $img_url ) ?: 0;
-			$thumb  = wp_get_attachment_image( $img_id, 'full', false, [
-				'class' => $img_class,
-				'sizes' => $sizes,
-			] );
-			$thumb  = SWELL::set_lazyload( $thumb, $lazy_type );
+			$img_id = SWELL::get_imgid_from_url( $img_url );
+			$thumb  = SWELL::get_image( $img_id, [
+				'class'   => $img_class,
+				'sizes'   => $sizes,
+				'loading' => $lazy_type,
+			]);
 
 		} elseif ( $item->type === 'post_type' ) {
 

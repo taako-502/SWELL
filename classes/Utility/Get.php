@@ -372,6 +372,23 @@ trait Get {
 
 
 	/**
+	 * attachment_url_to_postid のキャッシュあり版
+	 */
+	public static function get_imgid_from_url( $img_url ) {
+		$cache_key = 'swell_imgid_' . md5( $img_url );
+
+		// キャッシュチェック
+		$cached_id = get_transient( $cache_key );
+		if ( $cached_id ) return $cached_id;
+
+		$img_id = attachment_url_to_postid( $img_url ) ?: 0;
+
+		set_transient( $cache_key, $img_id, DAY_IN_SECONDS * 30 );
+		return $img_id;
+	}
+
+
+	/**
 	 * アーカイブページのデータを取得
 	 */
 	public static function get_archive_data() {
@@ -820,45 +837,124 @@ trait Get {
 
 
 	/**
+	 * wp_get_attachment_image から必要な部分だけ抜き取った関数
+	 */
+	public static function get_image( $img_id, $args = [] ) {
+
+		$echo = $args['echo'] ?? false;
+		$size = $args['size'] ?? 'full';
+
+		$html  = '';
+		$image = wp_get_attachment_image_src( $img_id, $size, false );
+
+		if ( ! $image ) return '';
+
+		list( $src, $width, $height ) = $image;
+		$size_array                   = [ absint( $width ), absint( $height ) ];
+
+		$width  = $args['width'] ?? $width;
+		$height = $args['height'] ?? $height;
+
+		// imgタグのattrs
+		$attrs = [
+			'src'    => $src,
+			'alt'    => $args['alt'] ?? '',
+			'class'  => $args['class'] ?? '',
+			'srcset' => $args['srcset'] ?? false,
+			'sizes'  => $args['sizes'] ?? false,
+		];
+
+		// 'srcset' と 'sizes' を生成
+		if ( '' === $attrs['srcset'] ) {
+			$attrs['srcset'] = false;
+		} else {
+			$image_meta = wp_get_attachment_metadata( $img_id );
+
+			if ( is_array( $image_meta ) ) {
+				// srcset の指定がなければ
+				if ( ! $attrs['srcset'] ) {
+					$attrs['srcset'] = wp_calculate_image_srcset( $size_array, $src, $image_meta, $img_id );
+				}
+
+				// sizes の指定がなければ (かつ、srcset があれば)
+				if ( $attrs['srcset'] && ! $attrs['sizes'] ) {
+					$attrs['sizes'] = wp_calculate_image_sizes( $size_array, $src, $image_meta, $img_id );
+				}
+			}
+		}
+
+		// layzload
+		$loading = $args['loading'] ?? \SWELL_Theme::$lazy_type;
+		if ( 'lazy' === $loading || 'eager' === $loading ) {
+			$attrs['loading'] = $loading;
+		} elseif ( 'lazysizes' === $loading ) {
+			$attrs['class']   .= ' layzload';
+			$attrs['data-src'] = $attrs['src'];
+			$attrs['src']      = $args['placeholder'] ?? self::$placeholder;
+			if ( isset( $attrs['srcset'] ) ) {
+				$attrs['data-srcset'] = $attrs['srcset'];
+				unset( $attrs['srcset'] );
+			}
+			if ( $width && $height ) {
+				$attrs['data-aspectratio'] = $width . '/' . $height;
+			}
+		}
+
+		$img_props = image_hwstring( $width, $height );
+
+		foreach ( $attrs as $name => $val ) {
+			if ( false === $val ) continue;
+			$img_props .= ' ' . $name . '="' . esc_attr( $val ) . '"';
+		}
+
+		if ( $echo ) {
+			echo "<img $img_props >"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		return "<img $img_props >";
+	}
+
+
+	/**
 	 * 画像IDからsourceタグを生成
 	 */
 	public static function get_img_source( $img_id, $args = [] ) {
-		$lazy_type   = $args['lazy_type'] ?? 'none';
-		$placeholder = $args['placeholder'] ?? self::$placeholder;
-		$media       = $args['media'] ?? '(max-width: 959px)';
-		$sizes       = $args['sizes'] ?? '100vw';
+		$size = $args['size'] ?? 'full';
 
-		$img_data = wp_get_attachment_image_src( $img_id, 'full' );
+		$img_data = wp_get_attachment_image_src( $img_id, $size );
 		if ( ! $img_data) return '';
 
 		$src    = $img_data[0];
 		$width  = $img_data[1];
 		$height = $img_data[2];
-		$srcset = wp_get_attachment_image_srcset( $img_id, 'full' );
+		$srcset = wp_get_attachment_image_srcset( $img_id, $size );
 
-		$source_props = 'media="' . esc_attr( $media ) . '" sizes="' . esc_attr( $sizes ) . '"';
+		$attrs = [
+			'media' => $args['media'] ?? '(max-width: 959px)',
+		];
+		if ( $srcset ) {
+			$attrs['sizes'] = $args['sizes'] ?? '100vw';
+		}
 
-		if ( 'lazysizes' === $lazy_type ) {
-			$source_props .= ' src="' . esc_url( $placeholder, [ 'http', 'https', 'data' ] ) . '"';
-			$source_props .= ' data-src="' . esc_attr( $src ) . '"';
+		$loading = $args['loading'] ?? 'none';
+		if ( 'lazysizes' === $loading ) {
+			$attrs['src']         = $args['placeholder'] ?? self::$placeholder;
+			$attrs['data-src']    = $src;
+			$attrs['data-srcset'] = $srcset;
 		} else {
-			$source_props .= ' src="' . esc_attr( $src ) . '"';
+			$attrs['src']    = $src;
+			$attrs['srcset'] = $srcset;
 
-			if ( 'lazy' === $lazy_type ) {
-				$source_props .= ' loading="lazy"';
+			if ( 'lazy' === $loading ) {
+				$attrs['loading'] = 'lazy';
 			}
 		}
 
-		if ( $srcset ) {
-			$source_props .= ' srcset="' . esc_attr( $srcset ) . '"';
+		$source_props = image_hwstring( $width, $height );
+		foreach ( $attrs as $name => $val ) {
+			if ( false === $val ) continue;
+			$source_props .= ' ' . $name . '="' . esc_attr( $val ) . '"';
 		}
-		if ( $width ) {
-			$source_props .= ' width="' . esc_attr( $width ) . '"';
-		}
-		if ( $height ) {
-			$source_props .= ' height="' . esc_attr( $height ) . '"';
-		}
-		return '<source ' . $source_props . '>';
+		return "<source $source_props >";
 	}
 
 
@@ -872,22 +968,20 @@ trait Get {
 		$img_alt     = self::get_setting( "slider{$i}_alt" );
 
 		if ( 1 === $i && $pc_imgid ) {
-			$picture_img = wp_get_attachment_image( $pc_imgid, 'full', false, [
+			$picture_img = self::get_image( $pc_imgid, [
 				'class'   => 'p-mainVisual__img u-obf-cover',
 				'alt'     => $img_alt,
-				'loading' => 'lazy' === $lazy_type ? 'lazy' : 'eager',
+				'loading' => $lazy_type,
 			] );
-
-			if ( 'lazysizes' === $lazy_type ) {
-				$picture_img = self::set_lazyload( $picture_img, 'lazysizes' );
-			}
 		} elseif ( 1 === $i ) {
+
 			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="p-mainVisual__img u-obf-cover">';
+
 		} elseif ( $pc_imgid ) {
-			$picture_img = wp_get_attachment_image( $pc_imgid, 'full', false, [
+			$picture_img = self::get_image( $pc_imgid, [
 				'class'   => 'p-mainVisual__img u-obf-cover swiper-lazy',
 				'alt'     => $img_alt,
-				'loading' => 'auto',
+				'loading' => '',
 			] );
 		}
 
@@ -895,7 +989,7 @@ trait Get {
 		$source         = '';
 		$sp_imgid       = self::get_setting( "slider{$i}_imgid_sp" );
 		$picture_source = $sp_imgid ? self::get_img_source( $sp_imgid, [
-			'lazy_type' => $lazy_type,
+			'loading' => $lazy_type,
 		] ) : '';
 
 		return $picture_source . $picture_img;
