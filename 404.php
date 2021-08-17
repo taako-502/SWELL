@@ -18,7 +18,6 @@ get_header();
 			<div class="is-style-more_btn">
 				<a href="<?=esc_url( \SWELL_Theme::site_data( 'home' ) )?>">TOPページへ</a>
 			</div>
-
 		</div>
 	</div>
 </main>

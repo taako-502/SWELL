@@ -33,7 +33,6 @@ console.log('SWELL: Loaded mediauploader.');
 		customUploader.on('select', function () {
 			// Get media attachment details from the frame state
 			const images = customUploader.state().get('selection');
-			// console.log(images);
 
 			// Get media attachment details from the frame state
 			const theImage = images.first().toJSON();
@@ -84,7 +83,7 @@ console.log('SWELL: Loaded mediauploader.');
 	$(document).on('click', '[name=media-upload-btn]', function (e) {
 		e.preventDefault();
 		const btnId = $(this).attr('data-id');
-		// console.log(btnId);
+
 		mediaSelectBtnClick(btnId);
 	});
 
