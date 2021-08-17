@@ -312,8 +312,7 @@ trait Get {
 
 		if ( $term_id ) {
 
-			$img_url  = get_term_meta( $term_id, 'swell_term_meta_image', 1 );
-			$thumb_id = attachment_url_to_postid( $img_url ) ?: 0;
+			$thumb_id = self::get_term_thumb_id( $term_id );
 
 		} elseif ( has_post_thumbnail( $post_id ) ) {
 
@@ -840,11 +839,12 @@ trait Get {
 
 		// imgタグのattrs
 		$attrs = [
-			'src'    => $src,
-			'alt'    => $args['alt'] ?? '',
-			'class'  => $args['class'] ?? '',
-			'srcset' => $args['srcset'] ?? false,
-			'sizes'  => $args['sizes'] ?? false,
+			'src'         => $src,
+			'alt'         => $args['alt'] ?? '',
+			'class'       => $args['class'] ?? '',
+			'srcset'      => $args['srcset'] ?? false,
+			'sizes'       => $args['sizes'] ?? false,
+			'aria-hidden' => $args['aria-hidden'] ?? false,
 		];
 
 		// 'srcset' と 'sizes' を生成
@@ -976,6 +976,71 @@ trait Get {
 		] ) : '';
 
 		return $picture_source . $picture_img;
+	}
+
+
+	/**
+	 * 投稿の背景画像IDを取得
+	 */
+	public static function get_post_ttlbg_id( $post_id ) {
+		$meta = get_post_meta( $post_id, 'swell_meta_ttlbg', true );
+
+		if ( false !== strpos( $meta, 'http' ) ) {
+			$id = attachment_url_to_postid( $meta );
+			update_post_meta( $post_id, 'swell_meta_ttlbg', (string) $id );
+		} else {
+			$id = (int) $meta;
+		}
+
+		if ( $id ) return $id;
+
+		$id = $id
+			?: self::get_setting( 'ttlbg_dflt_imgid' )
+			?: get_post_thumbnail_id( $post_id )
+			?: self::get_noimg( 'id' );
+
+		return $id;
+	}
+
+
+	/**
+	 * タームの背景画像IDを取得
+	 */
+	public static function get_term_ttlbg_id( $term_id ) {
+		$meta = get_term_meta( $term_id, 'swell_term_meta_ttlbg', 1 );
+
+		if ( false !== strpos( $meta, 'http' ) ) {
+			$id = attachment_url_to_postid( $meta );
+			update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+		} else {
+			$id = (int) $meta;
+		}
+
+		if ( $id ) return $id;
+
+		$id = $id
+			?: self::get_setting( 'ttlbg_dflt_imgid' )
+			?: self::get_term_thumb_id( $term_id )
+			?: self::get_noimg( 'id' );
+
+		return $id;
+	}
+
+
+	/**
+	 * タームのアイキャッチ画像IDを取得
+	 */
+	public static function get_term_thumb_id( $term_id ) {
+		$meta = get_term_meta( $term_id, 'swell_term_meta_image', 1 );
+
+		if ( false !== strpos( $meta, 'http' ) ) {
+			$id = attachment_url_to_postid( $meta );
+			update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+		} else {
+			$id = (int) $meta;
+		}
+
+		return $id;
 	}
 
 }

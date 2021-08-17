@@ -246,7 +246,7 @@ class Updated_Action {
 			'logo'              => 'logo_id',
 			'logo_top'          => 'logo_top_id',
 			'no_image'          => 'noimg_id',
-			// 'ttlbg_default_img' => 'ttlbg_dflt_imgid',
+			'ttlbg_default_img' => 'ttlbg_dflt_imgid',
 			'slider1_img'       => 'slider1_imgid',
 			'slider1_img_sp'    => 'slider1_imgid_sp',
 			'slider2_img'       => 'slider2_imgid',

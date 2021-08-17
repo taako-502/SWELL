@@ -37,10 +37,16 @@ console.log('SWELL: Loaded mediauploader.');
 
 			// Get media attachment details from the frame state
 			const theImage = images.first().toJSON();
-			// console.log(theImage);
+
+			const dataType = srcInputField.attr('data-type');
 
 			// inputタグにURLをセット
-			srcInputField.val(theImage.url);
+			if ('id' === dataType) {
+				srcInputField.val(theImage.id);
+			} else {
+				srcInputField.val(theImage.url);
+			}
+
 			srcInputField.change();
 
 			// プレビューエリアを更新
@@ -78,7 +84,7 @@ console.log('SWELL: Loaded mediauploader.');
 	$(document).on('click', '[name=media-upload-btn]', function (e) {
 		e.preventDefault();
 		const btnId = $(this).attr('data-id');
-		console.log(btnId);
+		// console.log(btnId);
 		mediaSelectBtnClick(btnId);
 	});
 

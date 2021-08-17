@@ -13,21 +13,19 @@ $is_show_desc  = get_term_meta( $term_id, 'swell_term_meta_show_desc', 1 );
 $is_show_thumb = ( '1' === $is_show_thumb );  // 標準：オフ
 $is_show_desc  = ( '0' !== $is_show_desc );   // 標準：オン
 
-$term_thumb  = $is_show_thumb ? get_term_meta( $term_id, 'swell_term_meta_image', 1 ) : '';
-$description = $is_show_desc ? $description : '';
+$term_thumb_id = $is_show_thumb ? \SWELL_Theme::get_term_thumb_id( $term_id ) : 0;
+$description   = $is_show_desc ? $description : '';
 
-if ( ! $term_thumb && ! $description ) return '';
+if ( ! $term_thumb_id && ! $description ) return '';
 
 ?>
 <div class="p-termHead">
-	<?php if ( $term_thumb ) : ?>
+	<?php if ( $term_thumb_id ) : ?>
 		<figure class="p-termHead__thumbWrap">
 			<?php
-				$lazy_type     = apply_filters( 'swell_term_head_lazy_type', 'none' );
-				$term_thumb_id = attachment_url_to_postid( $term_thumb ) ?: 0;
 				\SWELL_Theme::get_image( $term_thumb_id, [
 					'class'   => 'p-termHead__thumbImg u-obf-cover', // obfはdescription長い時用
-					'loading' => $lazy_type,
+					'loading' => apply_filters( 'swell_term_head_lazy_type', 'none' ),
 					'echo'    => true,
 				]);
 			?>

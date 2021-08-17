@@ -97,7 +97,7 @@ function side_meta_cb( $post ) {
 				<?=esc_html__( 'Background image for title', 'swell' )?>
 			</label>
 			<div class="swl-meta__field">
-				<?php Field::media_btns( 'swell_meta_ttlbg', $meta_val ); ?>
+				<?php Field::media_btns( 'swell_meta_ttlbg', $meta_val, 'id' ); ?>
 			</div>
 			<p class="swl-meta__desc">
 				<?=esc_html__( 'Specify the background image when the title display position is "Above the content".', 'swell' )?>

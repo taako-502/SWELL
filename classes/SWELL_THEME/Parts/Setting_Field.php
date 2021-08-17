@@ -35,17 +35,22 @@ class Setting_Field {
 	/**
 	 * 画像アップロード
 	 */
-	public static function media_btns( $id = '', $src = '' ) {
+	public static function media_btns( $id, $val, $type = 'url' ) {
+		if ( 'id' === $type ) {
+			$src = wp_get_attachment_url( $val ) ?: $val;
+		} else {
+			$src = $val;
+		}
 	?>
-		<input type="hidden" id="src_<?=$id?>" name="<?=$id?>" value="<?=esc_attr( $src )?>" />
-		<div id="preview_<?=$id?>" class="media_preview">
+		<input type="hidden" id="src_<?=esc_attr( $id )?>" name="<?=esc_attr( $id )?>" value="<?=esc_attr( $val )?>" data-type="<?=esc_attr( $type )?>" />
+		<div id="preview_<?=esc_attr( $id )?>" class="media_preview">
 			<?php if ( $src ) : ?>
-				<img src="<?=esc_url( $src )?>" alt="preview" style="max-width:100%;max-height:300px;">
+				<img src="<?=esc_attr( $src )?>" alt="preview" style="max-width:100%;max-height:300px;">
 			<?php endif; ?>
 		</div>
 		<div class="media_btns">
-			<input class="button" type="button" name="media-upload-btn" data-id="<?=$id?>" value="<?=__( 'Select image', 'swell' )?>" />
-			<input class="button" type="button" name="media-clear" value="<?=__( 'Delete image', 'swell' )?>" data-id="<?=$id?>" />
+			<input class="button" type="button" name="media-upload-btn" data-id="<?=esc_attr( $id )?>" value="<?=esc_attr__( 'Select image', 'swell' )?>" />
+			<input class="button" type="button" name="media-clear" value="<?=esc_attr__( 'Delete image', 'swell' )?>" data-id="<?=esc_attr( $id )?>" />
 		</div>
 	<?php
 	}
@@ -58,7 +63,7 @@ class Setting_Field {
 		if ( ! $term_slug ) return;
 		?>
 			<select name="" class="swell_parts_select" data-for="<?=esc_attr( $target_id )?>">
-				<option value="">-- <?=__( 'Select Blog Parts', 'swell' )?> --</option>
+				<option value="">-- <?=esc_html__( 'Select Blog Parts', 'swell' )?> --</option>
 				<?php
 
 					$args      = [
@@ -82,7 +87,9 @@ class Setting_Field {
 						$the_ID   = (string) get_the_ID();
 						$selected = selected( $parts_id, $the_ID, false );
 					?>
-						<option value="<?=esc_attr( $the_ID )?>"<?=$selected?>><?php the_title(); ?></option>
+						<option value="<?=esc_attr( $the_ID )?>"<?=$selected?>>
+							<?php the_title(); ?>
+						</option>
 					<?php
 					endwhile;
 					wp_reset_postdata();
