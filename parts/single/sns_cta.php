@@ -57,7 +57,6 @@ $tw_lang = ( 'ja' === $lang ) ? 'ja' : 'en'; // _x( 'en', 'tw', 'swell' );
 				'post_id' => get_the_ID(),
 				'size'    => 'medium',
 				'srcset'  => '',
-				// 'sizes'   => '(min-width: 600px) 320px, 50vw',
 				'class'   => 'p-snsCta__img u-obf-cover',
 				'echo'    => true,
 			] );

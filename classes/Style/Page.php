@@ -23,6 +23,7 @@ class Page {
 		style::add( '.l-topTitleArea.c-filterLayer::before', [
 			'background-color:' . $ttlbg_overlay_color,
 			'opacity:' . $ttlbg_overlay_opacity,
+			'content:""',
 		]);
 	}
 
