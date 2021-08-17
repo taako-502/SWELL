@@ -39,7 +39,7 @@ if ( $sp_poster ) {
 			<source data-src-sp="<?=esc_url( $sp_video_url )?>" data-src-pc="<?=esc_url( $pc_video_url )?>">
 		</video>
 	</div>
-	<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
+	<div class="p-mainVisual__textLayer l-container l-parent u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 	<?php
 		// キャッチコピー
 		if ( '' !== $slide_title ) {

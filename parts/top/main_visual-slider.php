@@ -38,7 +38,7 @@ $mv_img_filter = $SETTING['mv_img_filter']
 					$parts_id    = (int) $SETTING[ 'slider' . $i . '_parts_id' ];
 					$text_style  = SWELL_Theme::get_mv_text_style( $txtcol, $shadowcol );
 			?>
-				<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
+				<div class="p-mainVisual__textLayer l-parent l-parent l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 					<?php
 						// キャッチコピー
 						if ( '' !== $slide_title ) {
@@ -106,7 +106,7 @@ $mv_img_filter = $SETTING['mv_img_filter']
 			$shadowcol   = $SETTING['slider1_shadowcol'];
 			$text_style  = SWELL_Theme::get_mv_text_style( $txtcol, $shadowcol );
 	?>
-		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
+		<div class="p-mainVisual__textLayer l-parent l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 			<?php
 				// キャッチコピー
 				if ( '' !== $slide_title ) {

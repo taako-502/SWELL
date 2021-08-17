@@ -42,7 +42,7 @@
     //     margin: .5em 0 1.5em;
     // }
 
-    & > div {
+    > div {
         pointer-events: none;
     }
 
@@ -71,16 +71,8 @@
 
     .post_content {
 
-        & > :first-child {
-            margin-top: 0 !important;
-        }
-
-        & > :last-child {
-            margin-bottom: 0 !important;
-        }
-
         //各要素のマージン
-        & > * {
+        > * {
             clear: both;
             margin-bottom: 2em;
         }
@@ -92,7 +84,7 @@
     display: flex;
     width: 100%;
 
-    & > .components-base-control:first-child {
+    > .components-base-control:first-child {
         flex-basis: 50%;
         margin-right: 8px;
     }

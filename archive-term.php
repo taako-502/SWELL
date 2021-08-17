@@ -44,7 +44,7 @@ $list_type = apply_filters( 'swell_post_list_type_on_term', $list_type, $term_id
 				'description' => $wp_obj->description,
 			] );
 		?>
-		<div class="p-termContent">
+		<div class="p-termContent l-parent">
 		<?php
 			// ブログパーツ
 			$parts_id = get_term_meta( $term_id, 'swell_term_meta_display_parts', 1 );

@@ -30,7 +30,7 @@ $parts_id = (int) $SETTING['slider1_parts_id'];
 		<picture class="p-mainVisual__imgLayer c-filterLayer__img">
 			<?php echo $slide_img; //phpcs:ignore ?>
 		</picture>
-		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
+		<div class="p-mainVisual__textLayer l-parent l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 		<?php
 			// キャッチコピー
 			if ( '' !== $slide_title ) {
