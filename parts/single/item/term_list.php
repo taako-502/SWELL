@@ -20,7 +20,7 @@ $tag_data = $show_tag ? SWELL_Theme::get_the_terms_data( $the_id, 'post_tag' ) :
 <?php if ( ! empty( $tag_data ) ) : ?>
 	<div class="p-articleMetas__termList c-tagList">
 		<?php foreach ( $tag_data as $data ) : ?>
-			<a class="c-tagList__link hov-flash-up" href="<?=esc_url( $data['url'] )?>'" data-tag-id="<?=esc_attr( $data['id'] )?>">
+			<a class="c-tagList__link hov-flash-up" href="<?=esc_url( $data['url'] )?>" data-tag-id="<?=esc_attr( $data['id'] )?>">
 				<?=esc_html( $data['name'] )?>
 			</a>
 		<?php endforeach; ?>
