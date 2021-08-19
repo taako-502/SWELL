@@ -23,7 +23,7 @@ function updated_hook() {
 	if ( false === $old_ver ) {
 
 		update_option( 'swell_version', $now_ver ); // 現在のバージョンをDBに記憶
-		\SWELL_Theme\Updated_Action\all_cache_delete();
+		all_cache_delete();
 
 	} elseif ( $old_ver !== $now_ver ) {
 
