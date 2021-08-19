@@ -55,7 +55,10 @@ function setFullScreenHeight(mainVisual) {
 	const header = document.getElementById('header');
 
 	//offsetHを計算：フルワイド幅からどれだけ引くか
-	if (header.classList.contains('-transparent')) return;
+	if (header.classList.contains('-transparent')) {
+		mainVisual.style.setProperty('--swl-headerH', '0px');
+		return;
+	}
 
 	let offsetH = 0;
 
