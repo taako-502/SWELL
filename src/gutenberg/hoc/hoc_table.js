@@ -88,6 +88,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 	// }
 	useEffect(() => {
 		const scrollableTable = document.querySelector(`[data-block="${clientId}"] table`);
+		if (null === scrollableTable) return;
 		if ('' === swlScrollable || 'sp' === swlScrollable) {
 			scrollableTable.style.width = null;
 			scrollableTable.style.maxWidth = null;

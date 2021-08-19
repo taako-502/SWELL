@@ -19,8 +19,8 @@ import blockIcon from './_icon';
 import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 import AcordionSidebar from './_sidebar';
 
-const ALLOWED_BLOCKS = ['accordion-item'];
-const TEMPLATE = [['accordion-item']];
+const ALLOWED_BLOCKS = ['loos/accordion-item'];
+const TEMPLATE = [['loos/accordion-item']];
 
 /**
  * アコーディオンブロック
