@@ -297,85 +297,76 @@ trait Get {
 	 * memo : image_downsize( $img_id, 'medium' );
 	 */
 	public static function get_thumbnail( $args ) {
-		$post_id          = $args['post_id'] ?? 0;
-		$term_id          = $args['term_id'] ?? 0;
-		$size             = $args['size'] ?? 'full';
-		$sizes            = $args['sizes'] ?? '(min-width: 960px) 960px, 100vw';
-		$class            = $args['class'] ?? '';
-		$placeholder      = $args['placeholder'] ?? ''; // 後方互換用
-		$placeholder_size = $args['placeholder_size'] ?? '';
-		$use_lazyload     = $args['use_lazyload'] ?? false;
-		$use_noimg        = $args['use_noimg'] ?? true;
-		$echo             = $args['echo'] ?? false;
+		$post_id   = $args['post_id'] ?? 0;
+		$term_id   = $args['term_id'] ?? 0;
+		$class     = $args['class'] ?? '';
+		$lazy_type = $args['lazy_type'] ?? self::$lazy_type;
+		$use_noimg = $args['use_noimg'] ?? true;
+		$echo      = $args['echo'] ?? false;
+		// $placeholder = $args['placeholder'] ?? ''; // 後方互換用
 
-		$attachment_args = [
-			'class' => $class . ' -no-lb',
-			'title' => '',
-			// 'alt' => '',
-		];
+		$class .= ' -no-lb';
 
-		$thumb            = '';
-		$is_default_noimg = false;
+		$thumb_id  = 0;
+		$thumb_url = '';
 
 		if ( $term_id ) {
-			// タームページのサムネイルを取得したい時
 
-			$img_url = get_term_meta( $term_id, 'swell_term_meta_image', 1 );
-			$img_id  = attachment_url_to_postid( $img_url ) ?: 0;
-			$thumb   = wp_get_attachment_image( $img_id, $size, false, $attachment_args );
-			if ( $placeholder_size ) {
-				$placeholder = wp_get_attachment_image_url( $img_id, $placeholder_size ) ?: '';
-			}
+			$thumb_id = self::get_term_thumb_id( $term_id );
+
 		} elseif ( has_post_thumbnail( $post_id ) ) {
-			// アイキャッチ画像の設定がある場合はそれを取得
 
-			$thumb = get_the_post_thumbnail( $post_id, $size, $attachment_args );
-			if ( $placeholder_size ) {
-				$placeholder = get_the_post_thumbnail_url( $post_id, $placeholder_size ) ?: '';
-			}
+			$thumb_id = get_post_thumbnail_id( $post_id );
+
 		} elseif ( $use_noimg ) {
-			$noimg_id = self::get_noimg( 'id' );
 
-			// NO-IMG設定があればそのIDから指定されたサイズの画像を取得
-			if ( $noimg_id ) {
-				$thumb = wp_get_attachment_image( $noimg_id, $size, false, $attachment_args );
-				if ( $placeholder_size ) {
-					$placeholder = wp_get_attachment_image_url( $noimg_id, $placeholder_size ) ?: '';
-				}
-			} else {
-				$thumb            = '<img src="' . esc_url( self::get_noimg( 'url' ) ) . '" class="' . esc_attr( $class ) . '">';
-				$is_default_noimg = true;
+			$thumb_id = self::get_noimg( 'id' );
+			if ( ! $thumb_id ) {
+				$thumb_url = self::get_noimg( 'url' );
 			}
-		} else {
-			return '';
 		}
 
 		// ソース置換
-		if ( $is_default_noimg ) {
-			$thumb = str_replace( ' title=""', '', $thumb );
-			if ( $sizes ) {
-				$thumb = preg_replace( '/ sizes="([^"]*)"/', ' sizes="' . $sizes . '"', $thumb );
-			}
-		}
+		if ( $thumb_id ) {
 
-		// lazyload準備
-		if ( $use_lazyload && ! self::is_rest() && ! self::is_iframe() ) {
-			$placeholder = $placeholder ?: self::$placeholder;
-			$thumb       = str_replace( ' src="', ' src="' . esc_url( $placeholder ) . '" data-src="', $thumb );
-			$thumb       = str_replace( ' srcset="', ' data-srcset="', $thumb );
-			$thumb       = str_replace( ' class="', ' class="lazyload ', $thumb );
+			$thumb = self::get_image( $thumb_id, [
+				'class'   => $class,
+				'alt'     => '',
+				'size'    => $args['size'] ?? 'full',
+				'srcset'  => $args['srcset'] ?? false,
+				'loading' => $lazy_type,
+			]);
 
-			$thumb = preg_replace_callback( '/<img([^>]*)>/', function( $matches ) {
-				$props = rtrim( $matches[1], '/' );
-				$props = self::set_aspectratio( $props );
-				return '<img' . $props . '>';
-			}, $thumb );
+		} elseif ( $thumb_url ) {
+
+			$thumb = '<img src="' . esc_url( $thumb_url ) . '" alt="" class="' . esc_attr( $class ) . '">';
+			$thumb = self::set_lazyload( $thumb, self::$lazy_type );
+
+		} else {
+			return '';
 		}
 
 		if ( $echo ) {
 			echo $thumb; // phpcs:ignore
 		}
 		return $thumb;
+	}
+
+
+	/**
+	 * attachment_url_to_postid のキャッシュあり版
+	 */
+	public static function get_imgid_from_url( $img_url ) {
+		$cache_key = 'swell_imgid_' . md5( $img_url );
+
+		// キャッシュチェック
+		$cached_id = get_transient( $cache_key );
+		if ( $cached_id ) return $cached_id;
+
+		$img_id = attachment_url_to_postid( $img_url ) ?: 0;
+
+		set_transient( $cache_key, $img_id, DAY_IN_SECONDS * 30 );
+		return $img_id;
 	}
 
 
@@ -794,5 +785,262 @@ trait Get {
 		// return false;
 	}
 
+
+	/**
+	 * ピックアップバナーの画像sizesを取得
+	 */
+	public static function get_pickup_banner_sizes( $menu_count = 1 ) {
+
+		// キャッシュ取得
+		$cached_data = wp_cache_get( 'pickup_banner_sizes', 'swell' );
+		if ( $cached_data ) return $cached_data;
+
+		// レイアウトに合わせてsizes取得
+		$layout_pc = self::get_setting( 'pickbnr_layout_pc' );
+		$layout_sp = self::get_setting( 'pickbnr_layout_sp' );
+
+		// pcサイズ
+		$sizes_pc = '320px';
+		if ( $layout_pc === 'fix_col3' || $layout_pc === 'flex' && $menu_count === 3 ) {
+			$sizes_pc = '400px';
+		} elseif ( $layout_pc === 'fix_col2' || $layout_pc === 'flex' && $menu_count === 2 ) {
+			$sizes_pc = '600px';
+		} elseif ( $layout_pc === 'flex' && $menu_count === 1 ) {
+			$sizes_pc = '960px';
+		}
+
+		// spサイズ
+		$sizes_sp = $layout_sp === 'fix_col2' ? '50vw' : '100vw';
+		$sizes    = "(min-width: 960px) {$sizes_pc}, {$sizes_sp}";
+
+		wp_cache_set( 'pickup_banner_sizes', $sizes, 'swell' );
+		return $sizes;
+	}
+
+
+	/**
+	 * wp_get_attachment_image から必要な部分だけ抜き取った関数
+	 */
+	public static function get_image( $img_id, $args = [] ) {
+
+		$echo = $args['echo'] ?? false;
+		$size = $args['size'] ?? 'full';
+
+		$html  = '';
+		$image = wp_get_attachment_image_src( $img_id, $size, false );
+
+		if ( ! $image ) return '';
+
+		list( $src, $width, $height ) = $image;
+		$size_array                   = [ absint( $width ), absint( $height ) ];
+
+		$width  = $args['width'] ?? $width;
+		$height = $args['height'] ?? $height;
+
+		// imgタグのattrs
+		$attrs = [
+			'src'         => $src,
+			'alt'         => $args['alt'] ?? '',
+			'class'       => $args['class'] ?? '',
+			'srcset'      => $args['srcset'] ?? false,
+			'sizes'       => $args['sizes'] ?? false,
+			'aria-hidden' => $args['aria-hidden'] ?? false,
+		];
+
+		// 'srcset' と 'sizes' を生成
+		if ( '' === $attrs['srcset'] ) {
+			$attrs['srcset'] = false;
+		} else {
+			$image_meta = wp_get_attachment_metadata( $img_id );
+
+			if ( is_array( $image_meta ) ) {
+				// srcset の指定がなければ
+				if ( ! $attrs['srcset'] ) {
+					$attrs['srcset'] = wp_calculate_image_srcset( $size_array, $src, $image_meta, $img_id );
+				}
+
+				// sizes の指定がなければ (かつ、srcset があれば)
+				if ( $attrs['srcset'] && ! $attrs['sizes'] ) {
+					$attrs['sizes'] = wp_calculate_image_sizes( $size_array, $src, $image_meta, $img_id );
+				}
+			}
+		}
+
+		// lazyload
+		$loading = $args['loading'] ?? \SWELL_Theme::$lazy_type;
+		if ( 'lazy' === $loading || 'eager' === $loading ) {
+			$attrs['loading'] = $loading;
+		} elseif ( 'lazysizes' === $loading ) {
+			$attrs['class']   .= ' lazyload';
+			$attrs['data-src'] = $attrs['src'];
+			$attrs['src']      = $args['placeholder'] ?? self::$placeholder;
+			if ( isset( $attrs['srcset'] ) ) {
+				$attrs['data-srcset'] = $attrs['srcset'];
+				unset( $attrs['srcset'] );
+			}
+			if ( $width && $height ) {
+				$attrs['data-aspectratio'] = $width . '/' . $height;
+			}
+		}
+
+		$img_props = image_hwstring( $width, $height );
+
+		foreach ( $attrs as $name => $val ) {
+			if ( false === $val ) continue;
+			$img_props .= ' ' . $name . '="' . esc_attr( $val ) . '"';
+		}
+
+		if ( $echo ) {
+			echo "<img $img_props >"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		return "<img $img_props >";
+	}
+
+
+	/**
+	 * 画像IDからsourceタグを生成
+	 */
+	public static function get_img_source( $img_id, $args = [] ) {
+		$size = $args['size'] ?? 'full';
+
+		$img_data = wp_get_attachment_image_src( $img_id, $size );
+		if ( ! $img_data) return '';
+
+		$src    = $img_data[0];
+		$width  = $img_data[1];
+		$height = $img_data[2];
+		$srcset = wp_get_attachment_image_srcset( $img_id, $size );
+
+		$attrs = [
+			'media' => $args['media'] ?? '(max-width: 959px)',
+		];
+		if ( $srcset ) {
+			$attrs['sizes'] = $args['sizes'] ?? '100vw';
+		}
+
+		$loading = $args['loading'] ?? 'none';
+		if ( 'lazysizes' === $loading ) {
+			$attrs['src']         = $args['placeholder'] ?? self::$placeholder;
+			$attrs['data-src']    = $src;
+			$attrs['data-srcset'] = $srcset;
+		} else {
+			$attrs['src']    = $src;
+			$attrs['srcset'] = $srcset;
+
+			if ( 'lazy' === $loading ) {
+				$attrs['loading'] = 'lazy';
+			}
+		}
+
+		$source_props = image_hwstring( $width, $height );
+		foreach ( $attrs as $name => $val ) {
+			if ( false === $val ) continue;
+			$source_props .= ' ' . $name . '="' . esc_attr( $val ) . '"';
+		}
+		return "<source $source_props >";
+	}
+
+
+	/**
+	 * メインビジュアルのスライダー画像
+	 */
+	public static function get_mv_slide_img( $i, $lazy_type = 'none' ) {
+		// PC画像
+		$picture_img = '';
+		$pc_imgid    = self::get_setting( "slider{$i}_imgid" );
+		$img_alt     = self::get_setting( "slider{$i}_alt" );
+
+		if ( 1 === $i && $pc_imgid ) {
+			$picture_img = self::get_image( $pc_imgid, [
+				'class'   => 'p-mainVisual__img u-obf-cover',
+				'alt'     => $img_alt,
+				'loading' => $lazy_type,
+			] );
+		} elseif ( 1 === $i ) {
+
+			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="p-mainVisual__img u-obf-cover">';
+
+		} elseif ( $pc_imgid ) {
+			$picture_img = self::get_image( $pc_imgid, [
+				'class'   => 'p-mainVisual__img u-obf-cover swiper-lazy',
+				'alt'     => $img_alt,
+				'loading' => '',
+			] );
+		}
+
+		// SP画像
+		$source         = '';
+		$sp_imgid       = self::get_setting( "slider{$i}_imgid_sp" );
+		$picture_source = $sp_imgid ? self::get_img_source( $sp_imgid, [
+			'loading' => $lazy_type,
+		] ) : '';
+
+		return $picture_source . $picture_img;
+	}
+
+
+	/**
+	 * 投稿の背景画像IDを取得
+	 */
+	public static function get_post_ttlbg_id( $post_id ) {
+		$meta = get_post_meta( $post_id, 'swell_meta_ttlbg', true );
+
+		if ( false !== strpos( $meta, 'http' ) ) {
+			$id = attachment_url_to_postid( $meta );
+			update_post_meta( $post_id, 'swell_meta_ttlbg', (string) $id );
+		} else {
+			$id = (int) $meta;
+		}
+
+		if ( $id ) return $id;
+
+		$id = $id
+			?: self::get_setting( 'ttlbg_dflt_imgid' )
+			?: get_post_thumbnail_id( $post_id )
+			?: self::get_noimg( 'id' );
+
+		return $id;
+	}
+
+
+	/**
+	 * タームの背景画像IDを取得
+	 */
+	public static function get_term_ttlbg_id( $term_id ) {
+		$meta = get_term_meta( $term_id, 'swell_term_meta_ttlbg', 1 );
+
+		if ( false !== strpos( $meta, 'http' ) ) {
+			$id = attachment_url_to_postid( $meta );
+			update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+		} else {
+			$id = (int) $meta;
+		}
+
+		if ( $id ) return $id;
+
+		$id = $id
+			?: self::get_setting( 'ttlbg_dflt_imgid' )
+			?: self::get_term_thumb_id( $term_id )
+			?: self::get_noimg( 'id' );
+
+		return $id;
+	}
+
+
+	/**
+	 * タームのアイキャッチ画像IDを取得
+	 */
+	public static function get_term_thumb_id( $term_id ) {
+		$meta = get_term_meta( $term_id, 'swell_term_meta_image', 1 );
+
+		if ( false !== strpos( $meta, 'http' ) ) {
+			$id = attachment_url_to_postid( $meta );
+			update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+		} else {
+			$id = (int) $meta;
+		}
+
+		return $id;
+	}
 
 }

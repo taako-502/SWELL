@@ -24,35 +24,37 @@ $text_style  = SWELL_Theme::get_mv_text_style( $txtcol, $SETTING['movie_shadowco
 // パーツID
 $parts_id = (int) $SETTING['movie_parts_id'];
 
+$video_props = 'playsinline autoplay loop muted';
+if ( $pc_poster ) {
+	$video_props .= ' data-poster-pc="' . esc_url( $pc_poster ) . '"';
+}
+if ( $sp_poster ) {
+	$video_props .= ' data-poster-sp="' . esc_url( $sp_poster ) . '"';
+}
+
 ?>
 <div class="p-mainVisual__inner c-filterLayer -<?=esc_attr( $SETTING['mv_img_filter'] )?>">
 	<div class="p-mainVisual__imgLayer c-filterLayer__img">
-		<video
-			class="p-mainVisual__video"
-			data-poster-pc="<?=esc_attr( $pc_poster )?>"
-			data-poster-sp="<?=esc_attr( $sp_poster )?>"
-			playsinline autoplay loop muted
-		>
-			<source data-src-sp="<?=esc_attr( $sp_video_url )?>" data-src-pc="<?=esc_attr( $pc_video_url )?>">
+		<video class="p-mainVisual__video" <?php echo $video_props; // phpcs:ignore?>>
+			<source data-src-sp="<?=esc_url( $sp_video_url )?>" data-src-pc="<?=esc_url( $pc_video_url )?>">
 		</video>
 	</div>
-	<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
+	<div class="p-mainVisual__textLayer l-container l-parent u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 	<?php
-
-		$slide_ttl = '';
-
 		// キャッチコピー
-		if ( '' !== $slide_title )
-			$slide_ttl .= '<div class="p-mainVisual__slideTitle">' . $slide_title . '</div>';
+		if ( '' !== $slide_title ) {
+			echo '<div class="p-mainVisual__slideTitle">' . wp_kses( $slide_title, SWELL_Theme::$allowed_text_html ) . '</div>';
+		}
 
 		// サブコピー
-		if ( '' !== $slide_text )
-			$slide_ttl .= '<div class="p-mainVisual__slideText">' . nl2br( $slide_text ) . '</div>';
-
-		echo wp_kses_post( $slide_ttl );
+		if ( '' !== $slide_text ) {
+			echo '<div class="p-mainVisual__slideText">' . wp_kses( nl2br( $slide_text ), SWELL_Theme::$allowed_text_html ) . '</div>';
+		}
 
 		// ブログパーツ
-		if ( $parts_id ) echo do_shortcode( '[blog_parts id="' . $parts_id . '"]' );
+		if ( $parts_id ) {
+			echo do_shortcode( '[blog_parts id="' . $parts_id . '"]' );
+		}
 
 		// ボタン
 		if ( '' !== $slide_url && '' !== $btn_text ) :
@@ -66,5 +68,5 @@ $parts_id = (int) $SETTING['movie_parts_id'];
 		endif;
 	?>
 	</div>
-	<?php if ( $SETTING['mv_on_scroll'] ) \SWELL_Theme::pluggable_parts( 'scroll_arrow', ['color' => $txtcol ] ); ?>
+	<?php if ( $SETTING['mv_on_scroll'] ) \SWELL_Theme::pluggable_parts( 'scroll_arrow', [ 'color' => $txtcol ] ); ?>
 </div>

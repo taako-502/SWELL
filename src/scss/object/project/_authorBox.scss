@@ -96,10 +96,10 @@
     }
 
     .avatar {
+        // display: block;
         width: 100px;
         height: 100px;
         object-fit: cover;
-        font-family: "object-fit: cover;";
         border: solid 2px $color_border;
         border-radius: 50%;
     }

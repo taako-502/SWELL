@@ -173,13 +173,11 @@ function add_rss_thumb( $content ) {
 /**
  * IEに警告を出す
  */
-add_action( 'admin_footer', '\SWELL_Theme\Hooks\hook_admin_footer', 20 );
-function hook_admin_footer() {
-	global $is_IE;
-	if ( $is_IE ) {
-		echo '<div class="ie-alertbox"><div class="__inner"><div class="__body">
-			<div class="__title icon-alert"> お使いのブラウザーは安全ではありません！</div>
-			<div class="__text">ご利用中の <b>Internet Explorer</b> はとても古いブラウザです。<br><br>Microsoftも公式に新しいブラウザへの乗り換えを推奨しており、<br>SWELLでは Internet Explorer を使って管理画面を操作することができないようになっています。<br><br><b>モダンブラウザ（<a href="https://www.microsoft.com/ja-jp/edge">Microsoft Edge</a> や <a href="https://www.google.co.jp/chrome/index.html">Google Chrome</a> など）</b>をご利用ください。</div>
-		</div></div></div>';
+global $is_IE;
+if ( $is_IE ) {
+	add_action( 'admin_footer', '\SWELL_Theme\Hooks\show_ie_alert', 20 );
+	add_action( 'wp_footer', '\SWELL_Theme\Hooks\show_ie_alert', 20 );
+	function show_ie_alert() {
+		swl_parts__ie_alert();
 	}
 }

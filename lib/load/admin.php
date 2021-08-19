@@ -22,7 +22,7 @@ function hook_admin_enqueue_scripts( $hook_suffix ) {
 
 	// メディアアップローダー用
 	wp_enqueue_media();
-	wp_enqueue_script( 'mediauploader', $build . '/js/admin/mediauploader.js', ['jquery' ], SWELL_VERSION, true );
+	wp_enqueue_script( 'mediauploader', $build . '/js/admin/mediauploader.min.js', ['jquery' ], SWELL_VERSION, true );
 
 	// カラーピッカー
 	wp_enqueue_style( 'wp-color-picker' );
@@ -32,27 +32,27 @@ function hook_admin_enqueue_scripts( $hook_suffix ) {
 	wp_enqueue_style( 'swell_admin_style', $assets . '/css/admin.css', [], SWELL_VERSION );
 
 	// 管理画面用JS（共通）
-	wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.js', ['jquery' ], SWELL_VERSION, true );
+	wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.min.js', ['jquery' ], SWELL_VERSION, true );
 
 	// ページの種類で分岐
 	if ( 'post.php' === $hook_suffix || 'post-new.php' === $hook_suffix ) {
 
 		// タイトルカウント
-		wp_enqueue_script( 'swell_title_count', $build . '/js/admin/count_title.js', ['jquery' ], SWELL_VERSION, true );
+		wp_enqueue_script( 'swell_title_count', $build . '/js/admin/count_title.min.js', ['jquery' ], SWELL_VERSION, true );
 
 	} elseif ( 'widgets.php' === $hook_suffix && ! \SWELL_Theme::use_widgets_block() ) {
 
 		// カラーピッカー
-		wp_enqueue_script( 'swell_colorpicker', $build . '/js/admin/colorpicker.js', [ 'wp-color-picker' ], SWELL_VERSION, true );
+		wp_enqueue_script( 'swell_colorpicker', $build . '/js/admin/colorpicker.min.js', [ 'wp-color-picker' ], SWELL_VERSION, true );
 
 	} elseif ( strpos( $hook_suffix, 'swell_settings' ) !== false ) {
 
 		// カラーピッカー
-		wp_enqueue_script( 'swell_colorpicker', $build . '/js/admin/colorpicker.js', [ 'wp-color-picker' ], SWELL_VERSION, true );
+		wp_enqueue_script( 'swell_colorpicker', $build . '/js/admin/colorpicker.min.js', [ 'wp-color-picker' ], SWELL_VERSION, true );
 
 		// 設定画面用ファイル
 		wp_enqueue_style( 'swell_settings_css', $assets . '/css/admin/settings.css', [], SWELL_VERSION );
-		wp_enqueue_script( 'swell_settings_js', $build . '/js/admin/settings.js', ['jquery' ], SWELL_VERSION, false );
+		wp_enqueue_script( 'swell_settings_js', $build . '/js/admin/settings.min.js', ['jquery' ], SWELL_VERSION, false );
 
 		// codemirror
 		// see: https://codemirror.net/doc/manual.html#config
@@ -91,10 +91,10 @@ function hook_admin_enqueue_scripts( $hook_suffix ) {
 	// 投稿タイプで分岐
 	if ( 'ad_tag' === $post_type ) {
 		wp_enqueue_style( 'swell_ad_css', $assets . '/css/admin/ad_tag.css', [], SWELL_VERSION );
-		wp_enqueue_script( 'swell_ad_js', $build . '/js/admin/ad_tag.js', ['jquery' ], SWELL_VERSION, false );
+		wp_enqueue_script( 'swell_ad_js', $build . '/js/admin/ad_tag.min.js', ['jquery' ], SWELL_VERSION, false );
 	} elseif ( 'speech_balloon' === $post_type ) {
 		wp_enqueue_style( 'swell_balloon_css', $assets . '/css/admin/balloon.css', [], SWELL_VERSION );
-		wp_enqueue_script( 'swell_balloon_js', $build . '/js/admin/balloon.js', ['jquery' ], SWELL_VERSION, false );
+		wp_enqueue_script( 'swell_balloon_js', $build . '/js/admin/balloon.min.js', ['jquery' ], SWELL_VERSION, false );
 	}
 }
 

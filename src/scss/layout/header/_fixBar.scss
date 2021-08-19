@@ -7,11 +7,6 @@
     margin-top: var(--swl-adminbar_height, 0);
     visibility: hidden;
     opacity: 0;
-    transition: all .5s;
-
-    // &:not([data-ready]) {
-    //     opacity: 0 !important;
-    // }
 
     &[data-ready] {
         transition: all .5s;

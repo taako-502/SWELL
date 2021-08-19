@@ -14,7 +14,7 @@ class Partial {
 	 * ヘッダーロゴ
 	 */
 	public static function head_logo() {
-		$logo = \SWELL_PARTS::head_logo( \SWELL_Theme::get_setting( 'header_transparent' ), true );
+		$logo = \SWELL_PARTS::head_logo();
 		return $logo;
 	}
 

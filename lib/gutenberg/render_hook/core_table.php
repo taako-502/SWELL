@@ -51,6 +51,7 @@ function render_table( $block_content, $block ) {
 	}
 	if ( $theadfix ) {
 		$props .= ' data-theadfix="' . esc_attr( $theadfix ) . '"';
+		\SWELL_Theme::set_use( 'fix_thead', true );
 	}
 
 	if ( $props ) {

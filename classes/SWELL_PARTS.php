@@ -16,22 +16,18 @@ class SWELL_PARTS{
 	/**
 	 * 3.0で消す
 	 */
-	public static function head_logo_img( $use_top_logo ) {
-		return \SWELL_Theme::get_pluggable_parts( 'head_logo', [
-			'use_top_logo' => $use_top_logo,
-		] );
+	public static function head_logo_img() {
+		return \SWELL_Theme::get_pluggable_parts( 'head_logo' );
 	}
 
 
 	/**
 	 * ヘッダーロゴ
 	 */
-	public static function head_logo( $header_transparent, $is_fixbar = false ) {
+	public static function head_logo( $is_fixbar = false ) {
 		
-		if ( \SWELL_Theme::site_data( 'logo' ) ) {
-			// topロゴも取得するかどうか
-			$use_top_logo = ( \SWELL_Theme::is_top() && ! is_paged() && $header_transparent !== 'no' );
-			$logo = self::head_logo_img( $use_top_logo );
+		if ( \SWELL_Theme::site_data( 'logo_id' ) ) {
+			$logo = \SWELL_Theme::get_pluggable_parts( 'head_logo' );
 			$logo_class = '-img';
 		} else {
 			// ロゴがない場合
@@ -44,7 +40,7 @@ class SWELL_PARTS{
 					'<a href="'. \SWELL_Theme::site_data( 'home' ) .'" title="'. \SWELL_Theme::site_data( 'title' ) .'" class="c-headLogo__link" rel="home">'. $logo .'</a>'.
 				'</'. $tag .'>';
 
-		return apply_filters( 'swell_parts_head_logo', $return, $header_transparent, $is_fixbar  );
+		return apply_filters( 'swell_parts_head_logo', $return, $is_fixbar  );
 	}
 
 
@@ -95,23 +91,23 @@ class SWELL_PARTS{
 			$caption = '<figcaption class="p-articleThumb__caption">' . esc_html( $caption ) . '</figcaption>';
 		}
 
-		//Youtubeの指定があれば動画を返す
+		//YouTubeの指定があれば動画を返す
 		if ( $youtube_id ) {
 
 			$is_youtube = true;
 			$return = '<figure class="p-articleThumb -youtube">' .
 				'<div class="p-articleThumb__youtube">' .
-				'<iframe class="lazyload" data-src="https://www.youtube.com/embed/' . $youtube_id . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>' . $caption .
+				'<iframe src="https://www.youtube.com/embed/' . $youtube_id . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' . $caption .
 			'</figure>';
 
 		} else {
 
+			
 			$thumb = \SWELL_Theme::get_thumbnail( [
-				'post_id'          => $post_id,
-				'class'            => 'p-articleThumb__img',
-				'placeholder_size' => 'medium',
-				'use_lazyload'     => true,
-				'use_noimg'        => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
+				'post_id'   => $post_id,
+				'class'     => 'p-articleThumb__img',
+				'lazy_type' => apply_filters( 'swell_post_thumbnail_lazy_type', 'none' ),
+				'use_noimg' => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
 			] );
 
 			if ( $thumb ) {

@@ -23,13 +23,11 @@ const concat = require('gulp-concat');
 const path = {
 	src: {
 		scss: 'src/scss/**/*.scss',
-		blockscss: 'src/gutenberg/blocks/**/*.scss',
 		plugins: 'src/js/plugin/*.js',
 		js: 'src/js/**/*.js',
 	},
 	dest: {
 		css: 'assets/css',
-		blockscss: 'build/blocks',
 	},
 };
 
@@ -58,28 +56,6 @@ const compileScss = () => {
 	);
 };
 
-const compileBlockScss = () => {
-	return (
-		src(path.src.blockscss)
-			.pipe(
-				plumber({
-					errorHandler: notify.onError('<%= error.message %>'),
-				})
-			)
-			.pipe(sassGlob())
-			.pipe(sass())
-			.pipe(
-				autoprefixer({
-					cascade: false,
-				})
-			)
-			.pipe(gcmq())
-			// .pipe(sass({ outputStyle: 'compressed' }))  //gcmqでnestedスタイルに展開されてしまうので再度compact化。
-			.pipe(cleanCSS())
-			.pipe(dest(path.dest.blockscss))
-	);
-};
-
 /*
  * プラグインスクリプトをまとめる
  */
@@ -95,5 +71,4 @@ const concatPlugins = () => {
 };
 
 exports.compileScss = compileScss;
-exports.compileBlockScss = compileBlockScss;
 exports.concatPlugins = concatPlugins;

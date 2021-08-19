@@ -7,76 +7,72 @@ trait Default_Settings {
 	public static function set_default_options() {
 		return [
 			// CORE機能の停止
-			'remove_wpver'          => '1',
-			'remove_wpver'          => '1',
-			'remove_rel_link'       => '1',
-			'remove_wlwmanifest'    => '1',
-			'remove_rsd_link'       => '1',
-			'remove_emoji'          => '1',
-			'remove_rest_link'      => '',
-			'remove_robots_image'   => '',
-			'remove_sitemap'        => '1',
-			'remove_img_srcset'     => '',
-			'remove_wptexturize'    => '',
-			'remove_self_pingbacks' => '',
-			'remove_feed_link'      => '',
+			'remove_wpver'           => '1',
+			'remove_wpver'           => '1',
+			'remove_rel_link'        => '1',
+			'remove_wlwmanifest'     => '1',
+			'remove_rsd_link'        => '1',
+			'remove_emoji'           => '1',
+			'remove_rest_link'       => '',
+			'remove_robots_image'    => '',
+			'remove_sitemap'         => '1',
+			'remove_media_inf_scrll' => '',
+			'remove_img_srcset'      => '',
+			'remove_wptexturize'     => '',
+			'remove_self_pingbacks'  => '',
+			'remove_feed_link'       => '',
 
 			// SWELL機能の停止
-			'remove_url2card'       => '',
-			'remove_delete_empp'    => '',
-			'remove_page_fade'      => '',
-			'remove_luminous'       => '',
-			'remove_patterns'       => '',
-			'remove_lp'             => '',
-			'remove_blog_parts'     => '',
-			'remove_ad_tag'         => '',
-			'remove_balloon'        => '',
+			'remove_url2card'        => '',
+			'remove_delete_empp'     => '',
+			'remove_page_fade'       => '',
+			'remove_luminous'        => '',
+			'remove_patterns'        => '',
+			'remove_lp'              => '',
+			'remove_blog_parts'      => '',
+			'remove_ad_tag'          => '',
+			'remove_balloon'         => '',
 
-			// CSSインライン
-			'load_style_inline'     => '',
-
-			// jQuery
-			'jquery_to_foot'        => '1',
-			'remove_jqmigrate'      => '1',
-			'load_jquery'           => '',
-
-			// FA
-			'load_font_awesome'     => '',
+			'load_style_inline'      => '',
+			'jquery_to_foot'         => '1',
+			'remove_jqmigrate'       => '1',
+			'load_jquery'            => '',
+			'load_font_awesome'      => '',
 
 			// キャッシュ機能
-			'cache_style'           => '1',
-			'cache_header'          => '',
-			'cache_sidebar'         => '',
-			'cache_top'             => '',
-			'cache_spmenu'          => '',
-			'cache_bottom_menu'     => '',
+			'cache_style'            => '1',
+			'cache_header'           => '',
+			'cache_sidebar'          => '',
+			'cache_top'              => '',
+			'cache_spmenu'           => '',
+			'cache_bottom_menu'      => '',
 
 			// ブログカード
-			'cache_blogcard_in'     => '',
-			'cache_blogcard_ex'     => '1',
-			'cache_card_time'       => '30',
+			'cache_blogcard_in'      => '',
+			'cache_blogcard_ex'      => '1',
+			'cache_card_time'        => '30',
 
 			// 遅延読み込み機能
 			// 'use_ajax'           => '',
-			'ajax_after_post'       => '',
-			'ajax_footer'           => '',
-			'use_lazyload'          => 'swell',
+			'ajax_after_post'        => '',
+			'ajax_footer'            => '',
+			'lazy_type'              => 'lazysizes',
 
 			// Pjax
-			'use_pjax'              => 'off',
-			'pjax_prevent_pages'    => '',
-			'prefetch_prevent_keys' => '',
+			'use_pjax'               => 'off',
+			'pjax_prevent_pages'     => '',
+			'prefetch_prevent_keys'  => '',
 
 			// JSON-LD
-			'use_json_ld'           => '1',
+			'use_json_ld'            => '1',
 
 			// 広告設定
-			'sc_ad_code'            => '',
-			'auto_ad_code'          => '',
-			'before_h2_addcode'     => '',
-			'infeed_code_pc'        => '',
-			'infeed_code_sp'        => '',
-			'infeed_interval'       => 4,
+			'sc_ad_code'             => '',
+			'auto_ad_code'           => '',
+			'before_h2_addcode'      => '',
+			'infeed_code_pc'         => '',
+			'infeed_code_sp'         => '',
+			'infeed_interval'        => 4,
 		];
 	}
 
@@ -189,11 +185,14 @@ trait Default_Settings {
 
 	public static function set_default_customizer() {
 		return [
-			'no_image'                => T_DIRE_URI . '/assets/img/no_img.png',
-			'ttlbg_default_img'       => '',
+			'noimg_id'                => 0,
+			'ttlbg_dflt_imgid'        => 0,
+
 			// ヘッダー設定
-			'logo'                    => '',
-			'logo_top'                => '',
+			'logo'                    => '', // 3.0で消す
+			'logo_top'                => '', // 3.0で消す
+			'logo_id'                 => 0,
+			'logo_top_id'             => 0,
 			'logo_size_pc'            => 40,
 			'logo_size_pcfix'         => 32,
 			'logo_size_sp'            => 48,
@@ -510,8 +509,8 @@ trait Default_Settings {
 			'mv_slide_animation'      => 'no',
 
 			// 各スライド
-			'slider1_img'             => 'https://picsum.photos/1600/1200',
-			'slider1_img_sp'          => '',
+			'slider1_imgid'           => '',
+			'slider1_imgid_sp'        => '',
 			'slider1_alt'             => '',
 			'slider1_title'           => _x( 'Let\'s start.', 'mv', 'swell' ),
 			'slider1_text'            => '',
@@ -523,8 +522,8 @@ trait Default_Settings {
 			'slider1_txtcol'          => '#ffffff',
 			'slider1_shadowcol'       => '#000000',
 			'slider1_txtpos'          => 'c',
-			'slider2_img'             => '',
-			'slider2_img_sp'          => '',
+			'slider2_imgid'           => '',
+			'slider2_imgid_sp'        => '',
 			'slider2_alt'             => '',
 			'slider2_title'           => '',
 			'slider2_text'            => '',
@@ -536,8 +535,8 @@ trait Default_Settings {
 			'slider2_txtcol'          => '#ffffff',
 			'slider2_shadowcol'       => '#000000',
 			'slider2_txtpos'          => 'c',
-			'slider3_img'             => '',
-			'slider3_img_sp'          => '',
+			'slider3_imgid'           => '',
+			'slider3_imgid_sp'        => '',
 			'slider3_alt'             => '',
 			'slider3_title'           => '',
 			'slider3_text'            => '',
@@ -549,8 +548,8 @@ trait Default_Settings {
 			'slider3_txtcol'          => '#ffffff',
 			'slider3_shadowcol'       => '#000000',
 			'slider3_txtpos'          => 'c',
-			'slider4_img'             => '',
-			'slider4_img_sp'          => '',
+			'slider4_imgid'           => '',
+			'slider4_imgid_sp'        => '',
 			'slider4_alt'             => '',
 			'slider4_title'           => '',
 			'slider4_text'            => '',
@@ -562,8 +561,8 @@ trait Default_Settings {
 			'slider4_txtcol'          => '#ffffff',
 			'slider4_shadowcol'       => '#000000',
 			'slider4_txtpos'          => 'c',
-			'slider5_img'             => '',
-			'slider5_img_sp'          => '',
+			'slider5_imgid'           => '',
+			'slider5_imgid_sp'        => '',
 			'slider5_alt'             => '',
 			'slider5_title'           => '',
 			'slider5_text'            => '',

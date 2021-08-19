@@ -54,8 +54,6 @@ a.c-bannerLink:hover {
     backface-visibility: hidden;
     transition: transform .25s;
 
-    @extend %objFitCover;
-
     .c-bannerLink.-blur-on & {
         transform: scale(1.08);
         filter: blur(4px);

@@ -59,6 +59,7 @@ class Top {
 			[
 				'background-color:' . $SETTING['mv_overlay_color'],
 				'opacity:' . $SETTING['mv_overlay_opacity'],
+				'content:""',
 			]
 		);
 

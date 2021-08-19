@@ -19,11 +19,12 @@ $wp_customize->add_section(
 // NO IMAGE画像
 Customizer::add(
 	$section,
-	'no_image',
+	'noimg_id',
 	[
 		'classname'   => '',
 		'label'       => 'NO IMAGE画像',
 		'description' => '記事アイキャッチ用の NO IMAGE画像を設定してください。（推奨：横幅1600px以上）',
-		'type'        => 'image',
+		'type'        => 'media',
+		'mime_type'   => 'image',
 	]
 );

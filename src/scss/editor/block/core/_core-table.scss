@@ -1,7 +1,7 @@
 // テーブル
 .wp-block-table {
 
-    & > table {
+    > table {
         margin-bottom: 0;
     }
 
@@ -20,7 +20,7 @@ table caption {
 
 .is-style-simple {
 
-    & > table {
+    > table {
         border-right: none;
         border-collapse: collapse !important;
         box-shadow: none;

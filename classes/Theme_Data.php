@@ -64,7 +64,11 @@ class Theme_Data {
 	public static $excerpt_length = 120;
 
 	// プレースホルダー
-	public static $placeholder = T_DIRE_URI . '/assets/img/placeholder.png';
+	public static $placeholder = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+	// 6:2 data:image/gif;base64,R0lGODlhBgACAPAAAP///wAAACH5BAEAAAAALAAAAAAGAAIAAAIDhI9WADs=
+
+	// lazyloadの種類
+	public static $lazy_type = 'none';
 
 	// 目次の生成フックがすでに処理されたかどうか
 	public static $added_toc = false;
@@ -220,7 +224,6 @@ class Theme_Data {
 		self::$site_data = [
 			'home'  => home_url( '/' ),
 			'title' => get_option( 'blogname' ),
-			'logo'  => '', // wp_loadedで
 		];
 	}
 
@@ -247,7 +250,7 @@ class Theme_Data {
 	public static function get_default_setting( $key = null ) {
 
 		if ( null !== $key ) {
-			return self::$default_setting[ $key ];
+			return self::$default_setting[ $key ] ?? '';
 		}
 		return self::$default_setting;
 	}

@@ -1,6 +1,7 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -52,34 +53,40 @@ class Body {
 	/**
 	 * 背景
 	 */
-	public static function bg( $SETTING ) {
+	public static function bg() {
 
-		if ( $SETTING['body_bg'] === '' ) return;
+		if ( SWELL::get_setting( 'body_bg' ) === '' ) return;
 
 		// backgroundプロパティ生成
-		$body_bg_repeat = ( $SETTING['noloop_body_bg'] ) ? 'no-repeat' : 'repeat';
-		$body_bg_prop   = 'url(' . $SETTING['body_bg'] . ') ' . $body_bg_repeat . ' ' . $SETTING['body_bg_pos_x'] . ' ' . $SETTING['body_bg_pos_y'];
-		if ( $SETTING['body_bg_size'] !== '' ) {
-			$body_bg_prop .= ' / ' . $SETTING['body_bg_size'];
+		$bg_repeat = ( SWELL::get_setting( 'noloop_body_bg' ) ) ? 'no-repeat' : 'repeat';
+		$bg_prop   = 'url(' . SWELL::get_setting( 'body_bg' ) . ') ' . $bg_repeat . ' ' . SWELL::get_setting( 'body_bg_pos_x' ) . ' ' . SWELL::get_setting( 'body_bg_pos_y' );
+		if ( SWELL::get_setting( 'body_bg_size' ) !== '' ) {
+			$bg_prop .= ' / ' . SWELL::get_setting( 'body_bg_size' );
 		}
 
 		// fixかどうかで変える
-		$selector = $SETTING['fix_body_bg'] ? '#body_wrap::before ' : '#body_wrap';
+		$selector = SWELL::get_setting( 'fix_body_bg' ) ? '#body_wrap::before ' : '#body_wrap';
 
-		Style::add( $selector, 'background:' . $body_bg_prop );
-		if ( $SETTING['body_bg_sp'] !== '' ) {
+		Style::add( $selector, 'background:' . $bg_prop );
+		if ( SWELL::get_setting( 'body_bg_sp' ) !== '' ) {
 			// spの画像が指定されていれば、imageだけ上書き
-			Style::add( $selector, 'background-image:url(' . $SETTING['body_bg_sp'] . ')', 'sp' );
+			Style::add( $selector, 'background-image:url(' . SWELL::get_setting( 'body_bg_sp' ) . ')', 'sp' );
 		}
 	}
 
 
 	/**
-	 * フレーム
+	 * 記事コンテンツ部分の背景色
 	 */
-	public static function frame( $frame_class ) {
+	public static function content_frame( $color_bg, $frame_class ) {
+
 		// frame-on は 2パターンあるので、 !frame-off で判定
-		if ( '-frame-off' !== $frame_class ) Style::add_module( '-frame-on' );
+		if ( '-frame-off' !== $frame_class ) {
+			Style::add_module( '-frame-on' );
+			Style::add_root( '--color_content_bg', '#fff' );
+		} else {
+			Style::add_root( '--color_content_bg', $color_bg );
+		}
 	}
 
 

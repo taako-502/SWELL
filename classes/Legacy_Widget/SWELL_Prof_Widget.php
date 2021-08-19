@@ -112,6 +112,10 @@ class SWELL_Prof_Widget extends WP_Widget {
 
 	// 出力
 	public function widget( $args, $instance ) {
+		// echo '<pre style="margin: 100px;">';
+		// var_dump( get_option( 'widget_swell_prof_widget' ) );
+		// echo '</pre>';
+
 		$instance = wp_parse_args( (array) $instance, [
 			'user_name'      => '',
 			'user_job'       => '',

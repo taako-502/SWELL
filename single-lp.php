@@ -61,12 +61,11 @@ the_post();
 		<figure class="lp-thumb">
 			<?php
 				SWELL_Theme::get_thumbnail( [
-					'post_id'          => $the_id,
-					'sizes'            => '100vw',
-					'class'            => 'lp-thumb__img',
-					'placeholder_size' => 'medium',
-					'use_lazyload'     => true,
-					'echo'             => true,
+					'post_id'   => $the_id,
+					'sizes'     => '100vw',
+					'class'     => 'lp-thumb__img',
+					'lazy_type' => 'none',
+					'echo'      => true,
 				] );
 			?>
 		</figure>
@@ -74,16 +73,14 @@ the_post();
 	</div>
 	<div id="lp-content" class="lp-content -style-<?=esc_attr( $body_style )?>" <?php SWELL_Theme::lp_content_attrs(); ?>>
 		<main class="lp-content__inner">
-
 			<?php if ( 'inner' === $thumb_pos ) : ?>
 				<figure class="lp-thumb u-mb-20">
 				<?php
 					SWELL_Theme::get_thumbnail( [
-						'post_id'          => $the_id,
-						'class'            => 'lp-thumb__img',
-						'placeholder_size' => 'medium',
-						'use_lazyload'     => true,
-						'echo'             => true,
+						'post_id'   => $the_id,
+						'class'     => 'lp-thumb__img',
+						'lazy_type' => 'none',
+						'echo'      => true,
 					] );
 				?>
 				</figure>

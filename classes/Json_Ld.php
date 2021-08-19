@@ -91,7 +91,7 @@ class Json_Ld {
 			'image_url'          => $thumb,
 			'author_name'        => $author_data->display_name ?: '',
 			'publisher_name'     => SWELL::site_data( 'title' ) ?: '',
-			'publisher_logo_url' => SWELL::site_data( 'logo' ) ?: '',
+			'publisher_logo_url' => SWELL::site_data( 'logo_url' ) ?: '',
 			'description'        => $description,
 		];
 		$data = apply_filters( 'swell_json_ld_article_data', $data, $the_id );

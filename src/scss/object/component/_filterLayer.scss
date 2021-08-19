@@ -1,17 +1,23 @@
+.c-filterLayer::before,
+.c-filterLayer::after,
+.c-filterLayer__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 //画像フィルター
 .c-filterLayer {
     // position: relative;
     z-index: 0;
 
     &::before {
-
-        @extend %absLayer;
         z-index: 1;
     }
 
     &::after {
-
-        @extend %absLayer;
         z-index: 2;
         display: block;
     }
@@ -21,27 +27,20 @@
         background-image: url(../img/texture/dot.png);
         background-size: 2px;
         opacity: .5;
+        content: "";
 
     }
 
     &.-texture-brushed::after {
         background-image: url(../img/texture/brushed-alum.png);
         opacity: .8;
+        content: "";
     }
 
 }
 
 .c-filterLayer__img {
-
-    @extend %absLayer;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    backface-visibility: hidden;
-    // transform: perspective(0);
-    & > img {
-        width: 100%;
-    }
+    z-index: 0;
 
     .-filter-blur > & {
         top: -4px;

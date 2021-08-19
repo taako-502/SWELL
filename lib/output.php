@@ -60,13 +60,27 @@ function hook_wp_footer_1() {
 	// スクロール監視用
 	echo '<div class="l-scrollObserver" aria-hidden="true"></div>';
 
+	$pjax = SWELL::is_use( 'pjax' );
+
+	if ( $pjax || SWELL::is_use( 'ol_start' ) ) {
+		wp_enqueue_script( 'swell_set_olstart', T_DIRE_URI . '/build/js/front/set_olstart.min.js', [], SWELL_VERSION, true );
+	}
+
+	if ( $pjax || SWELL::is_use( 'rellax' ) ) {
+		wp_enqueue_script( 'swell_set_rellax', T_DIRE_URI . '/build/js/front/set_rellax.min.js', [ 'swell_rellax' ], SWELL_VERSION, true );
+	}
+
+	if ( ! $pjax && SWELL::is_use( 'fix_thead' ) ) {
+		echo "<script>document.documentElement.setAttribute('data-has-theadfix', '1');</script>";
+	}
+
 	// clipboard.js
-	if ( SWELL::is_use( 'clipboard' ) ) {
-		wp_enqueue_script( 'clipboard' );
+	if ( $pjax || SWELL::is_use( 'clipboard' ) ) {
+		wp_enqueue_script( 'swell_set_urlcopy', T_DIRE_URI . '/build/js/front/set_urlcopy.min.js', [ 'clipboard' ], SWELL_VERSION, true );
 	}
 
 	// pinit.js
-	if ( SWELL::is_use( 'pinterest' ) ) {
+	if ( $pjax || SWELL::is_use( 'pinterest' ) ) {
 		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript
 		echo '<script async defer src="//assets.pinterest.com/js/pinit.js"></script>';
 	}
@@ -172,9 +186,8 @@ function get_swl_front_css() {
 	 * 以下、キャッシュさせないCSS
 	 */
 	// タブ
-	global $is_IE;
 	$is_android = SWELL::is_android();
-	if ( $is_IE || $is_android ) {
+	if ( $is_android ) {
 		$style .= '.c-tabBody__item[aria-hidden="false"]{animation:none !important;display:block;}';
 	}
 
@@ -197,10 +210,6 @@ function get_swl_front_css() {
 
 		if ( file_exists( $lp_css ) ) $style .= SWELL::get_file_contents( $lp_css );
 	}
-
-	// IEではCSS変数を置換
-	global $is_IE;
-	if ( $is_IE ) $style = SWELL::replace_css_var_on_IE( $style );
 
 	return $style;
 }

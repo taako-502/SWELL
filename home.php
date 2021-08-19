@@ -31,7 +31,7 @@ $the_id = get_queried_object_id();
 				$cache_key = ( IS_MOBILE ) ? 'home_posts_sp' : 'home_posts';
 			endif;
 
-			echo '<div class="p-homeContent u-mt-40">';
+			echo '<div class="p-homeContent l-parent u-mt-40">';
 			SWELL_Theme::get_parts( 'parts/home_content', '', $cache_key, 24 * HOUR_IN_SECONDS );
 			echo '</div>';
 		?>

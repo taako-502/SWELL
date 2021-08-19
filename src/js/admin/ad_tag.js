@@ -1,5 +1,5 @@
 (function ($) {
-	console.log('Loaded ad_tag.js.');
+	console.log('SWELL: Loaded ad_tag.js.');
 
 	$(function () {
 		// $('form').attr('autocomplete', 'off');

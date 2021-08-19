@@ -36,28 +36,7 @@ function register_swell_blocks() {
  * 普通のカスタムブロックの登録
  */
 function register_normal_blocks() {
-	$blocks = [
-		'tab',
-		'tab-body',
-	];
 
-	foreach ( $blocks as $block_name ) {
-
-		$handle = "swell-block/{$block_name}";
-		$asset  = include T_DIRE . "/build/blocks/{$block_name}/index.asset.php";
-
-		wp_register_script(
-			$handle,
-			T_DIRE_URI . "/build/blocks/{$block_name}/index.js",
-			array_merge( $asset['dependencies'], [ 'swell_blocks' ] ),
-			SWELL_VERSION,
-			true
-		);
-
-		register_block_type( "loos/{$block_name}", [ 'editor_script' => $handle ] );
-	}
-
-	// リファクタリング済み
 	$blocks = [
 		'accordion',
 		'accordion-item',
@@ -65,7 +44,7 @@ function register_normal_blocks() {
 		'ab-test-a',
 		'ab-test-b',
 		'banner-link',
-    'button',
+		'button',
 		'cap-block',
 		'dl',
 		'dl-dt',
@@ -75,6 +54,8 @@ function register_normal_blocks() {
 		'full-wide',
 		'step',
 		'step-item',
+		'tab',
+		'tab-body',
 	];
 	foreach ( $blocks as $block_name ) {
 

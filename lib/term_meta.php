@@ -19,7 +19,7 @@ function add_term_fields() {
 ?>
 	<div class="form-field">
 		<label><?=__( 'Featured image', 'swell' )?></label>
-		<?php Field::media_btns( 'swell_term_meta_image', '' ); ?>
+		<?php Field::media_btns( 'swell_term_meta_image', '', 'id' ); ?>
 	</div>
 <?php
 }
@@ -151,20 +151,17 @@ function add_term_edit_fields( $term ) {
 	<tr class="form-field">
 		<th><label for="swell_term_meta_ttlbg"><?=__( 'Background image for title', 'swell' )?></label></th>
 		<td>
-			<?php Field::media_btns( 'swell_term_meta_ttlbg', $term_ttlbg ); ?>
+			<?php Field::media_btns( 'swell_term_meta_ttlbg', $term_ttlbg, 'id' ); ?>
 		</td>
 	</tr>
-	<!-- 画像アップロード -->
 	<tr class="form-field">
 		<th><label for="swell_term_meta_image"><?=__( 'Featured image', 'swell' )?></label></th>
 		<td>
-			<?php Field::media_btns( 'swell_term_meta_image', $term_image ); ?>
+			<?php Field::media_btns( 'swell_term_meta_image', $term_image, 'id' ); ?>
 		</td>
 	</tr>
 	<tr class="form-field">
-		<th>
-			「アイキャッチ画像」をページに表示させるかどうか
-		</th>
+		<th>「アイキャッチ画像」をページに表示させるかどうか</th>
 		<td>
 			<?php
 				$checked = ( $is_show_thumb === '1' ) ? ' checked' : ''; // 標準：オフ
@@ -173,9 +170,7 @@ function add_term_edit_fields( $term ) {
 		</td>
 	</tr>
 	<tr class="form-field">
-		<th>
-			「説明」の内容をページに表示させるかどうか
-		</th>
+		<th>「説明」の内容をページに表示させるかどうか</th>
 		<td>
 			<?php
 				$checked = ( $is_show_desc !== '0' ) ? ' checked' : ''; // 標準：オン
@@ -184,9 +179,7 @@ function add_term_edit_fields( $term ) {
 		</td>
 	</tr>
 	<tr class="form-field">
-		<th>
-			記事一覧リストを表示するかどうか
-		</th>
+		<th>記事一覧リストを表示するかどうか</th>
 		<td>
 			<?php
 				$checked = ( $is_show_list !== '0' ) ? ' checked' : ''; // 標準：オン
@@ -195,9 +188,7 @@ function add_term_edit_fields( $term ) {
 		</td>
 	</tr>
 	<tr class="form-field">
-		<th>
-			ページで呼び出すブログパーツ
-		</th>
+		<th>ページで呼び出すブログパーツ</th>
 		<td>
 			<input type="text" name="swell_term_meta_display_parts" id="swell_term_meta_display_parts" size="20" value="<?=$parts_id?>" style="width: 6em">
 			<?php

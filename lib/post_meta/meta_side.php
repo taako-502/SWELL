@@ -68,14 +68,14 @@ function side_meta_cb( $post ) {
 			<?php
 				$field_args = [
 					'id'          => 'swell_meta_youtube',
-					'title'       => __( 'Youtube videos for Featured image', 'swell' ),
+					'title'       => __( 'アイキャッチ用のYouTube動画', 'swell' ),
 					'meta'        => get_post_meta( $the_id, 'swell_meta_youtube', true ),
-					'placeholder' => __( 'Enter the Youtube video ID', 'swell' ),
+					'placeholder' => __( 'YouTubeの動画IDを入力', 'swell' ),
 				];
 				Field::meta_text_input( $field_args );
 			?>
 			<p class="swl-meta__desc">
-				<?=esc_html__( 'Please enter only the ID part from the Youtube URL.', 'swell' )?>
+				<?=esc_html__( 'YouTubeのURLから、ID部分のみを入力してください。', 'swell' )?>
 			</p>
 			</div>
 		<?php endif; ?>
@@ -97,7 +97,7 @@ function side_meta_cb( $post ) {
 				<?=esc_html__( 'Background image for title', 'swell' )?>
 			</label>
 			<div class="swl-meta__field">
-				<?php Field::media_btns( 'swell_meta_ttlbg', $meta_val ); ?>
+				<?php Field::media_btns( 'swell_meta_ttlbg', $meta_val, 'id' ); ?>
 			</div>
 			<p class="swl-meta__desc">
 				<?=esc_html__( 'Specify the background image when the title display position is "Above the content".', 'swell' )?>

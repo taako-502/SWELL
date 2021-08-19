@@ -5,18 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 $SETTING = SWELL_Theme::get_setting();
 
-// PC画像
-$pc_img    = $SETTING['slider1_img'];
-$pc_img_id = attachment_url_to_postid( $pc_img );
-$pc_img_s  = ( $pc_img_id ) ? wp_get_attachment_image_url( $pc_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
-
-// SP画像
-$sp_img    = $SETTING['slider1_img_sp'] ?: $pc_img;
-$sp_img_id = attachment_url_to_postid( $sp_img );
-$sp_img_s  = ( $sp_img_id ) ? wp_get_attachment_image_url( $sp_img_id, 'medium' ) : \SWELL_Theme::$placeholder;
-
 // altテキスト
 $img_alt = $SETTING['slider1_alt'] ?: '';
+
+// lazy_type
+$lazy_type = apply_filters( 'swell_mv_single_lazy_type', 'none' );
+$slide_img = SWELL_Theme::get_mv_slide_img( 1, $lazy_type );
 
 // テキストやボタン
 $slide_title = $SETTING['slider1_title'];
@@ -33,37 +27,33 @@ $parts_id = (int) $SETTING['slider1_parts_id'];
 <div class="p-mainVisual__inner">
 
 	<div class="p-mainVisual__slide c-filterLayer -<?=esc_attr( $SETTING['mv_img_filter'] )?>">
-
 		<picture class="p-mainVisual__imgLayer c-filterLayer__img">
-			<source media="(max-width: 959px)" srcset="<?=esc_attr( $sp_img_s )?>" data-srcset="<?=esc_attr( $sp_img )?>">
-			<img src="<?=esc_url( $pc_img_s )?>" data-src="<?=esc_attr( $pc_img )?>" alt="<?=esc_attr( $img_alt )?>" class="p-mainVisual__img lazyload">
+			<?php echo $slide_img; //phpcs:ignore ?>
 		</picture>
-		<div class="p-mainVisual__textLayer l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
+		<div class="p-mainVisual__textLayer l-parent l-container u-ta-<?=esc_attr( $txtpos )?>" style="<?=esc_attr( $text_style )?>">
 		<?php
-			$slide_ttl = '';
-
 			// キャッチコピー
-			if ( '' !== $slide_title )
-				$slide_ttl .= '<div class="p-mainVisual__slideTitle">' . $slide_title . '</div>';
+			if ( '' !== $slide_title ) {
+				echo '<div class="p-mainVisual__slideTitle">' . wp_kses( $slide_title, SWELL_Theme::$allowed_text_html ) . '</div>';
+			}
 
 			// サブコピー
-			if ( '' !== $slide_text )
-				$slide_ttl .= '<div class="p-mainVisual__slideText">' . nl2br( $slide_text ) . '</div>';
-
-			echo wp_kses_post( $slide_ttl );
+			if ( '' !== $slide_text ) {
+				echo '<div class="p-mainVisual__slideText">' . wp_kses( nl2br( $slide_text ), SWELL_Theme::$allowed_text_html ) . '</div>';
+			}
 
 			// ブログパーツ
 			if ( $parts_id ) echo do_shortcode( '[blog_parts id="' . $parts_id . '"]' );
 
 			// ボタン or スライド全体をリンク
 			if ( '' !== $slide_url && '' !== $btn_text ) :
-				$btn_args = [
-					'href'     => $slide_url,
-					'text'     => $btn_text,
-					'btn_type' => $SETTING['slider1_btntype'],
-					'btn_col'  => $SETTING['slider1_btncol'],
-				];
-				\SWELL_Theme::pluggable_parts( 'mv_btn', $btn_args );
+			$btn_args = [
+				'href'     => $slide_url,
+				'text'     => $btn_text,
+				'btn_type' => $SETTING['slider1_btntype'],
+				'btn_col'  => $SETTING['slider1_btncol'],
+			];
+			\SWELL_Theme::pluggable_parts( 'mv_btn', $btn_args );
 
 			elseif ( $slide_url ) :
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

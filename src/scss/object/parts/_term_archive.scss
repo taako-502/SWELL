@@ -5,6 +5,7 @@
 .p-termHead {
     position: relative;
     margin-top: 3rem;
+    border: solid 1px var(--color_border);
 
     @include tab {
         display: flex;
@@ -15,42 +16,16 @@
     width: 100%;
 }
 
-.p-termHead__thumbImg {
-
-    @extend %objFitCover;
-}
-
 .p-termHead__desc {
     width: 100%;
     padding: 1.5em;
-    border: solid 1px $color_border;
-
-    .p-termHead__thumbWrap + & {
-
-        @include mobile {
-            border-top: none;
-        }
-
-        @include tab {
-            border-left: none;
-        }
-    }
-
 }
 
 .p-termContent {
     margin-top: 4em;
 
-    & > .p-blogParts {
+    > .p-blogParts {
         margin-bottom: 4em;
     }
 }
 
-.p-authorContent,
-.p-homeContent,
-.p-termContent {
-
-    & > :first-child {
-        margin-top: 0;
-    }
-}

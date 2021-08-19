@@ -41,7 +41,7 @@
         color: var(--color_header_text);
     }
 
-    &.-loop-off {
+    &[data-loop="0"] {
 
         .menu-item:first-child {
             margin-left: auto;

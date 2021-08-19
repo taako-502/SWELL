@@ -105,6 +105,36 @@ trait Others {
 
 
 	/**
+	 * 画像にlazyloadを適用
+	 */
+	public static function set_lazyload( $image, $lazy_type, $placeholder = '' ) {
+
+		if ( $lazy_type === 'eager' ) {
+
+			$image = str_replace( ' src="', ' loading="eager" src="', $image );
+
+		} elseif ( $lazy_type === 'lazy' || self::is_rest() || self::is_iframe() ) {
+
+			$image = str_replace( ' src="', ' loading="lazy" src="', $image );
+
+		} elseif ( $lazy_type === 'lazysizes' ) {
+			$placeholder = $placeholder ?: self::$placeholder;
+			$image       = str_replace( ' src="', ' src="' . esc_url( $placeholder, ['http', 'https', 'data' ] ) . '" data-src="', $image );
+			$image       = str_replace( ' srcset="', ' data-srcset="', $image );
+			$image       = str_replace( ' class="', ' class="lazyload ', $image );
+
+			$image = preg_replace_callback( '/<img([^>]*)>/', function( $matches ) {
+				$props = rtrim( $matches[1], '/' );
+				$props = self::set_aspectratio( $props );
+				return '<img' . $props . '>';
+			}, $image );
+		}
+
+		return $image;
+	}
+
+
+	/**
 	 * width,height から aspectratio を指定
 	 */
 	public static function set_aspectratio( $props, $src = '' ) {
@@ -237,62 +267,6 @@ trait Others {
 			return true;
 		}
 		return false;
-	}
-
-
-	/**
-	 * IEでCSS変数を置換する
-	 */
-	// phpcs:ignore WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid
-	public static function replace_css_var_on_IE( $style ) {
-		$SETTING = self::get_setting();
-		$EDITOR  = self::get_editor();
-
-		$color_main       = $SETTING['color_main'];
-		$color_content_bg = ( $SETTING['content_frame'] === 'frame_off' ) ? $SETTING['color_bg'] : '#fff';
-		$ps_space         = ( $SETTING['ps_no_space'] ) ? '0' : '8px';
-		$btn_red          = $EDITOR['color_btn_red'];
-		$btn_blue         = $EDITOR['color_btn_blue'];
-		$btn_green        = $EDITOR['color_btn_green'];
-
-		$css_variables = [
-			'var(--color_htag)'              => $SETTING['color_htag'] ?: $color_main,
-			'var(--color_gnav_bg)'           => $SETTING['color_gnav_bg'] ?: $SETTING['color_main'],
-			'var(--color_gray)'              => 'rgba(200,200,200,.15)',
-			'var(--color_border)'            => 'rgba(200,200,200,.5)',
-			'var(--color_btn_blue_dark)'     => self::get_rgba( $btn_blue, 1, -.25 ),
-			'var(--color_btn_red_dark)'      => self::get_rgba( $btn_red, 1, -.25 ),
-			'var(--color_btn_green_dark)'    => self::get_rgba( $btn_green, 1, -.25 ),
-			'var(--color_main_thin)'         => self::get_rgba( $color_main, 0.05, 0.25 ),
-			'var(--color_main_dark)'         => self::get_rgba( $color_main, 1, -.25 ),
-			'var(--container_size)'          => (int) $SETTING['container_size'] + 96 . 'px',
-			'var(--article_size)'            => (int) $SETTING['article_size'] + 64 . 'px',
-			'var(--logo_size_sp)'            => $SETTING['logo_size_sp'] . 'px',
-			'var(--logo_size_pc)'            => $SETTING['logo_size_pc'] . 'px',
-			'var(--logo_size_pcfix)'         => $SETTING['logo_size_pcfix'] . 'px',
-			'var(--card_posts_thumb_ratio)'  => self::$thumb_ratios[ $SETTING['card_posts_thumb_ratio'] ]['value'],
-			'var(--list_posts_thumb_ratio)'  => self::$thumb_ratios[ $SETTING['list_posts_thumb_ratio'] ]['value'],
-			'var(--big_posts_thumb_ratio)'   => self::$thumb_ratios[ $SETTING['big_posts_thumb_ratio'] ]['value'],
-			'var(--thumb_posts_thumb_ratio)' => self::$thumb_ratios[ $SETTING['thumb_posts_thumb_ratio'] ]['value'],
-			'var(--color_content_bg)'        => $color_content_bg,
-			'var(--mv_btn_radius)'           => $SETTING['mv_btn_radius'] . 'px',
-			'var(--ps_space)'                => $ps_space,
-			'var(--color_list_check)'        => $EDITOR['color_list_check'] ?: $color_main,
-			'var(--color_list_num)'          => $EDITOR['color_list_num'] ?: $color_main,
-		];
-		foreach ( $css_variables as $key => $value ) {
-			$style = str_replace( $key, $value, $style );
-		}
-
-		// 残りはそのまま$SETTINGの値を受け渡す
-		$style = preg_replace_callback('/var\(--([^\)]*)\)/', function( $m ) {
-			$key    = $m[1];
-			$return = self::get_setting( $key ) ?: self::get_editor( $key ) ?: $m[0];
-			return $return;
-		}, $style);
-
-		return $style;
-
 	}
 
 }

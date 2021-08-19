@@ -13,28 +13,24 @@ class Sanitize {
 	/**
 	 * controlのtypeからサニタイズ関数の名前を取得
 	 */
-	public static function get_sanitize_name( $type ) {
+	public static function get_sanitize_name( $type, $mime_type = '' ) {
 
 		switch ( $type ) {
 			case 'checkbox':
 				return ['\SWELL_THEME\Customizer\Sanitize', 'checkbox' ];
-				break;
 			case 'radio':
 			case 'select':
 				return ['\SWELL_THEME\Customizer\Sanitize', 'select' ];
-				break;
 			case 'number':
 				return ['\SWELL_THEME\Customizer\Sanitize', 'float' ];
-				break;
+			case 'media':
+				return ['\SWELL_THEME\Customizer\Sanitize', 'media_' . $mime_type ];
 			case 'image':
 				return ['\SWELL_THEME\Customizer\Sanitize', 'image' ];
-				break;
 			case 'color':
 				return 'sanitize_hex_color';
-				break;
 			default: // text | textarea
 				return 'wp_kses_post';
-				break;
 		}
 	}
 
@@ -106,9 +102,29 @@ class Sanitize {
 
 
 	/**
+	 * ファイルアップローダー（画像）
+	 * WP_Customize_Media_Controlに対して使う。
+	 */
+	public static function media_image( $image_id, $setting ) {
+		$image_url = wp_get_attachment_url( $image_id );
+		$mimes     = [
+			'jpg|jpeg|jpe' => 'image/jpeg',
+			'gif'          => 'image/gif',
+			'png'          => 'image/png',
+			'bmp'          => 'image/bmp',
+			'tif|tiff'     => 'image/tiff',
+			'ico'          => 'image/x-icon',
+			'svg'          => 'image/svg+xml',
+		];
+		$file      = wp_check_filetype( $image_url, $mimes );
+		return ( $file['ext'] ? $image_id : $setting->default );
+	}
+
+
+	/**
 	 * 動画用
 	 */
-	public static function video( $video_id, $setting ) {
+	public static function media_video( $video_id, $setting ) {
 		$video_url = wp_get_attachment_url( $video_id );
 		$mimes     = [
 			'mpg|mpeg' => 'video/mpeg',

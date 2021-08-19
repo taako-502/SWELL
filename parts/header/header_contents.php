@@ -11,7 +11,7 @@ if ( $SETTING['info_bar_pos'] === 'head_top' ) SWELL_Theme::get_parts( 'parts/he
 	<?php SWELL_Theme::get_parts( 'parts/header/head_bar' ); // ヘッダーバー ?>
 	<div class="l-header__inner l-container">
 		<div class="l-header__logo">
-			<?php echo SWELL_PARTS::head_logo( $SETTING['header_transparent'] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo SWELL_PARTS::head_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<?php if ( $SETTING['phrase_pos'] === 'head_wrap' ) : ?>
 				<div class="c-catchphrase u-thin"><?=esc_html( SWELL_Theme::site_data( 'catchphrase' ) )?></div>
 			<?php endif; ?>
@@ -33,8 +33,8 @@ if ( $SETTING['info_bar_pos'] === 'head_top' ) SWELL_Theme::get_parts( 'parts/he
 		<?php SWELL_Theme::get_parts( 'parts/header/sp_btns' ); // メニューボタン & カスタムボタン ?>
 	</div>
 	<?php
-	if ( has_nav_menu( 'sp_head_menu' ) ) : // SP用ヘッダーメニュー
-		SWELL_Theme::get_parts( 'parts/header/sp_head_nav', $SETTING['sp_head_nav_loop'] );
+	if ( SWELL_Theme::is_use( 'sp_head_nav' ) ) :
+		SWELL_Theme::get_parts( 'parts/header/sp_head_nav' );
 	endif;
 	?>
 </header>

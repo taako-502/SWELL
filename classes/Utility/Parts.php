@@ -29,24 +29,6 @@ trait Parts {
 
 
 	/**
-	 * lazyload画像
-	 */
-	public static function lazyimg( $args = [] ) {
-		$src         = $args['src'] ?? '';
-		$alt         = $args['alt'] ?? '';
-		$class       = $args['class'] ?? '';
-		$placeholder = $args['placeholder'] ?? self::$placeholder;
-
-		if ( self::is_rest() || self::is_iframe() ) {
-			echo '<img src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
-		} else {
-			$class .= ' lazyload';
-			echo '<img src="' . esc_url( $placeholder ) . '" data-src="' . esc_url( $src ) . '" alt="' . esc_attr( $alt ) . '" class="' . esc_attr( $class ) . '">';
-		}
-	}
-
-
-	/**
 	 * テンプレート読み込み
 	 * $path       : 読み込むファイルのパス
 	 * $variable   : 引数として利用できるようにする変数

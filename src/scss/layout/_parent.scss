@@ -1,0 +1,12 @@
+.post_content,
+.l-mainContent__inner,
+.l-parent {
+
+    > :first-child {
+        margin-top: 0 !important;
+    }
+
+    > :last-child {
+        margin-bottom: 0 !important;
+    }
+}

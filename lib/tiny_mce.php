@@ -55,7 +55,7 @@ add_filter( 'mce_external_plugins', __NAMESPACE__ . '\add_mce_external_plugins' 
 
 function add_mce_external_plugins( $plugins ) {
 	$plugins['table']        = T_DIRE_URI . '/assets/js/tinymce/table_plugin.min.js';
-	$plugins['swellButtons'] = T_DIRE_URI . '/build/js/admin/tinymce.js?v=' . SWELL_VERSION;
+	$plugins['swellButtons'] = T_DIRE_URI . '/build/js/admin/tinymce.min.js?v=' . SWELL_VERSION;
 	return $plugins;
 }
 

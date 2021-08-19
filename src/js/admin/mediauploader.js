@@ -1,5 +1,5 @@
 // 画像選択処理
-console.log('Loaded media-uploader.js.');
+console.log('SWELL: Loaded mediauploader.');
 
 (function ($) {
 	let customUploader = null;
@@ -33,21 +33,24 @@ console.log('Loaded media-uploader.js.');
 		customUploader.on('select', function () {
 			// Get media attachment details from the frame state
 			const images = customUploader.state().get('selection');
-			// console.log(images);
 
 			// Get media attachment details from the frame state
 			const theImage = images.first().toJSON();
-			// console.log(theImage);
+
+			const dataType = srcInputField.attr('data-type');
 
 			// inputタグにURLをセット
-			srcInputField.val(theImage.url);
+			if ('id' === dataType) {
+				srcInputField.val(theImage.id);
+			} else {
+				srcInputField.val(theImage.url);
+			}
+
 			srcInputField.change();
 
 			// プレビューエリアを更新
 			// previewArea.empty();
-			previewArea.html(
-				'<img style="max-width:100%;" src="' + theImage.url + '" />'
-			);
+			previewArea.html('<img style="max-width:100%;" src="' + theImage.url + '" />');
 
 			// クローズ
 			// $('.media-modal-close').click();
@@ -80,7 +83,7 @@ console.log('Loaded media-uploader.js.');
 	$(document).on('click', '[name=media-upload-btn]', function (e) {
 		e.preventDefault();
 		const btnId = $(this).attr('data-id');
-		console.log(btnId);
+
 		mediaSelectBtnClick(btnId);
 	});
 

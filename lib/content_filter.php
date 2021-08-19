@@ -7,10 +7,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 // memo: ショートコード展開の優先度:11 , ダイナミックブロック展開の優先度:9
 
-global $wp_embed;
-
-// 遅延読み込み時も is_admin なので注意
+// エディター側では処理されないように。
 if ( ! is_admin() ) {
+
+	global $wp_embed;
 
 	// ショートコード展開より後に実行する処理
 	add_filter( 'the_content', [ $wp_embed, 'autoembed' ], 12 ); // 再利用ブロックとブログパーツでも埋め込みを有効化する
@@ -19,24 +19,43 @@ if ( ! is_admin() ) {
 	// SEOプラグインのディスクリプション生成時に発火しないように、登録を遅らせる。
 	add_action('wp_head', function () {
 		add_filter( 'the_content', __NAMESPACE__ . '\add_toc', 12 );
-		add_filter( 'the_content', __NAMESPACE__ . '\add_lazyload', 12 );
-		add_filter( 'the_content', __NAMESPACE__ . '\url_to_blog_card', 12 );
+
+		// URLの自動ブログカード化機能: プラグインなどで不具合があるページだけオフにしたりできるように apply_filters 付き
+		$remove_url_to_card = apply_filters( 'swell_remove_url_to_card', \SWELL_Theme::get_option( 'remove_url2card' ) );
+		if ( ! $remove_url_to_card ) {
+			add_filter( 'the_content', __NAMESPACE__ . '\url_to_blog_card', 12 );
+		}
+
+		if ( 'lazysizes' === \SWELL_Theme::$lazy_type ) {
+			add_filter( 'the_content', __NAMESPACE__ . '\add_lazysizes', 12 );
+		}
+
 	}, 99 );
 };
 
-// カスタムHTMLウィジェット にも処理を追加
-// add_filter( 'widget_text', __NAMESPACE__ . '\remove_p_by_shortcode' );
-add_filter( 'widget_text', 'do_shortcode' );
-add_filter( 'widget_text', [ $wp_embed, 'autoembed' ], 12 );
-add_filter( 'widget_text', __NAMESPACE__ . '\add_lazyload', 12 );
-add_filter( 'widget_text', __NAMESPACE__ . '\add_toc_on_widget', 12 );
-add_filter( 'widget_text', __NAMESPACE__ . '\remove_empty_p', 12 );
+// ajaxでの遅延読み込み時も is_admin() true になって処理されなくなってしまうので、ウィジェット関連は is_admin 分岐外にて。
+add_action( 'wp_loaded', function () {
 
-// テキストウィジェット にも処理を追加
-add_filter( 'widget_text_content', [ $wp_embed, 'autoembed' ], 12 );
-add_filter( 'widget_text_content', __NAMESPACE__ . '\add_lazyload', 12 );
-add_filter( 'widget_text_content', __NAMESPACE__ . '\add_toc_on_widget', 12 );
-add_filter( 'widget_text_content', __NAMESPACE__ . '\remove_empty_p', 12 );
+	global $wp_embed;
+
+	// カスタムHTMLウィジェット にも処理を追加
+	// add_filter( 'widget_text', __NAMESPACE__ . '\remove_p_by_shortcode' );
+	add_filter( 'widget_text', 'do_shortcode' );
+	add_filter( 'widget_text', [ $wp_embed, 'autoembed' ], 12 );
+	add_filter( 'widget_text', __NAMESPACE__ . '\add_toc_on_widget', 12 );
+	add_filter( 'widget_text', __NAMESPACE__ . '\remove_empty_p', 12 );
+
+	// テキストウィジェット にも処理を追加
+	add_filter( 'widget_text_content', [ $wp_embed, 'autoembed' ], 12 );
+	add_filter( 'widget_text_content', __NAMESPACE__ . '\add_toc_on_widget', 12 );
+	add_filter( 'widget_text_content', __NAMESPACE__ . '\remove_empty_p', 12 );
+
+	if ( 'lazysizes' === \SWELL_Theme::$lazy_type ) {
+		add_filter( 'widget_text', __NAMESPACE__ . '\add_lazysizes', 12 );
+		add_filter( 'widget_text_content', __NAMESPACE__ . '\add_lazysizes', 12 );
+	}
+
+}, 20 );
 
 // 過去ブロックとの後方互換性を保つための処理
 // require_once( T_DIRE.'/lib/block/replace_old_blocks.php' );
@@ -145,7 +164,7 @@ function add_toc( $content, $is_content_hook = true ) {
 /**
  * lazyloadを追加
  */
-function add_lazyload( $content ) {
+function add_lazysizes( $content ) {
 
 	// サーバーサイドレンダー, wp-json/wp/v2 などからはフック通さない
 	if ( SWELL::is_rest() || SWELL::is_iframe() ) return $content;

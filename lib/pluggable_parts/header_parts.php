@@ -7,21 +7,64 @@ use \SWELL_Theme as SWELL;
  * ヘッダーロゴ
  */
 if ( ! function_exists( 'swl_parts__head_logo' ) ) :
-	function swl_parts__head_logo( $args ) {
+	function swl_parts__head_logo() {
 
-		$use_top_logo = $args['use_top_logo'] ?? false;
-		$logo         = apply_filters( 'swell_head_logo', SWELL::site_data( 'logo' ) );
-		$logo_top     = apply_filters( 'swell_head_logo_top', SWELL::site_data( 'logo_top' ) );
-		$site_title   = SWELL::site_data( 'title' );
+		$logo_id     = SWELL::site_data( 'logo_id' );
+		$logo_top_id = SWELL::site_data( 'logo_top_id' ) ?: $logo_id;
 
-		if ( $use_top_logo ) {
-			// ヘッダーオーバーレイがオンの時
-			echo '<img src="' . esc_url( $logo_top ) . '" alt="' . esc_attr( $site_title ) . '" class="c-headLogo__img -top">' .
-				'<img src="' . esc_url( $logo ) . '" alt="" class="c-headLogo__img -common" role="presentation">';
-		} else {
-			// 通常時
-			echo '<img src="' . esc_url( $logo ) . '" alt="' . esc_attr( $site_title ) . '" class="c-headLogo__img">';
+		// トップページのヒーロヘッダーを利用するかどうか。
+		$use_overlay_header = ( SWELL::is_top() && ! is_paged() && SWELL::get_setting( 'header_transparent' ) !== 'no' );
+
+		// 後方互換用。ロゴURLが直接指定されている場合。
+		if ( has_filter( 'swell_head_logo' ) ) {
+			$logo     = apply_filters( 'swell_head_logo', SWELL::site_data( 'logo_url' ) );
+			$logo_top = apply_filters( 'swell_head_logo_top', wp_get_attachment_url( $logo_top_id ) );
+
+			if ( $use_overlay_header ) {
+				echo '<img src="' . esc_url( $logo_top ) . '" alt="' . esc_attr( SWELL::site_data( 'title' ) ) . '" class="c-headLogo__img -top">' .
+					'<img src="' . esc_url( $logo ) . '" alt="" class="c-headLogo__img -common" aria-hidden="true">';
+			} else {
+				// 通常時
+				echo '<img src="' . esc_url( $logo ) . '" alt="' . esc_attr( SWELL::site_data( 'title' ) ) . '" class="c-headLogo__img">';
+			}
+
+			return;
 		}
+
+		$logo_sizes = apply_filters( 'swell_head_logo_sizes', '(max-width: 959px) 50vw, 800px' );
+
+		if ( ! $use_overlay_header ) {
+			// 通常時
+
+			$return = SWELL::get_image( $logo_id, [
+				'class'   => 'c-headLogo__img',
+				'sizes'   => $logo_sizes,
+				'alt'     => SWELL::site_data( 'title' ),
+				'loading' => 'eager',
+			] );
+
+		} else {
+			// ヘッダーオーバーレイ有効時
+			$logo_top = SWELL::get_image( $logo_top_id, [
+				'class'   => 'c-headLogo__img -top',
+				'sizes'   => $logo_sizes,
+				'alt'     => SWELL::site_data( 'title' ),
+				'loading' => 'eager',
+			] );
+
+			$common_logo = SWELL::get_image( $logo_id, [
+				'class'   => 'c-headLogo__img -common',
+				'sizes'   => $logo_sizes,
+				'alt'     => '',
+				'loading' => 'lazy',
+			] );
+			$common_logo = str_replace( '<img ', '<img aria-hidden="true" ', $common_logo );
+
+			$return = $logo_top . $common_logo;
+		}
+
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $return;
 	}
 endif;
 

@@ -17,7 +17,5 @@ export default function setDomData(DOM) {
 	DOM.mainContent = document.getElementById('main_content');
 	DOM.sidebar = document.getElementById('sidebar');
 	DOM.fixBottomMenu = document.getElementById('fix_bottom_menu');
-	DOM.mainVisual = document.getElementById('main_visual');
-	DOM.postSlider = document.getElementById('post_slider');
 	DOM.fixSidebar = document.getElementById('fix_sidebar');
 }

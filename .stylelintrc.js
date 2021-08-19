@@ -3,7 +3,7 @@ module.exports = {
         '@wordpress/stylelint-config/scss',
         'stylelint-config-rational-order',
     ],
-    ignoreFiles: ['./src/scss/foundation/base/**/*.scss', './src/**/*.js', './assets/**/*.css', './build/**/*.css'],
+    ignoreFiles: ['./src/scss/foundation/base/**/*.scss', './src/**/*.js', './assets/**/*', './build/**/*'],
     rules: {
         'max-line-length': null, //max文字数を無視
         'selector-class-pattern': null,

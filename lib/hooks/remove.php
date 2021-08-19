@@ -107,6 +107,10 @@ function remove_wp_func() {
 		remove_filter( 'wp_robots', 'wp_robots_max_image_preview_large' );
 	}
 
+	if ( ! $OPTION['remove_media_inf_scrll'] ) {
+		add_filter( 'media_library_infinite_scrolling', '__return_true' );
+	}
+
 	/**
 	 * script/styleタグで不要なtype属性を非表示
 	 */
@@ -122,26 +126,18 @@ function remove_wp_func() {
 /**
  * 設定に合わせて不要な機能・出力を削除
  */
-add_action( 'wp', __NAMESPACE__ . '\remove_swell_func', 11 );
+add_action( 'wp_loaded', __NAMESPACE__ . '\remove_swell_func', 99 );
 function remove_swell_func() {
 	$OPTION = \SWELL_Theme::get_option();
 
 	// 画像Lazyload
-	$lazyload_type = $OPTION['use_lazyload'];
-	if ( 'swell' !== $lazyload_type || '' === $lazyload_type ) {
-		remove_filter( 'the_content', '\SWELL_Theme\Content_Filter\add_lazyload', 12 );
-	}
-	if ( 'core' !== $lazyload_type ) {
+	if ( 'lazy' !== \SWELL_Theme::$lazy_type ) {
 		add_filter( 'wp_lazy_loading_enabled', '__return_false' );
 	}
 
 	// 空段落削除機能のオフ
-	if ( $OPTION['remove_delete_empp'] ) {
-		remove_filter( 'the_content', '\SWELL_Theme\Content_Filter\remove_empty_p', 12 );
+	if ( \SWELL_Theme::get_option( 'remove_delete_empp' ) ) {
+		remove_filter( 'the_content', 'SWELL_Theme\Content_Filter\remove_empty_p', 12 );
 	}
 
-	// URLの自動ブログカード化機能 プラグインなどで不具合があるページだけオフにしたりできるように apply_filters
-	if ( apply_filters( 'swell_remove_url_to_card', $OPTION['remove_url2card'] ) ) {
-		remove_filter( 'the_content', '\SWELL_Theme\Content_Filter\url_to_blog_card', 12 );
-	}
 }

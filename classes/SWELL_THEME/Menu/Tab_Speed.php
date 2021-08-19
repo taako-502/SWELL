@@ -109,7 +109,7 @@ class Tab_Speed {
 
 		add_settings_field(
 			'label_lazyload',
-			'画像のLazyload',
+			'画像等のLazyload',
 			'__return_false',
 			$page_name,
 			$section_name,
@@ -118,19 +118,18 @@ class Tab_Speed {
 
 		$note_text = __( 'Note : ', 'swell' );
 		add_settings_field(
-			'use_lazyload',
+			'lazy_type',
 			'',
 			$cb,
 			$page_name,
 			$section_name,
 			[
-				'id'      => 'use_lazyload',
+				'id'      => 'lazy_type',
 				'type'    => 'radio',
-				'desc'    => $note_text . 'このLazyloadの設定は、投稿コンテンツ内の画像や動画などが対象です。',
 				'choices' => [
-					'off'   => '使用しない',
-					'core'  => 'コアの lazyload を使用する<br><small>' . $note_text . 'WordPress5.5.からの機能で、画像などにloading="lazy"が追加されます。</small>',
-					'swell' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img,video,iframeタグに適用されます。<br>' . $note_text . 'WordPress5.5から標準実装されるloading属性だけで十分な場合はオフにしてください。</small>',
+					'none'      => '使用しない',
+					'lazy'      => '<code>loading="lazy"</code>を使用する',
+					'lazysizes' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img, video, iframeタグに適用されます。',
 				],
 			]
 		);
@@ -160,11 +159,11 @@ class Tab_Speed {
 				'id'      => 'use_pjax',
 				'type'    => 'radio',
 				// 'label' => $data[0],
-				'desc'    => 'この機能についてはいくつか注意点がございます。<br><a href="https://swell-theme.com/function/5978/" target="_blank">こちらのページ</a>をご一読ください。',
+				'desc'    => '※ Pjax機能についてはいくつか注意点がございます。<a href="https://swell-theme.com/function/5978/" target="_blank">こちらのページ</a>をご一読ください。',
 				'choices' => [
 					'off'      => '使用しない',
 					'prefetch' => 'Prefetch',
-					'pjax'     => 'Pjaxによる遷移（Barba v2）',
+					'pjax'     => 'Pjaxによる遷移（非推奨）',
 				],
 			]
 		);

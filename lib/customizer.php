@@ -36,7 +36,7 @@ function load_scripts() {
 	$prev_handle = 'customizer-responsive-device-preview';
 	wp_enqueue_script(
 		$prev_handle,
-		T_DIRE_URI . '/build/js/admin/customizer/responsive-device-preview.js',
+		T_DIRE_URI . '/build/js/customizer/responsive-device-preview.min.js',
 		[ 'customize-controls' ],
 		SWELL_VERSION,
 		false
@@ -46,7 +46,7 @@ function load_scripts() {
 	// 設定項目の表示・非表示を切り替える処理
 	wp_enqueue_script(
 		'swell-customizer-controls',
-		T_DIRE_URI . '/build/js/admin/customizer/customizer-controls.js',
+		T_DIRE_URI . '/build/js/customizer/customizer-controls.min.js',
 		[],
 		SWELL_VERSION,
 		false

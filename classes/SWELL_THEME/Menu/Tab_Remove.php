@@ -78,18 +78,19 @@ class Tab_Remove {
 		);
 
 		$remove_settings = [
-			'remove_wpver'          => 'WordPressのバージョン情報を出力しない',
-			'remove_rel_link'       => '<code>rel="prev/next"</code>を出力しない',
-			'remove_wlwmanifest'    => 'Windows Live Writeの連携停止',
-			'remove_rsd_link'       => 'EditURI(RSD Link)を停止する',
-			'remove_emoji'          => '絵文字用のスクリプトの読み込みをしない',
-			'remove_self_pingbacks' => 'セルフピンバックを停止する',
-			'remove_sitemap'        => 'コアのサイトマップ機能を停止する ',
-			'remove_robots_image'   => '<code>meta="robots" content="max-image-preview:large"</code>を出力しない',
-			'remove_rest_link'      => 'REST API用のlinkタグを出力しない',
-			'remove_img_srcset'     => '画像のsrcsetを出力しない',
-			'remove_wptexturize'    => '記号の自動変換を停止する(wptexturize無効化)',
-			'remove_feed_link'      => 'RSSフィードを停止する',
+			'remove_wpver'           => 'WordPressのバージョン情報を出力しない',
+			'remove_rel_link'        => '<code>rel="prev/next"</code>を出力しない',
+			'remove_wlwmanifest'     => 'Windows Live Writeの連携停止',
+			'remove_rsd_link'        => 'EditURI(RSD Link)を停止する',
+			'remove_emoji'           => '絵文字用のスクリプトの読み込みをしない',
+			'remove_self_pingbacks'  => 'セルフピンバックを停止する',
+			'remove_sitemap'         => 'コアのサイトマップ機能を停止する ',
+			'remove_media_inf_scrll' => 'メディアライブラリの無限スクロールを停止する ',
+			'remove_robots_image'    => '<code>meta="robots" content="max-image-preview:large"</code>を出力しない',
+			'remove_rest_link'       => 'REST API用のlinkタグを出力しない',
+			'remove_img_srcset'      => '画像のsrcsetを出力しない',
+			'remove_wptexturize'     => '記号の自動変換を停止する(wptexturize無効化)',
+			'remove_feed_link'       => 'RSSフィードを停止する',
 
 		];
 

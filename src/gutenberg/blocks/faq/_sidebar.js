@@ -1,9 +1,9 @@
 /**
  * @WordPress dependencies
  */
-// import { __ } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { useMemo } from '@wordpress/element';
-import { PanelBody, RadioControl } from '@wordpress/components';
+import { PanelBody, RadioControl, ToggleControl } from '@wordpress/components';
 
 /**
  * 設定
@@ -21,8 +21,7 @@ const iconStyles = {
  * FAQコントロール
  */
 export default function ({ attributes, setAttributes }) {
-	const { iconRadius, qIconStyle, aIconStyle } = attributes;
-	// const nowClass = className || '';
+	const { iconRadius, qIconStyle, aIconStyle, outputJsonLd } = attributes;
 
 	// Qアイコンの色
 	const qIconOptions = useMemo(() => {
@@ -64,6 +63,14 @@ export default function ({ attributes, setAttributes }) {
 	// パネル生成
 	return (
 		<PanelBody title='FAQ設定' initialOpen={true} className='faq-controles'>
+			<ToggleControl
+				label={__('構造化データを出力する', 'swell')}
+				help={__('検索結果にリッチリザルトを表示したい時にオンにしてください。', 'swell')}
+				checked={outputJsonLd}
+				onChange={(val) => {
+					setAttributes({ outputJsonLd: val });
+				}}
+			/>
 			<RadioControl
 				label='Q / Aのアイコンの形'
 				selected={iconRadius}

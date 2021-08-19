@@ -20,12 +20,13 @@ $wp_customize->add_section(
 // タイトル背景用デフォルト画像
 Customizer::add(
 	$section,
-	'ttlbg_default_img',
+	'ttlbg_dflt_imgid',
 	[
 		'classname'   => '',
 		'label'       => 'タイトル背景用デフォルト画像',
 		'description' => '投稿ページの「タイトル背景画像」でアイキャッチ画像よりも優先させたい画像がある場合に設定してください。',
-		'type'        => 'image',
+		'type'        => 'media',
+		'mime_type'   => 'image',
 	]
 );
 

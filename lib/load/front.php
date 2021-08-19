@@ -1,18 +1,19 @@
 <?php
-namespace SWELL_Theme\Load_Files;
+namespace SWELL_Theme\Load_Files\Front;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+use \SWELL_Theme as SWELL;
 
 /**
  * フロントで読み込むファイル
  */
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\wp_enqueue_scripts', 8 );
 function wp_enqueue_scripts() {
-	load_front_fa();
 	load_front_styles();
 	load_front_scripts();
+	load_plugins();
 }
-
 
 /**
  * フロント用のスクリプト
@@ -25,33 +26,23 @@ function load_front_scripts() {
 	// embed系script除外
 	wp_deregister_script( 'wp-embed' );
 
-	if ( \SWELL_Theme::is_widget_iframe() ) return;
-
-	// 3.0で消す
-	global $is_IE;
-	if ( $is_IE ) {
-		wp_enqueue_script( 'object-fit-images', $assets . '/js/polyfill/ofi.min.js', [], SWELL_VERSION, true );
-		wp_enqueue_script( 'picturefill', $assets . '/js/polyfill/picturefill.min.js', [], SWELL_VERSION, true );
-	}
-
-	// JSプラグイン
-	wp_enqueue_script( 'swell_plugins', $assets . '/js/plugins.js', [], SWELL_VERSION, true );
+	if ( SWELL::is_widget_iframe() ) return;
 
 	// mainスクリプト
-	$main_script_path = ( \SWELL_Theme::is_use( 'pjax' ) ) ? '/js/main_with_pjax.js' : '/js/main.js';
-	wp_enqueue_script( 'swell_script', $build . $main_script_path, [], SWELL_VERSION, true );
+	$main_script = ( SWELL::is_use( 'pjax' ) ) ? '/js/main_with_pjax' : '/js/main';
+	wp_enqueue_script( 'swell_script', $build . $main_script . '.min.js', [], SWELL_VERSION, true );
 
 	// フロント側に渡すグローバル変数
 	wp_localize_script( 'swell_script', 'swellVars', global_vars_on_front() );
 
 	// prefetch使用時の追加スクリプト
-	if ( \SWELL_Theme::is_use( 'prefetch' ) ) {
-		wp_enqueue_script( 'swell_prefetch_script', $build . '/js/set_prefetch.js', [], SWELL_VERSION, true );
+	if ( SWELL::is_use( 'prefetch' ) ) {
+		wp_enqueue_script( 'swell_prefetch', $build . '/js/prefetch.min.js', [], SWELL_VERSION, true );
 	}
 
 	// 管理画面用をログイン時のみ読み込む（ツールバーのキャッシュクリア処理に使用）
 	if ( is_user_logged_in() ) {
-		wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.js', [], SWELL_VERSION, true );
+		wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.min.js', [], SWELL_VERSION, true );
 	}
 }
 
@@ -61,8 +52,7 @@ function load_front_scripts() {
  */
 function load_front_styles() {
 
-	global $is_IE;
-	$SETTING = \SWELL_Theme::get_setting();
+	$SETTING = SWELL::get_setting();
 	$assets  = T_DIRE_URI . '/assets';
 	$build   = T_DIRE_URI . '/build';
 
@@ -70,17 +60,12 @@ function load_front_styles() {
 	wp_enqueue_style( 'wp-block-library' );
 
 	// main.css
-	if ( $is_IE || \SWELL_Theme::get_setting( 'load_style_inline' ) ) {
+	if ( SWELL::get_setting( 'load_style_inline' ) ) {
 
 		// インライン読み込み時
-		$main_style = \SWELL_Theme::get_file_contents( T_DIRE . '/assets/css/main.css' );
+		$main_style = SWELL::get_file_contents( T_DIRE . '/assets/css/main.css' );
 		$main_style = str_replace( '../', T_DIRE_URI . '/assets/', $main_style );
 		$main_style = str_replace( '@charset "UTF-8";', '', $main_style );
-
-		if ( $is_IE ) {
-			// IEではカスタムプロパティを置換しておく
-			$main_style = \SWELL_Theme::replace_css_var_on_IE( $main_style );
-		}
 
 		// 空でmain_styleを登録しておく
 		wp_register_style( 'main_style', false ); // phpcs:ignore
@@ -94,23 +79,74 @@ function load_front_styles() {
 	}
 
 	// カスタムフォーマット用CSS
-	$custom_format_css = \SWELL_Theme::get_editor( 'custom_format_css' );
+	$custom_format_css = SWELL::get_editor( 'custom_format_css' );
 	if ( $custom_format_css ) {
 		wp_add_inline_style( 'main_style', $custom_format_css );
 	}
 }
 
-
 /**
- * FontAwesome
+ * プラグインファイル
  */
-function load_front_fa() {
-	$fa_type = \SWELL_Theme::get_setting( 'load_font_awesome' );
+function load_plugins() {
+
+	if ( SWELL::is_widget_iframe() ) return;
+
+	// 登録だけしておく
+	wp_register_script( 'swell_luminous', T_DIRE_URI . '/assets/js/plugins/luminous.min.js', [], SWELL_VERSION, true );
+	wp_register_script( 'swell_swiper', T_DIRE_URI . '/assets/js/plugins/swiper.min.js', [], SWELL_VERSION, true );
+	wp_register_script( 'swell_rellax', T_DIRE_URI . '/assets/js/plugins/rellax.min.js', [], SWELL_VERSION, true );
+
+	// スマホヘッダーナビ
+	if ( SWELL::is_use( 'sp_head_nav' ) ) {
+		wp_enqueue_script( 'swell_set_sp_head_nav', T_DIRE_URI . '/build/js/front/set_sp_head_nav.min.js', [ 'swell_swiper' ], SWELL_VERSION, true );
+	}
+
+	// pjax使うかどうか
+	$pjax = SWELL::is_use( 'pjax' );
+
+	// lazysizes
+	if ( $pjax || SWELL::is_use( 'lazysizes' ) ) {
+		wp_enqueue_script( 'swell_lazysizes', T_DIRE_URI . '/assets/js/plugins/lazysizes.min.js', [], SWELL_VERSION, true );
+	}
+
+	// Luminous
+	$is_luminous_page = is_single() || is_page() || is_category() || is_tag() || is_tax();
+	$is_luminous_page = $is_luminous_page && ! SWELL::get_setting( 'remove_luminous' );
+	if ( $pjax || $is_luminous_page ) {
+		// wp_enqueue_script( 'swell_luminous' );
+		wp_enqueue_script( 'swell_set_luminous', T_DIRE_URI . '/build/js/front/set_luminous.min.js', [ 'swell_luminous' ], SWELL_VERSION, true );
+		wp_enqueue_style( 'swell_luminous', T_DIRE_URI . '/assets/css/plugins/luminous.css', [], SWELL_VERSION );
+	}
+
+	// mv
+	$mv_type = SWELL::get_setting( 'main_visual_type' );
+	if ( $pjax || SWELL::is_top() && ! is_paged() && 'none' !== $mv_type ) {
+		$deps = 'slider' === $mv_type ? ['swell_script', 'swell_swiper' ] : ['swell_script' ];
+		wp_enqueue_script( 'swell_set_mv', T_DIRE_URI . '/build/js/front/set_mv.min.js', $deps, SWELL_VERSION, true );
+	}
+
+	// post slider
+	if ( $pjax || SWELL::is_top() && ! is_paged() && 'on' === SWELL::get_setting( 'show_post_slide' ) ) {
+		wp_enqueue_script(
+			'swell_set_post_slider',
+			T_DIRE_URI . '/build/js/front/set_post_slider.min.js',
+			[
+				'swell_script',
+				'swell_swiper',
+			],
+			SWELL_VERSION, true
+		);
+	}
+
+	// Font Awesome
+	$fa_type = SWELL::get_setting( 'load_font_awesome' );
 	if ( 'css' === $fa_type ) {
 		wp_enqueue_style( 'font-awesome-5', T_DIRE_URI . '/assets/font-awesome/css/all.min.css', [], SWELL_VERSION );
 	} elseif ( 'js' === $fa_type ) {
 		wp_enqueue_script( 'font-awesome-5', T_DIRE_URI . '/assets/font-awesome/js/all.min.js', [], SWELL_VERSION, true );
 	}
+
 }
 
 
@@ -119,8 +155,8 @@ function load_front_fa() {
  */
 function global_vars_on_front() {
 
-	$SETTING  = \SWELL_Theme::get_setting();
-	$is_bot   = \SWELL_Theme::is_bot() || is_robots();
+	$SETTING  = SWELL::get_setting();
+	$is_bot   = SWELL::is_bot() || is_robots();
 	$is_login = is_user_logged_in();
 
 	$global_vars = [
@@ -130,18 +166,14 @@ function global_vars_on_front() {
 		'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 		'ajaxNonce'       => wp_create_nonce( 'swell-ajax-nonce' ),
 		'isLoggedIn'      => $is_login ? '1' : '',
-		'isAjaxAfterPost' => \SWELL_Theme::is_use( 'ajax_after_post' ),
-		'isAjaxFooter'    => \SWELL_Theme::is_use( 'ajax_footer' ),
+		'isAjaxAfterPost' => SWELL::is_use( 'ajax_after_post' ),
+		'isAjaxFooter'    => SWELL::is_use( 'ajax_footer' ),
 		'isFixHeadSP'     => $SETTING['fix_header_sp'],
 		'tocListTag'      => $SETTING['index_list_tag'],
 		'tocTarget'       => $SETTING['toc_target'],
 		'tocMinnum'       => $SETTING['toc_minnum'],
-		'isCountPV'       => is_singular( \SWELL_Theme::$post_types_for_pvct ) && ! $is_login && ! $is_bot,
+		'isCountPV'       => is_singular( SWELL::$post_types_for_pvct ) && ! $is_login && ! $is_bot,
 	];
-
-	// Luminousのオン / オフ
-	$is_luminous_page           = is_single() || is_page() || is_category() || is_tag() || is_tax();
-	$global_vars['useLuminous'] = ( $is_luminous_page && ! $SETTING['remove_luminous'] );
 
 	// メインビジュアルスライダー
 	if ( 'slider' === $SETTING['main_visual_type'] ) {
@@ -165,12 +197,12 @@ function global_vars_on_front() {
 	}
 
 	// pjaxで無視するページ群
-	if ( \SWELL_Theme::is_use( 'pjax' ) ) {
+	if ( SWELL::is_use( 'pjax' ) ) {
 
 		$pjax_prevent_pages              = str_replace( ["\r", "\n" ], '', $SETTING['pjax_prevent_pages'] );
 		$global_vars['pjaxPreventPages'] = $pjax_prevent_pages;
 
-	} elseif ( \SWELL_Theme::is_use( 'prefetch' ) ) {
+	} elseif ( SWELL::is_use( 'prefetch' ) ) {
 
 		$prefetch_prevent_keys             = str_replace( ["\r", "\n" ], '', $SETTING['prefetch_prevent_keys'] );
 		$global_vars['ignorePrefetchKeys'] = $prefetch_prevent_keys;

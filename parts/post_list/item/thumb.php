@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 $the_id   = $variable['post_id'] ?? get_the_ID();
 $sizes    = $variable['sizes'] ?? '(min-width: 960px) 960px, 100vw';
-$size     = $variable['size'] ?? '';
+$size     = $variable['size'] ?? 'full';
 $cat_pos  = $variable['cat_pos'] ?? 'none';
 $cat_data = $variable['cat_data'] ?? []; // 後方互換用
 ?>
@@ -11,12 +11,11 @@ $cat_data = $variable['cat_data'] ?? []; // 後方互換用
 	<figure class="c-postThumb__figure">
 		<?php
 			\SWELL_Theme::get_thumbnail( [
-				'post_id'      => $the_id,
-				'size'         => $size,
-				'sizes'        => $sizes,
-				'class'        => 'c-postThumb__img',
-				'use_lazyload' => true,
-				'echo'         => true,
+				'post_id' => $the_id,
+				'size'    => $size,
+				'sizes'   => $sizes,
+				'class'   => 'c-postThumb__img u-obf-cover',
+				'echo'    => true,
 			] );
 		?>
 	</figure>

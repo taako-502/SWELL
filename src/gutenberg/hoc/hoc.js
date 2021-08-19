@@ -112,7 +112,7 @@ const addSwellHoc = createHigherOrderComponent((BlockEdit) => {
 			return (
 				<>
 					<BlockEdit {...props} />
-					<SwellHoc {...{ attributes, setAttributes }} />
+					<SwellHoc {...{ attributes, setAttributes, clientId }} />
 				</>
 			);
 		}

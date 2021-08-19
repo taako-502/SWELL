@@ -1,5 +1,5 @@
 (function () {
-	console.log('Loaded tinymce.js');
+	console.log('SWELL: Loaded tinymce.js');
 
 	const tinymce = window.tinymce;
 

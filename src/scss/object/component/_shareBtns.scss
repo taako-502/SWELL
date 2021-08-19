@@ -96,7 +96,7 @@
     color: #fff;
     font-size: 4.5vw;
     line-height: 1;
-    transition: color .25s;
+    // transition: color .25s;
 
     @include tab {
         font-size: 18px;
@@ -193,7 +193,7 @@ $btn_height: 30px;
             transition-duration: .25s;
         }
 
-        & + .c-copyedPoppup {
+        + .c-copyedPoppup {
             visibility: visible;
             opacity: 1;
         }

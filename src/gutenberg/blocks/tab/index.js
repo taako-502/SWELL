@@ -7,18 +7,25 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType, createBlock } from '@wordpress/blocks';
-import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	InspectorControls,
+	useBlockProps,
+	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
+} from '@wordpress/block-editor';
+
 import { RawHTML, useEffect, useState, useCallback } from '@wordpress/element';
 import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
  * @SWELL dependencies
  */
-import { iconColor } from '@swell-guten/config';
+import metadata from './block.json';
 import blockIcon from './_icon';
 import example from './_example';
 import TabSidebar from './_sidebar';
 import TabNavList from './components/TabNavList';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 
 /**
  * @others dependencies
@@ -49,24 +56,20 @@ function moveAt(array, index, at) {
 	return array;
 }
 
+// clientIdからタブIDを生成する （split使うよりsubstring+indexOfの方が速いっぽい）
+function generateTabId(clientId) {
+	const theId = clientId.substring(0, clientId.indexOf('-'));
+	return theId;
+	// const newID = clientId.split('-');
+	// return newID[0];
+}
+
 /**
  * registerBlockType
  */
-registerBlockType('loos/tab', {
-	title: 'タブ',
-	description: 'タブ切り替えコンテンツを簡単に作成できます。',
-	icon: {
-		foreground: iconColor,
-		src: blockIcon.tab,
-	},
-	category: 'swell-blocks',
-	keywords: ['swell', 'tab'],
-	supports: {
-		anchor: true,
-		className: false,
-	},
+registerBlockType(metadata.name, {
+	icon: getBlockIcon(blockIcon),
 	styles: [
-		// ブロック要素のスタイルを設定
 		{
 			name: 'default',
 			label: 'ノーマル',
@@ -83,45 +86,13 @@ registerBlockType('loos/tab', {
 	],
 	example,
 	attributes: {
-		isExample: {
-			type: 'boolean',
-			default: false,
-		},
-		tabId: {
-			type: 'string',
-			default: '',
-		},
+		...metadata.attributes,
 		tabHeaders: {
 			type: 'array',
 			default: [__('Tab 1', 'swell'), __('Tab 2', 'swell')],
 		},
-		activeTab: {
-			type: 'number',
-			default: 0,
-		},
-		tabWidthPC: {
-			type: 'string',
-			default: 'auto',
-		},
-		tabWidthSP: {
-			type: 'string',
-			default: 'auto',
-		},
-		isScrollPC: {
-			type: 'boolean',
-			default: false,
-		},
-		isScrollSP: {
-			type: 'boolean',
-			default: false,
-		},
-		tabColor: {
-			type: 'string',
-			default: '',
-		},
 	},
-
-	edit: ({ attributes, setAttributes, className, clientId, isSelected }) => {
+	edit: ({ attributes, setAttributes, clientId, isSelected }) => {
 		// useSelectが使えなければ null
 		if (useSelect === undefined) return null;
 
@@ -137,36 +108,57 @@ registerBlockType('loos/tab', {
 			tabColor,
 		} = attributes;
 
+		// デフォルトクラスを強制セット
 		useEffect(() => {
-			// デフォルトクラスを強制セット
+			if (isExample) return;
 			if (!attributes.className) {
 				setAttributes({ className: 'is-style-default' });
 			}
+		}, [attributes.className]);
 
-			// タブ個別のIDをセット
-			if (!tabId) setAttributes({ tabId: clientId });
-		}, [attributes.className, tabId, clientId]);
+		const theTabId = tabId || generateTabId(clientId);
+
+		// タブIDを初回にセット
+		useEffect(() => {
+			if (!tabId) {
+				setAttributes({ tabId: theTabId });
+			}
+		}, [tabId, theTabId]);
 
 		// エディタ上での開閉状態を管理
 		const [actTab, setActTab] = useState(activeTab);
 
+		// getBlockOrderメソッドの準備 memo: useSelectで取得すると更新のタイミングが遅くなる
 		const { getBlockOrder } = wp.data.select('core/block-editor');
+
+		//useDispatch系メソッド
 		const { removeBlocks, insertBlocks, updateBlockAttributes, moveBlocksUp, moveBlocksDown } =
 			useDispatch('core/block-editor');
 
-		// const tabBodyIDs = useSelect(
-		//     (select) => wp.select('core/block-editor').getBlocks(clientId)[0],
-		//     [clientId, tabHeaders, actCt]
-		// );
+		// IDの二重登録チェック
+		useEffect(() => {
+			if (isExample) return;
+			const sameIdBlocks = document.querySelectorAll(
+				`.swell-block-tab[data-tab-id="${tabId}"]`
+			);
+			if (sameIdBlocks.length > 1) {
+				const newId = generateTabId(clientId);
+				setAttributes({ tabId: newId });
+
+				// タブボディ側
+				const tabBodyIDs = getBlockOrder(clientId);
+				tabBodyIDs.forEach((_tabBodyID) => {
+					updateBlockAttributes(_tabBodyID, { tabId: newId });
+				});
+			}
+		}, [clientId]);
 
 		// 順序( id )を再セット
 		const resetOrder = useCallback(() => {
 			// useSelectで取得すると、どうしても更新のタイミングが遅くなる
 			const tabBodyIDs = getBlockOrder(clientId);
 			for (let i = 0; i < tabBodyIDs.length; i++) {
-				updateBlockAttributes(tabBodyIDs[i], {
-					id: i,
-				});
+				updateBlockAttributes(tabBodyIDs[i], { id: i });
 			}
 		}, [clientId]);
 
@@ -273,36 +265,41 @@ registerBlockType('loos/tab', {
 			[clientId, tabId, tabHeaders, resetOrder]
 		);
 
-		// ブロックのクラス
-		const blockClass = classnames(className, blockName, {
-			'has-background': !!tabColor,
+		// ブロックprops
+		const blockProps = useBlockProps({
+			className: classnames(blockName, {
+				'has-background': !!tabColor,
+			}),
+			'data-width-pc': tabWidthPC,
+			'data-width-sp': tabWidthSP,
+			'data-scroll-pc': isScrollPC ? 'true' : null,
+			'data-scroll-sp': isScrollSP ? 'true' : null,
+			'data-tab-id': tabId,
+			style: tabColor ? { backgroundColor: tabColor } : null,
 		});
+		const innerBlocksProps = useInnerBlocksProps(
+			{},
+			{
+				allowedBlocks: ['loos/tab-body'],
+				template: [
+					['loos/tab-body', { id: 0, tabId: theTabId }],
+					['loos/tab-body', { id: 1, tabId: theTabId }],
+				],
+				templateLock: false,
+			}
+		);
 
 		return (
 			<>
 				<InspectorControls>
 					<TabSidebar {...{ attributes, setAttributes, clientId }} />
 				</InspectorControls>
-				<div
-					className={blockClass}
-					data-width-pc={tabWidthPC}
-					data-scroll-pc={isScrollPC ? 'true' : null}
-					data-width-sp={tabWidthSP}
-					data-scroll-sp={isScrollSP ? 'true' : null}
-					style={
-						tabColor
-							? {
-									backgroundColor: tabColor,
-							  }
-							: null
-					}
-				>
+				<div {...blockProps}>
 					<TabNavList
 						{...{
 							blockName,
 							isSelected,
 							attributes,
-							// setAttributes,
 							actTab,
 							setActTab,
 							updateTabsHeader,
@@ -312,16 +309,7 @@ registerBlockType('loos/tab', {
 							removeTab,
 						}}
 					/>
-					<div className={`${blockName}__bodyWrap c-tabBody`}>
-						<InnerBlocks
-							allowedBlocks={['loos/tab-body']}
-							templateLock={false}
-							template={[
-								['loos/tab-body', { id: 0, tabId: tabId || clientId }],
-								['loos/tab-body', { id: 1, tabId: tabId || clientId }],
-							]}
-						/>
-					</div>
+					<div className='c-tabBody'>{innerBlocksProps.children}</div>
 				</div>
 				{!isExample && (
 					<style>
@@ -346,25 +334,19 @@ registerBlockType('loos/tab', {
 			tabColor,
 		} = attributes;
 
-		const blockClass = classnames(blockName, {
-			'has-background': !!tabColor,
+		const blockProps = useBlockProps.save({
+			className: classnames(blockName, {
+				'has-background': !!tabColor,
+			}),
+			'data-width-pc': tabWidthPC,
+			'data-width-sp': tabWidthSP,
+			'data-scroll-pc': isScrollPC ? 'true' : null,
+			'data-scroll-sp': isScrollSP ? 'true' : null,
+			style: tabColor ? { backgroundColor: tabColor } : null,
 		});
 
 		return (
-			<div
-				className={blockClass}
-				data-width-pc={tabWidthPC}
-				data-width-sp={tabWidthSP}
-				data-scroll-pc={isScrollPC ? 'true' : null}
-				data-scroll-sp={isScrollSP ? 'true' : null}
-				style={
-					tabColor
-						? {
-								backgroundColor: tabColor,
-						  }
-						: null
-				}
-			>
+			<div {...blockProps}>
 				<ul className='c-tabList' role='tablist'>
 					{tabHeaders.map((header, index) => (
 						<li key={index} className='c-tabList__item' role='presentation'>

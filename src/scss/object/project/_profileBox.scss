@@ -11,10 +11,10 @@
 }
 
 .p-profileBox__bgImg {
+    display: block;
     width: 100%;
     height: 160px;
     object-fit: cover;
-    font-family: "object-fit: cover;";
 }
 
 .p-profileBox__icon {
@@ -26,7 +26,6 @@
     width: 120px;
     height: 120px;
     object-fit: cover;
-    font-family: "object-fit: cover;";
     background: #fdfdfd;
     border: solid 4px #fdfdfd;
     border-radius: 50%;

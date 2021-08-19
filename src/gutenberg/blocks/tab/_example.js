@@ -1,11 +1,3 @@
-const LoremP = {
-	name: 'core/paragraph',
-	attributes: {
-		content:
-			'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-	},
-};
-
 export default {
 	attributes: {
 		isExample: true,
@@ -18,14 +10,22 @@ export default {
 			attributes: {
 				id: 0,
 			},
-			innerBlocks: [LoremP],
+			innerBlocks: [
+				{
+					name: 'core/paragraph',
+					attributes: {
+						content:
+							'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+					},
+				},
+			],
 		},
 		{
 			name: 'loos/tab-body',
 			attributes: {
 				id: 1,
 			},
-			innerBlocks: [LoremP],
+			innerBlocks: [],
 		},
 	],
 };

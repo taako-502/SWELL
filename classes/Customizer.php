@@ -47,21 +47,17 @@ class Customizer {
 
 		global $wp_customize;
 
-		$DEFAULT = \SWELL_Theme::get_default_setting();
-		$default = $DEFAULT[ $id ];
-
-		$args = self::set_args( $args );
-
+		$args         = self::set_args( $args );
 		$customize_id = 'loos_customizer[' . $id . ']';
 		$type         = $args['type'];
 		$partial      = $args['partial'];
 
 		// setting 用
 		$setting_args = [
-			'default'           => $default,
+			'default'           => \SWELL_Theme::get_default_setting( $id ),
 			'type'              => 'option',
 			'transport'         => $args['transport'],
-			'sanitize_callback' => isset( $args['sanitize'] ) ? $args['sanitize'] : Sanitize::get_sanitize_name( $type ),
+			'sanitize_callback' => isset( $args['sanitize'] ) ? $args['sanitize'] : Sanitize::get_sanitize_name( $type, $args['mime_type'] ),
 		];
 
 		// partialありの時、settingオプション追加

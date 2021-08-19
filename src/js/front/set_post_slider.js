@@ -1,20 +1,43 @@
-// import DOM from './data/domData';
-import { isPC } from '@swell-js/modules/data/stateData';
+/* eslint no-undef: 0 */
+// console.log('SWELL: set_ps.js');
+
+const isPC = 959 < window.innerWidth ? true : false;
+
+/**
+ * メインスライダー
+ */
+setPostSlider();
+
+// 画面回転時にも発火させる
+window.addEventListener('orientationchange', () => {
+	setTimeout(() => {
+		if (window.swellPsSwiper) {
+			window.swellPsSwiper.destroy();
+			setPostSlider();
+		}
+	}, 10);
+});
+
+// Pjax用
+if (window.SWELLHOOK) {
+	window.SWELLHOOK.barbaAfter.add(setPostSlider);
+}
 
 /**
  * 記事スライダーをセットする関数
  * ! postSliderがあるときにだけ呼び出されるように !
- *
- * @param {*} postSlider
  */
-export default function setPostSlider(postSlider) {
+function setPostSlider() {
+	const pSlider = document.getElementById('post_slider');
+	if (null === pSlider) return;
+
 	const swellVars = window.swellVars;
 	if (swellVars === undefined) return;
 
-	const swiperContainer = postSlider.querySelector('.swiper-container');
+	const swiperContainer = pSlider.querySelector('.swiper-container');
 	if (null === swiperContainer) {
 		// もしスライダークラスが見つからなければ
-		postSlider.classList.add('show_');
+		pSlider.classList.add('show_');
 		return;
 	}
 
@@ -38,17 +61,17 @@ export default function setPostSlider(postSlider) {
 		on: {
 			init() {
 				setTimeout(() => {
-					const thumb = postSlider.querySelector('.p-postList__thumb');
+					const thumb = pSlider.querySelector('.p-postList__thumb');
 					if (thumb) {
 						const thumbHelfH = thumb.offsetHeight / 2;
-						const prevNav = postSlider.querySelector('.swiper-button-prev');
-						const nextNav = postSlider.querySelector('.swiper-button-next');
+						const prevNav = pSlider.querySelector('.swiper-button-prev');
+						const nextNav = pSlider.querySelector('.swiper-button-next');
 						if (prevNav && nextNav) {
 							prevNav.style.top = thumbHelfH + 'px';
 							nextNav.style.top = thumbHelfH + 'px';
 						}
 					}
-					postSlider.classList.add('show_');
+					pSlider.classList.add('show_');
 				}, 10);
 			},
 		},
@@ -60,8 +83,8 @@ export default function setPostSlider(postSlider) {
 	swipeOption.centeredSlides = true;
 	// if (1 === sliderNum % 2) {
 	//     // スライドの枚数が奇数なら
-	//     let prevButton = postSlider.querySelector('.swiper-button-prev');
-	//     let nextButton = postSlider.querySelector('.swiper-button-next');
+	//     let prevButton = pSlider.querySelector('.swiper-button-prev');
+	//     let nextButton = pSlider.querySelector('.swiper-button-next');
 	//     if (prevButton) {
 	//         prevButton.style.left = '8px';
 	//     }

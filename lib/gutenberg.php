@@ -5,9 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 
 /**
- * コアブロックの拡張
+ * render_hook
  */
-require __DIR__ . '/gutenberg/render_core.php';
+require __DIR__ . '/gutenberg/render_hook/core_list.php';
+require __DIR__ . '/gutenberg/render_hook/core_table.php';
+require __DIR__ . '/gutenberg/render_hook/faq.php';
+require __DIR__ . '/gutenberg/render_hook/full_wide.php';
 
 
 /**

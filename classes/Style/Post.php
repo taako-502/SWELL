@@ -11,19 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class Post {
 
 	/**
-	 * 記事コンテンツ部分の背景色
-	 */
-	public static function content_bg( $color_bg, $frame_class ) {
-
-		if ( '-frame-off' !== $frame_class ) {
-			Style::add_root( '--color_content_bg', '#fff' );
-		} else {
-			Style::add_root( '--color_content_bg', $color_bg );
-		}
-	}
-
-
-	/**
 	 * ボタン
 	 */
 	public static function btn() {

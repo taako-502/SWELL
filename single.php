@@ -16,6 +16,8 @@ while ( have_posts() ) :
 <main id="main_content" class="l-mainContent l-article">
 	<article class="l-mainContent__inner">
 		<?php
+			do_action( 'swell_before_post_head', $the_id );
+
 			// タイトル周り
 			if ( ! SWELL_Theme::is_show_ttltop() ) :
 				SWELL_Theme::get_parts( 'parts/single/post_head' );

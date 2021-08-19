@@ -122,10 +122,8 @@ class Style {
 
 	/**
 	 * カスタムスタイルの生成（フロント用）
-	 *
-	 * @return void
 	 */
-	public static function custom_style() {
+	public static function front_style() {
 		$SETTING     = SWELL::get_setting();
 		$frame_class = SWELL::get_frame_class();
 
@@ -140,8 +138,11 @@ class Style {
 		// Body
 		Style\Body::font( $SETTING['body_font_family'] );
 		Style\Body::content_size( $SETTING['container_size'], $SETTING['article_size'] );
-		Style\Body::bg( $SETTING );
-		Style\Body::frame( $frame_class );
+		Style\Body::content_frame( $SETTING['color_bg'], $frame_class );
+		Style\Body::bg();
+		if ( $SETTING['to_site_rounded'] ) {
+			Style\Body::radius( $SETTING['sidettl_type'], $SETTING['h2_type'], $frame_class );
+		}
 
 		// ヘッダー周りのスタイル
 		Style\Header::header_border( $SETTING['header_border'] );
@@ -218,24 +219,25 @@ class Style {
 
 	}
 
+	/**
+	 * フロント&エディター共通
+	 */
+	public static function editor_style() {
+		Style\Editor::content_bg();
+	}
+
 
 	/**
-	 * カスタムスタイル（フロント&エディター共通用）
-	 *
-	 * @return void
+	 * フロント&エディター共通
 	 */
-	public static function post_style() {
+	public static function common_style() {
 
-		$EDITOR      = SWELL::get_editor();
-		$SETTING     = SWELL::get_setting();
-		$frame_class = SWELL::get_frame_class();
-		$color_main  = $SETTING['color_main'];
+		$EDITOR     = SWELL::get_editor();
+		$SETTING    = SWELL::get_setting();
+		$color_main = $SETTING['color_main'];
 
 		// カラー用CSS変数のセット
 		Style\Color::common( $SETTING, $EDITOR );
-
-		// 記事コンテンツの背景色
-		Style\Post::content_bg( $SETTING['color_bg'], $frame_class );
 
 		// ボタン
 		Style\Post::btn();
@@ -290,7 +292,6 @@ class Style {
 		// サイト全体の画像を丸くするかどうか
 		if ( $SETTING['to_site_rounded'] ) {
 			self::add_module( '-site-radius' );
-			Style\Body::radius( $SETTING['sidettl_type'], $SETTING['h2_type'], $frame_class );
 		}
 
 		// 見出し
@@ -318,10 +319,11 @@ class Style {
 
 		// スタイルを生成
 		if ( 'front' === $type ) {
-			self::post_style();
-			self::custom_style();
+			self::common_style();
+			self::front_style();
 		} elseif ( 'editor' === $type ) {
-			self::post_style();
+			self::common_style();
+			self::editor_style();
 		}
 
 		$output_style  = '';

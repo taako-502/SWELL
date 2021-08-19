@@ -57,7 +57,7 @@ $is_show_tab = $SETTING['show_tab_on_author'];
 				?>
 			</div>
 		</div>
-		<div class="p-authorContent">
+		<div class="p-authorContent l-parent">
 			<?php
 				// タブ切り替えリスト
 				if ( $is_show_tab ) :

@@ -19,14 +19,21 @@ $btn_color      = $variable['btn_color'];
 $show_user_sns  = $variable['show_user_sns'];
 $is_icon_circle = $variable['is_icon_circle'];
 
+// wp_get_sidebars_widgets();  // = get_option( 'sidebars_widgets' );
+
+// echo '<pre style="margin-left: 100px;">';
+// var_dump( wp_get_sidebars_widgets() );
+// echo '</pre>';
 ?>
 <div class="p-profileBox">
 	<?php if ( $user_bg ) : ?>
 		<figure class="p-profileBox__bg">
 			<?php
-				\SWELL_Theme::lazyimg([
-					'src'   => $user_bg,
-					'class' => 'p-profileBox__bgImg',
+				$bg_img_id = \SWELL_Theme::get_imgid_from_url( $user_bg );
+				\SWELL_Theme::get_image( $bg_img_id, [
+					'class'   => 'p-profileBox__bgImg',
+					'sizes'   => '(max-width: 959px) 100vw, 320px',
+					'echo'    => true,
 				]);
 			?>
 		</figure>
@@ -34,9 +41,14 @@ $is_icon_circle = $variable['is_icon_circle'];
 	<?php if ( $user_icon ) : ?>
 		<figure class="p-profileBox__icon">
 			<?php
-				\SWELL_Theme::lazyimg([
-					'src'   => $user_icon,
-					'class' => 'p-profileBox__iconImg',
+				$icon_img_id = \SWELL_Theme::get_imgid_from_url( $user_icon );
+				\SWELL_Theme::get_image( $icon_img_id, [
+					'size'    => 'medium',
+					'class'   => 'p-profileBox__iconImg',
+					'width'   => '120',
+					'height'  => '120',
+					'sizes'   => '(max-width: 120px) 100vw, 120px',
+					'echo'    => true,
 				]);
 			?>
 		</figure>
@@ -63,15 +75,15 @@ $is_icon_circle = $variable['is_icon_circle'];
 	<?php endif; ?>
 	<?php
 		if ( $show_user_sns ) : // SNSアイコンリスト
-			$sns_settings = SWELL_Theme::get_sns_settings();
+		$sns_settings = SWELL_Theme::get_sns_settings();
 
-			if ( ! empty( $sns_settings ) ) :
-				$list_data = [
-					'list_data' => $sns_settings,
-				];
-				if ( false === $is_icon_circle ) :
-					$list_data['fz_class'] = 'u-fz-16';
-					$list_data['ul_class'] = 'p-profileBox__iconList';
+		if ( ! empty( $sns_settings ) ) :
+			$list_data = [
+				'list_data' => $sns_settings,
+			];
+			if ( false === $is_icon_circle ) :
+				$list_data['fz_class'] = 'u-fz-16';
+				$list_data['ul_class'] = 'p-profileBox__iconList';
 				else :
 					$list_data['ul_class']  = 'p-profileBox__iconList is-style-circle';
 					$list_data['fz_class']  = 'u-fz-14';

@@ -2,7 +2,7 @@
  * カラーピッカーに関するスクリプト。
  * https://make.wordpress.org/core/2012/11/30/new-color-picker-in-wp-3-5/
  */
-console.log('Loaded colorpicker.js.');
+console.log('SWELL: Loaded colorpicker.');
 
 (function ($) {
 	//通常（ウィジェット以外）

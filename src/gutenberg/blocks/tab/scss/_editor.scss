@@ -1,39 +1,27 @@
 
 // Gutenberg
 [data-type="loos/tab"] {
+    position: relative;
+    padding: 24px;
+    // border: dashed 1px $color_guide;
 
     .block-list-appender:first-child .block-editor-default-block-appender {
         display: block !important;
     }
 
-    // ガイド線
-    .swell-block-tab {
-        padding: 24px;
-        // border: dashed 1px $color_guide;
-    }
-
     &.is-selected,
     &.has-child-selected {
-
-        .swell-block-tab {
-            padding: 40px 24px 24px;
-
-        }
+        padding: 40px 24px 24px;
     }
 
-    .swell-block-tab {
-        position: relative;
-
-        &.has-background,
-        &.has-border {
-            padding: 40px;
-        }
+    &.has-background,
+    &.has-border {
+        padding: 40px;
     }
 
     .c-tabList {
         position: relative;
         padding: 0;
-
     }
 
     .swell-block-tab__addBtn {
@@ -72,14 +60,6 @@
         }
     }
 
-    // 選択するまでタブのホバーエフェクト動作させない。 -> これがあるとたまにタブブロック全体がクリックできなくなるっぽい...？
-    // &:not(.is-selected):not(.has-child-selected) {
-
-    //     .c-tabList__item {
-    //         pointer-events: none;
-    //     }
-    // }
-
     // タブブロックが選択 or タブボディが選択してる時だけ表示。かつ、アクティブなタブのみ表示。
     &:not(.is-selected):not(.has-child-selected),
     .c-tabList__item:not(.is-active) {
@@ -94,17 +74,17 @@
         align-items: center;
         text-align: center;
 
-        & > .rich-text {
+        > .rich-text {
             width: 100%;
             margin: 0 !important;
         }
     }
 
-    .is-style-balloon .swell-block-tab__addBtn {
+    &.is-style-balloon .swell-block-tab__addBtn {
         margin-bottom: 16px;
     }
 
-    .is-style-bb .swell-block-tab__addBtn {
+    &.is-style-bb .swell-block-tab__addBtn {
         margin-bottom: .75em;
     }
 
@@ -115,7 +95,7 @@
 
     @include pc {
 
-        .swell-block-tab {
+        &.swell-block-tab {
             padding-top: 0 !important;
         }
 
@@ -129,7 +109,7 @@
 
     @include sp {
 
-        .swell-block-tab {
+        &.swell-block-tab {
             padding-top: 0 !important;
         }
 
@@ -150,7 +130,7 @@
         display: block;
     }
 
-    & + .block-list-appender {
+    + .block-list-appender {
         display: none;
         visibility: hidden;
     }
@@ -221,9 +201,41 @@
 
 }
 
-.swell-block-tab__body > .block-editor-inner-blocks > .block-editor-block-list__layout {
 
-    & > [data-type="core/paragraph"] + .block-list-appender {
-        display: none;
+// サイドバーのタブ
+.swell-tab-panel {
+
+    .components-panel__body:last-child {
+        margin-bottom: 0;
     }
+
+    .components-tab-panel__tabs {
+        display: flex;
+        border-top: 1px solid #e2e4e7;
+
+        .components-button {
+            display: block;
+            width: 100%;
+            height: auto;
+            padding: 8px 0;
+            font-weight: 400;
+            border-radius: 0;
+            transition: none !important;
+
+            // 5.5から一瞬丈夫にバーが表示されるのを防ぐ
+            &:focus:not(.is-active) {
+                box-shadow: none !important;
+            }
+        }
+    }
+
+    .components-button {
+
+        .dashicons-before {
+            display: block;
+            margin: auto;
+            margin-bottom: 4px;
+        }
+    }
+
 }
