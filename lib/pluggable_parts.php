@@ -237,3 +237,79 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 	<?php
 	}
 endif;
+
+
+/**
+ * IEアラート
+ */
+if ( ! function_exists( 'swl_parts__ie_alert' ) ) :
+	function swl_parts__ie_alert() {
+?>
+<style>
+.ie-alertbox {
+	position: fixed;
+	right: 0;
+	bottom: 0;
+	z-index: 9999;
+	display:-ms-flexbox;
+	display: flex;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-ms-flex-align: center;
+	align-items: center;
+
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 100%;
+	height: 100%;
+	max-height: 100%;
+	padding: 2em;
+	background: rgba(0, 0, 0, .7);
+}
+
+.__inner {
+	position: relative;
+	z-index: 1;
+	display:-ms-flexbox;
+	display: flex;
+	-ms-flex-direction: row;
+	flex-direction: column;
+	-ms-flex-pack: center;
+	justify-content: center;
+	width: 100%;
+	max-width: 1000px;
+	height: 100%;
+	max-height: 600px;
+	text-align: center;
+	background: rgba(185, 43, 0, .5);
+	color: #fff;
+	font-family: Meiryo, sans-serif;
+	line-height: 1.6;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+.ie-alertbox .__text a {
+	text-decoration: underline;
+	color: #87ceff;
+}
+</style>
+		<div class="ie-alertbox">
+			<div class="__inner">
+				<div class="__title u-mb-10 u-fz-xl">
+					<b class="icon-alert"> お使いのブラウザーは安全ではありません！</b>
+				</div>
+				<div class="__text">
+					ご利用中の <b>Internet Explorer</b> はとても古いブラウザです。
+					<br>当サイトをIEで閲覧することはできません。
+					<br><br>
+					開発元のMicrosoftも<a href="https://www.microsoft.com/ja-jp/edge">Microsoft Edge</a>への移行を強く推奨しており、<br>
+				　　2022年 6月 には正式にサポートが終了します。
+					<br><br>
+					Edgeもしくはその他のモダンブラウザ（<a href="https://www.google.co.jp/chrome/index.html">Google Chrome</a> など）をご利用ください。
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+endif;
