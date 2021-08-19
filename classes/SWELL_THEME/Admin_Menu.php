@@ -133,11 +133,6 @@ class Admin_Menu {
 	 * 「SWELL設定」の内容
 	 */
 	public function swell_setting() {
-		global $is_IE;
-		if ( $is_IE ) {
-			echo '<div class="u-fz-xl">※ IE以外のブラウザをお使いください。</div>';
-			return;
-		}
 		require_once T_DIRE . '/lib/menu/swell_menu.php';
 	}
 
@@ -146,11 +141,6 @@ class Admin_Menu {
 	 * サブメニューの表示内容
 	 */
 	public function editor_setting() {
-		global $is_IE;
-		if ( $is_IE ) {
-			echo '<div class="u-fz-xl">※ IE以外のブラウザをお使いください。</div>';
-			return;
-		}
 		require_once T_DIRE . '/lib/menu/swell_menu_editor.php';
 	}
 

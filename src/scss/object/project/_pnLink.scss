@@ -101,9 +101,7 @@
 .p-pnLinks__thumb {
     width: 48px;
     height: 32px;
-
     object-fit: cover;
-    font-family: "object-fit: cover;";
 
     @include tab {
         width: 72px;

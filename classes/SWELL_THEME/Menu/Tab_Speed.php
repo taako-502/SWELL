@@ -109,7 +109,7 @@ class Tab_Speed {
 
 		add_settings_field(
 			'label_lazyload',
-			'画像のLazyload',
+			'画像等のLazyload',
 			'__return_false',
 			$page_name,
 			$section_name,
@@ -130,7 +130,7 @@ class Tab_Speed {
 				'choices' => [
 					'off'   => '使用しない',
 					'core'  => '<code>loading="lazy"</code>を使用する',
-					'swell' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img,video,iframeタグに適用されます。',
+					'swell' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img, video, iframeタグに適用されます。',
 				],
 			]
 		);
@@ -160,11 +160,11 @@ class Tab_Speed {
 				'id'      => 'use_pjax',
 				'type'    => 'radio',
 				// 'label' => $data[0],
-				'desc'    => 'この機能についてはいくつか注意点がございます。<br><a href="https://swell-theme.com/function/5978/" target="_blank">こちらのページ</a>をご一読ください。',
+				'desc'    => '※ Pjax機能についてはいくつか注意点がございます。<a href="https://swell-theme.com/function/5978/" target="_blank">こちらのページ</a>をご一読ください。',
 				'choices' => [
 					'off'      => '使用しない',
 					'prefetch' => 'Prefetch',
-					'pjax'     => 'Pjaxによる遷移（Barba v2）',
+					'pjax'     => 'Pjaxによる遷移（非推奨）',
 				],
 			]
 		);

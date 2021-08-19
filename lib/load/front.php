@@ -28,13 +28,6 @@ function load_front_scripts() {
 
 	if ( SWELL::is_widget_iframe() ) return;
 
-	// 3.0で消す
-	global $is_IE;
-	if ( $is_IE ) {
-		wp_enqueue_script( 'object-fit-images', $assets . '/js/polyfill/ofi.min.js', [], SWELL_VERSION, true );
-		wp_enqueue_script( 'picturefill', $assets . '/js/polyfill/picturefill.min.js', [], SWELL_VERSION, true );
-	}
-
 	// mainスクリプト
 	$main_script = ( SWELL::is_use( 'pjax' ) ) ? '/js/main_with_pjax' : '/js/main';
 	wp_enqueue_script( 'swell_script', $build . $main_script . '.min.js', [], SWELL_VERSION, true );
@@ -59,7 +52,6 @@ function load_front_scripts() {
  */
 function load_front_styles() {
 
-	global $is_IE;
 	$SETTING = SWELL::get_setting();
 	$assets  = T_DIRE_URI . '/assets';
 	$build   = T_DIRE_URI . '/build';
@@ -68,17 +60,12 @@ function load_front_styles() {
 	wp_enqueue_style( 'wp-block-library' );
 
 	// main.css
-	if ( $is_IE || SWELL::get_setting( 'load_style_inline' ) ) {
+	if ( SWELL::get_setting( 'load_style_inline' ) ) {
 
 		// インライン読み込み時
 		$main_style = SWELL::get_file_contents( T_DIRE . '/assets/css/main.css' );
 		$main_style = str_replace( '../', T_DIRE_URI . '/assets/', $main_style );
 		$main_style = str_replace( '@charset "UTF-8";', '', $main_style );
-
-		if ( $is_IE ) {
-			// IEではカスタムプロパティを置換しておく
-			$main_style = SWELL::replace_css_var_on_IE( $main_style );
-		}
 
 		// 空でmain_styleを登録しておく
 		wp_register_style( 'main_style', false ); // phpcs:ignore

@@ -186,9 +186,8 @@ function get_swl_front_css() {
 	 * 以下、キャッシュさせないCSS
 	 */
 	// タブ
-	global $is_IE;
 	$is_android = SWELL::is_android();
-	if ( $is_IE || $is_android ) {
+	if ( $is_android ) {
 		$style .= '.c-tabBody__item[aria-hidden="false"]{animation:none !important;display:block;}';
 	}
 
@@ -211,10 +210,6 @@ function get_swl_front_css() {
 
 		if ( file_exists( $lp_css ) ) $style .= SWELL::get_file_contents( $lp_css );
 	}
-
-	// IEではCSS変数を置換
-	global $is_IE;
-	if ( $is_IE ) $style = SWELL::replace_css_var_on_IE( $style );
 
 	return $style;
 }
