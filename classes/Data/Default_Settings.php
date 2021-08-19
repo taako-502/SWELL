@@ -56,7 +56,7 @@ trait Default_Settings {
 			// 'use_ajax'           => '',
 			'ajax_after_post'        => '',
 			'ajax_footer'            => '',
-			'use_lazyload'           => 'swell',
+			'lazy_type'              => 'lazysizes',
 
 			// Pjax
 			'use_pjax'               => 'off',

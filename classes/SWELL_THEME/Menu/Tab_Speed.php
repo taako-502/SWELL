@@ -118,19 +118,18 @@ class Tab_Speed {
 
 		$note_text = __( 'Note : ', 'swell' );
 		add_settings_field(
-			'use_lazyload',
+			'lazy_type',
 			'',
 			$cb,
 			$page_name,
 			$section_name,
 			[
-				'id'      => 'use_lazyload',
+				'id'      => 'lazy_type',
 				'type'    => 'radio',
-				// 'desc'    => $note_text . 'このLazyloadの設定は、投稿コンテンツ内の画像や動画などが対象です。',
 				'choices' => [
-					'off'   => '使用しない',
-					'core'  => '<code>loading="lazy"</code>を使用する',
-					'swell' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img, video, iframeタグに適用されます。',
+					'none'      => '使用しない',
+					'lazy'      => '<code>loading="lazy"</code>を使用する',
+					'lazysizes' => 'スクリプト(lazysizes.js)を使って遅延読み込みさせる<br><small>' . $note_text . 'img, video, iframeタグに適用されます。',
 				],
 			]
 		);

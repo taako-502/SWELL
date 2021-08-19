@@ -25,7 +25,7 @@ if ( ! $term_thumb_id && ! $description ) return '';
 			<?php
 				\SWELL_Theme::get_image( $term_thumb_id, [
 					'class'   => 'p-termHead__thumbImg u-obf-cover', // obfはdescription長い時用
-					'loading' => apply_filters( 'swell_term_head_lazy_type', 'none' ),
+					'loading' => apply_filters( 'swell_term_thumbnail_lazy_type', 'none' ),
 					'echo'    => true,
 				]);
 			?>

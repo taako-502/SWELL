@@ -213,19 +213,24 @@ class Updated_Action {
 	 * options のデータを変更する
 	 */
 	public static function change_db_in_options() {
-		$is_change = false;
+		$is_change = 0;
 		$OPTIONS   = self::$options_data;
 
-		// 2.2.0
+		// 2.5.0
 		if ( isset( $OPTIONS['use_lazyload'] ) ) {
 			$now_option = $OPTIONS['use_lazyload'];
-			if ( '1' === $now_option ) {
-				$OPTIONS['use_lazyload'] = 'swell';
-			} elseif ( '' === $now_option ) {
-				$OPTIONS['use_lazyload'] = 'core';
-			}
+			if ( 'swell' === $now_option || '1' === $now_option ) {
+				$OPTIONS['lazy_type'] = 'lazysizes';
 
-			$is_change = true;
+			} elseif ( 'core' === $now_option || '' === $now_option ) {
+				$OPTIONS['lazy_type'] = 'lazy';
+
+			} else {
+				$OPTIONS['lazy_type'] = 'none';
+
+			}
+			unset( $OPTIONS['use_lazyload'] );
+			$is_change = 1;
 		}
 
 		if ( $is_change ) {

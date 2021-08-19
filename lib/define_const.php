@@ -91,13 +91,9 @@ function hook_wp_loaded() {
 	// define( 'NOIMG_ID', $noimg_id );
 
 	// lazyload
-	if ( 'swell' === $SETTING['use_lazyload'] ) {
-		SWELL::$lazy_type = 'lazysizes';
+	SWELL::$lazy_type = $SETTING['lazy_type'];
+	if ( 'lazysizes' === SWELL::$lazy_type ) {
 		SWELL::set_use( 'lazysizes', true );
-	} elseif ( 'core' === $SETTING['use_lazyload'] ) {
-		SWELL::$lazy_type = 'lazy';
-	} else {
-		SWELL::$lazy_type = $SETTING['use_lazyload'];
 	}
 }
 
