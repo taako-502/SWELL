@@ -266,7 +266,7 @@ class Updated_Action {
 				$img_id = attachment_url_to_postid( $img_url ) ?: 0;
 
 				if ( $img_id ) {
-					// unset( $SETTINGS[ $url_key ] ); // ダウングレードした時に戻らなくなるので unset は3.0で。
+					unset( $SETTINGS[ $url_key ] );
 					$SETTINGS[ $id_key ] = $img_id;
 					$is_changed          = 1;
 				}
