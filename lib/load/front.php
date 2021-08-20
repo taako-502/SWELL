@@ -105,11 +105,6 @@ function load_plugins() {
 	// pjax使うかどうか
 	$pjax = SWELL::is_use( 'pjax' );
 
-	// lazysizes
-	if ( $pjax || SWELL::is_use( 'lazysizes' ) ) {
-		wp_enqueue_script( 'swell_lazysizes', T_DIRE_URI . '/assets/js/plugins/lazysizes.min.js', [], SWELL_VERSION, true );
-	}
-
 	// Luminous
 	$is_luminous_page = is_single() || is_page() || is_category() || is_tag() || is_tax();
 	$is_luminous_page = $is_luminous_page && ! SWELL::get_setting( 'remove_luminous' );
