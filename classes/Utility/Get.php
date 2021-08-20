@@ -870,6 +870,8 @@ trait Get {
 		$loading = $args['loading'] ?? \SWELL_Theme::$lazy_type;
 		if ( 'lazy' === $loading || 'eager' === $loading ) {
 			$attrs['loading'] = $loading;
+		} elseif ( self::is_rest() || self::is_iframe() ) {
+			$attrs['loading'] = 'lazy';
 		} elseif ( 'lazysizes' === $loading ) {
 			$attrs['class']   .= ' lazyload';
 			$attrs['data-src'] = $attrs['src'];

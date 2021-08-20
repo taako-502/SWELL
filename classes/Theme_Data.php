@@ -183,6 +183,17 @@ class Theme_Data {
 		'ol'     => [ 'class' => true ],
 		'li'     => [ 'class' => true ],
 		'p'      => [ 'class' => true ],
+		'div'    => [ 'class' => true ],
+		'img'    => [
+			'alt'     => true,
+			'src'     => true,
+			'secset'  => true,
+			'class'   => true,
+			'seizes'  => true,
+			'width'   => true,
+			'height'  => true,
+			'loading' => true,
+		],
 	];
 
 
