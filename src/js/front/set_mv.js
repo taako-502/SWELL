@@ -52,23 +52,21 @@ function mvSet() {
  * フルスクリーン時の高さセット : スライダー & 動画であり得る
  */
 function setFullScreenHeight(mainVisual) {
+	let mvH = window.innerHeight;
 	const header = document.getElementById('header');
 
 	//offsetHを計算：フルワイド幅からどれだけ引くか
 	if (header.classList.contains('-transparent')) {
 		mainVisual.style.setProperty('--swl-headerH', '0px');
-		return;
+	} else {
+		//お知らせバーの高さを引く
+		const infoBar = document.querySelector('.c-infoBar');
+		if (infoBar) {
+			mvH -= infoBar.offsetHeight;
+		}
 	}
 
-	let offsetH = 0;
-
-	//お知らせバーの高さを取得
-	const infoBar = document.querySelector('.c-infoBar');
-	if (infoBar) {
-		offsetH += infoBar.offsetHeight;
-	}
-
-	mainVisual.style.setProperty('--swl-mv-offsetH', `${offsetH}px`);
+	mainVisual.style.setProperty('--swl-mv-height', `${mvH}px`);
 }
 
 /**
