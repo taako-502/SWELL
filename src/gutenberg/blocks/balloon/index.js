@@ -26,7 +26,7 @@ import classnames from 'classnames';
 const blockName = 'swell-block-balloon';
 registerBlockType(metadata.name, {
 	icon: getBlockIcon('format-chat'),
-	edit: ({ attributes, setAttributes, className }) => {
+	edit: ({ attributes, setAttributes }) => {
 		const {
 			balloonID,
 			balloonIcon,
@@ -76,7 +76,6 @@ registerBlockType(metadata.name, {
 			if (balloonBorder) data.border = balloonBorder;
 			if (balloonShape) data.shape = balloonShape;
 
-			console.log(attributes.className, className);
 			// クラス生成
 			data.class = classnames(`c-balloon -bln-${data.align}`, {
 				'-sp-vertical': '' !== spVertical,
