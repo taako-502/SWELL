@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * ふきだしブロック
  */
-$asset = include T_DIRE . '/build/blocks/post-link/index.asset.php';
+$asset = include T_DIRE . '/build/blocks/balloon/index.asset.php';
 wp_register_script(
 	'swell-block/balloon',
 	T_DIRE_URI . '/build/blocks/balloon/index.js',
@@ -62,7 +62,7 @@ function cb_balloon( $attrs, $content = '' ) {
 		if ( $attrs['className'] ) {
 			$block_class .= ' ' . $attrs['className'];
 
-			// API v1 時代のものは $content の pタグにクラスがついているので消す
+			// $content の pタグにもクラスがついているのでそっちは消す
 			$content = str_replace( 'p class="' . $attrs['className'] . '"', 'p', $content );
 		}
 		$content = '[speech_balloon' . $props . ']' . $content . '[/speech_balloon]';

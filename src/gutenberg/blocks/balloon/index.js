@@ -144,8 +144,9 @@ registerBlockType(metadata.name, {
 		);
 	},
 	save: ({ attributes }) => {
-		// 単純に p タグとして内容は保存しておく
-		return <RichText.Content tagName='p' value={attributes.content} />;
+		const blockProps = useBlockProps.save({});
+		// 単純に p タグとして内容は保存しておく. blockProps付けておかないと再編集時にclassが消える。
+		return <RichText.Content {...blockProps} tagName='p' value={attributes.content} />;
 	},
 	transforms,
 	deprecated,
