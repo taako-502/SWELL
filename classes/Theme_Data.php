@@ -177,7 +177,10 @@ class Theme_Data {
 		'br'     => [ 'class' => true ],
 		'i'      => [ 'class' => true ],
 		'em'     => [ 'class' => true ],
-		'span'   => [ 'class' => true ],
+		'span'   => [
+			'class' => true,
+			'style' => true,
+		],
 		'strong' => [ 'class' => true ],
 		'ul'     => [ 'class' => true ],
 		'ol'     => [ 'class' => true ],
