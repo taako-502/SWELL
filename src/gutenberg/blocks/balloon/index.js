@@ -26,7 +26,7 @@ import classnames from 'classnames';
 const blockName = 'swell-block-balloon';
 registerBlockType(metadata.name, {
 	icon: getBlockIcon('format-chat'),
-	edit: ({ attributes, setAttributes }) => {
+	edit: ({ attributes, setAttributes, className }) => {
 		const {
 			balloonID,
 			balloonIcon,
@@ -76,6 +76,7 @@ registerBlockType(metadata.name, {
 			if (balloonBorder) data.border = balloonBorder;
 			if (balloonShape) data.shape = balloonShape;
 
+			console.log(attributes.className, className);
 			// クラス生成
 			data.class = classnames(`c-balloon -bln-${data.align}`, {
 				'-sp-vertical': '' !== spVertical,
@@ -144,8 +145,9 @@ registerBlockType(metadata.name, {
 		);
 	},
 	save: ({ attributes }) => {
-		// 単純に p タグとして内容は保存しておく
-		return <RichText.Content tagName='p' value={attributes.content} />;
+		const blockProps = useBlockProps.save({});
+		// 単純に p タグとして内容は保存しておく. blockProps付けておかないと再編集時にclassが消える。
+		return <RichText.Content {...blockProps} tagName='p' value={attributes.content} />;
 	},
 	transforms,
 	deprecated,

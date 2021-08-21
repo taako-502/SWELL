@@ -62,7 +62,7 @@ function cb_balloon( $attrs, $content = '' ) {
 		if ( $attrs['className'] ) {
 			$block_class .= ' ' . $attrs['className'];
 
-			// API v1 時代のものは $content の pタグにクラスがついているので消す
+			// $content の pタグにもクラスがついているのでそっちは消す
 			$content = str_replace( 'p class="' . $attrs['className'] . '"', 'p', $content );
 		}
 		$content = '[speech_balloon' . $props . ']' . $content . '[/speech_balloon]';
