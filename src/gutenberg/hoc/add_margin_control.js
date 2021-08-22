@@ -23,7 +23,10 @@ const addMarginControls = createHigherOrderComponent((BlockEdit) => {
 
 		// 除去するブロック
 		const isRemoval =
-			'core/shortcode' === name || 'core/html' === name || 'core/block' === name;
+			'core/shortcode' === name ||
+			'core/html' === name ||
+			'core/block' === name ||
+			'core/freeform' === name;
 		if (!props.isSelected || isRemoval) {
 			return <BlockEdit {...props} />;
 		}
