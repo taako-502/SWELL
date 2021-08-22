@@ -25,10 +25,13 @@ function render_faq( $block_content, $block ) {
 	foreach ( $questions[0] as $i => $question ) {
 
 		if ( ! isset( $answers[0][ $i ] ) ) break;
-		$question = wp_strip_all_tags( $question, true );
+		$question = wp_strip_all_tags( do_shortcode( $question ), true );
 
 		// Answerは一部HTMLが許可されている: https://developers.google.com/search/docs/data-types/faqpage?hl=ja#answer
-		$answer = strip_tags( $answers[0][ $i ], '<h1><h2><h3><h4><h5><h6><br><ol><ul><li><a><p><div><b><strong><i><em>' );
+		$answer = strip_tags(
+			do_shortcode( $answers[0][ $i ] ),
+			'<h1><h2><h3><h4><h5><h6><br><ol><ul><li><a><p><div><b><strong><em>' // <i>は除外
+		);
 		$answer = str_replace( "\n", '', $answer );
 
 		$faqs[] = [
