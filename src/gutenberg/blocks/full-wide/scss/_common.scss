@@ -4,7 +4,7 @@
 
 .swell-block-fullWide {
     position: relative;
-    z-index: 1;
+    // z-index: 1;
     padding: 2em 0;
 
     &.has-bg-img {
@@ -47,7 +47,7 @@
 
 .swell-block-fullWide__inner {
     position: relative;
-    z-index: 2;
+    z-index: 1;
 
     &.l-article {
 
@@ -65,7 +65,7 @@
 .swell-block-fullWide__SVG {
     position: absolute;
     left: 0;
-    z-index: 5;
+    z-index: 1;
     width: 100%;
     // height: 100px;
     pointer-events: none;
