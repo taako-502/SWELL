@@ -1,4 +1,76 @@
 //リッチカラム
 .swell-block-columns {
-    background: #fff;
+    --swl-fb: 100%;
+    --swl-fb_tab: 50%;
+    --swl-fb_pc: 50%;
+    --swl-clmn-mrgn--x: .75rem;
+    --swl-clmn-mrgn--bttm: 1.5rem;
+    --swl-clmn-pddng: 0;
+
+    overflow: hidden; // 左右マイナスマージンではみ出さないように
+
+    &__inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        margin-right: calc(-1 * var(--swl-clmn-mrgn--x));
+        margin-left: calc(-1 * var(--swl-clmn-mrgn--x));
+    }
+
+    &.alignfull {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    &[data-valign="top"] {
+        align-items: flex-start;
+    }
+
+    &[data-valign="center"] {
+        align-items: center;
+    }
+
+    &[data-valign="bottom"] {
+        align-items: flex-end;
+    }
+
+    &.is-style-shadow {
+        --swl-clmn-pddng: 1rem;
+    }
+
+    &.is-style-shadow > .swell-block-columns__item {
+        background-color: #fff;
+        box-shadow: var(--swl-shadow);
+    }
+
+    .swell-block-columns__item {
+        width: calc(var(--swl-fb) - var(--swl-clmn-mrgn--x) * 2);
+        margin: 0 var(--swl-clmn-mrgn--x) var(--swl-clmn-mrgn--bttm);
+        padding: var(--swl-clmn-pddng);
+
+        @include tab {
+            --swl-fb: var(--swl-fb_tab);
+        }
+
+        @include pc {
+            --swl-fb: var(--swl-fb_pc);
+        }
+
+        &[data-valign="top"] {
+            align-self: flex-start;
+        }
+
+        &[data-valign="center"] {
+            align-self: center;
+        }
+
+        &[data-valign="bottom"] {
+            align-self: flex-end;
+        }
+
+        &.is-breadk-all {
+            word-break: break-all;
+        }
+    }
 }
+

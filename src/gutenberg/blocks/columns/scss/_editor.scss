@@ -1,4 +1,15 @@
 // リッチカラム
 [data-type="loos/columns"] {
-    background: #eee;
+    // overflow:hiddenのままだと、「親ブロックを選択」や、ブロック選択時の青枠が見切れるため戻す
+    overflow: initial;
+
+    [data-type="loos/column"] > .wp-block-image {
+        max-width: 100%;
+    }
+
+    .block-list-appender {
+        // カラム幅・左右マージンに影響を受けないように、常に幅一杯になるようにする
+        flex-basis: calc(100% - var(--swl-clmn-mrgn--x) * 2);
+        margin: 0 auto;
+    }
 }
