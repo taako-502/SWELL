@@ -922,12 +922,10 @@ trait Get {
 
 		$loading = $args['loading'] ?? 'none';
 		if ( 'lazysizes' === $loading ) {
-			$attrs['src']         = $args['placeholder'] ?? self::$placeholder;
-			$attrs['data-src']    = $src;
+			$attrs['srcset']      = $args['placeholder'] ?? self::$placeholder;
 			$attrs['data-srcset'] = $srcset;
 		} else {
-			$attrs['src']    = $src;
-			$attrs['srcset'] = $srcset;
+			$attrs['srcset'] = $srcset ?: $src;
 
 			if ( 'lazy' === $loading ) {
 				$attrs['loading'] = 'lazy';
