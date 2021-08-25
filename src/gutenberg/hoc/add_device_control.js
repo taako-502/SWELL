@@ -40,7 +40,6 @@ const setBlocks = [
 	'loos/post-link',
 	'loos/blog-parts',
 	'loos/post-list',
-	'loos/ab-test',
 ];
 
 /**
