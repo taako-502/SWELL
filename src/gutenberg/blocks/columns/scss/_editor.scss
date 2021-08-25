@@ -10,10 +10,15 @@
         left: 2px !important;
     }
 
+    // ブロック未選択時は、ブロック下にマイナスマージンを設定
+    &:not(.is-selected):not(.has-child-selected) .swell-block-columns__inner {
+        margin-bottom: calc(-1 * var(--swl-clmn-mrgn--bttm));
+    }
+
     // もしクラッシュした時、カラム項目だとわかりやすいようにしておく
     [data-type="loos/column"].has-warning {
-        flex-basis: 46% !important;
-        margin: 2% !important;
+        flex-basis: calc(50% - var(--swl-clmn-mrgn--x) * 2) !important;
+        margin: 0 var(--swl-clmn-mrgn--x) !important;
     }
 
 
@@ -26,6 +31,15 @@
     .block-list-appender {
         flex-basis: calc(100% - var(--swl-clmn-mrgn--x) * 2);
         margin: 0 auto;
+    }
+
+    // ブロックインサーター下の余白を打消し
+    &.is-style-shadow.is-selected,
+    &.is-style-shadow.has-child-selected {
+
+        .swell-block-columns__inner {
+            padding-bottom: 0;
+        }
     }
 }
 
