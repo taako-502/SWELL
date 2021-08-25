@@ -1,15 +1,35 @@
 // リッチカラム
 [data-type="loos/columns"] {
-    // overflow:hiddenのままだと、「親ブロックを選択」や、ブロック選択時の青枠が見切れるため戻す
-    overflow: initial;
+    // overflow:hiddenの影響でブロック選択時の青枠が見切れることへの対策
+    padding: 2px;
 
+    .is-root-container > &::after {
+        top: 2px !important;
+        right: 2px !important;
+        bottom: 2px !important;
+        left: 2px !important;
+    }
+
+    // もしクラッシュした時、カラム項目だとわかりやすいようにしておく
+    [data-type="loos/column"].has-warning {
+        flex-basis: 46% !important;
+        margin: 2% !important;
+    }
+
+
+    // 画像はみ出しバグの対策。（これでもはみ出すことがある？）
     [data-type="loos/column"] > .wp-block-image {
         max-width: 100%;
     }
 
+    // カラム幅・左右マージンに影響を受けないように、常に幅一杯になるようにする
     .block-list-appender {
-        // カラム幅・左右マージンに影響を受けないように、常に幅一杯になるようにする
         flex-basis: calc(100% - var(--swl-clmn-mrgn--x) * 2);
         margin: 0 auto;
     }
+}
+
+// 横幅設定の動きがわかりやすいように、 is-selected 時は青線見せる
+[data-type="loos/column"].is-selected::after {
+    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
 }

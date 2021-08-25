@@ -170,7 +170,6 @@ registerBlockType(metadata.name, {
 				</InspectorControls>
 				{/* 左右marginの関係でカラムブロックは一つdivかませる */}
 				<div {...blockProps}>
-					<div className='swell-block-parentSelector'>親ブロックを選択</div>
 					<div {...innerBlocksProps} />
 				</div>
 			</>

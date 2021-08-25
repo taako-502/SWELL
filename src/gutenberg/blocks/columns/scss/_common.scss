@@ -7,15 +7,12 @@
     --swl-clmn-mrgn--bttm: 1.5rem;
     --swl-clmn-pddng: 0;
 
-    overflow: hidden; // 左右マイナスマージンではみ出さないように
+    // シャドウが途切れるのを防ぐ。
+    margin-right: -4px;
+    margin-left: -4px;
+    padding: 0 4px;
 
-    &__inner {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-        margin-right: calc(-1 * var(--swl-clmn-mrgn--x));
-        margin-left: calc(-1 * var(--swl-clmn-mrgn--x));
-    }
+    overflow: hidden; // 左右マイナスマージンではみ出さないように
 
     &.alignfull {
         margin-right: 0;
@@ -34,43 +31,67 @@
         align-items: flex-end;
     }
 
-    &.is-style-shadow {
-        --swl-clmn-pddng: 1rem;
-    }
+}
 
-    &.is-style-shadow > .swell-block-columns__item {
-        background-color: #fff;
-        box-shadow: var(--swl-shadow);
-    }
+//リッチカラム
+.swell-block-columns__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 0 !important;
+    margin-right: calc(-1 * var(--swl-clmn-mrgn--x));
+    margin-left: calc(-1 * var(--swl-clmn-mrgn--x));
+}
 
-    .swell-block-columns__item {
+.swell-block-column {
+
+    // 詳細度強めておく
+    .swell-block-columns & {
         width: calc(var(--swl-fb) - var(--swl-clmn-mrgn--x) * 2);
         margin: 0 var(--swl-clmn-mrgn--x) var(--swl-clmn-mrgn--bttm);
         padding: var(--swl-clmn-pddng);
 
         @include tab {
-            --swl-fb: var(--swl-fb_tab);
+            width: calc(var(--swl-fb_tab) - var(--swl-clmn-mrgn--x) * 2);
         }
 
         @include pc {
-            --swl-fb: var(--swl-fb_pc);
+            width: calc(var(--swl-fb_pc) - var(--swl-clmn-mrgn--x) * 2);
         }
 
-        &[data-valign="top"] {
-            align-self: flex-start;
-        }
+    }
 
-        &[data-valign="center"] {
-            align-self: center;
-        }
 
-        &[data-valign="bottom"] {
-            align-self: flex-end;
-        }
+    &[data-valign="top"] {
+        align-self: flex-start;
+    }
 
-        &.is-breadk-all {
-            word-break: break-all;
-        }
+    &[data-valign="center"] {
+        align-self: center;
+    }
+
+    &[data-valign="bottom"] {
+        align-self: flex-end;
+    }
+
+    &.is-breadk-all {
+        word-break: break-all;
     }
 }
 
+
+// シャドウスタイル
+.swell-block-columns.is-style-shadow {
+    --swl-clmn-pddng: 1rem;
+
+    .swell-block-columns__inner {
+        padding-bottom: 8px;
+    }
+
+    > .swell-block-columns__inner > .swell-block-column {
+        color: #333;
+        background-color: #fff;
+
+        @extend %boxShadow;
+    }
+}

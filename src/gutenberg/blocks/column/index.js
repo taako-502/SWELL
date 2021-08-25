@@ -65,7 +65,7 @@ const LinkedButton = ({ isLinked, ...props }) => {
 /**
  * カラム項目
  */
-const blockName = 'swell-block-columns';
+const blockName = 'swell-block-column';
 registerBlockType(metadata.name, {
 	icon: getBlockIcon(blockIcon),
 	attributes: metadata.attributes,
@@ -77,14 +77,9 @@ registerBlockType(metadata.name, {
 		const [isLinked, setIsLinked] = useState(false);
 
 		// 子ブロックの設定
-		const blockClass = classnames(
-			`${blockName}__item`,
-			'swl-inner-blocks',
-			'swl-has-margin--s',
-			{
-				'is-breadk-all': isBreakAll,
-			}
-		);
+		const blockClass = classnames(blockName, 'swl-inner-blocks', 'swl-has-margin--s', {
+			'is-breadk-all': isBreakAll,
+		});
 
 		const columnStyle = {};
 		if (widthMobile) {
@@ -283,7 +278,7 @@ registerBlockType(metadata.name, {
 
 		// ブロックprops
 		const blockProps = useBlockProps.save({
-			className: classnames(`${blockName}__item`, {
+			className: classnames(blockName, {
 				'is-breadk-all': isBreakAll,
 			}),
 			'data-valign': vAlign || null,
