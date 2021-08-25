@@ -37,6 +37,7 @@ if (localEntries) {
 		'full-wide',
 		'post-link',
 		'post-list',
+		'restricted-area',
 		'rss',
 		'step',
 		'step-item',

@@ -1,0 +1,8 @@
+// 制限エリア
+[data-type="loos/restricted-area"] {
+    padding: 1em;
+
+    &:not(.is-selected) {
+        border: dashed 1px $color_guide;
+    }
+}
