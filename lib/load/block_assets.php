@@ -15,6 +15,8 @@ function hook_enqueue_block_editor_assets() {
 	global $hook_suffix;
 	if ( 'post.php' === $hook_suffix || 'post-new.php' === $hook_suffix ) {
 		wp_enqueue_script( 'swell_post_editor', T_DIRE_URI . '/build/blocks/post_editor.js', [], SWELL_VERSION, true );
+	} elseif ( 'widgets.php' === $hook_suffix || 'customize.php' === $hook_suffix ) {
+		wp_enqueue_script( 'swell_widget_editor', T_DIRE_URI . '/build/blocks/widget_editor.js', [], SWELL_VERSION, true );
 	}
 
 	// カスタムフォーマット用CSS
