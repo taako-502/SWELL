@@ -40,7 +40,7 @@ addFilter('blocks.registerBlockType', 'swell/filter-fse-blocks', function (setti
 		'core/site-tagline',
 	];
 	if (-1 !== fseBlocks.indexOf(name)) {
-		return {};
+		settings.supports.inserter = false;
 	}
 	return settings;
 });
