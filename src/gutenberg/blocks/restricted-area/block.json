@@ -16,29 +16,33 @@
         "html": false
     },
     "attributes": {
-        "administrator": {
-            "type": "boolean",
-            "default": true
+        "roles": {
+            "type": "object",
+            "default": {
+                "administrator": true,
+                "editor": true,
+                "author": true,
+                "contributor": true,
+                "subscriber": true
+            }
         },
-        "editor": {
-            "type": "boolean",
-            "default": true
-        },
-        "author": {
-            "type": "boolean",
-            "default": true
-        },
-        "contributor": {
-            "type": "boolean",
-            "default": true
-        },
-        "subscriber": {
-            "type": "boolean",
-            "default": true
-        },
-        "nonLoggedin": {
+        "isRole": {
             "type": "boolean",
             "default": false
+        },
+        "isLoggedIn": {
+            "type": "boolean",
+            "default": true
+        },
+        "isDateTime": {
+            "type": "boolean",
+            "default": false
+        },
+        "startDateTime": {
+            "type": "string"
+        },
+        "endDateTime": {
+            "type": "string"
         }
     },
     "textdomain": "swell"
