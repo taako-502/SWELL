@@ -232,7 +232,7 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 	?>
 		<a <?=$a_props?> class="c-bannerLink">
 			<figure class="c-bannerLink__figure"><?=$thumb?></figure>
-			<span class="c-bannerLink__label"><?=esc_html( $item->title )?></span>
+			<span class="c-bannerLink__label"><?=wp_kses( $item->title, SWELL::$allowed_text_html )?></span>
 		</a>
 	<?php
 	}
