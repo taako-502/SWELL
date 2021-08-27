@@ -32,23 +32,21 @@ function cb_restricted_area( $attrs, $content ) {
 				return $role === true;
 			}));
 
-			// 現在のユーザーの権限が制限対象として含まれているか
-			$show_flg = false;
-			foreach ( $allowed_roles as $allowed_role ) {
-				if ( current_user_can( $allowed_role ) ) {
-					$show_flg = true;
-				}
-			}
-			if ( ! $show_flg  ) return '';
+			$current_user = wp_get_current_user();
+
+			// 現在のユーザーの権限が制限対象として含まれていない場合は非表示
+			if ( empty( array_intersect( $allowed_roles, $current_user->roles ) ) ) return '';
 		}
 	}
 
 	// 日時範囲制限有効
 	if ( $attrs['isDateTime'] ) {
-		$current_timestamp = current_time('timestamp', true);
+		// phpcs:ignore WordPress.DateTime.CurrentTimeTimestamp.Requested
+		$current_timestamp = current_time( 'timestamp' );
 		$start_timestamp   = isset( $attrs['startDateTime'] ) ? strtotime( $attrs['startDateTime'] ) : null;
 		$end_timestamp     = isset( $attrs['endDateTime'] ) ? strtotime( $attrs['endDateTime'] ) : null;
 
+		// 現在日時が設定範囲に含まれていない場合は非表示
 		if ( $start_timestamp && $current_timestamp < $start_timestamp ) return '';
 		if ( $end_timestamp && $end_timestamp < $current_timestamp ) return '';
 	}
