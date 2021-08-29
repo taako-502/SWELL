@@ -99,7 +99,11 @@ function load_plugins() {
 
 	// スマホヘッダーナビ
 	if ( SWELL::is_use( 'sp_head_nav' ) ) {
-		wp_enqueue_script( 'swell_set_sp_head_nav', T_DIRE_URI . '/build/js/front/set_sp_head_nav.min.js', [ 'swell_swiper' ], SWELL_VERSION, true );
+		if ( SWELL::get_setting( 'sp_head_nav_loop' ) ) {
+			wp_enqueue_script( 'swell_set_sp_headnav_loop', T_DIRE_URI . '/build/js/front/set_sp_headnav_loop.min.js', [ 'swell_swiper' ], SWELL_VERSION, true );
+		} else {
+			wp_enqueue_script( 'swell_set_sp_headnav', T_DIRE_URI . '/build/js/front/set_sp_headnav.min.js', [], SWELL_VERSION, true );
+		}
 	}
 
 	// pjax使うかどうか
