@@ -9,7 +9,7 @@ $SETTING = SWELL_Theme::get_setting();
 $img_alt = $SETTING['slider1_alt'] ?: '';
 
 // lazy_type
-$lazy_type = apply_filters( 'swell_mv_single_lazy_type', 'none' );
+$lazy_type = apply_filters( 'swell_mv_single_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type;
 $slide_img = SWELL_Theme::get_mv_slide_img( 1, $lazy_type );
 
 // テキストやボタン
