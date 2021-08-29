@@ -193,7 +193,7 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 		$sizes = SWELL::get_pickup_banner_sizes( $menu_count );
 
 		// lazyloadタイプ
-		$lazy_type = SWELL::get_setting( 'pickbnr_lazy_type' ) ?: 'none';
+		$lazy_type = SWELL::get_setting( 'pickbnr_lazy_off' ) ? 'none' : SWELL::$lazy_type;
 
 		$img_class = 'c-bannerLink__img';
 

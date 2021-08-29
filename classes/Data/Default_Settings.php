@@ -439,7 +439,7 @@ trait Default_Settings {
 			'pickbnr_border'          => 'on',
 			'pickbnr_bgblack'         => 'off',
 			'pickbnr_show_under'      => false,
-			'pickbnr_lazy_type'       => 'none',
+			'pickbnr_lazy_off'       => true,
 
 			// 記事スライダー設定
 			'show_post_slide'         => 'on',
