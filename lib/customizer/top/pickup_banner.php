@@ -139,3 +139,18 @@ Customizer::add(
 		'type'        => 'checkbox',
 	]
 );
+
+Customizer::add(
+	$section,
+	'pickbnr_lazy_type',
+	[
+		'classname'   => '',
+		'label'       => 'Lazyload種別',
+		'type'        => 'select',
+		'choices'     => [
+			'none'       => 'オフ',
+			'lazy'       => 'loading="lazy"を付与',
+			'lazysizes'  => 'lazysizes.jsを使う',
+		],
+	]
+);
