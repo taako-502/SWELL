@@ -143,18 +143,3 @@ Customizer::add(
 		'description' => 'チェックを外すと、サイト全体（「SWELL設定」→「画像等のLazyload」）の設定に従います。',
 	]
 );
-
-// Customizer::add(
-// 	$section,
-// 	'pickbnr_lazy_type',
-// 	[
-//
-// 		'label' => 'Lazyload種別',
-// 		'type'  => 'select',
-// 		'choices'  => [
-// 			'none' => 'オフ',
-// 			'lazy' => 'loading="lazy"を付与',
-// 			'lazysizes'  => 'lazysizes.jsを使う',
-// 		],
-// 	]
-// );
