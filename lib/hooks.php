@@ -28,13 +28,12 @@ add_filter( 'pre_term_description', 'wp_kses_post' );
  */
 add_filter( 'body_class', '\SWELL_Theme\Hooks\hook_body_class' );
 function hook_body_class( $classes ) {
-	$SETTING = \SWELL_Theme::get_setting();
 
-	if ( ! $SETTING['to_site_flat'] ) {
+	if ( ! SWELL::get_setting( 'to_site_flat' ) ) {
 		$classes[] = '-body-solid';
 	}
 
-	if ( $SETTING['fix_body_bg'] ) {
+	if ( SWELL::get_setting( 'fix_body_bg' ) ) {
 		$classes[] = '-bg-fix';
 	}
 	if ( ! SWELL::is_show_index() ) {
@@ -81,16 +80,15 @@ function hook_pre_get_posts( $query ) {
 
 	if ( $query->is_home() ) {
 
-		$SETTING = \SWELL_Theme::get_setting();
-		$exc_cat = explode( ',', $SETTING['exc_cat_id'] );
-		$exc_tag = explode( ',', $SETTING['exc_tag_id'] );
+		$exc_cat = explode( ',', SWELL::get_setting( 'exc_cat_id' ) );
+		$exc_tag = explode( ',', SWELL::get_setting( 'exc_tag_id' ) );
 		if ( ! empty( $exc_cat ) ) {
 			$query->set( 'category__not_in', $exc_cat );
 		}
 		if ( ! empty( $exc_tag ) ) {
 			$query->set( 'tag__not_in', $exc_tag );
 		}
-		if ( $SETTING['cache_top'] ) {
+		if ( SWELL::get_setting( 'cache_top' ) ) {
 			$query->set( 'post_status', 'publish' ); // 非公開時期の投稿がキャッシュされないように
 		}
 	}
@@ -178,6 +176,7 @@ if ( $is_IE ) {
 	add_action( 'admin_footer', '\SWELL_Theme\Hooks\show_ie_alert', 20 );
 	add_action( 'wp_footer', '\SWELL_Theme\Hooks\show_ie_alert', 20 );
 	function show_ie_alert() {
+		if ( SWELL::get_option( 'remove_ie_alert' ) ) return;
 		swl_parts__ie_alert();
 	}
 }

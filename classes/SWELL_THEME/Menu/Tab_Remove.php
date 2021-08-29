@@ -19,10 +19,11 @@ class Tab_Remove {
 		);
 
 		$remove_settings = [
-			'remove_page_fade'   => '「ページ表示時のアニメーション」を停止',
-			'remove_url2card'    => '「URLの自動カード化」を停止',
-			'remove_delete_empp' => '「空のpタグを自動削除する機能」を停止',
-			'remove_luminous'    => '「投稿画像をクリックで拡大表示する機能」を停止',
+			'remove_page_fade'   => '「ページ表示時のアニメーション」を停止する',
+			'remove_url2card'    => '「URLの自動カード化」を停止する',
+			'remove_delete_empp' => '「空のpタグを自動削除する機能」を停止する',
+			'remove_luminous'    => '「投稿画像をクリックで拡大表示する機能」を停止する',
+			'remove_ie_alert'    => '「IEでアクセスされた時の警告表示」を停止する',
 			'remove_patterns'    => '「SWELLが用意しているブロックパターン」を非表示にする',
 		];
 		foreach ( $remove_settings as $key => $label ) {

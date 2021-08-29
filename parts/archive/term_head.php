@@ -17,7 +17,7 @@ $term_thumb_id = $is_show_thumb ? \SWELL_Theme::get_term_thumb_id( $term_id ) : 
 $description   = $is_show_desc ? $description : '';
 
 if ( ! $term_thumb_id && ! $description ) return '';
-
+$lazy_type = apply_filters( 'swell_mv_single_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type;
 ?>
 <div class="p-termHead">
 	<?php if ( $term_thumb_id ) : ?>
@@ -25,7 +25,7 @@ if ( ! $term_thumb_id && ! $description ) return '';
 			<?php
 				\SWELL_Theme::get_image( $term_thumb_id, [
 					'class'   => 'p-termHead__thumbImg u-obf-cover', // obfはdescription長い時用
-					'loading' => apply_filters( 'swell_term_thumbnail_lazy_type', 'none' ),
+					'loading' => apply_filters( 'swell_term_thumbnail_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type,
 					'echo'    => true,
 				]);
 			?>

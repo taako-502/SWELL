@@ -27,6 +27,7 @@ trait Default_Settings {
 			'remove_delete_empp'     => '',
 			'remove_page_fade'       => '',
 			'remove_luminous'        => '',
+			'remove_ie_alert'        => '',
 			'remove_patterns'        => '',
 			'remove_lp'              => '',
 			'remove_blog_parts'      => '',
@@ -439,6 +440,7 @@ trait Default_Settings {
 			'pickbnr_border'          => 'on',
 			'pickbnr_bgblack'         => 'off',
 			'pickbnr_show_under'      => false,
+			'pickbnr_lazy_off'        => true,
 
 			// 記事スライダー設定
 			'show_post_slide'         => 'on',

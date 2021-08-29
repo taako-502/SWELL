@@ -24,7 +24,7 @@ function setParallax() {
 		parallaxLayer.setAttribute('aria-hidden', 'true');
 		parallaxLayer.style.backgroundImage = `url(${bgImg})`;
 
-		block.appendChild(parallaxLayer);
+		block.prepend(parallaxLayer);
 	}
 
 	new Rellax('.__parallaxLayer', {
