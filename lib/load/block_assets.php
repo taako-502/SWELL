@@ -34,16 +34,22 @@ function hook_enqueue_block_editor_assets() {
 	 * 旧ブロック
 	 */
 	wp_enqueue_script( 'swell-old-blocks', T_DIRE_URI . '/build/blocks/old-blocks/index.js', ['swell_blocks' ], SWELL_VERSION, true );
-
-	// ブロックに必要なデータを admin_footer で出力
-	add_action( 'admin_footer', __NAMESPACE__ . '\output_content_data', 20 );
 }
+
+
+// ブロックに必要なデータを admin_footer で出力(TinyMceでも利用することに注意。)
+add_action( 'admin_footer', __NAMESPACE__ . '\output_content_data', 20 );
 
 
 /**
  * エディターに渡すデータ
  */
 function output_content_data() {
+
+	// エディター画面でのみ出力
+	global $hook_suffix;
+	$has_editor = 'post.php' === $hook_suffix || 'post-new.php' === $hook_suffix || 'widgets.php' === $hook_suffix || 'customize.php' === $hook_suffix;
+	if ( ! $has_editor ) return;
 
 	echo '<script id="swell_content_data">';
 
