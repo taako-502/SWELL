@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
-import { useMemo, useCallback } from '@wordpress/element';
+import { useState, useMemo, useCallback } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
 // import { InspectorControls } from '@wordpress/block-editor';
 import {
@@ -37,6 +37,9 @@ const sizOptions = [
 
 export default ({ attributes, setAttributes, clientId }) => {
 	const { rel, isNewTab, imgUrl, htmlTags, isCount, btnId, iconName } = attributes;
+
+	const [isResetBtnData, setIsResetBtnData] = useState(false);
+
 	let nowClass = attributes.className || '';
 
 	const hasHtml = '' !== htmlTags;
@@ -62,7 +65,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 			btnData = btnCvData[btnId] || null;
 		}
 
-		if (null === btnData) {
+		if (null === btnData || isResetBtnData) {
 			return <p>まだ計測データはありません。</p>;
 		}
 
@@ -95,7 +98,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</p>
 			</>
 		);
-	}, [meta]);
+	}, [meta, isResetBtnData]);
 
 	// 現在の色
 	const selectedColor = useMemo(() => {
@@ -139,6 +142,19 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<div className='swell-button-data'>
 					<div className='__title'>このボタンの計測結果</div>
 					{btnClickedData}
+					<div className='__clearBtn'>
+						<Button
+							isSmall
+							onClick={() => {
+								setIsResetBtnData(true);
+								// 計測用のIDを再生成する。
+								const newID = clientId.split('-');
+								setAttributes({ btnId: newID[0] || '' });
+							}}
+						>
+							{__('計測結果をクリア')}
+						</Button>
+					</div>
 				</div>
 			)}
 		</>
