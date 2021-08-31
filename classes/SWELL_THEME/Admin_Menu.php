@@ -14,6 +14,7 @@ class Admin_Menu {
 	const SUB_PAGE_SLUG = [
 		'editor'   => 'swell_settings_editor',
 		'ads'      => 'swell_settings_ads',
+		'widget'   => 'swell_settings_widget',
 		'swellers' => 'swell_settings_swellers',
 	];
 
@@ -110,6 +111,14 @@ class Admin_Menu {
 		);
 		add_submenu_page(
 			self::PAGE_SLUG,
+			__( 'SWELL Widget', 'swell' ),
+			__( 'SWELL Widget', 'swell' ),
+			'manage_options',
+			self::SUB_PAGE_SLUG['widget'],
+			[self::$instance, 'swell_widget' ]
+		);
+		add_submenu_page(
+			self::PAGE_SLUG,
 			__( 'SWELLERS\'', 'swell' ),
 			__( 'SWELLERS\'', 'swell' ),
 			'manage_options',
@@ -150,7 +159,9 @@ class Admin_Menu {
 	public function swellers_id_setting() {
 		require_once T_DIRE . '/lib/menu/swell_menu_swellers.php';
 	}
-
+	public function swell_widget() {
+		require_once T_DIRE . '/lib/menu/swell_menu_widget_editor.php';
+	}
 
 	/**
 	 * 設定の追加

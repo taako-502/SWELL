@@ -7,12 +7,12 @@ const defaultConfig = require('@wordpress/scripts/config/webpack.config');
  */
 defaultConfig.plugins.shift();
 
-for (let i = 0; i < defaultConfig.plugins.length; i++) {
-	const pluginInstance = defaultConfig.plugins[i];
-	if ('DependencyExtractionWebpackPlugin' === pluginInstance.constructor.name) {
-		defaultConfig.plugins.splice(i, i);
-	}
-}
+// for (let i = 0; i < defaultConfig.plugins.length; i++) {
+// 	const pluginInstance = defaultConfig.plugins[i];
+// 	if ('DependencyExtractionWebpackPlugin' === pluginInstance.constructor.name) {
+// 		defaultConfig.plugins.splice(i, i);
+// 	}
+// }
 
 let entryFiles = {};
 let srcDir = 'js';
@@ -42,6 +42,7 @@ if ('front' === process.env.TYPE) {
 		'count_title',
 		'mediauploader',
 		'settings',
+		'widget/index',
 		'tinymce',
 	];
 } else if ('customizer' === process.env.TYPE) {
@@ -73,6 +74,7 @@ module.exports = {
 	resolve: {
 		alias: {
 			'@swell-js': path.resolve(__dirname, 'src/js/'),
+			'@swell-guten': path.resolve(__dirname, 'src/gutenberg'),
 		},
 	},
 	plugins: [...defaultConfig.plugins, new webpack.EnvironmentPlugin(['TYPE'])],
