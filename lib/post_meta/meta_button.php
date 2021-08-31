@@ -5,12 +5,15 @@ use \SWELL_Theme as SWELL;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-add_action( 'post_updated', __NAMESPACE__ . '\hook_save_post', 10, 2 );
+add_action( 'save_post', __NAMESPACE__ . '\hook_save_post', 10, 2 );
 
 /**
  * 保存処理
  */
 function hook_save_post( $post_id, $post ) {
+	// リビジョンの投稿IDが渡ってきたときは何もしない
+	if ( wp_is_post_revision( $post_id ) ) return;
+
 	// 自動保存時には保存しないように
 	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 		return;
@@ -54,6 +57,10 @@ function hook_save_post( $post_id, $post ) {
 	}
 
 	// DBアップデート
-	$new_btn_cv_metas = json_encode( $new_btn_cv_metas );
-	update_post_meta( $post_id, 'swell_btn_cv_data', $new_btn_cv_metas );
+	if ( empty( $new_btn_cv_metas ) ) {
+		delete_post_meta( $post_id, 'swell_btn_cv_data' );
+	} else {
+		$new_btn_cv_metas = json_encode( $new_btn_cv_metas );
+		update_post_meta( $post_id, 'swell_btn_cv_data', $new_btn_cv_metas );
+	}
 }

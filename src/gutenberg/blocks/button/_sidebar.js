@@ -81,6 +81,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 
 		return (
 			<>
+				<div className='__title'>このボタンの計測結果</div>
 				<p className='__data'>
 					ボタン設置後のPV数：<b>{ctPv}回</b>
 				</p>
@@ -96,6 +97,22 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<p className='__data'>
 					表示回数に対するクリック率：<b>{clickPerImp}%</b>
 				</p>
+				<div className='__clearBtn'>
+					<Button
+						isSmall
+						onClick={() => {
+							// eslint-disable-next-line no-alert
+							if (window.confirm('本当にリセットしてもいいですか？')) {
+								setIsResetBtnData(true);
+								// 計測用のIDを再生成する。
+								const newID = clientId.split('-');
+								setAttributes({ btnId: newID[0] || '' });
+							}
+						}}
+					>
+						{__('計測結果をクリア')}
+					</Button>
+				</div>
 			</>
 		);
 	}, [meta, isResetBtnData]);
@@ -138,25 +155,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					}
 				}}
 			/>
-			{isCount && (
-				<div className='swell-button-data'>
-					<div className='__title'>このボタンの計測結果</div>
-					{btnClickedData}
-					<div className='__clearBtn'>
-						<Button
-							isSmall
-							onClick={() => {
-								setIsResetBtnData(true);
-								// 計測用のIDを再生成する。
-								const newID = clientId.split('-');
-								setAttributes({ btnId: newID[0] || '' });
-							}}
-						>
-							{__('計測結果をクリア')}
-						</Button>
-					</div>
-				</div>
-			)}
+			{isCount && <div className='swell-button-data'>{btnClickedData}</div>}
 		</>
 	);
 
