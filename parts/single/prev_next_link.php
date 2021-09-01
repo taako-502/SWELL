@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $show_thumb   = SWELL_Theme::get_setting( 'show_page_link_thumb' );
-$is_same_term = SWELL_Theme::get_setting( 'pn_link_is_same_term' );
+$is_same_term = is_singular( 'post' ) ? SWELL_Theme::get_setting( 'pn_link_is_same_term' ) : false;
 
 $pn_style  = '-style-' . SWELL_Theme::get_setting( 'page_link_style' );
 $add_class = ( $show_thumb ) ? $pn_style . ' -thumb-on' : $pn_style;
