@@ -108,32 +108,32 @@
 							},
 						});
 					}
-
-					if (normalAdList.length > 0) {
-						adSetList.push({
-							text: 'バナー型',
-							menu: normalAdList,
-						});
-					}
-					if (affiliateAdList.length > 0) {
-						adSetList.push({
-							text: 'アフィリエイト型',
-							menu: affiliateAdList,
-						});
-					}
-					if (amazonAdList.length > 0) {
-						adSetList.push({
-							text: 'Amazon型',
-							menu: amazonAdList,
-						});
-					}
-					if (rankingAdList.length > 0) {
-						adSetList.push({
-							text: 'ランキング型',
-							menu: rankingAdList,
-						});
-					}
 				});
+
+				if (normalAdList.length > 0) {
+					adSetList.push({
+						text: 'バナー型',
+						menu: normalAdList,
+					});
+				}
+				if (affiliateAdList.length > 0) {
+					adSetList.push({
+						text: 'アフィリエイト型',
+						menu: affiliateAdList,
+					});
+				}
+				if (amazonAdList.length > 0) {
+					adSetList.push({
+						text: 'Amazon型',
+						menu: amazonAdList,
+					});
+				}
+				if (rankingAdList.length > 0) {
+					adSetList.push({
+						text: 'ランキング型',
+						menu: rankingAdList,
+					});
+				}
 			}
 
 			const shortcodeSelectMenu = [
