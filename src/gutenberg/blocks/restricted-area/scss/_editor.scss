@@ -17,4 +17,33 @@
             fill: currentColor;
         }
     }
+
+
+}
+
+.edit-post-sidebar {
+
+    .swl-dash {
+        margin: 0 auto 12px;
+        padding-right: 1em;
+        writing-mode: vertical-rl;
+    }
+
+    .swl-dateTimePicker {
+        margin-bottom: 12px;
+
+        .components-base-control__field {
+            display: flex;
+            align-items: center;
+        }
+
+        .components-base-control__label {
+            margin-right: 8px;
+            margin-bottom: 0;
+        }
+
+        .components-button svg {
+            margin-right: 4px;
+        }
+    }
 }
