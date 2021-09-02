@@ -7,6 +7,30 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 add_action( 'save_post', __NAMESPACE__ . '\hook_save_post', 10, 2 );
 
+
+/**
+ * 計測IDを持つSWELLボタンのみ検索して、IDの配列を返す
+ */
+function get_btn_ids( $parsed_content ) {
+	$btns = [];
+	foreach ( $parsed_content as $block ) {
+		$block_name = $block['blockName'];
+
+		if ( $block_name === 'loos/button' ) {
+			preg_match( '/\sdata-id="([^"]*)"/', $block['innerHTML'], $id_matches );
+			if ( $id_matches ) {
+				$btns[] = $id_matches[1];
+			}
+		} elseif ( ! empty( $block['innerBlocks'] ) ) {
+			// インナーブロックにも同じ処理を。
+			$inner_btns = get_btn_ids( $block['innerBlocks'] );
+			$btns       = array_merge( $btns, $inner_btns );
+		}
+	}
+
+	return $btns;
+}
+
 /**
  * 保存処理
  */
@@ -34,17 +58,8 @@ function hook_save_post( $post_id, $post ) {
 	$new_btn_ids = [];
 
 	// コンテンツをパースしてSWELLボタンを抽出
-	$blocks = parse_blocks( $post->post_content );
-
-	foreach ( $blocks as $block ) {
-		if ( $block['blockName'] === 'loos/button' ) {
-			// SWELLボタンのボタンIDを格納
-			preg_match( '/\sdata-id="([^"]*)"/', $block['innerHTML'], $id_matches );
-			if ( $id_matches ) {
-				$new_btn_ids[] = $id_matches[1];
-			}
-		}
-	}
+	$parsed_content = parse_blocks( $post->post_content );
+	$new_btn_ids    = get_btn_ids( $parsed_content );
 
 	// 計測対象のボタンが一つもなければ
 	if ( empty( $new_btn_ids ) ) {
