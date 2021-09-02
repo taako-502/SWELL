@@ -18,12 +18,12 @@ function register_rest_metas() {
 
 
 /**
- * /wp/v2/swell-block-settings を追加
- * データベース名 : swell-block-settings
+ * エンドポイントを追加
  */
 add_action( 'rest_api_init', __NAMESPACE__ . '\hook_rest_api_init' );
 function hook_rest_api_init() {
 
+	// SWELLブロック設定の取得
 	register_rest_route( 'wp/v2', '/swell-block-settings', [
 		'methods'             => 'GET',
 		'callback'            => function() {
@@ -55,7 +55,7 @@ function hook_rest_api_init() {
 		},
 	] );
 
-	// アップデート処理
+	// SWELLブロック設定のアップデート処理
 	register_rest_route( 'wp/v2', '/swell-block-settings', [
 		'methods'             => 'POST',
 		'callback'            => function( $request ) {
@@ -88,4 +88,139 @@ function hook_rest_api_init() {
 		},
 	] );
 
+	// ボタンの計測
+	register_rest_route( 'wp/v2', '/swell-ct-btn-data', [
+		'methods'             => 'POST',
+		'callback'            => function( $request ) {
+			if ( ! isset( $request['btnid'] ) || ! isset( $request['postid'] ) || ! isset( $request['ct_name'] ) ) wp_die( json_encode( [] ) );
+
+			$btnid   = $request['btnid'];
+			$postid  = $request['postid'];
+			$ct_name = $request['ct_name']; // 何をカウントするか
+
+			$btn_cv_metas = get_post_meta( $postid, 'swell_btn_cv_data', true ) ?: [];
+
+			if ( $btn_cv_metas ) $btn_cv_metas = json_decode( $btn_cv_metas, true );
+
+			// ここで配列になっていなければ何かがおかしいので return
+			if ( ! is_array( $btn_cv_metas ) ) wp_die( json_encode( [] ) );
+
+			if ( 'pv' === $ct_name ) {
+				$btnids = explode( ',', $btnid );
+				foreach ( $btnids as $the_id ) {
+					$btn_cv_metas = ct_up_btn_data( $btn_cv_metas, $the_id, $ct_name );
+				}
+			} else {
+				$btn_cv_metas = ct_up_btn_data( $btn_cv_metas, $btnid, $ct_name );
+			}
+
+			$btn_cv_metas = json_encode( $btn_cv_metas );
+
+			update_post_meta( $postid, 'swell_btn_cv_data', $btn_cv_metas );
+
+			$return = [
+				'btnid'   => $btnid,
+				'cvdata'  => $btn_cv_metas,
+				'ct_name' => $ct_name,
+			];
+
+			return json_encode( $return );
+		},
+	] );
+
+	// 広告の計測
+	register_rest_route( 'wp/v2', '/swell-ct-ad-data', [
+		'methods'             => 'POST',
+		'callback'            => function( $request ) {
+			if ( ! isset( $request['adid'] ) || ! isset( $request['ct_name'] ) ) wp_die( json_encode( [] ) );
+
+			$ad_id   = $request['adid'];
+			$ct_name = $request['ct_name']; // 何をカウントするか
+
+			$return = [];
+
+			switch ( $ct_name ) {
+				// PV数
+				case 'pv':
+					$ad_ids = explode( ',', $ad_id );
+					foreach ( $ad_ids as $the_id ) {
+						$count       = (int) get_post_meta( $ad_id, 'pv_count', true );
+						$update_meta = update_post_meta( $the_id, 'pv_count', $count + 1 );
+
+						$return[] = [
+							'id' => $the_id,
+							'ct' => $count,
+						];
+					}
+					break;
+
+				// 広告表示回数
+				case 'imp':
+					$count       = (int) get_post_meta( $ad_id, 'imp_count', true );
+					$update_meta = update_post_meta( $ad_id, 'imp_count', $count + 1 );
+
+					$return = [
+						'id' => $ad_id,
+						'ct' => $count,
+					];
+					break;
+
+				// 広告クリック数
+				case 'click':
+					// どこがクリックされたか
+					$ad_target = ( isset( $request['target'] ) ) ? $request['target'] : '';
+					$meta_key  = $ad_target . '_clicked_ct';
+
+					$count       = (int) get_post_meta( $ad_id, $meta_key, true );
+					$update_meta = update_post_meta( $ad_id, $meta_key, $count + 1 );
+
+					$return = [
+						'id'     => $ad_id,
+						'target' => $ad_target,
+						'ct'     => $count,
+					];
+					break;
+			}
+
+			return json_encode( $return );
+		},
+	] );
+
+	// 広告の計測データのリセット
+	register_rest_route( 'wp/v2', '/swell-reset-ad-data', [
+		'methods'             => 'POST',
+		'callback'            => function( $request ) {
+			if ( ! isset( $request['id'] ) ) wp_die( 'リセットに失敗しました' );
+
+			$ad_id = $request['id'];
+
+			$keys = [
+				'imp_count',
+				'pv_count',
+				'tag_clicked_ct',
+				'btn1_clicked_ct',
+				'btn2_clicked_ct',
+			];
+			foreach ( $keys as $key ) {
+				$update_meta = update_post_meta( $ad_id, $key, 0 );
+			}
+			wp_die( 'リセットに成功しました' );
+		},
+		'permission_callback' => function () {
+			return current_user_can( 'edit_others_posts' );
+		},
+	] );
 }
+
+// ボタン計測データの加算
+function ct_up_btn_data( $cv_data, $btnid, $ct_name ) {
+	if ( ! isset( $cv_data[ $btnid ] ) ) {
+		$cv_data[ $btnid ]             = [];
+		$cv_data[ $btnid ][ $ct_name ] = 1;
+	} else {
+		$count                         = (int) $cv_data[ $btnid ][ $ct_name ];
+		$cv_data[ $btnid ][ $ct_name ] = $count + 1;
+	}
+
+	return $cv_data;
+};

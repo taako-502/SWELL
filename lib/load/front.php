@@ -160,7 +160,7 @@ function global_vars_on_front() {
 
 	$global_vars = [
 		// 'direUri' => T_DIRE_URI,
-		// 'apiPath' => rest_url() .'wp/v2/',
+		'restUrl'         => rest_url() . 'wp/v2/',
 		'postID'          => is_singular() ? get_queried_object_id() : 0,
 		'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 		'ajaxNonce'       => wp_create_nonce( 'swell-ajax-nonce' ),

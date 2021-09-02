@@ -36,32 +36,27 @@ export default function () {
 	buttonCount();
 }
 
-// ajax処理
-const sendCountFetch = async (params) => {
-	// ajaxUrl を正常に取得できるか
+/**
+ * REST APIの呼び出し
+ */
+const callRestApi = async (route, params) => {
+	// REST APIエンドポイントを正常に取得できるか
 	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
+	const restUrl = window.swellVars.restUrl;
+	if (restUrl === undefined) return;
 
-	// nonce を正常に取得できるか
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
-
-	params.append('nonce', ajaxNonce);
-
-	const responseJSON = await fetch(ajaxUrl, {
+	fetch(restUrl + route, {
 		method: 'POST',
-		cache: 'no-cache',
 		body: params,
 	}).then((response) => {
-		if (response.ok) {
-			// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
-			return response.json();
-		}
-		throw new TypeError('Failed ajax!');
-	});
+		console.log(response.json());
 
-	// console.log(responseJSON);
+		// if (response.ok) {
+		// 	// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
+		// 	return response.json();
+		// }
+		// throw new TypeError('Failed ajax!');
+	});
 };
 
 /**
@@ -133,14 +128,14 @@ const ctButtonData = (buttonID, ctName) => {
 	if (!postID) return;
 
 	// 受け渡すデータ
-	const params = new URLSearchParams(); // WPのajax通す時は URLSearchParams 使う
-	params.append('action', 'swell_ct_btn_data');
+	const route = 'swell-ct-btn-data';
+	const params = new URLSearchParams();
 	params.append('btnid', buttonID);
 	params.append('postid', postID);
 	params.append('ct_name', ctName);
 
-	// ajax実行
-	sendCountFetch(params);
+	// REST API呼び出し
+	callRestApi(route, params);
 };
 
 /**
@@ -237,31 +232,37 @@ const adBoxCount = () => {
 };
 
 const countAdClicked = async (adID, target) => {
-	// 受け渡すデータ（WPのajax通す時は URLSearchParams 使う）
+	// 受け渡すデータ
+	const route = 'swell-ct-ad-data';
 	const params = new URLSearchParams();
-	params.append('action', 'swell_clicked_ad');
-	params.append('id', adID); //広告ID
+	params.append('adid', adID); //広告ID
+	params.append('ct_name', 'click');
 	params.append('target', target); // 何をクリックしたか
 
-	sendCountFetch(params);
+	// REST API呼び出し
+	callRestApi(route, params);
 };
 
 // PVカウント
 const countPageView = async (adIDs) => {
-	// 受け渡すデータ（WPのajax通す時は URLSearchParams 使う）
+	// 受け渡すデータ
+	const route = 'swell-ct-ad-data';
 	const params = new URLSearchParams();
-	params.append('action', 'swell_ct_ad_pv');
-	params.append('id', adIDs);
+	params.append('adid', adIDs);
+	params.append('ct_name', 'pv');
 
-	sendCountFetch(params);
+	// REST API呼び出し
+	callRestApi(route, params);
 };
 
 // IMPカウント
 const countAdBoxImp = async (adID) => {
-	// 受け渡すデータ（WPのajax通す時は URLSearchParams 使う）
+	// 受け渡すデータ
+	const route = 'swell-ct-ad-data';
 	const params = new URLSearchParams();
-	params.append('action', 'swell_ct_ad_imp');
-	params.append('id', adID);
+	params.append('adid', adID);
+	params.append('ct_name', 'imp');
 
-	sendCountFetch(params);
+	// REST API呼び出し
+	callRestApi(route, params);
 };
