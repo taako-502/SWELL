@@ -19,7 +19,7 @@
     }
 
     // カラム幅・左右マージンに影響を受けないように、常に幅一杯になるようにする
-    .block-list-appender {
+    .swell-block-columns__inner > .block-list-appender {
         flex-basis: calc(100% - var(--swl-clmn-mrgn--x));
         margin: 0 auto;
         margin: 0 0 0 var(--swl-clmn-mrgn--x);
