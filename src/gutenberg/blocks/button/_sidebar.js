@@ -5,7 +5,6 @@ import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { useMemo, useCallback } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
-// import { InspectorControls } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	ToggleControl,
@@ -37,6 +36,7 @@ const sizOptions = [
 
 export default ({ attributes, setAttributes, clientId }) => {
 	const { rel, isNewTab, imgUrl, htmlTags, isCount, btnId, iconName } = attributes;
+
 	let nowClass = attributes.className || '';
 
 	const hasHtml = '' !== htmlTags;
@@ -78,6 +78,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 
 		return (
 			<>
+				<div className='__title'>このボタンの計測結果</div>
 				<p className='__data'>
 					ボタン設置後のPV数：<b>{ctPv}回</b>
 				</p>
@@ -93,9 +94,24 @@ export default ({ attributes, setAttributes, clientId }) => {
 				<p className='__data'>
 					表示回数に対するクリック率：<b>{clickPerImp}%</b>
 				</p>
+				<div className='__clearBtn'>
+					<Button
+						isSmall
+						onClick={() => {
+							// eslint-disable-next-line no-alert
+							if (window.confirm('本当にリセットしてもいいですか？')) {
+								// 計測用のIDを再生成する。
+								const newID = clientId.split('-');
+								setAttributes({ btnId: newID[0] || '' });
+							}
+						}}
+					>
+						{__('計測結果をクリア')}
+					</Button>
+				</div>
 			</>
 		);
-	}, [meta]);
+	}, [btnId, meta]);
 
 	// 現在の色
 	const selectedColor = useMemo(() => {
@@ -135,12 +151,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 					}
 				}}
 			/>
-			{isCount && (
-				<div className='swell-button-data'>
-					<div className='__title'>このボタンの計測結果</div>
-					{btnClickedData}
-				</div>
-			)}
+			{isCount && <div className='swell-button-data'>{btnClickedData}</div>}
 		</>
 	);
 
