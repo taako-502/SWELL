@@ -1,24 +1,15 @@
 // リッチカラム
 [data-type="loos/columns"] {
-    // overflow:hiddenの影響でブロック選択時の青枠が見切れることへの対策
-    padding: 2px;
-
-    .is-root-container > &::after {
-        top: 2px !important;
-        right: 2px !important;
-        bottom: 2px !important;
-        left: 2px !important;
-    }
 
     // ブロック未選択時は、ブロック下にマイナスマージンを設定
     &:not(.is-selected):not(.has-child-selected) .swell-block-columns__inner {
-        margin-bottom: calc(-1 * var(--swl-clmn-mrgn--bttm));
+        margin-bottom: calc(-1 * var(--swl-clmn-mrgn--y));
     }
 
     // もしクラッシュした時、カラム項目だとわかりやすいようにしておく
     [data-type="loos/column"].has-warning {
-        flex-basis: calc(50% - var(--swl-clmn-mrgn--x) * 2) !important;
-        margin: 0 var(--swl-clmn-mrgn--x) !important;
+        flex-basis: 46% !important;
+        margin: 0 2% !important;
     }
 
 
@@ -29,13 +20,14 @@
 
     // カラム幅・左右マージンに影響を受けないように、常に幅一杯になるようにする
     .block-list-appender {
-        flex-basis: calc(100% - var(--swl-clmn-mrgn--x) * 2);
+        flex-basis: calc(100% - var(--swl-clmn-mrgn--x));
         margin: 0 auto;
+        margin: 0 0 0 var(--swl-clmn-mrgn--x);
     }
 
     // ブロックインサーター下の余白を打消し
-    &.is-style-shadow.is-selected,
-    &.is-style-shadow.has-child-selected {
+    &.is-style-clmn-shadow.is-selected,
+    &.is-style-clmn-shadow.has-child-selected {
 
         .swell-block-columns__inner {
             padding-bottom: 0;

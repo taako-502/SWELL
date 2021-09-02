@@ -45,6 +45,7 @@
 // ガイド線を少し外側に
 .is-root-container > [data-type="core/group"],
 .is-root-container > [data-type="core/columns"],
+.is-root-container > [data-type="loos/columns"],
 .is-root-container > [data-type="loos/ab-test"],
 .is-root-container > [data-type="loos/accordion"],
 .is-root-container > [data-type="loos/step"],
@@ -66,12 +67,5 @@
     &::after {
         top: -4px !important;
         bottom: -4px !important;
-    }
-}
-
-[data-type="loos/button"] {
-
-    &::after {
-        top: -4px !important;
     }
 }

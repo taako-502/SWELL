@@ -1,7 +1,7 @@
 /**
  * @WordPress dependencies
  */
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 import {
 	BlockControls,
 	InspectorControls,
@@ -40,8 +40,26 @@ registerBlockType(metadata.name, {
 	icon: getBlockIcon(blockIcon),
 	styles: [
 		{ name: 'default', label: 'デフォルト', isDefault: true },
-		{ name: 'shadow', label: 'シャドウ' },
+		{ name: 'clmn-shadow', label: 'シャドウ' },
 	],
+	transforms: {
+		from: [
+			//どのブロックタイプから変更できるようにするか
+			{
+				type: 'block',
+				blocks: ['core/columns'],
+				transform: (attributes, content) => {
+					const newInnerBlocks = [];
+					content.forEach((columnBlock) => {
+						newInnerBlocks.push(
+							createBlock('loos/column', {}, columnBlock.innerBlocks)
+						);
+					});
+					return createBlock(metadata.name, {}, newInnerBlocks);
+				},
+			},
+		],
+	},
 	edit: (props) => {
 		const { attributes, setAttributes } = props;
 		const { vAlign, colPC, colTab, colMobile, margin } = attributes;
@@ -53,8 +71,8 @@ registerBlockType(metadata.name, {
 				'--swl-fb': '1' !== colMobile ? getColumnBasis(colMobile) : null,
 				'--swl-fb_tab': '2' !== colTab ? getColumnBasis(colTab) : null,
 				'--swl-fb_pc': '2' !== colPC ? getColumnBasis(colPC) : null,
-				'--swl-clmn-mrgn--x': '0.75rem' !== margin.x ? margin.x : null,
-				'--swl-clmn-mrgn--bttm': '1.5rem' !== margin.bottom ? margin.bottom : null,
+				'--swl-clmn-mrgn--x': '1.5rem' !== margin.x ? margin.x : null,
+				'--swl-clmn-mrgn--y': '1.5rem' !== margin.y ? margin.y : null,
 			},
 			'data-valign': vAlign || null,
 		});
@@ -135,15 +153,16 @@ registerBlockType(metadata.name, {
 						</BaseControl>
 						<BaseControl>
 							<BaseControl.VisualLabel>
-								カラム間の余白 (<code style={{ fontSize: '12px' }}>margin:</code>)
+								カラム間の余白 (<code className='u-fz-s'>margin</code>)
 							</BaseControl.VisualLabel>
 							<Flex>
 								<FlexItem style={{ minWidth: '4em', marginRight: 'auto' }}>
-									left & right
+									左右の余白
 								</FlexItem>
 								<FlexBlock style={{ flex: '0 1 auto' }}>
 									<UnitNumber
 										value={margin.x}
+										step='0.5'
 										onChange={(newVal) => {
 											setAttributes({ margin: { ...margin, x: newVal } });
 										}}
@@ -152,14 +171,15 @@ registerBlockType(metadata.name, {
 							</Flex>
 							<Flex style={{ marginTop: '8px' }}>
 								<FlexItem style={{ minWidth: '4em', marginRight: 'auto' }}>
-									bottom
+									上下の余白
 								</FlexItem>
 								<FlexBlock style={{ flex: '0 1 auto' }}>
 									<UnitNumber
-										value={margin.bottom}
+										value={margin.y}
+										step='0.5'
 										onChange={(newVal) => {
 											setAttributes({
-												margin: { ...margin, bottom: newVal },
+												margin: { ...margin, y: newVal },
 											});
 										}}
 									/>
@@ -186,8 +206,8 @@ registerBlockType(metadata.name, {
 				'--swl-fb': '1' !== colMobile ? getColumnBasis(colMobile) : null,
 				'--swl-fb_tab': '2' !== colTab ? getColumnBasis(colTab) : null,
 				'--swl-fb_pc': '2' !== colPC ? getColumnBasis(colPC) : null,
-				'--swl-clmn-mrgn--x': '0.75rem' !== margin.x ? margin.x : null,
-				'--swl-clmn-mrgn--bttm': '1.5rem' !== margin.bottom ? margin.bottom : null,
+				'--swl-clmn-mrgn--x': '1.5rem' !== margin.x ? margin.x : null,
+				'--swl-clmn-mrgn--y': '1.5rem' !== margin.y ? margin.y : null,
 			},
 			'data-valign': vAlign || null,
 		});

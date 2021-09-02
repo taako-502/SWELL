@@ -3,16 +3,10 @@
     --swl-fb: 100%;
     --swl-fb_tab: 50%;
     --swl-fb_pc: 50%;
-    --swl-clmn-mrgn--x: .75rem;
-    --swl-clmn-mrgn--bttm: 1.5rem;
+    --swl-clmn-mrgn--x: 1.5rem;
+    --swl-clmn-mrgn--y: 1.5rem;
     --swl-clmn-pddng: 0;
 
-    // シャドウが途切れるのを防ぐ。
-    margin-right: -4px;
-    margin-left: -4px;
-    padding: 0 4px;
-
-    overflow: hidden; // 左右マイナスマージンではみ出さないように
 
     &.alignfull {
         margin-right: 0;
@@ -39,7 +33,6 @@
     flex-wrap: wrap;
     justify-content: flex-start;
     margin-top: 0 !important;
-    margin-right: calc(-1 * var(--swl-clmn-mrgn--x));
     margin-left: calc(-1 * var(--swl-clmn-mrgn--x));
 }
 
@@ -47,16 +40,16 @@
 
     // 詳細度強めておく
     .swell-block-columns & {
-        width: calc(var(--swl-fb) - var(--swl-clmn-mrgn--x) * 2);
-        margin: 0 var(--swl-clmn-mrgn--x) var(--swl-clmn-mrgn--bttm);
+        width: calc(var(--swl-fb) - var(--swl-clmn-mrgn--x));
+        margin: 0 0 var(--swl-clmn-mrgn--y) var(--swl-clmn-mrgn--x);
         padding: var(--swl-clmn-pddng);
 
         @include tab {
-            width: calc(var(--swl-fb_tab) - var(--swl-clmn-mrgn--x) * 2);
+            width: calc(var(--swl-fb_tab) - var(--swl-clmn-mrgn--x));
         }
 
         @include pc {
-            width: calc(var(--swl-fb_pc) - var(--swl-clmn-mrgn--x) * 2);
+            width: calc(var(--swl-fb_pc) - var(--swl-clmn-mrgn--x));
         }
 
     }
@@ -81,7 +74,7 @@
 
 
 // シャドウスタイル
-.swell-block-columns.is-style-shadow {
+.is-style-clmn-shadow {
     --swl-clmn-pddng: 1rem;
 
     .swell-block-columns__inner {

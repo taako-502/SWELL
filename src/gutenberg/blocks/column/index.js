@@ -278,7 +278,7 @@ registerBlockType(metadata.name, {
 
 		// ブロックprops
 		const blockProps = useBlockProps.save({
-			className: classnames(blockName, {
+			className: classnames(blockName, 'swl-has-mb--s', {
 				'is-breadk-all': isBreakAll,
 			}),
 			'data-valign': vAlign || null,

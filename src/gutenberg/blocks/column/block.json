@@ -3,9 +3,10 @@
     "name": "loos/column",
     "title": "カラム項目",
     "category": "swell-blocks",
-    "parent": [ "loos/columns" ],
+    "parent": [
+        "loos/columns"
+    ],
     "supports": {
-        "anchor": true,
         "className": false,
         "reusable": false
     },

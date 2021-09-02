@@ -34,7 +34,7 @@ const getUnitNum = (val) => {
  * UnitControl: https://github.com/WordPress/gutenberg/blob/3da717b8d0/packages/components/src/unit-control/index.js
  */
 export default (props) => {
-	const { value, units, onChange, idKey = '', className = '' } = props;
+	const { value, units, onChange, step = '1', idKey = '', className = '' } = props;
 	const _UNITS = units || UNITS;
 	const { num, unit } = getUnitNum(value);
 
@@ -50,7 +50,7 @@ export default (props) => {
 				onChange={(val) => {
 					onChange(val);
 				}}
-				step='1'
+				step={'px' === unit ? '1' : step}
 				unit={unit}
 				units={_UNITS.map((_unit) => {
 					return { label: _unit, value: _unit };
