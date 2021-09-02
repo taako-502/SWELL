@@ -76,6 +76,9 @@ class Theme_Data {
 	// JSの読み込みを制御する変数
 	public static $use = [];
 
+	// そのページに使われているブロック
+	public static $used_blocks = [];
+
 	// キャッシュキー
 	public static $cache_keys = [
 		'style' => [ // スタイルに関わるキャッシュキー
