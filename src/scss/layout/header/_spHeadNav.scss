@@ -43,6 +43,11 @@
 
     &[data-loop="0"] {
 
+        .p-spHeadMenu {
+            display: flex;
+            overflow-x: auto;
+        }
+
         .menu-item:first-child {
             margin-left: auto;
         }

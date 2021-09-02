@@ -32,10 +32,9 @@ Customizer::add(
 	$section,
 	'pickbnr_layout_pc',
 	[
-		'classname'   => '',
-		'label'       => 'バナーレイアウト（PC）',
-		'type'        => 'select',
-		'choices'     => [
+		'label'   => 'バナーレイアウト（PC）',
+		'type'    => 'select',
+		'choices' => [
 			'fix_col4' => '固定幅 4列',
 			'fix_col3' => '固定幅 3列',
 			'fix_col2' => '固定幅 2列',
@@ -49,10 +48,9 @@ Customizer::add(
 	$section,
 	'pickbnr_layout_sp',
 	[
-		'classname'   => '',
-		'label'       => 'バナーレイアウト（SP）',
-		'type'        => 'select',
-		'choices'     => [
+		'label'   => 'バナーレイアウト（SP）',
+		'type'    => 'select',
+		'choices' => [
 			'fix_col2' => '固定幅 2列',
 			'fix_col1' => '固定幅 1列',
 			'slide'    => 'スライド（横スクロール可能に）',
@@ -75,16 +73,15 @@ Customizer::add(
 	$section,
 	'pickbnr_style',
 	[
-		'classname'   => '',
-		'label'       => 'バナータイトルのデザイン',
-		'type'        => 'select',
-		'choices'     => [
-			'none'          => __( 'Don\'t show', 'swell' ),
-			'top_left'      => '左上に表示',
-			'btm_right'     => '右下に表示',
-			'ctr_simple'    => '中央（シンプル）',
-			'ctr_button'    => '中央（ボタン風）',
-			'btm_wide'      => '下にワイド表示',
+		'label'   => 'バナータイトルのデザイン',
+		'type'    => 'select',
+		'choices' => [
+			'none'       => __( 'Don\'t show', 'swell' ),
+			'top_left'   => '左上に表示',
+			'btm_right'  => '右下に表示',
+			'ctr_simple' => '中央（シンプル）',
+			'ctr_button' => '中央（ボタン風）',
+			'btm_wide'   => '下にワイド表示',
 		],
 	]
 );
@@ -94,12 +91,11 @@ Customizer::add(
 	$section,
 	'pickbnr_border',
 	[
-		'classname'   => '',
-		'label'       => '内側に白線を',
-		'type'        => 'radio',
-		'choices'     => [
-			'off'    => 'つけない',
-			'on'     => 'つける',
+		'label'   => '内側に白線を',
+		'type'    => 'radio',
+		'choices' => [
+			'off' => 'つけない',
+			'on'  => 'つける',
 		],
 	]
 );
@@ -109,12 +105,11 @@ Customizer::add(
 	$section,
 	'pickbnr_bgblack',
 	[
-		'classname'   => '',
-		'label'       => 'バナー画像を少し暗く',
-		'type'        => 'radio',
-		'choices'     => [
-			'off'    => 'しない',
-			'on'     => 'する',
+		'label'   => 'バナー画像を少し暗く',
+		'type'    => 'radio',
+		'choices' => [
+			'off' => 'しない',
+			'on'  => 'する',
 		],
 	]
 );
@@ -134,8 +129,17 @@ Customizer::add(
 	$section,
 	'pickbnr_show_under',
 	[
-		'classname'   => '',
-		'label'       => 'トップページ以外の下層ページにも表示する',
+		'label' => 'トップページ以外の下層ページにも表示する',
+		'type'  => 'checkbox',
+	]
+);
+
+Customizer::add(
+	$section,
+	'pickbnr_lazy_off',
+	[
+		'label'       => 'Lazyloadを強制オフにする',
 		'type'        => 'checkbox',
+		'description' => 'チェックを外すと、サイト全体（「SWELL設定」→「画像等のLazyload」）の設定に従います。',
 	]
 );

@@ -44,6 +44,10 @@ function setPostSlider() {
 	const swipeOption = {
 		loop: true,
 		effect: 'slider',
+		preloadImages: false,
+		lazy: {
+			loadPrevNext: true,
+		},
 		autoplay: {
 			delay: parseInt(swellVars.psDelay) || 10000,
 			disableOnInteraction: false,

@@ -95,18 +95,27 @@ class SWELL_PARTS{
 		if ( $youtube_id ) {
 
 			$is_youtube = true;
+			$youtube_url = 'https://www.youtube.com/embed/' . esc_attr( $youtube_id );
+			$iframe_props = 'frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen';
+
+			if ( 'lazy' === \SWELL_Theme::$lazy_type ) {
+				$iframe_props .= ' src="' . $youtube_url . '" loading="lazy"';
+			} elseif ( 'lazysizes' === \SWELL_Theme::$lazy_type ) {
+				$iframe_props .= ' class="lazyload" data-src="' . $youtube_url . '"';
+			} else {
+				$iframe_props .= ' src="' . $youtube_url . '"';
+			}
+
 			$return = '<figure class="p-articleThumb -youtube">' .
-				'<div class="p-articleThumb__youtube">' .
-				'<iframe src="https://www.youtube.com/embed/' . $youtube_id . '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' . $caption .
+				'<div class="p-articleThumb__youtube"><iframe ' . $iframe_props . '></iframe></div>' . $caption .
 			'</figure>';
 
 		} else {
 
-			
 			$thumb = \SWELL_Theme::get_thumbnail( [
 				'post_id'   => $post_id,
 				'class'     => 'p-articleThumb__img',
-				'lazy_type' => apply_filters( 'swell_post_thumbnail_lazy_type', 'none' ),
+				'lazy_type' => apply_filters( 'swell_post_thumbnail_lazy_off', true ) ? 'none' : \SWELL_Theme::$lazy_type,
 				'use_noimg' => is_single() && \SWELL_Theme::get_setting('show_noimg_thumb'),
 			] );
 

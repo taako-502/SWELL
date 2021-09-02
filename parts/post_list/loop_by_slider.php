@@ -7,21 +7,24 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $query_args  = $variable['query_args'] ?? [];
 $thumb_sizes = $variable['thumb_sizes'] ?? '';
 
-$SETTING = SWELL_Theme::get_setting();
-
 // 表示設定
-$show_date     = $SETTING['ps_show_date'];
-$show_modified = $SETTING['ps_show_modified'];
-$show_author   = $SETTING['ps_show_author'];
-$cat_pos       = $SETTING['pickup_cat_pos'];
+$show_date     = SWELL_Theme::get_setting( 'ps_show_date' );
+$show_modified = SWELL_Theme::get_setting( 'ps_show_modified' );
+$show_author   = SWELL_Theme::get_setting( 'ps_show_author' );
+$cat_pos       = SWELL_Theme::get_setting( 'pickup_cat_pos' );
 
 // クエリの取得
 $the_query = new WP_Query( apply_filters( 'swell_pickup_post_args', $query_args ) );
 
+// 表示枚数
+$ps_num_sp = SWELL_Theme::get_setting( 'ps_num_sp' );
+
 ?>
 <ul class="p-postSlider__postList p-postList swiper-wrapper">
 <?php
+	$ct = 0;
 	while ( $the_query->have_posts() ) :
+		$ct++;
 		$the_query->the_post();
 		$post_data = get_post();
 		$the_id    = $post_data->ID;
@@ -30,6 +33,7 @@ $the_query = new WP_Query( apply_filters( 'swell_pickup_post_args', $query_args 
 		if ( mb_strwidth( $the_title, 'UTF-8' ) > 120 ) :
 			$the_title = mb_strimwidth( $the_title, 0, 120, '...', 'UTF-8' );
 		endif;
+
 ?>
 	<li class="p-postList__item swiper-slide">
 		<a href="<?php the_permalink( $the_id ); ?>" class="p-postList__link">
@@ -37,10 +41,11 @@ $the_query = new WP_Query( apply_filters( 'swell_pickup_post_args', $query_args 
 				SWELL_Theme::get_parts(
 					'parts/post_list/item/thumb',
 					[
-						'post_id'  => $the_id,
-						'cat_pos'  => $cat_pos,
-						'size'     => 'large',
-						'sizes'    => $thumb_sizes,
+						'post_id'   => $the_id,
+						'cat_pos'   => $cat_pos,
+						'size'      => 'large',
+						'sizes'     => $thumb_sizes,
+						'lazy_type' => $ct > $ps_num_sp ? 'swiper' : 'none',
 					]
 				);
 			?>

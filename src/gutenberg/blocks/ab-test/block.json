@@ -10,7 +10,8 @@
         "test"
     ],
     "supports": {
-        "className": false
+        "className": false,
+        "customClassName": false
     },
     "example": {
         "innerBlocks": [

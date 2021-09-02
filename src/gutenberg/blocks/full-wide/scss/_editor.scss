@@ -1,5 +1,5 @@
 [data-type="loos/full-wide"] {
-    z-index: 1;
+    // z-index: 1;
 
     &.is-selected::before {
         z-index: 1;
@@ -19,9 +19,9 @@
         }
     }
 
-    .swell-block-fullWide__SVG {
-        z-index: -1; //SVGがガイド線の上にいってしまう。
-    }
+    // .swell-block-fullWide__SVG {
+    //     z-index: -1; //SVGがガイド線の上にいってしまう。
+    // }
 
     &[data-content-size="container"],
     &[data-content-size="article"],

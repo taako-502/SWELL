@@ -870,18 +870,25 @@ trait Get {
 		$loading = $args['loading'] ?? \SWELL_Theme::$lazy_type;
 		if ( 'lazy' === $loading || 'eager' === $loading ) {
 			$attrs['loading'] = $loading;
+
 		} elseif ( self::is_rest() || self::is_iframe() ) {
 			$attrs['loading'] = 'lazy';
-		} elseif ( 'lazysizes' === $loading ) {
-			$attrs['class']   .= ' lazyload';
+
+		} elseif ( 'lazysizes' === $loading || 'swiper' === $loading ) {
 			$attrs['data-src'] = $attrs['src'];
 			$attrs['src']      = $args['placeholder'] ?? self::$placeholder;
 			if ( isset( $attrs['srcset'] ) ) {
 				$attrs['data-srcset'] = $attrs['srcset'];
 				unset( $attrs['srcset'] );
 			}
-			if ( $width && $height ) {
-				$attrs['data-aspectratio'] = $width . '/' . $height;
+
+			if ( 'lazysizes' === $loading ) {
+				$attrs['class'] .= ' lazyload';
+				if ( $width && $height ) {
+					$attrs['data-aspectratio'] = $width . '/' . $height;
+				}
+			} elseif ( 'swiper' === $loading ) {
+				$attrs['class'] .= ' swiper-lazy';
 			}
 		}
 
@@ -922,12 +929,10 @@ trait Get {
 
 		$loading = $args['loading'] ?? 'none';
 		if ( 'lazysizes' === $loading ) {
-			$attrs['src']         = $args['placeholder'] ?? self::$placeholder;
-			$attrs['data-src']    = $src;
+			$attrs['srcset']      = $args['placeholder'] ?? self::$placeholder;
 			$attrs['data-srcset'] = $srcset;
 		} else {
-			$attrs['src']    = $src;
-			$attrs['srcset'] = $srcset;
+			$attrs['srcset'] = $srcset ?: $src;
 
 			if ( 'lazy' === $loading ) {
 				$attrs['loading'] = 'lazy';
@@ -964,9 +969,9 @@ trait Get {
 
 		} elseif ( $pc_imgid ) {
 			$picture_img = self::get_image( $pc_imgid, [
-				'class'   => 'p-mainVisual__img u-obf-cover swiper-lazy',
+				'class'   => 'p-mainVisual__img u-obf-cover',
 				'alt'     => $img_alt,
-				'loading' => '',
+				'loading' => 'swiper',
 			] );
 		}
 

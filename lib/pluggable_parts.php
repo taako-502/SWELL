@@ -192,8 +192,10 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 		// レイアウトに合わせてsizes取得
 		$sizes = SWELL::get_pickup_banner_sizes( $menu_count );
 
-		$lazy_type = apply_filters( 'swell_pickup_banner_lazy_type', 'lazy' );
-		$img_class = 'c-bannerLink__img'; // u-obf-cover
+		// lazyloadタイプ
+		$lazy_type = SWELL::get_setting( 'pickbnr_lazy_off' ) ? 'none' : SWELL::$lazy_type;
+
+		$img_class = 'c-bannerLink__img';
 
 		// 説明欄に直接画像URLがある場合
 		$img_url = $item->description;
@@ -232,7 +234,7 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 	?>
 		<a <?=$a_props?> class="c-bannerLink">
 			<figure class="c-bannerLink__figure"><?=$thumb?></figure>
-			<span class="c-bannerLink__label"><?=esc_html( $item->title )?></span>
+			<span class="c-bannerLink__label"><?=wp_kses( $item->title, SWELL::$allowed_text_html )?></span>
 		</a>
 	<?php
 	}
