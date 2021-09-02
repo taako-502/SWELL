@@ -8,6 +8,7 @@ import {
 	useBlockProps,
 	__experimentalUseInnerBlocksProps as useInnerBlocksProps,
 } from '@wordpress/block-editor';
+import { Icon } from '@wordpress/components';
 
 /**
  * @SWELL dependencies
@@ -26,22 +27,28 @@ const blockName = 'swell-block-restrictedArea';
 registerBlockType(metadata.name, {
 	icon: getBlockIcon(blockIcon),
 	edit: ({ attributes, setAttributes }) => {
-		// ブロックprops
 		const blockProps = useBlockProps({
-			className: `${blockName} swl-inner-blocks swl-has-margin--s`,
+			className: `${blockName} swl-inner-blocks`,
 		});
-
-		const innerBlocksProps = useInnerBlocksProps(blockProps, {
-			template: TEMPLATE,
-			templateLock: false,
-		});
+		const innerBlocksProps = useInnerBlocksProps(
+			{},
+			{
+				template: TEMPLATE,
+				templateLock: false,
+			}
+		);
 
 		return (
 			<>
 				<InspectorControls>
 					<RestrictedAreaSidebar {...{ attributes, setAttributes }} />
 				</InspectorControls>
-				<div {...innerBlocksProps} />
+				<div {...blockProps}>
+					<div className='swell-block-parentSelector'>
+						<Icon icon={blockIcon} />
+					</div>
+					{innerBlocksProps.children}
+				</div>
 			</>
 		);
 	},

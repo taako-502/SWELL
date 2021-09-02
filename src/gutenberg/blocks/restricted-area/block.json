@@ -13,7 +13,10 @@
     "supports": {
         "className": false,
         "customClassName": false,
-        "html": false
+        "html": false,
+        "align": [
+            "full"
+        ]
     },
     "attributes": {
         "roles": {
