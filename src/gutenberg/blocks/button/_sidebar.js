@@ -3,9 +3,8 @@
  */
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
-import { useState, useMemo, useCallback } from '@wordpress/element';
+import { useMemo, useCallback } from '@wordpress/element';
 import { useEntityProp } from '@wordpress/core-data';
-// import { InspectorControls } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	ToggleControl,
@@ -38,8 +37,6 @@ const sizOptions = [
 export default ({ attributes, setAttributes, clientId }) => {
 	const { rel, isNewTab, imgUrl, htmlTags, isCount, btnId, iconName } = attributes;
 
-	const [isResetBtnData, setIsResetBtnData] = useState(false);
-
 	let nowClass = attributes.className || '';
 
 	const hasHtml = '' !== htmlTags;
@@ -65,7 +62,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 			btnData = btnCvData[btnId] || null;
 		}
 
-		if (null === btnData || isResetBtnData) {
+		if (null === btnData) {
 			return <p>まだ計測データはありません。</p>;
 		}
 
@@ -103,7 +100,6 @@ export default ({ attributes, setAttributes, clientId }) => {
 						onClick={() => {
 							// eslint-disable-next-line no-alert
 							if (window.confirm('本当にリセットしてもいいですか？')) {
-								setIsResetBtnData(true);
 								// 計測用のIDを再生成する。
 								const newID = clientId.split('-');
 								setAttributes({ btnId: newID[0] || '' });
@@ -115,7 +111,7 @@ export default ({ attributes, setAttributes, clientId }) => {
 				</div>
 			</>
 		);
-	}, [meta, isResetBtnData]);
+	}, [btnId, meta]);
 
 	// 現在の色
 	const selectedColor = useMemo(() => {
