@@ -46,7 +46,11 @@ function hook_save_post( $post_id, $post ) {
 		}
 	}
 
-	if ( empty( $new_btn_ids ) ) return;
+	// 計測対象のボタンが一つもなければ
+	if ( empty( $new_btn_ids ) ) {
+		delete_post_meta( $post_id, 'swell_btn_cv_data' );
+		return;
+	}
 
 	// コンテンツ内のボタンIDがメタフィールドのキーに無ければ削除
 	$new_btn_cv_metas = $btn_cv_metas;
