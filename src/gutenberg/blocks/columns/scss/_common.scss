@@ -77,14 +77,19 @@
 .is-style-clmn-shadow {
     --swl-clmn-pddng: 1rem;
 
-    .swell-block-columns__inner {
-        padding-bottom: 8px;
-    }
 
     > .swell-block-columns__inner > .swell-block-column {
         color: #333;
         background-color: #fff;
 
         @extend %boxShadow;
+    }
+}
+
+.is-style-clmn-border {
+    --swl-clmn-pddng: 1rem;
+
+    > .swell-block-columns__inner > .swell-block-column {
+        border: solid 1px var(--swl-color_border);
     }
 }

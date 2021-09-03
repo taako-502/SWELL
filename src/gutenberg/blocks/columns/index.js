@@ -40,6 +40,7 @@ registerBlockType(metadata.name, {
 	icon: getBlockIcon(blockIcon),
 	styles: [
 		{ name: 'default', label: 'デフォルト', isDefault: true },
+		{ name: 'clmn-border', label: 'ボーダー' },
 		{ name: 'clmn-shadow', label: 'シャドウ' },
 	],
 	transforms: {
