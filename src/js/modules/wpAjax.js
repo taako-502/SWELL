@@ -13,6 +13,11 @@ const doFetch = async (params, doneFunc, failFunc) => {
 	const ajaxUrl = window.swellVars.ajaxUrl;
 	if (ajaxUrl === undefined) return;
 
+	// restUrlを正常に取得できるか
+	if (window.swellVars === undefined) return;
+	const restUrl = window.swellVars.restUrl;
+	if (restUrl === undefined) return;
+
 	// nonce を正常に取得できるか
 	const ajaxNonce = window.swellVars.ajaxNonce;
 	if (ajaxNonce === undefined) return;
@@ -202,15 +207,20 @@ const pvCount = () => {
 	const postID = window.swellVars.postID || 0;
 	if (!postID) return;
 
+	// 受け渡すデータ
 	const params = new URLSearchParams();
-	params.append('action', 'swell_pv_count');
-	params.append('post_id', postID);
+	params.append('postid', postID);
 
-	const doneFunc = () => {};
-	const failFunc = (json) => {
-		console.error(json);
-	};
-	doFetch(params, doneFunc, failFunc);
+	fetch(window.swellVars.restUrl + 'swell-ct-pv', {
+		method: 'POST',
+		body: params,
+	}).then((response) => {
+		if (response.ok) {
+			// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
+			return response.json();
+		}
+		throw new TypeError('Failed ajax!');
+	});
 };
 
 /**

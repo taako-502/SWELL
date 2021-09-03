@@ -88,6 +88,22 @@ function hook_rest_api_init() {
 		},
 	] );
 
+	// PV数の計測
+	register_rest_route( 'wp/v2', '/swell-ct-pv', [
+		'methods'             => 'POST',
+		'callback'            => function( $request ) {
+			if ( ! isset( $request['postid'] ) ) wp_die( json_encode( [] ) );
+
+			\SWELL_Theme::set_post_views( $request['postid'] );
+
+			$return = [
+				'postid'   => $request['postid'],
+			];
+
+			return json_encode( $return );
+		},
+	] );
+
 	// ボタンの計測
 	register_rest_route( 'wp/v2', '/swell-ct-btn-data', [
 		'methods'             => 'POST',
@@ -98,6 +114,9 @@ function hook_rest_api_init() {
 			$postid  = $request['postid'];
 			$ct_name = $request['ct_name']; // 何をカウントするか
 
+			// 不正なパラメータ
+			if ( ! in_array( $ct_name, [ 'pv', 'imp', 'click' ], true ) ) wp_die( json_encode( [] ) );
+
 			$btn_cv_metas = get_post_meta( $postid, 'swell_btn_cv_data', true ) ?: [];
 
 			if ( $btn_cv_metas ) $btn_cv_metas = json_decode( $btn_cv_metas, true );
@@ -106,11 +125,13 @@ function hook_rest_api_init() {
 			if ( ! is_array( $btn_cv_metas ) ) wp_die( json_encode( [] ) );
 
 			if ( 'pv' === $ct_name ) {
+				// PV数
 				$btnids = explode( ',', $btnid );
 				foreach ( $btnids as $the_id ) {
 					$btn_cv_metas = ct_up_btn_data( $btn_cv_metas, $the_id, $ct_name );
 				}
 			} else {
+				// 表示回数、クリック数
 				$btn_cv_metas = ct_up_btn_data( $btn_cv_metas, $btnid, $ct_name );
 			}
 
@@ -136,6 +157,9 @@ function hook_rest_api_init() {
 
 			$ad_id   = $request['adid'];
 			$ct_name = $request['ct_name']; // 何をカウントするか
+
+			// 不正なパラメータ
+			if ( ! in_array( $ct_name, [ 'pv', 'imp', 'click' ], true ) ) wp_die( json_encode( [] ) );
 
 			$return = [];
 
@@ -204,7 +228,7 @@ function hook_rest_api_init() {
 			foreach ( $keys as $key ) {
 				$update_meta = update_post_meta( $ad_id, $key, 0 );
 			}
-			wp_die( 'リセットに成功しました' );
+			return 'リセットに成功しました';
 		},
 		'permission_callback' => function () {
 			return current_user_can( 'edit_others_posts' );

@@ -1,5 +1,3 @@
-// import DOM from './data/domData';
-
 window.isSwlAdCtConnecting = false;
 
 const observerOptions = {
@@ -9,7 +7,7 @@ const observerOptions = {
 };
 
 /**
- * 広告タグのクリックを計測
+ * 広告タグ、ボタンの計測
  */
 export default function () {
 	// IntersectionObserverをブラウザがサポートしているかどうか
@@ -20,14 +18,10 @@ export default function () {
 	// fetch使えるか
 	if (!window.fetch) return;
 
-	// ajaxUrl正常に取得できるか
+	// restUrlを正常に取得できるか
 	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
-
-	// nonce
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
+	const restUrl = window.swellVars.restUrl;
+	if (restUrl === undefined) return;
 
 	// 広告タグ機能の計測
 	adBoxCount();
@@ -40,22 +34,17 @@ export default function () {
  * REST APIの呼び出し
  */
 const callRestApi = async (route, params) => {
-	// REST APIエンドポイントを正常に取得できるか
-	if (window.swellVars === undefined) return;
 	const restUrl = window.swellVars.restUrl;
-	if (restUrl === undefined) return;
 
 	fetch(restUrl + route, {
 		method: 'POST',
 		body: params,
 	}).then((response) => {
-		console.log(response.json());
-
-		// if (response.ok) {
-		// 	// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
-		// 	return response.json();
-		// }
-		// throw new TypeError('Failed ajax!');
+		if (response.ok) {
+			// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
+			return response.json();
+		}
+		throw new TypeError('Failed ajax!');
 	});
 };
 
@@ -76,8 +65,6 @@ const buttonCount = () => {
 			if (entry.isIntersecting) {
 				const button = entry.target;
 				const buttonID = button.getAttribute('data-id');
-				// console.log('view!', buttonID);
-
 				window.isSwlAdCtConnecting = true;
 				setTimeout(() => {
 					window.isSwlAdCtConnecting = false;
@@ -118,11 +105,11 @@ const buttonCount = () => {
 
 	// そのページ自体の表示回数の計測
 	if (buttonIDs.length > 0) {
-		// console.log('buttonIDs', buttonIDs);
 		ctButtonData(buttonIDs, 'pv');
 	}
 };
 
+// ボタンイベントの処理
 const ctButtonData = (buttonID, ctName) => {
 	const postID = window.swellVars.postID || 0;
 	if (!postID) return;
@@ -133,6 +120,25 @@ const ctButtonData = (buttonID, ctName) => {
 	params.append('btnid', buttonID);
 	params.append('postid', postID);
 	params.append('ct_name', ctName);
+
+	// REST API呼び出し
+	callRestApi(route, params);
+};
+
+// 広告イベントの処理
+const ctAdData = (adData) => {
+	const postID = window.swellVars.postID || 0;
+	if (!postID) return;
+
+	// 受け渡すデータ
+	const route = 'swell-ct-ad-data';
+	const params = new URLSearchParams();
+	params.append('adid', adData.adID); //広告ID
+	params.append('ct_name', adData.ctName);
+
+	if (adData.target) {
+		params.append('target', adData.target);
+	}
 
 	// REST API呼び出し
 	callRestApi(route, params);
@@ -162,7 +168,7 @@ const adBoxCount = () => {
 				// 少しだけ遅らせてpvカウントや他の計測とのバッティングを回避
 				const delayTime = window.isSwlAdCtConnecting ? 120 : 10;
 				setTimeout(() => {
-					countAdBoxImp(adID);
+					ctAdData({ adID, ctName: 'imp' });
 				}, delayTime);
 
 				//表示計測は一度だけでいいので、一回処理されれば削除
@@ -187,7 +193,7 @@ const adBoxCount = () => {
 			if (adLink) {
 				adLink.onclick = function (e) {
 					e.preventDefault();
-					countAdClicked(adID, 'tag');
+					ctAdData({ adID, ctName: 'click', target: 'tag' });
 					adLink.onclick = () => true;
 					adLink.click();
 				};
@@ -198,7 +204,7 @@ const adBoxCount = () => {
 			if (adImg) {
 				adImg.onclick = function (e) {
 					e.preventDefault();
-					countAdClicked(adID, 'tag');
+					ctAdData({ adID, ctName: 'click', target: 'tag' });
 					adImg.onclick = () => true;
 					adImg.click();
 				};
@@ -207,7 +213,7 @@ const adBoxCount = () => {
 			if (adBtn1) {
 				adBtn1.onclick = function (e) {
 					e.preventDefault();
-					countAdClicked(adID, 'btn1');
+					ctAdData({ adID, ctName: 'click', target: 'btn1' });
 					adBtn1.onclick = () => true;
 					adBtn1.click();
 				};
@@ -216,7 +222,7 @@ const adBoxCount = () => {
 			if (adBtn2) {
 				adBtn2.onclick = function (e) {
 					e.preventDefault();
-					countAdClicked(adID, 'btn2');
+					ctAdData({ adID, ctName: 'click', target: 'btn2' });
 					adBtn2.onclick = () => true;
 					adBtn2.click();
 				};
@@ -226,43 +232,6 @@ const adBoxCount = () => {
 
 	// そのページ自体の表示回数の計測
 	if (adIDs.length > 0) {
-		// console.log(adIDs);
-		countPageView(adIDs.join(','));
+		ctAdData({ adID: adIDs.join(','), ctName: 'pv' });
 	}
-};
-
-const countAdClicked = async (adID, target) => {
-	// 受け渡すデータ
-	const route = 'swell-ct-ad-data';
-	const params = new URLSearchParams();
-	params.append('adid', adID); //広告ID
-	params.append('ct_name', 'click');
-	params.append('target', target); // 何をクリックしたか
-
-	// REST API呼び出し
-	callRestApi(route, params);
-};
-
-// PVカウント
-const countPageView = async (adIDs) => {
-	// 受け渡すデータ
-	const route = 'swell-ct-ad-data';
-	const params = new URLSearchParams();
-	params.append('adid', adIDs);
-	params.append('ct_name', 'pv');
-
-	// REST API呼び出し
-	callRestApi(route, params);
-};
-
-// IMPカウント
-const countAdBoxImp = async (adID) => {
-	// 受け渡すデータ
-	const route = 'swell-ct-ad-data';
-	const params = new URLSearchParams();
-	params.append('adid', adID);
-	params.append('ct_name', 'imp');
-
-	// REST API呼び出し
-	callRestApi(route, params);
 };

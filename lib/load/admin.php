@@ -106,7 +106,7 @@ function global_vars_on_admin() {
 
 	$global_vars = [
 		// 'homeUrl' => home_url( '/' ),
-		// 'apiPath' => rest_url() .'wp/v2/',
+		'restUrl'   => rest_url() . 'wp/v2/',
 		'adminUrl'  => admin_url(),
 		'direUri'   => T_DIRE_URI,
 		'ajaxUrl'   => admin_url( 'admin-ajax.php' ),
