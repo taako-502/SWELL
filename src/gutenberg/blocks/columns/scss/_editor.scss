@@ -1,0 +1,41 @@
+// リッチカラム
+[data-type="loos/columns"] {
+
+    // ブロック未選択時は、ブロック下にマイナスマージンを設定
+    &:not(.is-selected):not(.has-child-selected) .swell-block-columns__inner {
+        margin-bottom: calc(-1 * var(--swl-clmn-mrgn--y));
+    }
+
+    // もしクラッシュした時、カラム項目だとわかりやすいようにしておく
+    [data-type="loos/column"].has-warning {
+        flex-basis: 46% !important;
+        margin: 0 2% !important;
+    }
+
+
+    // 画像はみ出しバグの対策。（これでもはみ出すことがある？）
+    [data-type="loos/column"] > .wp-block-image {
+        max-width: 100%;
+    }
+
+    // カラム幅・左右マージンに影響を受けないように、常に幅一杯になるようにする
+    .swell-block-columns__inner > .block-list-appender {
+        flex-basis: calc(100% - var(--swl-clmn-mrgn--x));
+        margin: 0 auto;
+        margin: 0 0 0 var(--swl-clmn-mrgn--x);
+    }
+
+    // ブロックインサーター下の余白を打消し
+    &.is-style-clmn-shadow.is-selected,
+    &.is-style-clmn-shadow.has-child-selected {
+
+        .swell-block-columns__inner {
+            padding-bottom: 0;
+        }
+    }
+}
+
+// 横幅設定の動きがわかりやすいように、 is-selected 時は青線見せる
+[data-type="loos/column"].is-selected::after {
+    box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
+}

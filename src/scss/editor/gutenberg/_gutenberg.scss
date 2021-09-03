@@ -125,3 +125,8 @@
         display: none;
     }
 }
+
+// リッチカラムブロックは、親と子ブロックの間にdivが入る
+[data-type="loos/columns"]:not(.is-selected):not(.has-child-selected) > .swell-block-columns__inner .block-list-appender {
+    display: none;
+}

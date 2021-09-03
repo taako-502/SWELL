@@ -1,0 +1,30 @@
+// リセット付きレンジコントロール
+.swl-range--useReset {
+
+    .components-range-control__root {
+        flex-wrap: wrap;
+    }
+
+    .css-uojzqi-ActionRightWrapper {
+        width: 100%;
+        margin-top: 8px;
+        text-align: right;
+    }
+
+    &.-colmun .css-uojzqi-ActionRightWrapper {
+        margin-top: 4px;
+    }
+
+    .components-range-control__reset {
+        height: auto !important;
+        min-height: 0 !important;
+        font-size: 0;
+        box-shadow: none !important;
+
+        // おそらくテーマディレクトリに掲載していない場合はテキストが翻訳されないため、疑似要素で対応
+        &::before {
+            font-size: 11px;
+            content: "リセット";
+        }
+    }
+}
