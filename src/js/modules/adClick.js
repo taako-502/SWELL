@@ -36,7 +36,7 @@ export default function () {
 const callRestApi = async (route, params) => {
 	const restUrl = window.swellVars.restUrl;
 
-	fetch(restUrl + route, {
+	const _res = fetch(restUrl + route, {
 		method: 'POST',
 		body: params,
 	}).then((response) => {
@@ -46,6 +46,10 @@ const callRestApi = async (route, params) => {
 		}
 		throw new TypeError('Failed ajax!');
 	});
+
+	// レスポンス確認時
+	// const res = await _res;
+	// console.log('route:' + route, JSON.parse(res));
 };
 
 /**
@@ -191,41 +195,29 @@ const adBoxCount = () => {
 		if ('text' === adType) {
 			const adLink = adBox.querySelector('a');
 			if (adLink) {
-				adLink.onclick = function (e) {
-					e.preventDefault();
-					ctAdData({ adID, ctName: 'click', target: 'tag' });
-					adLink.onclick = () => true;
-					adLink.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'tag' };
+				adLink.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adLink.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 		} else {
 			// クリック計測
 			const adImg = adBox.querySelector('.p-adBox__img a');
 			if (adImg) {
-				adImg.onclick = function (e) {
-					e.preventDefault();
-					ctAdData({ adID, ctName: 'click', target: 'tag' });
-					adImg.onclick = () => true;
-					adImg.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'tag' };
+				adImg.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adImg.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 			const adBtn1 = adBox.querySelector('.-btn1');
 			if (adBtn1) {
-				adBtn1.onclick = function (e) {
-					e.preventDefault();
-					ctAdData({ adID, ctName: 'click', target: 'btn1' });
-					adBtn1.onclick = () => true;
-					adBtn1.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'btn1' };
+				adBtn1.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adBtn1.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 			const adBtn2 = adBox.querySelector('.-btn2');
 			if (adBtn2) {
-				adBtn2.onclick = function (e) {
-					e.preventDefault();
-					ctAdData({ adID, ctName: 'click', target: 'btn2' });
-					adBtn2.onclick = () => true;
-					adBtn2.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'adBtn2' };
+				adBtn2.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adBtn2.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 		}
 	});
@@ -234,4 +226,22 @@ const adBoxCount = () => {
 	if (adIDs.length > 0) {
 		ctAdData({ adID: adIDs.join(','), ctName: 'pv' });
 	}
+};
+
+const clickedAdEvent = (e, adData) => {
+	// ホイールボタン以外での mousedown は無効化
+	if ('mousedown' === e.type && 1 !== e.button) {
+		return;
+	}
+
+	// クリックされたボックス
+	const adBox = document.querySelector(`.p-adBox[data-id="${adData.adID}"]`);
+	if (null === adBox) return;
+
+	// 二重計測防止
+	const clicked = adBox.getAttribute('data-clicked');
+	if (clicked) return;
+
+	adBox.setAttribute('data-clicked', '1');
+	ctAdData(adData);
 };
