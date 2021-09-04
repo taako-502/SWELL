@@ -13,7 +13,7 @@ import addClickEvents from '@swell-js/modules/addClickEvents';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
 import adClick from '@swell-js/modules/adClick';
 import { pvCount } from '@swell-js/modules/pvCount';
-import { ajaxToLoadContents } from '@swell-js/modules/wpAjax';
+import { lazyLoadContents } from '@swell-js/modules/lazyLoadContents';
 import { setBlockStyle, checkTheadFix, removeNoreferrer } from '@swell-js/modules/setPostContent';
 
 /**
@@ -237,9 +237,9 @@ export function resetSwellScript({ newBody, next }) {
 	pvCount();
 
 	// コンテンツの後読み込み
-	ajaxToLoadContents();
+	lazyLoadContents();
 
-	// SWELLへのリンクを検知して noreferrer 削除する. !! ajaxToLoadContents よりあとで !!
+	// SWELLへのリンクを検知して noreferrer 削除する. !! lazyLoadContents よりあとで !!
 	removeNoreferrer();
 
 	// 広告タグのクリック計測(非ログイン時のみ)

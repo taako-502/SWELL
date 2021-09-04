@@ -27,7 +27,7 @@ import addClickEvents from '@swell-js/modules/addClickEvents';
 import adClick from '@swell-js/modules/adClick';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
 import { pvCount } from '@swell-js/modules/pvCount';
-import { ajaxToLoadContents } from '@swell-js/modules/wpAjax';
+import { lazyLoadContents } from '@swell-js/modules/lazyLoadContents';
 import { removeNoreferrer } from '@swell-js/modules/setPostContent';
 
 /**
@@ -151,11 +151,11 @@ window.addEventListener('load', function () {
 	pvCount();
 
 	// コンテンツの後読み込み
-	ajaxToLoadContents();
+	lazyLoadContents();
 
 	/**
 	 * SWELLへのリンクを検知して noreferrer 削除する
-	 * ! ajaxToLoadContents よりあとで !
+	 * ! lazyLoadContents よりあとで !
 	 */
 	removeNoreferrer();
 

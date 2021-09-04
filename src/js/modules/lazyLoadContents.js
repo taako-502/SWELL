@@ -2,15 +2,19 @@ import DOM from './data/domData';
 import addClickEvents from './addClickEvents';
 import { addSmoothScrollEvent } from './smoothScroll';
 
+/* eslint no-console: 0 */
+// console.log('SWELL: lazyLoadContents.js');
+
 /**
  * コンテンツ遅延読み込みのREST APIを呼び出し
  */
-const callRestApi = async (params, placement, doneFunc, failFunc) => {
+const callRestApi = async (params, doneFunc, failFunc) => {
 	// restUrlを正常に取得できるか
 	if (window.swellVars === undefined) return;
 	const restUrl = window.swellVars.restUrl;
 	if (restUrl === undefined) return;
 
+	/* eslint no-unused-vars: 0 */
 	const _res = fetch(restUrl + 'swell-lazyload-contents', {
 		method: 'POST',
 		body: params,
@@ -152,13 +156,13 @@ const setFetchFunctions = (params, placement, selectorDOM) => {
 		console.error(`Ajax failed : ${placement}`);
 	};
 
-	callRestApi(params, placement, doneFunc, failFunc);
+	callRestApi(params, doneFunc, failFunc);
 };
 
 /**
  * コンテンツ遅延読み込み処理
  */
-const lazyLoadContent = (placement, addParam) => {
+const loadContent = (placement, addParam) => {
 	const selectorDOM = document.getElementById(placement);
 	if (!selectorDOM) return;
 
@@ -186,12 +190,12 @@ const lazyLoadContent = (placement, addParam) => {
 /**
  * コンテンツの遅延読み込み
  */
-export const ajaxToLoadContents = () => {
+export const lazyLoadContents = () => {
 	if (window.swellVars.isAjaxAfterPost) {
-		lazyLoadContent('after_article', 'post_id');
+		loadContent('after_article', 'post_id');
 	}
 	if (window.swellVars.isAjaxFooter) {
-		lazyLoadContent('before_footer_widget', '');
-		lazyLoadContent('footer', '');
+		loadContent('before_footer_widget', '');
+		loadContent('footer', '');
 	}
 };

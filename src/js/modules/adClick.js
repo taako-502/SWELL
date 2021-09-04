@@ -43,6 +43,7 @@ export default function () {
 const callRestApi = async (route, params) => {
 	const restUrl = window.swellVars.restUrl;
 
+	/* eslint no-unused-vars: 0 */
 	const _res = fetch(restUrl + route, {
 		method: 'POST',
 		body: params,
