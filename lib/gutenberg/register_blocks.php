@@ -46,6 +46,8 @@ function register_normal_blocks() {
 		'banner-link',
 		'button',
 		'cap-block',
+		'columns',
+		'column',
 		'dl',
 		'dl-dt',
 		'dl-dd',

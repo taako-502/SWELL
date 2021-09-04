@@ -12,7 +12,9 @@ import {
 	Button,
 	Popover,
 	DateTimePicker,
+	Icon,
 } from '@wordpress/components';
+import { calendar } from '@wordpress/icons';
 
 /**
  * 設定
@@ -63,7 +65,9 @@ export default ({ attributes, setAttributes }) => {
 
 	// 日時の表示設定を取得
 	const settings = __experimentalGetSettings();
+
 	// 12時間表記（AM/PM）かどうか
+	// const is12Hour = false;
 	const is12Hour = /a(?!\\)/i.test(
 		settings.formats.time.toLowerCase().replace(/\\\\/g, '').split('').reverse().join('')
 	);
@@ -78,9 +82,9 @@ export default ({ attributes, setAttributes }) => {
 
 	return (
 		<>
-			<PanelBody title='表示の制限' initialOpen={true}>
+			<PanelBody title='制限設定' initialOpen={true}>
 				<ToggleControl
-					label='ログイン制限を有効にする'
+					label='ログイン状態で制限する'
 					checked={isRole}
 					onChange={(val) => {
 						setAttributes({ isRole: val });
@@ -89,7 +93,7 @@ export default ({ attributes, setAttributes }) => {
 				{isRole && (
 					<>
 						<RadioControl
-							label='コンテンツを見ることのできるユーザー'
+							label='コンテンツを閲覧できるユーザー'
 							selected={isLoggedIn ? 'loggedIn' : 'noLoggedIn'}
 							options={loggedInStatuses}
 							onChange={(val) => {
@@ -119,8 +123,9 @@ export default ({ attributes, setAttributes }) => {
 						)}
 					</>
 				)}
+				<hr />
 				<ToggleControl
-					label='日時範囲制限を有効にする'
+					label='表示期間を制限する'
 					checked={isDateTime}
 					onChange={(val) => {
 						setAttributes({ isDateTime: val });
@@ -128,9 +133,10 @@ export default ({ attributes, setAttributes }) => {
 				/>
 				{isDateTime && (
 					<>
-						<BaseControl>
-							<BaseControl.VisualLabel>開始日時</BaseControl.VisualLabel>
+						<BaseControl className='swl-dateTimePicker'>
+							<BaseControl.VisualLabel>開始</BaseControl.VisualLabel>
 							<Button
+								icon={calendar}
 								isTertiary
 								onClick={() => {
 									setIsOpenStartDateTime(true);
@@ -157,9 +163,11 @@ export default ({ attributes, setAttributes }) => {
 								</Popover>
 							)}
 						</BaseControl>
-						<BaseControl>
-							<BaseControl.VisualLabel>終了日時</BaseControl.VisualLabel>
+						<div className='swl-dash'>〜</div>
+						<BaseControl className='swl-dateTimePicker'>
+							<BaseControl.VisualLabel>終了</BaseControl.VisualLabel>
 							<Button
+								icon={calendar}
 								isTertiary
 								onClick={() => {
 									setIsOpenEndDateTime(true);

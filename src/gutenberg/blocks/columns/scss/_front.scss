@@ -1,0 +1,16 @@
+
+
+.swell-block-columns__inner {
+    // .post_content div>:last-childの mb0より強く
+    .swell-block-columns &:last-child {
+        margin-bottom: calc(-1 * var(--swl-clmn-mrgn--y)) !important;
+    }
+}
+
+.swell-block-column {
+
+    // .post_content div>:last-childの mb0より強く
+    .swell-block-columns &:last-child {
+        margin-bottom: var(--swl-clmn-mrgn--y) !important;
+    }
+}

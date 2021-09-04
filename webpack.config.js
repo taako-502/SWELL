@@ -29,6 +29,8 @@ if (localEntries) {
 		'blog-parts',
 		'button',
 		'cap-block',
+		'columns',
+		'column',
 		'dl',
 		'dl-dt',
 		'dl-dd',
