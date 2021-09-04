@@ -231,7 +231,7 @@ function hook_rest_api_init() {
 					if ( $the_query->have_posts() ) :
 					while ( $the_query->have_posts() ) :
 						$the_query->the_post();
-						\SWELL_Theme::get_parts( 'parts/single/after_article', ['post_id' => $post_id ] );
+						\SWELL_Theme::get_parts( 'parts/single/after_article' );
 					endwhile;
 					endif;
 					wp_reset_postdata();
