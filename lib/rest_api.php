@@ -197,6 +197,66 @@ function hook_rest_api_init() {
 			return 'リセットに成功しました';
 		},
 	] );
+
+		// コンテンツの遅延読み込み
+	register_rest_route( 'wp/v2', '/swell-lazyload-contents', [
+		'methods'             => 'POST',
+		'permission_callback' => '__return_true',
+		'callback'            => function( $request ) {
+			if ( ! isset( $request['placement'] ) ) wp_die( json_encode( [] ) );
+
+			$placement = $request['placement']; // 遅延読み込みするコンテンツ
+
+			// 不正なパラメータ
+			if ( ! in_array( $placement, [ 'after_article', 'before_footer_widget', 'footer' ], true ) ) wp_die( json_encode( [] ) );
+
+			$return = [];
+
+			switch ( $placement ) {
+				case 'after_article':
+					// 記事下コンテンツ
+					if ( ! isset( $request['post_id'] ) ) wp_die( json_encode( [] ) );
+					$post_id = $request['post_id'];
+
+					ob_start();
+
+					// ループ回す
+					$post_id = $_POST['post_id'] ?: '';
+
+					$the_query = new \WP_Query( [
+						'p'              => $post_id,
+						'no_found_rows'  => true,
+						'posts_per_page' => 1,
+					] );
+					if ( $the_query->have_posts() ) :
+					while ( $the_query->have_posts() ) :
+						$the_query->the_post();
+						\SWELL_Theme::get_parts( 'parts/single/after_article', ['post_id' => $post_id ] );
+					endwhile;
+					endif;
+					wp_reset_postdata();
+
+					$contents = ob_get_clean();
+					break;
+
+				// フッター直前ウィジェット
+				case 'before_footer_widget':
+					ob_start();
+					\SWELL_Theme::get_parts( 'parts/footer/before_footer' );
+					$contents = ob_get_clean();
+					break;
+				// フッターコンテンツ
+				case 'footer':
+					ob_start();
+					\SWELL_Theme::get_parts( 'parts/footer/footer_contents' );
+					$contents = ob_get_clean();
+					break;
+			}
+
+			return $contents;
+		},
+	] );
+
 }
 
 

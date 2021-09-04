@@ -2,37 +2,22 @@ import DOM from './data/domData';
 import addClickEvents from './addClickEvents';
 import { addSmoothScrollEvent } from './smoothScroll';
 
-// export const addAjaxEvents = () => {};
-
 /**
- * コンテンツ遅延読み込みのajax処理を実行
+ * コンテンツ遅延読み込みのREST APIを呼び出し
  */
-const doFetch = async (params, doneFunc, failFunc) => {
-	// ajaxUrl を正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
-
+const callRestApi = async (params, placement, doneFunc, failFunc) => {
 	// restUrlを正常に取得できるか
 	if (window.swellVars === undefined) return;
 	const restUrl = window.swellVars.restUrl;
 	if (restUrl === undefined) return;
 
-	// nonce を正常に取得できるか
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
-
-	params.append('nonce', ajaxNonce);
-
-	await fetch(ajaxUrl, {
+	const _res = fetch(restUrl + 'swell-lazyload-contents', {
 		method: 'POST',
-		cache: 'no-cache',
 		body: params,
 	})
 		.then((response) => {
-			// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
 			if (response.ok) {
-				// console.log(response);
+				// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
 				return response.json();
 			}
 			throw new TypeError('Failed ajax!');
@@ -73,11 +58,9 @@ const removeDropdownScript = (dom) => {
 		archiveDropdowns.forEach((dropdown) => {
 			// script削除
 			(function () {
-				const parentForm = dropdown.parentNode;
-				if (null === parentForm) return;
-				const scriptTag = parentForm.nextElementSibling;
+				const scriptTag = dropdown.nextElementSibling;
 				if (null === scriptTag) return;
-				parentForm.parentNode.removeChild(scriptTag);
+				dropdown.parentNode.removeChild(scriptTag);
 			})();
 		});
 	}
@@ -123,7 +106,7 @@ const addDropdownEvent = (dom) => {
 /**
  * ajax処理の中身を定義する関数
  */
-const setFetchFunctions = (params, actionName, selectorDOM) => {
+const setFetchFunctions = (params, placement, selectorDOM) => {
 	const doneFunc = (response) => {
 		const fragment = document.createDocumentFragment();
 
@@ -166,21 +149,21 @@ const setFetchFunctions = (params, actionName, selectorDOM) => {
 	};
 
 	const failFunc = (err) => {
-		console.error(`Ajax failed : ${actionName}`);
+		console.error(`Ajax failed : ${placement}`);
 	};
 
-	doFetch(params, doneFunc, failFunc);
+	callRestApi(params, placement, doneFunc, failFunc);
 };
 
 /**
  * コンテンツ遅延読み込み処理
  */
-const lazyLoadContent = (actionName, selector, addParam) => {
-	const selectorDOM = document.getElementById(selector);
+const lazyLoadContent = (placement, addParam) => {
+	const selectorDOM = document.getElementById(placement);
 	if (!selectorDOM) return;
 
 	const params = new URLSearchParams();
-	params.append('action', actionName);
+	params.append('placement', placement);
 
 	// paramsにパラメータを追加
 	if ('post_id' === addParam) {
@@ -197,7 +180,7 @@ const lazyLoadContent = (actionName, selector, addParam) => {
 	}
 
 	// ajax処理
-	setFetchFunctions(params, actionName, selectorDOM);
+	setFetchFunctions(params, placement, selectorDOM);
 };
 
 /**
@@ -205,10 +188,10 @@ const lazyLoadContent = (actionName, selector, addParam) => {
  */
 export const ajaxToLoadContents = () => {
 	if (window.swellVars.isAjaxAfterPost) {
-		lazyLoadContent('swell_load_after_article', 'after_article', 'post_id');
+		lazyLoadContent('after_article', 'post_id');
 	}
 	if (window.swellVars.isAjaxFooter) {
-		lazyLoadContent('swell_load_foot_before', 'before_footer_widget', '');
-		lazyLoadContent('swell_load_footer', 'footer', '');
+		lazyLoadContent('before_footer_widget', '');
+		lazyLoadContent('footer', '');
 	}
 };
