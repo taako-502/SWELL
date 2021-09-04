@@ -161,7 +161,6 @@ function global_vars_on_front() {
 	$global_vars = [
 		// 'direUri' => T_DIRE_URI,
 		'restUrl'         => rest_url() . 'wp/v2/',
-		'postID'          => is_singular() ? get_queried_object_id() : 0,
 		'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 		'ajaxNonce'       => wp_create_nonce( 'swell-ajax-nonce' ),
 		'isLoggedIn'      => $is_login ? '1' : '',
@@ -171,7 +170,6 @@ function global_vars_on_front() {
 		'tocListTag'      => $SETTING['index_list_tag'],
 		'tocTarget'       => $SETTING['toc_target'],
 		'tocMinnum'       => $SETTING['toc_minnum'],
-		'isCountPV'       => is_singular( SWELL::$post_types_for_pvct ) && ! $is_login && ! $is_bot,
 	];
 
 	// メインビジュアルスライダー

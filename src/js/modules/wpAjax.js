@@ -201,29 +201,6 @@ const lazyLoadContent = (actionName, selector, addParam) => {
 };
 
 /**
- * PVカウント処理
- */
-const pvCount = () => {
-	const postID = window.swellVars.postID || 0;
-	if (!postID) return;
-
-	// 受け渡すデータ
-	const params = new URLSearchParams();
-	params.append('postid', postID);
-
-	fetch(window.swellVars.restUrl + 'swell-ct-pv', {
-		method: 'POST',
-		body: params,
-	}).then((response) => {
-		if (response.ok) {
-			// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
-			return response.json();
-		}
-		throw new TypeError('Failed ajax!');
-	});
-};
-
-/**
  * コンテンツの遅延読み込み
  */
 export const ajaxToLoadContents = () => {
@@ -233,10 +210,5 @@ export const ajaxToLoadContents = () => {
 	if (window.swellVars.isAjaxFooter) {
 		lazyLoadContent('swell_load_foot_before', 'before_footer_widget', '');
 		lazyLoadContent('swell_load_footer', 'footer', '');
-	}
-
-	// PVカウント
-	if (window.swellVars.isCountPV) {
-		pvCount();
 	}
 };

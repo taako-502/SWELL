@@ -9,10 +9,11 @@ import setDomData from '@swell-js/modules/setDomData';
 import setIndexList from '@swell-js/modules/setIndexList';
 import setFixWidget from '@swell-js/modules/setFixWidget';
 import setGnavClass from '@swell-js/modules/setGnavClass';
-import { ajaxToLoadContents } from '@swell-js/modules/wpAjax';
 import addClickEvents from '@swell-js/modules/addClickEvents';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
 import adClick from '@swell-js/modules/adClick';
+import { pvCount } from '@swell-js/modules/pvCount';
+import { ajaxToLoadContents } from '@swell-js/modules/wpAjax';
 import { setBlockStyle, checkTheadFix, removeNoreferrer } from '@swell-js/modules/setPostContent';
 
 /**
@@ -231,6 +232,9 @@ export function resetSwellScript({ newBody, next }) {
 	// if (window.Luminous && window.swellVars.useLuminous) setLuminous();
 
 	if (!!window.Prism) Prism.highlightAll();
+
+	// PVカウント
+	pvCount();
 
 	// コンテンツの後読み込み
 	ajaxToLoadContents();

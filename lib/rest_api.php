@@ -96,7 +96,7 @@ function hook_rest_api_init() {
 			if ( ! isset( $request['btnid'] ) || ! isset( $request['postid'] ) || ! isset( $request['ct_name'] ) ) wp_die( json_encode( [] ) );
 
 			$btnid   = $request['btnid'];
-			$postid  = $request['postid'];
+			$postid  = (int) $request['postid'];
 			$ct_name = $request['ct_name']; // 何をカウントするか
 
 			// 不正なパラメータ
@@ -141,7 +141,7 @@ function hook_rest_api_init() {
 		'callback'            => function( $request ) {
 			if ( ! isset( $request['adid'] ) || ! isset( $request['ct_name'] ) ) wp_die( json_encode( [] ) );
 
-			$ad_id   = $request['adid'];
+			$ad_id   = (int) $request['adid'];
 			$ct_name = $request['ct_name']; // 何をカウントするか
 
 			// 不正なパラメータ
@@ -182,7 +182,7 @@ function hook_rest_api_init() {
 		'callback'            => function( $request ) {
 			if ( ! isset( $request['id'] ) ) wp_die( 'リセットに失敗しました' );
 
-			$ad_id = $request['id'];
+			$ad_id = (int) $request['id'];
 
 			$keys = [
 				'imp_count',

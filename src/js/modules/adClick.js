@@ -23,6 +23,13 @@ export default function () {
 	const restUrl = window.swellVars.restUrl;
 	if (restUrl === undefined) return;
 
+	// postIDセット
+	const content = document.querySelector('#content');
+	const postID = content.getAttribute('data-postid');
+	if (!postID) return;
+
+	window.swellVars.postID = postID;
+
 	// 広告タグ機能の計測
 	adBoxCount();
 
@@ -115,9 +122,7 @@ const buttonCount = () => {
 
 // ボタンイベントの処理
 const ctButtonData = (buttonID, ctName) => {
-	const postID = window.swellVars.postID || 0;
-	if (!postID) return;
-
+	const postID = window.swellVars.postID;
 	// 受け渡すデータ
 	const route = 'swell-ct-btn-data';
 	const params = new URLSearchParams();
@@ -131,9 +136,6 @@ const ctButtonData = (buttonID, ctName) => {
 
 // 広告イベントの処理
 const ctAdData = (adData) => {
-	const postID = window.swellVars.postID || 0;
-	if (!postID) return;
-
 	// 受け渡すデータ
 	const route = 'swell-ct-ad-data';
 	const params = new URLSearchParams();
