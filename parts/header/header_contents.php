@@ -23,14 +23,16 @@ if ( $SETTING['info_bar_pos'] === 'head_top' ) SWELL_Theme::get_parts( 'parts/he
 				] );
 			?>
 		</nav>
-		<?php if ( is_active_sidebar( 'head_box' ) ) : // ヘッダー内ウィジェット ?>
-			<div class="w-header pc_">
-				<div class="w-header__inner">
-					<?php dynamic_sidebar( 'head_box' ); ?>
-				</div>
-			</div>
-		<?php endif; ?>
-		<?php SWELL_Theme::get_parts( 'parts/header/sp_btns' ); // メニューボタン & カスタムボタン ?>
+		<?php
+			// ヘッダー内ウィジェット
+			\SWELL_Theme::outuput_widgets( 'head_box', [
+				'before' => '<div class="w-header pc_"><div class="w-header__inner">',
+				'after'  => '</div></div>',
+			] );
+
+			// メニューボタン & カスタムボタン
+			SWELL_Theme::get_parts( 'parts/header/sp_btns' );
+		?>
 	</div>
 	<?php
 	if ( SWELL_Theme::is_use( 'sp_head_nav' ) ) :

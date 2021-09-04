@@ -9,9 +9,7 @@ while ( have_posts() ) :
 	$the_id  = get_the_ID();
 
 	// シェアボタンを隠すかどうか
-	$show_share_btns    = get_post_meta( $the_id, 'swell_meta_hide_sharebtn', true ) !== '1';
-	$show_widget_top    = get_post_meta( $the_id, 'swell_meta_show_widget_top', true );
-	$show_widget_bottom = get_post_meta( $the_id, 'swell_meta_show_widget_bottom', true );
+	$show_share_btns = get_post_meta( $the_id, 'swell_meta_hide_sharebtn', true ) !== '1';
 ?>
 <main id="main_content" class="l-mainContent l-article">
 	<article class="l-mainContent__inner">
@@ -20,27 +18,23 @@ while ( have_posts() ) :
 
 			// タイトル周り
 			if ( ! SWELL_Theme::is_show_ttltop() ) :
-				SWELL_Theme::get_parts( 'parts/single/post_head' );
+			SWELL_Theme::get_parts( 'parts/single/post_head' );
 			endif;
 
 			// アイキャッチ画像
 			if ( SWELL_Theme::is_show_thumb( $the_id ) ) :
-				do_action( 'swell_before_post_thumb', $the_id );
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo SWELL_PARTS::post_thumbnail( $the_id );
+			do_action( 'swell_before_post_thumb', $the_id );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo SWELL_PARTS::post_thumbnail( $the_id );
 			endif;
 
 			// 記事上シェアボタン
 			if ( $show_share_btns && $SETTING['show_share_btn_top'] ) :
-				SWELL_Theme::get_parts( 'parts/single/share_btns', [ 'position' => '-top' ] );
+			SWELL_Theme::get_parts( 'parts/single/share_btns', [ 'position' => '-top' ] );
 			endif;
 
 			// 記事上ウィジェット
-			if ( is_active_sidebar( 'single_top' ) && '1' !== $show_widget_top ) :
-				echo '<div class="w-singleTop">';
-				dynamic_sidebar( 'single_top' );
-				echo '</div>';
-			endif;
+			SWELL_Theme::outuput_content_widget( 'single', 'top' );
 		?>
 
 		<div class="<?=esc_attr( apply_filters( 'swell_post_content_class', 'post_content' ) )?>">
@@ -57,11 +51,7 @@ while ( have_posts() ) :
 			wp_link_pages( $defaults );
 
 			// 下部ウィジェット
-			if ( is_active_sidebar( 'single_bottom' ) && '1' !== $show_widget_bottom ) :
-				echo '<div class="w-singleBottom">';
-					dynamic_sidebar( 'single_bottom' );
-				echo '</div>';
-			endif;
+			SWELL_Theme::outuput_content_widget( 'single', 'bottom' );
 
 			// post_foot
 			SWELL_Theme::get_parts( 'parts/single/post_foot' );
@@ -90,8 +80,8 @@ while ( have_posts() ) :
 		?>
 		<div id="after_article" class="l-articleBottom">
 			<?php
-				if ( ! \SWELL_Theme::is_use( 'ajax_after_post' ) ) :
-					SWELL_Theme::get_parts( 'parts/single/after_article' );
+				if ( ! SWELL_Theme::is_use( 'ajax_after_post' ) ) :
+				SWELL_Theme::get_parts( 'parts/single/after_article' );
 				endif;
 			?>
 		</div>

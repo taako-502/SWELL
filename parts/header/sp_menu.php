@@ -32,11 +32,10 @@ $spmenu_class = ( 'center_left' === SWELL_Theme::get_setting( 'header_layout_sp'
 				?>
 			</div>
 			<?php
-				if ( is_active_sidebar( 'sp_menu_bottom' ) ) :
-				echo '<div id="sp_menu_bottom" class="p-spMenu__bottom w-spMenuBottom">';
-				dynamic_sidebar( 'sp_menu_bottom' );
-				echo '</div>';
-				endif;
+				\SWELL_Theme::outuput_widgets( 'sp_menu_bottom', [
+					'before' => '<div id="sp_menu_bottom" class="p-spMenu__bottom w-spMenuBottom">',
+					'after'  => '</div>',
+				] );
 			?>
 		</div>
 	</div>
