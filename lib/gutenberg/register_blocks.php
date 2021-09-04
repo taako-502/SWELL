@@ -46,6 +46,8 @@ function register_normal_blocks() {
 		'banner-link',
 		'button',
 		'cap-block',
+		'columns',
+		'column',
 		'dl',
 		'dl-dt',
 		'dl-dd',
@@ -92,6 +94,7 @@ function register_dynamic_blocks() {
 		'blog-parts',
 		'post-list',
 		'post-link',
+		'restricted-area',
 		'rss',
 	];
 	foreach ( $dynamic_blocks as $block_name ) {

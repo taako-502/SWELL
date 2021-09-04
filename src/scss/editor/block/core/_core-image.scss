@@ -72,14 +72,14 @@ img.aligncenter {
 }
 
 img.border,
-.is-style-border img,
-.is-style-border video {
+.is-style-border > img,
+.is-style-border > video {
     border: solid 1px rgba(0, 0, 0, .1);
 }
 
 img.photo_frame,
-.is-style-photo_frame img,
-.is-style-photo_frame video {
+.is-style-photo_frame > img,
+.is-style-photo_frame > video {
     border: solid 4px #fff;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
 
@@ -90,8 +90,8 @@ img.photo_frame,
 
 
 img.shadow,
-.is-style-shadow img,
-.is-style-shadow video {
+.is-style-shadow > img,
+.is-style-shadow > video {
 
     @extend %imageShadow;
 }

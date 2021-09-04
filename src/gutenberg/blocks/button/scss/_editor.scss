@@ -4,6 +4,10 @@
     // [data-align="left/right"]時に、WordPressコアのheight:0が当たるのを阻止
     height: auto !important;
 
+    &.is-selected {
+        padding-top: 4px;
+    }
+
     // [data-align="left/right"]時に、WordPressコアのfloatが当たるのを阻止
     > * {
         float: none !important;
@@ -71,5 +75,15 @@
 
     .__data {
         margin-bottom: 4px;
+    }
+
+    .__clearBtn {
+        width: 100%;
+        margin-top: 1em;
+        text-align: center;
+
+        .components-button {
+            box-shadow: inset 0 0 0 1px #1e1e1e;
+        }
     }
 }

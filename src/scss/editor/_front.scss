@@ -95,7 +95,8 @@ div[class*="is-style-"], //tinyMCE と 昔の 「スタイルブロック」用
 .wp-block-media-text__content, //メディアと文章ブロック
 .swell-block-accordion__body,  //アコーディオン
 .swell-block-step__body, //ステップブロック
-.faq_a {
+.faq_a,
+.swl-has-mb--s {
 
     > * {
         margin-bottom: 1em;
