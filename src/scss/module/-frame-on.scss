@@ -2,17 +2,22 @@
 @import "../foundation/mixin/**";
 
 
-$pad_mainContent_sp: 3vw;
-$pad_mainContent_pc: 32px;
+$mc-pad--sp: 3vw;
+$mc-pad--pc: 32px;
 
-// $pad_container_pc: 48px;
-$pad_container_sp: 2vw; //フレームオンの時は上書き
+// CSS変数上書き
+.-frame-on {
+
+    @include sp {
+        --swl-pad_container: 2vw;
+    }
+}
 
 .alignwide {
 
     @include sp {
-        left: (-$pad_mainContent_sp); // = $pad_mainContent_sp
-        width: calc(100% + #{$pad_mainContent_sp * 2});
+        left: (-$mc-pad--sp); // = $mc-pad--sp
+        width: calc(100% + #{$mc-pad--sp * 2});
     }
 
     @include pc {
@@ -87,20 +92,19 @@ $pad_container_sp: 2vw; //フレームオンの時は上書き
     .post_content > h2 {
 
         @include sp {
-            margin-right: (-$pad_mainContent_sp);
-            margin-left: (-$pad_mainContent_sp);
+            margin-right: (-$mc-pad--sp);
+            margin-left: (-$mc-pad--sp);
         }
     }
 
 
     // メインコンテンツ
     .l-mainContent {
-        padding: $pad_mainContent_sp;
-        // overflow: hidden;
+        padding: $mc-pad--sp;
         background: #fff;
 
         @include pc {
-            padding: $pad_mainContent_pc;
+            padding: $mc-pad--pc;
         }
     }
 
@@ -109,17 +113,16 @@ $pad_container_sp: 2vw; //フレームオンの時は上書き
         @include pc {
 
             &.l-article {
-                padding: 0 #{$pad_mainContent_pc + $pad_post_content_pc};
+                --swl-fw_inner_pad: calc(var(--swl-pad_post_content) + #{$mc-pad--pc});
             }
         }
 
         @include sp {
             // フル幅用
-            padding: 0 $pad_container_sp;
+            --swl-fw_inner_pad: var(--swl-pad_container, 2vw);
 
-            &.l-container,
             &.l-article {
-                padding: 0 #{$pad_container_sp + $pad_mainContent_sp};
+                --swl-fw_inner_pad: calc(var(--swl-pad_container, 2vw) + #{$mc-pad--sp});
             }
         }
     }

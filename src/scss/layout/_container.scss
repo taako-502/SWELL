@@ -2,11 +2,6 @@
     max-width: var(--container_size);
     margin-right: auto;
     margin-left: auto;
-    padding-right: $pad_container_sp;
-    padding-left: $pad_container_sp;
-
-    @include pc {
-        padding-right: $pad_container_pc;
-        padding-left: $pad_container_pc;
-    }
+    padding-right: var(--swl-pad_container, 0px);
+    padding-left: var(--swl-pad_container, 0px);
 }

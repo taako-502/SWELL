@@ -1,5 +1,21 @@
 @charset "UTF-8";
 
 :root {
+
+    // 余白間
+    --swl-pad_post_content: 0;
+    --swl-pad_container: 4vw;
+
+    @include pc {
+        --swl-pad_post_content: 16px;
+        --swl-pad_container: 48px;
+    }
+
+    // ボーダー
     --swl-color_border: rgba(200, 200, 200, .5);
+
+    // 記事コンテンツの浮き出し系
+    --swl-box-shadow:
+        0 2px 4px rgba(0, 0, 0, .05),
+        0 4px 4px -4px rgba(0, 0, 0, .1);
 }

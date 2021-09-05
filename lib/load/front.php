@@ -78,12 +78,60 @@ function load_front_styles() {
 		wp_enqueue_style( 'main_style', $assets . '/css/main.css', [], SWELL_VERSION );
 	}
 
+	// 切り分け済みのブロックCSS
+	load_separated_styles();
+
 	// カスタムフォーマット用CSS
 	$custom_format_css = SWELL::get_editor( 'custom_format_css' );
 	if ( $custom_format_css ) {
 		wp_add_inline_style( 'main_style', $custom_format_css );
 	}
 }
+
+function load_separated_styles() {
+
+	$separated_blocks = [
+		'loos/accordion' => '/build/blocks/accordion/index.css',
+		'loos/balloon'   => '/build/blocks/balloon/index.css',
+		'loos/cap-block' => '/build/blocks/cap-block/index.css',
+		'loos/columns'   => '/build/blocks/columns/index.css',
+		'loos/dl'        => '/build/blocks/dl/index.css',
+		'loos/full-wide' => '/build/blocks/full-wide/index.css',
+	];
+
+	// 使われたブロックだけ読み込むかどうか
+	if ( 1 ) {
+		if ( SWELL::is_widget_iframe() ) SWELL::$used_blocks = [];
+		foreach ( $separated_blocks as $name => $path ) {
+
+			// if ( false !== stripos( $name, 'loos/' ) ) {}
+			if ( ! isset( SWELL::$used_blocks[ $name ] ) ) {
+				continue;
+			}
+
+			load_separated_css( $path, $name );
+		}
+	} else {
+		foreach ( $separated_blocks as $name => $path ) {
+			load_separated_css( $path, $name );
+		}
+	}
+
+}
+
+function load_separated_css( $css_path, $name ) {
+	// インライン出力するかどうか
+	if ( 0 ) {
+		$css = '';
+		$css = SWELL::get_file_contents( T_DIRE . $css_path );
+		// $css = str_replace( '../', T_DIRE_URI . '/assets/', $css );
+		$css = str_replace( '@charset "UTF-8";', '', $css );
+		wp_add_inline_style( 'main_style', $css );
+	} else {
+		wp_enqueue_style( "swell_{$name}", T_DIRE_URI . $css_path, [ 'main_style' ], SWELL_VERSION );
+	}
+}
+
 
 /**
  * プラグインファイル

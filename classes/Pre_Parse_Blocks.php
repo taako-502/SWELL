@@ -23,14 +23,21 @@ class Pre_Parse_Blocks {
 		$parsed_content = parse_blocks( $post->post_content );
 		foreach ( $parsed_content as $block ) {
 			self::check_block( $block, \SWELL_Theme::$used_blocks );
-
 		}
 
-		// サイドバーのブロックチェック
+		// コンテンツの文字列を直接チェック
+		self::check_content_str( $post->post_content );
+
+		// add_filter( 'pre_do_shortcode_tag', [ __CLASS__, 'pre_check_do_shortcode' ], 10, 2 );
+		add_filter( 'widget_text', [ __CLASS__, 'check_widget_content_str' ], 1 );
+		add_filter( 'widget_text_content', [ __CLASS__, 'check_widget_content_str' ], 1 );
+
+		// サイドバーのチェック
 		if ( \SWELL_Theme::is_show_sidebar() ) {
 			self::parse_sidebar();
 		}
 
+		// ページ種別ごとのウィジェットチェック
 		if ( \SWELL_Theme::is_top() ) {
 			self::parse_front_widget();
 		} elseif ( is_page() || is_home() ) {
@@ -39,8 +46,12 @@ class Pre_Parse_Blocks {
 			self::parse_single_widget();
 		}
 
-		// その他のウィジェットエリアのブロックチェック
+		// その他のウィジェットチェック
 		self::parse_other_area();
+
+		// remove_filter( 'pre_do_shortcode_tag', [ __CLASS__, 'pre_check_do_shortcode' ], 10, 2 );
+		remove_filter( 'widget_text', [ __CLASS__, 'check_widget_content_str' ], 1 );
+		remove_filter( 'widget_text_content', [ __CLASS__, 'check_widget_content_str' ], 1 );
 
 	}
 
@@ -146,7 +157,7 @@ class Pre_Parse_Blocks {
 
 
 	/**
-	 * check_sidebar_block
+	 * サイドバーチェック
 	 */
 	public static function check_sidebar_block( $block_content, $block ) {
 		self::check_block( $block, self::$sidebar_blocks );
@@ -155,12 +166,48 @@ class Pre_Parse_Blocks {
 
 
 	/**
-	 * check_sidebar_block
+	 * その他チェック
 	 */
 	public static function check_other_area_block( $block_content, $block ) {
 		self::check_block( $block, \SWELL_Theme::$used_blocks );
 		return $block_content;
 	}
 
+
+	/**
+	 * ショートコードのチェック
+	 */
+	// public static function pre_check_do_shortcode( $return, $tag ) {
+	// 	if ( 'ふきだし' === $tag || 'speech_balloon' === $tag ) {
+	// 		\SWELL_Theme::$used_blocks['loos/balloon'] = true;
+	// 	}
+	// 	return $return;
+	// }
+
+
+	/**
+	 * 文字列チェック
+	 */
+	public static function check_content_str( $content ) {
+		if ( false !== strpos( $content, '[ふきだし' ) || false !== strpos( $content, '[speech_balloon' ) ) {
+			\SWELL_Theme::$used_blocks['loos/balloon'] = true;
+		}
+		if ( false !== strpos( $content, 'cap_box' ) ) {
+			\SWELL_Theme::$used_blocks['loos/cap-block'] = true;
+		}
+		if ( false !== strpos( $content, '[full_wide_content' ) ) {
+			\SWELL_Theme::$used_blocks['loos/full-wide'] = true;
+		}
+	}
+
+
+	/**
+	 * 文字列チェック
+	 */
+	public static function check_widget_content_str( $content ) {
+		self::check_content_str( $content );
+		return $content;
+
+	}
 
 }

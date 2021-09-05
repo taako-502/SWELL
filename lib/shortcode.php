@@ -355,7 +355,7 @@ if ( ! function_exists( __NAMESPACE__ . '\full_wide_content' ) ) :
 
 		$add_style = '';
 		$add_attr  = '';
-		$class     = 'wp-block-loos-full-wide';
+		$class     = 'swell-block-fullWide alignfull';
 		if ( isset( $args['bgimg'] ) ) {
 
 			$class    .= ' lazyload';
@@ -367,15 +367,12 @@ if ( ! function_exists( __NAMESPACE__ . '\full_wide_content' ) ) :
 			$add_style .= 'background-color:' . $args['bg'] . ';';
 
 		}
+
 		if ( isset( $args['color'] ) ) {
-
 			$add_style .= 'color:' . $args['color'] . ';';
-
 		}
 		if ( isset( $args['class'] ) ) {
-
 			$class .= ' ' . $args['class'];
-
 		}
 
 		$text_color = ( isset( $args['color'] ) ) ? $args['color'] : '';
@@ -383,7 +380,7 @@ if ( ! function_exists( __NAMESPACE__ . '\full_wide_content' ) ) :
 		// $content = do_shortcode( shortcode_unautop( $content ) );
 		if ( $add_style ) $add_attr .= ' style="' . $add_style . '"';
 
-		return '<div class="' . $class . '"' . $add_attr . '>' . $content . '</div>';
+		return '<div class="' . $class . '"' . $add_attr . '><div class="swell-block-fullWide__inner l-article">' . $content . '</div></div>';
 
 	}
 endif;

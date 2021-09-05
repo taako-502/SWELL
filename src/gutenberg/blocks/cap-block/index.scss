@@ -1,3 +1,5 @@
+@import "../../../scss/foundation/mixin/_media.scss";
+
 .cap_box {
     position: relative;
 }
@@ -103,8 +105,7 @@
 
     &.cap_box {
         overflow: hidden;
-        // box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
-        @extend %boxShadow;
+        box-shadow: var(--swl-box-shadow);
     }
 
     > .cap_box_content {

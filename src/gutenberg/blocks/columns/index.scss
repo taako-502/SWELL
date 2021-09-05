@@ -1,3 +1,5 @@
+@import "../../../scss/foundation/mixin/_media.scss";
+
 //リッチカラム
 .swell-block-columns {
     --swl-fb: 100%;
@@ -81,8 +83,7 @@
     > .swell-block-columns__inner > .swell-block-column {
         color: #333;
         background-color: #fff;
-
-        @extend %boxShadow;
+        box-shadow: var(--swl-box-shadow);
     }
 }
 

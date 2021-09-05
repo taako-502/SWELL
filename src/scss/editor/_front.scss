@@ -6,12 +6,8 @@
 .post_content {
     max-width: 100%;
     margin: 4em 0;
-    padding: 0;
+    padding: 0 var(--swl-pad_post_content, 0px);
     line-height: 1.8;
-
-    @include pc {
-        padding: 0 16px;
-    }
 
     //各要素のマージン
     > * {

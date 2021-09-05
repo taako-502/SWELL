@@ -105,6 +105,15 @@ div.has-background,
     background: var(--color_gray);
 }
 
+// 背景が白 / テキスト 黒 で固定された要素
+.is-style-emboss_box,
+.is-style-sticky_box,
+.is-style-balloon_box2 {
+    color: #333;
+    background-color: #fff;
+}
+
+
 // ストライプ
 .is-style-bg_stripe {
     position: relative;
@@ -179,9 +188,8 @@ div.has-background,
 
 .is-style-emboss_box {
 
-    @extend %bgfff;
-    @extend %boxShadow;
     border-top: solid 2px var(--color_main);
+    box-shadow: var(--swl-box-shadow);
 }
 
 .is-style-kakko_box {
@@ -260,9 +268,8 @@ div.has-background,
     padding: .75em 1em;
     line-height: 1.4;
     border-left: solid 8px var(--color_main);
-    // box-shadow: 1px 2px 6px rgba(0, 0, 0, .1);
-    @extend %boxShadow;
-    @extend %bgfff;
+    box-shadow: var(--swl-box-shadow);
+
 }
 
 //ふきだし
@@ -297,8 +304,6 @@ div.has-background,
     line-height: 1.4;
     border: solid 1px;
     border-radius: 2px;
-
-    @extend %bgfff;
 
     &::before {
         position: absolute;
