@@ -15,19 +15,39 @@ class Pre_Parse_Blocks {
 	 */
 	public static function init() {
 
-		if ( ! ( is_singular( 'post' ) || is_page() ) ) return;
-		$post = get_post( get_queried_object_id() );
-		if ( ! $post) return;
+		// if ( ! ( is_singular( 'post' ) || is_page() ) ) return;
 
-		// コンテンツをパースしてブロックをチェック
-		$parsed_content = parse_blocks( $post->post_content );
-		foreach ( $parsed_content as $block ) {
-			self::check_block( $block, \SWELL_Theme::$used_blocks );
+		if ( is_singular( 'post' ) || is_page() ) {
+			$post = get_post( get_queried_object_id() );
+			if ( $post ) {
+				// コンテンツをパースしてブロックをチェック
+				$parsed_content = parse_blocks( $post->post_content );
+				foreach ( $parsed_content as $block ) {
+					self::check_block( $block, \SWELL_Theme::$used_blocks );
+				}
+
+				// コンテンツの文字列を直接チェック
+				self::check_content_str( $post->post_content );
+			}
 		}
 
-		// コンテンツの文字列を直接チェック
-		self::check_content_str( $post->post_content );
+		// ウィジェットのチェック
+		self::parse_widgets();
 
+		// その他ページ種別等によってセットするもの
+		if ( \SWELL_Theme::is_show_pickup_banner() ) {
+			\SWELL_Theme::$used_blocks['loos/banner-link'] = true;
+		}
+		if ( is_home() || is_archive() ) {
+			\SWELL_Theme::$used_blocks['loos/tab'] = true;
+		}
+	}
+
+
+	/**
+	 * サイドバーのチェック
+	 */
+	public static function parse_widgets() {
 		// add_filter( 'pre_do_shortcode_tag', [ __CLASS__, 'pre_check_do_shortcode' ], 10, 2 );
 		add_filter( 'widget_text', [ __CLASS__, 'check_widget_content_str' ], 1 );
 		add_filter( 'widget_text_content', [ __CLASS__, 'check_widget_content_str' ], 1 );
@@ -52,7 +72,6 @@ class Pre_Parse_Blocks {
 		// remove_filter( 'pre_do_shortcode_tag', [ __CLASS__, 'pre_check_do_shortcode' ], 10, 2 );
 		remove_filter( 'widget_text', [ __CLASS__, 'check_widget_content_str' ], 1 );
 		remove_filter( 'widget_text_content', [ __CLASS__, 'check_widget_content_str' ], 1 );
-
 	}
 
 
@@ -198,6 +217,10 @@ class Pre_Parse_Blocks {
 		if ( false !== strpos( $content, '[full_wide_content' ) ) {
 			\SWELL_Theme::$used_blocks['loos/full-wide'] = true;
 		}
+		if ( false !== strpos( $content, '[カスタムバナー' ) || false !== strpos( $content, '[custom_banner' ) ) {
+			\SWELL_Theme::$used_blocks['loos/banner-link'] = true;
+		}
+
 	}
 
 

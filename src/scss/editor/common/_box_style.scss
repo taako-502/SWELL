@@ -189,7 +189,7 @@ div.has-background,
 .is-style-emboss_box {
 
     border-top: solid 2px var(--color_main);
-    box-shadow: var(--swl-box-shadow);
+    box-shadow: var(--swl-box_shadow);
 }
 
 .is-style-kakko_box {
@@ -268,7 +268,7 @@ div.has-background,
     padding: .75em 1em;
     line-height: 1.4;
     border-left: solid 8px var(--color_main);
-    box-shadow: var(--swl-box-shadow);
+    box-shadow: var(--swl-box_shadow);
 
 }
 
@@ -575,7 +575,7 @@ div.has-background,
     border: solid 6px #dfe1e5;
     border-top: none;
     border-radius: 8px;
-    box-shadow: 0 1px 16px -2px rgba(0, 0, 0, .12);
+    box-shadow: 0 1px 16px -2px var(--swl-color_shadow);
 
     .wp-block-group__inner-container {
         max-height: 400px;

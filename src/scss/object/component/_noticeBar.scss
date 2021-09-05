@@ -11,7 +11,7 @@
     font-size: .95em;
     line-height: 2;
     border-radius: 40px;
-    box-shadow: 0 2px 4px $color_shadow;
+    box-shadow: 0 2px 4px var(--swl-color_shadow);
 }
 
 .c-infoBar::before {

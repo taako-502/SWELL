@@ -179,13 +179,13 @@ $mc-pad--pc: 32px;
 .-frame-border {
 
     .l-mainContent {
-        box-shadow: 0 0 1px $color_shadow;
+        box-shadow: 0 0 1px var(--swl-color_shadow);
     }
 
     &.-frame-on-sidebar {
 
         #sidebar .c-widget {
-            box-shadow: 0 0 1px $color_shadow;
+            box-shadow: 0 0 1px var(--swl-color_shadow);
         }
     }
 

@@ -11,11 +11,10 @@
     text-align: center;
     background: #fff;
     border: solid 1px var(--color_main);
+    box-shadow: var(--swl-box_shadow);
     cursor: pointer;
     opacity: .75;
     transition: .25s;
-
-    @extend %btnShadow;
 
     @include pc {
 

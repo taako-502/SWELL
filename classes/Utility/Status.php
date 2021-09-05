@@ -322,6 +322,7 @@ trait Status {
 	public static function is_show_pickup_banner() {
 
 		if ( is_paged() ) return false;
+		if ( ! has_nav_menu( 'pickup_banner' ) ) return false;
 
 		$is_show_banners = false;
 
@@ -332,6 +333,20 @@ trait Status {
 		}
 
 		return apply_filters( 'swell_is_show_pickup_banner', $is_show_banners );
+	}
+
+
+	/**
+	 * 必要なCSSだけを読み込むかどうか
+	 */
+	public static function is_separate_css() {
+		$flag = true;
+
+		if ( self::is_term() ) {
+			$flag = false;
+		}
+
+		return apply_filters( 'swell_is_separate_css', $flag );
 	}
 
 }

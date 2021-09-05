@@ -14,8 +14,21 @@
     // ボーダー
     --swl-color_border: rgba(200, 200, 200, .5);
 
+    // shadowカラー
+    --swl-color_shadow: rgba(0, 0, 0, .12);
+
     // 記事コンテンツの浮き出し系
-    --swl-box-shadow:
+    --swl-box_shadow:
         0 2px 4px rgba(0, 0, 0, .05),
         0 4px 4px -4px rgba(0, 0, 0, .1);
+
+    // 画像系のシャドウ
+    --swl-img_shadow:
+        0 2px 8px rgba(0, 0, 0, .1),
+        0 4px 8px -4px rgba(0, 0, 0, .2);
+
+
+    // box-shadow:
+    //     0 2px 4px rgba(0, 0, 0, .1),
+    //     0 4px 4px -4px rgba(0, 0, 0, .1);
 }

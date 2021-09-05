@@ -19,8 +19,6 @@
         padding: 2em;
     }
 
-    @extend %imageShadow;
-
     .is-opened > & {
         transform: translateY(0);
     }

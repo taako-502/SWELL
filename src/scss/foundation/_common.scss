@@ -98,8 +98,7 @@ a {
     //画像の影
     .p-articleThumb__img,
     .p-articleThumb__youtube {
-
-        @extend %imageShadow;
+        box-shadow: var(--swl-img_shadow);
     }
 
     .p-postList__thumb,
@@ -110,7 +109,7 @@ a {
 
     .p-snsCta,
     .c-shareBtns__btn {
-        box-shadow: var(--swl-box-shadow);
+        box-shadow: var(--swl-box_shadow);
     }
 
     //ランキング

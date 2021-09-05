@@ -61,7 +61,7 @@
     &.wp-block-media-text {
         color: #333;
         background: #fff;
-        box-shadow: 0 2px 8px $color_shadow;
+        box-shadow: var(--swl-box_shadow);
     }
 
     .wp-block-media-text__media {

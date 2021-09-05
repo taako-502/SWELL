@@ -51,7 +51,7 @@
         position: relative;
     }
 
-    & > .menu-item:first-child > a {
+    > .menu-item:first-child > a {
         border-top: none;
     }
 
@@ -83,7 +83,7 @@
     width: 88vw;
     height: 100%;
     padding-top: var(--logo_size_sp);
-    box-shadow: 0 0 8px $color_shadow;
+    box-shadow: 0 0 8px var(--swl-color_shadow);
     transition: transform .45s;
     transition-timing-function: ease-out;
     // 背景透過できるように、擬似要素で

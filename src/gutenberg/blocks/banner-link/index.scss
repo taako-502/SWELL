@@ -1,3 +1,14 @@
+@import "../../../scss/foundation/mixin/_media.scss";
+
+.c-bannerLink::before,
+.c-bannerLink__text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 // バナーリンクブロック・カスタムバナーショートコード・ピックアップバナーから利用される。
 .c-bannerLink {
     position: relative;
@@ -12,8 +23,7 @@
     }
 
     &.-shadow-on {
-
-        @extend %imageShadow;
+        box-shadow: var(--swl-img_shadow);
     }
 
     &.-radius-on {
@@ -21,10 +31,9 @@
     }
 
     &::before {
-
-        @extend %absLayer;
         z-index: 1;
         background-color: inherit;
+        content: "";
     }
 }
 
@@ -84,8 +93,6 @@ a.c-bannerLink:hover {
     justify-content: center;
     padding: 1.5em;
     color: #fff;
-
-    @extend %absLayer;
 
     &.is-vertically-aligned-top {
         justify-content: flex-start;
@@ -191,7 +198,7 @@ a.c-bannerLink:hover {
         padding: 8px 12px;
         color: #333;
         background: rgba(#fff, .9);
-        border: solid 1px rgba(0, 0, 0, .12);
+        border: solid 1px var(--swl-color_shadow);
         border-radius: 40px;
         transform: translateY(-50%);
     }
@@ -207,5 +214,18 @@ a.c-bannerLink:hover {
         color: #fff;
         text-shadow: 1px 1px rgba(0, 0, 0, .25);
         background: rgba(0, 0, 0, .25);
+    }
+}
+
+
+// カスタムバナー　(ショートコード)だけのCSS
+.p-customBanner {
+
+    .c-bannerLink::before {
+        background: rgba(0, 0, 0, .2);
+    }
+
+    .c-bannerLink__text {
+        text-shadow: 1px 1px 0 var(--swl-color_shadow);
     }
 }

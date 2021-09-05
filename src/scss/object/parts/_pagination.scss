@@ -38,8 +38,7 @@
     transition: color .25s, background-color .25s;
 
     .-body-solid & {
-
-        @extend %btnShadow;
+        box-shadow: var(--swl-box_shadow);
     }
 
     &:hover,

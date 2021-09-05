@@ -91,16 +91,21 @@ function load_front_styles() {
 function load_separated_styles() {
 
 	$separated_blocks = [
-		'loos/accordion' => '/build/blocks/accordion/index.css',
-		'loos/balloon'   => '/build/blocks/balloon/index.css',
-		'loos/cap-block' => '/build/blocks/cap-block/index.css',
-		'loos/columns'   => '/build/blocks/columns/index.css',
-		'loos/dl'        => '/build/blocks/dl/index.css',
-		'loos/full-wide' => '/build/blocks/full-wide/index.css',
+		'loos/accordion'   => '/build/blocks/accordion/index.css',
+		'loos/balloon'     => '/build/blocks/balloon/index.css',
+		'loos/banner-link' => '/build/blocks/banner-link/index.css',
+		'loos/cap-block'   => '/build/blocks/cap-block/index.css',
+		'loos/columns'     => '/build/blocks/columns/index.css',
+		'loos/dl'          => '/build/blocks/dl/index.css',
+		'loos/faq'         => '/build/blocks/faq/index.css',
+		'loos/full-wide'   => '/build/blocks/full-wide/index.css',
+		'loos/step'        => '/build/blocks/step/index.css',
+		'loos/tab'         => '/build/blocks/tab/index.css',
+		'core/columns'     => '/build/blocks/tab/index.css',
 	];
 
 	// 使われたブロックだけ読み込むかどうか
-	if ( 1 ) {
+	if ( SWELL::is_separate_css() ) {
 		if ( SWELL::is_widget_iframe() ) SWELL::$used_blocks = [];
 		foreach ( $separated_blocks as $name => $path ) {
 

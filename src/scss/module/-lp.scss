@@ -102,7 +102,7 @@
     }
 
     .-style-shadow & {
-        box-shadow: 4px 0 4px -4px $color_shadow, -4px 0 4px -4px $color_shadow;
+        box-shadow: 4px 0 4px -4px var(--swl-color_shadow), -4px 0 4px -4px var(--swl-color_shadow);
     }
 }
 

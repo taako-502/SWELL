@@ -92,8 +92,7 @@ img.photo_frame,
 img.shadow,
 .is-style-shadow > img,
 .is-style-shadow > video {
-
-    @extend %imageShadow;
+    box-shadow: var(--swl-img_shadow);
 }
 
 img.size_s,
