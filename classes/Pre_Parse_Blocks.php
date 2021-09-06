@@ -225,6 +225,12 @@ class Pre_Parse_Blocks {
 	 */
 	public static function check_content_str( $content ) {
 
+		if ( ! isset( \SWELL_Theme::$used_blocks['loos/ad-tag'] ) ) {
+			if ( false !== strpos( $content, '[ad_tag' ) ) {
+				\SWELL_Theme::$used_blocks['loos/ad-tag'] = true;
+			}
+		}
+
 		if ( ! isset( \SWELL_Theme::$used_blocks['loos/balloon'] ) ) {
 			if ( false !== strpos( $content, '[ふきだし' ) || false !== strpos( $content, '[speech_balloon' ) ) {
 				\SWELL_Theme::$used_blocks['loos/balloon'] = true;
@@ -290,6 +296,9 @@ class Pre_Parse_Blocks {
 		} elseif ( 'widget_rss' === $classname ) {
 			\SWELL_Theme::$used_blocks['widget/rss'] = true;
 		}
+		// elseif ( 'widget_search' === $classname ) {
+		// 	\SWELL_Theme::$used_blocks['widget/search'] = true;
+		// }
 
 		// widget_meta
 	}

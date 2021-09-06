@@ -113,6 +113,7 @@ function load_separated_styles() {
 
 		// swell
 		'loos/accordion'    => '/build/blocks/accordion/index.css',
+		'loos/ad-tag'       => '/build/blocks/ad-tag/index.css',
 		'loos/balloon'      => '/build/blocks/balloon/index.css',
 		'loos/banner-link'  => '/build/blocks/banner-link/index.css',
 		'loos/cap-block'    => '/build/blocks/cap-block/index.css',
