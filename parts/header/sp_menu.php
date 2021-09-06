@@ -20,13 +20,13 @@ $spmenu_class = ( 'center_left' === SWELL_Theme::get_setting( 'header_layout_sp'
 							'container'      => '',
 							'fallback_cb'    => '',
 							'theme_location' => 'nav_sp_menu',
-							'items_wrap'     => '<ul class="c-spnav">%3$s</ul>',
+							'items_wrap'     => '<ul class="c-spnav c-listMenu">%3$s</ul>',
 						]);
 					else :
 						wp_nav_menu([
 							'container'      => '',
 							'theme_location' => 'header_menu',
-							'items_wrap'     => '<ul class="c-spnav">%3$s</ul>',
+							'items_wrap'     => '<ul class="c-spnav c-listMenu">%3$s</ul>',
 						]);
 					endif;
 				?>

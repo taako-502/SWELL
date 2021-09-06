@@ -212,8 +212,7 @@ function get_swl_front_css() {
 	// LP
 	if ( is_singular( 'lp' ) ) {
 		$lp_css = T_DIRE . '/assets/css/module/-lp.css';
-
-		if ( file_exists( $lp_css ) ) $style .= SWELL::get_file_contents( $lp_css );
+		$style .= SWELL::get_file_contents( $lp_css );
 	}
 
 	return $style;

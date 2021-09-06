@@ -212,7 +212,7 @@ tbody th,
     &::before {
 
         @extend %absLayer;
-        background-color: rgba(150, 150, 150, .05);
+        background-color: var(--swl-color_hov_gray);
         pointer-events: none;
     }
 }

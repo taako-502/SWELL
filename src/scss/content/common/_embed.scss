@@ -1,0 +1,49 @@
+// front用
+.post_content {
+
+    iframe {
+        display: block;
+        max-width: 100%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+}
+
+
+// チラつき防止。 .twitter-tweet:not(.twitter-tweet-rendered)は当たらなかった...
+@include mobile {
+
+    .twitter-tweet,
+    .instagram-media {
+        display: none !important;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 88vw !important;
+    }
+
+    .twitter-tweet-rendered,
+    .instagram-media-rendered {
+        display: block !important;
+    }
+
+    // 2020.6月末頃に構造が変わった
+    .twitter-tweet > iframe {
+        width: 100% !important;
+    }
+}
+
+
+// twitter-widget:not(.twitter-tweet-rendered) {
+//     display: none !important;
+// }
+
+// Twitterとインスタグラム、中央寄せに対応
+.twitter-tweet-rendered,
+.instagram-media-rendered {
+    // display: block !important;
+    margin-right: auto !important; //instaがmargin上書きされるので important
+    margin-left: auto !important; //instaがmargin上書きされるので important
+}
+

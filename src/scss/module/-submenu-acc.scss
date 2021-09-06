@@ -57,27 +57,38 @@
     }
 }
 
-/* --------------- ウィジェットリスト系 --------------- */
+
+// カテゴリーリストはアイコンある
+.wp-block-categories-list > li > a,
+.widget_categories > ul > .cat-item > a {
+    padding-left: 1.5em;
+}
 
 
-%w_Ul {
+.c-listMenu {
 
     a {
         position: relative;
-
-        // &::before {
-        //     content: none !important; //ウィジェットとの兼ね合いでsub-menuにアイコンがついてしまう
-        // }
+        padding: .75em .5em;
     }
 
     // a + ul がある時
     a:not(:last-child) {
         padding-right: 40px;
     }
-
 }
 
-%w_childUl {
+.c-gnav .sub-menu a:not(:last-child) {
+    padding-right: 40px;
+}
+
+.c-gnav .sub-menu .sub-menu {
+    box-shadow: none;
+}
+
+.c-gnav .sub-menu .sub-menu,
+.c-listMenu .children,
+.c-listMenu .sub-menu {
     position: relative;
     height: 0;
     margin: 0;
@@ -93,75 +104,11 @@
 
     a {
         padding-left: 1.5em;
-
-        @include pc {
-            font-size: .9em;
-        }
+        font-size: .9em;
 
     }
 
     ul a {
         padding-left: 2.25em;
     }
-
 }
-
-
-// サブメニューの展開
-.c-spnav,
-.c-gnav .sub-menu {
-
-    @extend %w_Ul;
-
-    .sub-menu {
-
-        @extend %w_childUl;
-    }
-}
-
-.wp-block-categories,
-.widget_categories,
-.widget_pages {
-
-    @extend %w_Ul;
-
-    .children {
-
-        @extend %w_childUl;
-
-    }
-}
-
-// ナビメニュー
-.widget_nav_menu {
-
-    @extend %w_Ul;
-
-    .sub-menu {
-
-        @extend %w_childUl;
-    }
-
-}
-
-
-/* --------------- グロナビ --------------- */
-.c-gnav {
-
-    .sub-menu .sub-menu {
-        box-shadow: none;
-    }
-}
-
-.c-spnav {
-
-    .sub-menu {
-
-        a {
-            padding-left: 1.25em;
-            font-size: .95em;
-        }
-
-    }
-}
-

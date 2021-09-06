@@ -1,13 +1,6 @@
 // front用
 .post_content {
 
-    iframe {
-        display: block;
-        max-width: 100%;
-        margin-right: auto;
-        margin-left: auto;
-    }
-
     .wp-block-embed {
         max-width: 100%;
     }
@@ -25,60 +18,21 @@
 }
 
 
-// チラつき防止。 .twitter-tweet:not(.twitter-tweet-rendered)は当たらなかった...
-@include mobile {
-
-    .twitter-tweet,
-    .instagram-media {
-        display: none !important;
-        box-sizing: border-box !important;
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 88vw !important;
-    }
-
-    .twitter-tweet-rendered,
-    .instagram-media-rendered {
-        display: block !important;
-    }
-
-    // 2020.6月末頃に構造が変わった
-    .twitter-tweet > iframe {
-        width: 100% !important;
-    }
-}
-
-
-// twitter-widget:not(.twitter-tweet-rendered) {
-//     display: none !important;
-// }
-
 .wp-block-embed-facebook,
 .wp-block-embed-twitter,
 .wp-block-embed-instagram {
     max-width: 100%;
     overflow: hidden;
     text-align: center; //FB用センター寄せ
-
 }
 
 // センター寄せ
-// .wp-block-embed-twitter,
-// .wp-block-embed-instagram,
 .wp-block-embed.aligncenter {
 
     iframe {
         display: block !important;
         margin: 0 auto !important;
     }
-}
-
-// Twitterとインスタグラム、中央寄せに対応
-.twitter-tweet-rendered,
-.instagram-media-rendered {
-    // display: block !important;
-    margin-right: auto !important; //instaがmargin上書きされるので important
-    margin-left: auto !important; //instaがmargin上書きされるので important
 }
 
 
@@ -89,13 +43,6 @@
 //     text-align: center;
 // }
 
-
-// 動画系の埋め込み
-// .wp-block-embed.is-type-video {
-//     iframe {
-//         width: 100%;
-//     }
-// }
 
 .wp-has-aspect-ratio {
     position: relative;

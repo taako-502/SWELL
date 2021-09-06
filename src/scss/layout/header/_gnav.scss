@@ -46,7 +46,7 @@
 
 
     // 親メニュー
-    & > .menu-item {
+    > .menu-item {
         position: relative;
         height: 100%;
 
@@ -55,7 +55,7 @@
             opacity: 1;
         }
 
-        & > a {
+        > a {
             position: relative;
             display: flex;
             flex-direction: column;
@@ -64,7 +64,6 @@
             padding: 0 12px;
             color: inherit;
             white-space: nowrap;
-            transition: all .25s;
 
             @media (max-width: 1200px) {
                 padding: 0 10px;
@@ -94,7 +93,7 @@
         }
 
         // 二層目
-        & > .sub-menu {
+        > .sub-menu {
             top: 100%;
             left: 50%;
             transform: translateX(-50%);
@@ -128,22 +127,12 @@
             padding: .5em .75em;
             color: inherit;
 
-            &::after {
-
-                @extend %absLayer;
-                z-index: 0;
-                background-color: transparent;
-                transform: scale(1);
-                transition: background-color .25s;
-                content: "";
+            &:hover {
+                background-color: var(--swl-color_hov_gray);
             }
 
-            &:hover::after {
-                background-color: rgba(200, 200, 200, .1);
-            }
         }
 
-        // .sub-menu {}
     }
 
 }

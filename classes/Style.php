@@ -170,9 +170,9 @@ class Style {
 
 		// グロナビとスマホメニューのサブメニューの展開方式
 		if ( SWELL::is_use( 'acc_submenu' ) ) {
-			self::add_module( '-gnav-acc' );
+			self::add_module( '-submenu-acc' );
 		} else {
-			self::add_module( '-gnav-normal' );
+			self::add_module( '-submenu-normal' );
 		}
 
 		// お知らせバー
@@ -341,22 +341,11 @@ class Style {
 		self::$modules;
 		foreach ( self::$modules as $filename ) {
 
-			// まず子テーマ側から探す
-			$include_path = S_DIRE . '/assets/css/module/' . $filename . '.css';
-			if ( ! file_exists( $include_path ) ) {
+			$include_path  = T_DIRE . '/assets/css/module/' . $filename . '.css';
+			$output_style .= SWELL::get_file_contents( $include_path );
 
-				// 小テーマにファイルがなければ 親テーマから探す
-				$include_path = T_DIRE . '/assets/css/module/' . $filename . '.css';
-				if ( ! file_exists( $include_path ) ) {
-
-					// 親テーマにもファイルが無ければ
-					$include_path = '';
-
-				}
-			}
-			if ( $include_path ) {
-				$output_style .= SWELL::get_file_contents( $include_path );
-			}
+			// $include_path = T_DIRE_URI . '/assets/css/module/' . $filename . '.css';
+			// wp_enqueue_style( 'swell-module' . $filename, $include_path, ['main_style' ], SWELL_VERSION );
 		}
 
 		return $output_style;

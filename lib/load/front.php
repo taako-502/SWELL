@@ -93,8 +93,10 @@ function load_separated_styles() {
 	$separated_blocks = [
 		'core/button'       => '/assets/css/blocks/button.css',
 		'core/calendar'     => '/assets/css/blocks/calendar.css',
+		'core/categories'   => '/assets/css/blocks/categories.css',
 		'core/columns'      => '/assets/css/blocks/columns.css',
 		'core/cover'        => '/assets/css/blocks/cover.css',
+		'core/embed'        => '/assets/css/blocks/embed.css',
 		'core/file'         => '/assets/css/blocks/file.css',
 		'core/gallery'      => '/assets/css/blocks/gallery.css',
 		'core/media-text'   => '/assets/css/blocks/media-text.css',
@@ -105,6 +107,9 @@ function load_separated_styles() {
 		'core/social-links' => '/assets/css/blocks/social-links.css',
 		'core/table'        => '/assets/css/blocks/table.css',
 		'core/tag-cloud'    => '/assets/css/blocks/tag-cloud.css',
+		'widget/dropdown'   => '/assets/css/blocks/widget-dropdown.css',
+		// 'widget/list'       => '/assets/css/blocks/widget-list.css',
+		'widget/rss'        => '/assets/css/blocks/widget-rss.css',
 
 		// swell
 		'loos/accordion'    => '/build/blocks/accordion/index.css',

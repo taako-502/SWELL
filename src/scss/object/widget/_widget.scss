@@ -37,3 +37,32 @@
     }
 }
 
+
+//投稿カウント数
+.post_count,
+.tag-link-count,
+.cat-post-count {
+    position: relative;
+    right: -1px;
+    color: #666;
+    font-size: 3vw;
+
+    @include tab {
+        font-size: 13px;
+    }
+}
+
+.cat-post-count {
+    margin-left: 4px;
+}
+
+
+// ul の list-style, padding を打ち消す
+.wp-block-rss,
+.wp-block-categories-list,
+.wp-block-archives-list,
+.wp-block-latest-posts,
+.wp-block-latest-comments {
+    padding: 0 !important;
+    list-style: none !important;
+}

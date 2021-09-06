@@ -23,10 +23,8 @@
 @import "object/**";
 
 // content
-@import "content/common/caption";
-@import "content/common/text_style";
-@import "content/common/box_style";
-@import "content/common/color_palette"; //優先度高くするため、commonの中では最後で読み込む
+@import "content/common/**";
+@import "content/color_palette"; // commonより優先度高く
 @import "content/front";
 @import "content/block/**";
 

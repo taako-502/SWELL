@@ -1,9 +1,7 @@
 // .wp-block {
-
 //     .wp-block-tag-cloud {
 //         pointer-events: none;
 //     }
-
 // }
 
 // リンククリック不可に。
@@ -36,7 +34,7 @@
     }
 }
 
-// 
+// ulの影響打ち消す
 [data-type="core/rss"] .wp-block-rss,
 [data-type="core/archives"] .wp-block-archives-list,
 [data-type="core/categories"] .wp-block-categories__list {
@@ -45,26 +43,48 @@
     list-style: none;
 }
 
-// アーカイブドロップダウン
-.wp-block-archives-dropdown select {
-    width: 100%;
-    max-width: 100% !important;
-    background-image: none !important;
+
+[data-type="core/rss"] {
+    padding: 0 !important;
 }
 
+
+// アーカイブドロップダウン
+.wp-block-archives-dropdown select,
 .wp-block-categories__dropdown {
     width: 100%;
     max-width: 100% !important;
     // background-image: none !important;
 }
 
-.wp-block-categories__list {
+
+.wp-block-categories,
+.wp-block-archives {
 
     li {
         position: relative;
-        margin-top: 0;
-        margin-bottom: 0;
+        margin: 0;
     }
+
+    a {
+        position: relative;
+        display: block;
+        padding: .75em .5em;
+        color: inherit;
+        line-height: 1.4;
+        text-decoration: none;
+        border-bottom: solid 1px var(--swl-color_border);
+
+        &:hover {
+            background-color: var(--swl-color_hov_gray);
+        }
+    }
+
+}
+
+
+.wp-block-categories__list {
+
 
     .wp-block-categories__post-count {
         position: absolute;
@@ -73,44 +93,35 @@
         font-size: .8em;
         opacity: .8;
     }
-}
 
-
-[data-type="core/rss"] {
-    padding: 0 !important;
-}
-
-// カテゴリーウィジェット
-//カテゴリー ブロック
-.wp-block-categories__list-level-0 > li > a {
-
-    padding-left: 1.5em;
-    // text-decoration: none;
-
-    &::before {
-        transform: scale(.8) translateX(1px) translateY(-50%);
-        transform-origin: 0 0;
-        opacity: .85;
-
-        @extend %swellicon;
-        @extend .icon-folder::before;
-    }
-}
-
-// 子メニューの表示関連
-.wp-block-categories__list .wp-block-categories__list {
-    font-size: .9rem;
-    border-top: none;
-    opacity: .5;
-
-    a {
-        padding-left: 1.75rem;
+    // 子メニューの表示関連
+    .wp-block-categories__list {
+        font-size: .9rem;
+        border-top: none;
+        opacity: .5;
 
         a {
-            padding-left: 2.5rem;
+            padding-left: 1.75rem;
+
+            a {
+                padding-left: 2.5rem;
+            }
         }
     }
 }
+
+
+//カテゴリー ブロック
+.wp-block-categories__list-level-0 > li > a::before {
+    margin-right: 4px;
+    transform: scale(.8) translateX(1px) translateY(-50%);
+    transform-origin: 0 0;
+    opacity: .85;
+
+    @extend %swellicon;
+    @extend .icon-folder::before;
+}
+
 
 .wp-block-latest-posts {
     // margin: 0 !important;
@@ -140,6 +151,26 @@
 }
 
 .editor-styles-wrapper {
+    // 検索
+    .wp-block-search {
+
+        .wp-block-search__button {
+            font-size: 14px;
+            background: #f7f7f7;
+            border: none;
+            box-shadow: 0 0 1px #aaa, inset 0 -1px 0 #ccc;
+        }
+    }
+
+    .wp-block-search__button-inside {
+
+        .wp-block-search__button {
+            background: none;
+            border: none;
+            box-shadow: none;
+        }
+    }
+
 
     // [data-type="core/archives"],
     // [data-type="core/categories"] {
@@ -169,30 +200,4 @@
     //         }
     //     }
     // }
-
-    // ソーシャルリンク
-    .wp-block-social-link {
-        margin: 0 8px 8px 0 !important;
-    }
-
-    // 検索
-    .wp-block-search {
-
-        .wp-block-search__button {
-            font-size: 14px;
-            background: #f7f7f7;
-            border: none;
-            box-shadow: 0 0 1px #aaa, inset 0 -1px 0 #ccc;
-        }
-    }
-
-    .wp-block-search__button-inside {
-
-        .wp-block-search__button {
-            background: none;
-            border: none;
-            box-shadow: none;
-        }
-    }
-
 }

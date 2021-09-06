@@ -175,6 +175,12 @@ class Pre_Parse_Blocks {
 				$block_name = str_replace( 'core/', '', $block_name );
 				wp_enqueue_style( "wp-block-{$block_name}" );
 				// wp_deregister_style で特定のコアブロックCSSの読み込み解除も可
+
+				// その他、共通パーツ等
+				if ( 'categories' !== $block_name || 'archives' !== $block_name ) {
+					$list['widget/dropdown'] = true;
+					$list['widget/list']     = true;
+				}
 			}
 		}
 
@@ -262,7 +268,7 @@ class Pre_Parse_Blocks {
 	 */
 	public static function check_dynamic_sidebar( $widget ) {
 		$classname = $widget['classname'] ?? '';
-		var_dump( $classname );
+		// var_dump( $classname );
 		// widget_categories / widget_archive
 
 		if ( 'widget_calendar' === $classname ) {
@@ -271,8 +277,21 @@ class Pre_Parse_Blocks {
 			\SWELL_Theme::$used_blocks['core/tag-cloud'] = true;
 		} elseif ( 'widget_recent_entries' === $classname ) {
 			\SWELL_Theme::$used_blocks['core/latest-posts'] = true;
+		} elseif ( 'widget_categories' === $classname ) {
+			\SWELL_Theme::$used_blocks['core/categories'] = true;
+			\SWELL_Theme::$used_blocks['widget/dropdown'] = true;
+			\SWELL_Theme::$used_blocks['widget/list']     = true;
+		} elseif ( 'widget_archive' === $classname ) {
+			\SWELL_Theme::$used_blocks['core/archives']   = true;
+			\SWELL_Theme::$used_blocks['widget/dropdown'] = true;
+			\SWELL_Theme::$used_blocks['widget/list']     = true;
+		} elseif ( 'widget_pages' === $classname || 'widget_nav_menu' === $classname || 'widget_rss' === $classname ) {
+			\SWELL_Theme::$used_blocks['widget/list'] = true;
+		} elseif ( 'widget_rss' === $classname ) {
+			\SWELL_Theme::$used_blocks['widget/rss'] = true;
 		}
 
+		// widget_meta
 	}
 
 
