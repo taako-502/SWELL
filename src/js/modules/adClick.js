@@ -19,8 +19,7 @@ export default function () {
 	if (!window.fetch) return;
 
 	// restUrlを正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const restUrl = window.swellVars.restUrl;
+	const restUrl = window?.swellVars?.restUrl;
 	if (restUrl === undefined) return;
 
 	// postIDセット

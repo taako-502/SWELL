@@ -43,27 +43,18 @@ document.addEventListener('DOMContentLoaded', function () {
 /**
  * ajax処理を実行する関数
  */
-const sendCountFetch = async (params, doneFunc, failFunc) => {
-	// ajaxUrl を正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
+const callRestApi = async (params, doneFunc, failFunc) => {
+	// restUrlを正常に取得できるか
+	const restUrl = window?.swellVars?.restUrl;
+	if (restUrl === undefined) return;
 
-	// nonce を正常に取得できるか
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
-
-	params.append('nonce', ajaxNonce);
-
-	await fetch(ajaxUrl, {
+	const _res = fetch(restUrl + 'swell-reset-cache', {
 		method: 'POST',
-		cache: 'no-cache',
 		body: params,
 	})
 		.then((response) => {
 			if (response.ok) {
 				// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
-				// console.log(response);
 				return response.json();
 			}
 			throw new TypeError('Failed ajax!');
@@ -74,12 +65,21 @@ const sendCountFetch = async (params, doneFunc, failFunc) => {
 		.catch((error) => {
 			failFunc(error);
 		});
+
+	// レスポンス確認時
+	// const res = await _res;
+	// console.log('route:' + route, JSON.parse(res));
 };
 
 // キャッシュクリア処理
-const ajaxToClearCache = function (actionName) {
+const ajaxToClearCache = function (action) {
+	// nonceを正常に取得できるか
+	const nonce = window?.wpApiSettings?.nonce;
+	if (nonce === undefined) return;
+
 	const params = new URLSearchParams(); // WPのajax通す時は URLSearchParams 使う
-	params.append('action', actionName);
+	params.append('action', action);
+	params.append('_wpnonce', nonce);
 
 	const doneFunc = (response) => {
 		alert(response);
@@ -92,7 +92,7 @@ const ajaxToClearCache = function (actionName) {
 	};
 
 	// ajax処理
-	sendCountFetch(params, doneFunc, failFunc);
+	callRestApi(params, doneFunc, failFunc);
 };
 
 /**
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCacheBtn) {
 		clearCacheBtn.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('swell_clear_cache');
+			ajaxToClearCache('cache');
 		});
 	}
 
@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCacheBtn2) {
 		clearCacheBtn2.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('swell_clear_cache');
+			ajaxToClearCache('cache');
 		});
 	}
 
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCardBtn) {
 		clearCardBtn.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('swell_clear_card_cache');
+			ajaxToClearCache('card_cache');
 		});
 	}
 
@@ -131,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCardBtn2) {
 		clearCardBtn2.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('swell_clear_card_cache');
+			ajaxToClearCache('card_cache');
 		});
 	}
 });

@@ -10,8 +10,7 @@ import { addSmoothScrollEvent } from './smoothScroll';
  */
 const callRestApi = async (params, doneFunc, failFunc) => {
 	// restUrlを正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const restUrl = window.swellVars.restUrl;
+	const restUrl = window?.swellVars?.restUrl;
 	if (restUrl === undefined) return;
 
 	/* eslint no-unused-vars: 0 */

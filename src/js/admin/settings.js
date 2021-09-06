@@ -1,30 +1,31 @@
 /* eslint: no-alert: 0 */
 
 // データリセット
-const ajaxToClearData = (actionName) => {
+const callRestApi = (actionName) => {
 	let resetAction = '';
-	if ('swell_reset_pv' === actionName) {
+	if ('pv' === actionName) {
 		resetAction = 'PVのリセット';
-	} else if ('swell_reset_settings' === actionName) {
+	} else if ('customizer' === actionName) {
 		resetAction = 'カスタマイザーのリセット';
 	}
 
-	// ajaxUrl正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
+	// restUrlを正常に取得できるか
+	const restUrl = window?.swellVars?.restUrl;
+	if (restUrl === undefined) return;
 
-	// nonce
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
+	// nonceを正常に取得できるか
+	const nonce = window?.wpApiSettings?.nonce;
+	if (nonce === undefined) return;
 
 	(function ($) {
 		$.ajax({
 			type: 'POST',
-			url: ajaxUrl,
+			url: restUrl + 'swell-reset-settings',
+			beforeSend(xhr) {
+				xhr.setRequestHeader('X-WP-Nonce', nonce);
+			},
 			data: {
 				action: actionName,
-				nonce: ajaxNonce,
 			},
 		})
 			.done(function (returnData) {
@@ -58,7 +59,7 @@ addEventListener('DOMContentLoaded', function () {
 			hashTab.classList.add('act_');
 		}
 	}
-	
+
 	for (let i = 0; i < tabNavs.length; i++) {
 		tabNavs[i].addEventListener('click', function (e) {
 			e.preventDefault();
@@ -84,7 +85,7 @@ addEventListener('DOMContentLoaded', function () {
 		resetBtn.addEventListener('click', function (e) {
 			e.preventDefault();
 			if (window.confirm('本当にリセットしてもいいですか？')) {
-				ajaxToClearData('swell_reset_settings');
+				callRestApi('customizer');
 			}
 		});
 	}
@@ -95,7 +96,7 @@ addEventListener('DOMContentLoaded', function () {
 		pvResetBtn.addEventListener('click', function (e) {
 			e.preventDefault();
 			if (window.confirm('本当にリセットしてもいいですか？')) {
-				ajaxToClearData('swell_reset_pv');
+				callRestApi('pv');
 			}
 		});
 	}

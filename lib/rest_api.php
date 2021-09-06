@@ -198,7 +198,7 @@ function hook_rest_api_init() {
 		},
 	] );
 
-		// コンテンツの遅延読み込み
+	// コンテンツの遅延読み込み
 	register_rest_route( 'wp/v2', '/swell-lazyload-contents', [
 		'methods'             => 'POST',
 		'permission_callback' => '__return_true',
@@ -257,6 +257,74 @@ function hook_rest_api_init() {
 		},
 	] );
 
+	// キャッシュのクリア
+	register_rest_route( 'wp/v2', '/swell-reset-cache', [
+		'methods'             => 'POST',
+		'permission_callback' => [ '\SWELL_Theme', 'is_administrator' ],
+		'callback'            => function( $request ) {
+			if ( ! isset( $request['action'] ) ) wp_die( json_encode( [] ) );
+
+			$action = $request['action'];
+
+			// 不正なパラメータ
+			if ( ! in_array( $action, [ 'cache', 'card_cache' ], true ) ) wp_die( json_encode( [] ) );
+
+			switch ( $action ) {
+				// カスタマイザー
+				case 'cache':
+					// キャッシュ
+					\SWELL_Theme::clear_cache();
+					break;
+				// カスタマイザー
+				case 'card_cache':
+					// ブログカード
+					\SWELL_Theme::clear_card_cache();
+					break;
+			}
+
+			return 'キャッシュクリアに成功しました。';
+		},
+	] );
+
+	// 設定のクリア
+	register_rest_route( 'wp/v2', '/swell-reset-settings', [
+		'methods'             => 'POST',
+		'permission_callback' => [ '\SWELL_Theme', 'is_administrator' ],
+		'callback'            => function( $request ) {
+			if ( ! isset( $request['action'] ) ) wp_die( json_encode( [] ) );
+
+			$action = $request['action'];
+
+			// 不正なパラメータ
+			if ( ! in_array( $action, [ 'customizer', 'pv' ], true ) ) wp_die( json_encode( [] ) );
+
+			switch ( $action ) {
+				// カスタマイザー
+				case 'customizer':
+					delete_option( \SWELL_Theme::DB_NAME_CUSTOMIZER );
+					\SWELL_Theme::clear_cache();
+					break;
+
+				// PV
+				case 'pv':
+					$args      = [
+						'post_type'      => 'post',
+						'fields'         => 'ids',
+						'posts_per_page' => -1,
+					];
+					$the_query = new \WP_Query( $args );
+					if ( $the_query->have_posts() ) {
+						foreach ( $the_query->posts as $the_id ) {
+							delete_post_meta( $the_id, SWELL_CT_KEY );
+						}
+					}
+					wp_reset_postdata();
+					break;
+			}
+
+			return 'リセットに成功しました。';
+		},
+	] );
 }
 
 
