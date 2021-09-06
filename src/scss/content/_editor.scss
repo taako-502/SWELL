@@ -1,6 +1,4 @@
-@import "./common/text_style";
-@import "./common/box_style";
-@import "./common/color_palette"; //優先度高くするため、最後に
+
 // 共通
 .mce-content-body,
 .editor-styles-wrapper {
@@ -34,6 +32,9 @@
         }
     }
 
+
+    @import "./post_content";
+
     th,
     td {
 
@@ -41,8 +42,6 @@
             text-align: left;
         }
     }
-
-    @import "./common/post_content";
 
     li {
         // 前後のブロックまでフォーカスがぶっとんでいくの防止

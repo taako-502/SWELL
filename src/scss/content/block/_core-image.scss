@@ -19,14 +19,8 @@
         display: block !important;
     }
 
-    figcaption {
-
-        @extend %figcaption;
-
-        a {
-            display: inline;
-        }
-
+    figcaption a {
+        display: inline;
     }
 
     &::after {

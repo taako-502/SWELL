@@ -1,3 +1,5 @@
+@import "../foundation/mixin/_media.scss";
+
 /*
 ブロック
     .wp-block-calendar
@@ -20,7 +22,7 @@
     padding: 24px;
     color: #333;
     background: #fff;
-    border: 1px solid $color_border;
+    border: 1px solid var(--swl-color_border);
 
     @include tab {
         font-size: 14px;
@@ -31,34 +33,28 @@
 .wp-block-calendar,
 .widget_calendar {
 
-    // 5.3まではtableにクラスついていない
-    table {
+    .wp-calendar-table {
         width: 100%;
         text-align: center;
         border: none;
-    }
 
-    caption {
-        padding: 0 0 .75em;
-        color: #40464d; //.wp-block-calendarに合わせる
-        line-height: 1;
+        caption {
+            padding: 0 0 .75em;
+            color: #40464d; //.wp-block-calendarに合わせる
+            line-height: 1;
 
-        @include tab {
-            font-size: 13px;
+            @include tab {
+                font-size: 13px;
+            }
         }
     }
 
-    // th,
-    // td {
-    //     text-align: center;
-    // }
-
     thead th {
         padding: 0 0 10px;
-        color: inherit;
-        font-weight: 700;
-        background: none;
-        border: none;
+        color: inherit !important;
+        font-weight: 700 !important;
+        background: none !important;
+        border: none !important;
     }
 
     tbody {
@@ -80,31 +76,13 @@
         border: 1px solid #fff;
     }
 
+
     .pad {
         background: none;
     }
 
-    // #prev & #next は ~5.3
-    #prev,
-    #next {
-        padding-top: 8px;
-        text-transform: uppercase;
-
-        @include tab {
-            font-size: 13px;
-        }
-    }
-
-    #prev {
-        text-align: left;
-    }
-
-    #next {
-        text-align: right;
-    }
 }
 
-// 5.4~
 .wp-calendar-nav {
     display: flex;
     justify-content: space-between;

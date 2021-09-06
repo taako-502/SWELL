@@ -1,0 +1,33 @@
+// @import "../foundation/mixin/_media.scss";
+
+.wp-block-social-links {
+
+
+    .wp-block-social-link {
+        margin: 4px !important;
+
+    }
+
+    // 5.8ではもういらない
+    // .wp-block-social-link-anchor {
+    //     color: inherit;
+    // }
+
+    &.is-style-logos-only {
+
+        .wp-block-social-link-anchor {
+            padding: 0;
+        }
+        // for editor
+        .components-button {
+            padding: 0;
+        }
+    }
+}
+
+// for Front ulの影響を打ち消す
+.post_content .wp-block-social-links {
+    padding: 0;
+    list-style: none;
+}
+

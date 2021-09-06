@@ -45,9 +45,12 @@ class Pre_Parse_Blocks {
 
 
 	/**
-	 * サイドバーのチェック
+	 * ウィジェットのチェック
 	 */
 	public static function parse_widgets() {
+		// ウィジェットごと
+		add_action( 'dynamic_sidebar', [ __CLASS__, 'check_dynamic_sidebar' ] );
+
 		// add_filter( 'pre_do_shortcode_tag', [ __CLASS__, 'pre_check_do_shortcode' ], 10, 2 );
 		add_filter( 'widget_text', [ __CLASS__, 'check_widget_content_str' ], 1 );
 		add_filter( 'widget_text_content', [ __CLASS__, 'check_widget_content_str' ], 1 );
@@ -166,6 +169,13 @@ class Pre_Parse_Blocks {
 		// まだリストに追加されてない時だけ追加
 		if ( ! isset( $list[ $block_name ] ) ) {
 			$list[ $block_name ] = true;
+
+			// parse_blocks() だけだと separate なコアCSSはフッターで読み込まれてしまうのでここでキューに追加
+			if ( false !== strpos( $block_name, 'core/' ) ) {
+				$block_name = str_replace( 'core/', '', $block_name );
+				wp_enqueue_style( "wp-block-{$block_name}" );
+				// wp_deregister_style で特定のコアブロックCSSの読み込み解除も可
+			}
 		}
 
 		// インナーブロックにも同じ処理を。
@@ -208,17 +218,31 @@ class Pre_Parse_Blocks {
 	 * 文字列チェック
 	 */
 	public static function check_content_str( $content ) {
-		if ( false !== strpos( $content, '[ふきだし' ) || false !== strpos( $content, '[speech_balloon' ) ) {
-			\SWELL_Theme::$used_blocks['loos/balloon'] = true;
+
+		if ( ! isset( \SWELL_Theme::$used_blocks['loos/balloon'] ) ) {
+			if ( false !== strpos( $content, '[ふきだし' ) || false !== strpos( $content, '[speech_balloon' ) ) {
+				\SWELL_Theme::$used_blocks['loos/balloon'] = true;
+			}
 		}
-		if ( false !== strpos( $content, 'cap_box' ) ) {
-			\SWELL_Theme::$used_blocks['loos/cap-block'] = true;
+		if ( ! isset( \SWELL_Theme::$used_blocks['loos/cap-block'] ) ) {
+			if ( false !== strpos( $content, 'cap_box' ) ) {
+				\SWELL_Theme::$used_blocks['loos/cap-block'] = true;
+			}
 		}
-		if ( false !== strpos( $content, '[full_wide_content' ) ) {
-			\SWELL_Theme::$used_blocks['loos/full-wide'] = true;
+		if ( ! isset( \SWELL_Theme::$used_blocks['loos/full-wide'] ) ) {
+			if ( false !== strpos( $content, '[full_wide_content' ) ) {
+				\SWELL_Theme::$used_blocks['loos/full-wide'] = true;
+			}
 		}
-		if ( false !== strpos( $content, '[カスタムバナー' ) || false !== strpos( $content, '[custom_banner' ) ) {
-			\SWELL_Theme::$used_blocks['loos/banner-link'] = true;
+		if ( ! isset( \SWELL_Theme::$used_blocks['loos/banner-link'] ) ) {
+			if ( false !== strpos( $content, '[カスタムバナー' ) || false !== strpos( $content, '[custom_banner' ) ) {
+				\SWELL_Theme::$used_blocks['loos/banner-link'] = true;
+			}
+		}
+		if ( ! isset( \SWELL_Theme::$used_blocks['loos/table'] ) ) {
+			if ( false !== strpos( $content, '<table' ) ) {
+				\SWELL_Theme::$used_blocks['core/table'] = true;
+			}
 		}
 
 	}
@@ -230,7 +254,26 @@ class Pre_Parse_Blocks {
 	public static function check_widget_content_str( $content ) {
 		self::check_content_str( $content );
 		return $content;
+	}
+
+
+	/**
+	 * check_dynamic_sidebar
+	 */
+	public static function check_dynamic_sidebar( $widget ) {
+		$classname = $widget['classname'] ?? '';
+		var_dump( $classname );
+		// widget_categories / widget_archive
+
+		if ( 'widget_calendar' === $classname ) {
+			\SWELL_Theme::$used_blocks['core/calendar'] = true;
+		} elseif ( 'widget_tag_cloud' === $classname ) {
+			\SWELL_Theme::$used_blocks['core/tag-cloud'] = true;
+		} elseif ( 'widget_recent_entries' === $classname ) {
+			\SWELL_Theme::$used_blocks['core/latest-posts'] = true;
+		}
 
 	}
+
 
 }

@@ -1,4 +1,4 @@
-//プルクォート
+
 .wp-block-pullquote {
     width: 100%;
     padding: 1em 0;
@@ -14,7 +14,7 @@
         text-align: right;
     }
 
-    & > blockquote {
+    > blockquote {
         margin: 0;
         padding: 1em;
         background: none;

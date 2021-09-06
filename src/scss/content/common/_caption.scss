@@ -1,0 +1,15 @@
+// テーブル
+.p-articleThumb__caption,
+.wp-block-image figcaption,
+.wp-block-video figcaption,
+.wp-block-table figcaption,
+.wp-block-embed > figcaption {
+
+    display: block !important;
+    margin-top: .75em;
+    margin-bottom: 0; //core上書き
+    color: inherit; //core上書き
+    font-size: .8em;
+    text-align: center;
+    opacity: .8;
+}

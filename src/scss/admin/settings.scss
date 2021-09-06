@@ -4,12 +4,12 @@
 @import "../foundation/placeholder";
 @import "../foundation/plugins/icomoon"; //@extend を使うため。→ アイコンフォントが404になるがそれはadmin.cssから読み込めてる。
 @import "../foundation/base/keyframes";
-@import "../editor/common/color_palette";
+@import "../content/common/color_palette";
 
 // プレビュー用にブロックのスタイル読み込む
 @import "../object/project/blogCard";
-@import "../editor/common/box_style";
-@import "../editor/block/core/core-list";
+@import "../content/common/box_style";
+@import "../content/block/core-list";
 @import "../../gutenberg/blocks/**/_common.scss";
 @import "../../gutenberg/blocks/**/index.scss";
 

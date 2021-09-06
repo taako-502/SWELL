@@ -31,7 +31,7 @@ if ( IS_MOBILE && is_active_sidebar( 'footer_sp' ) ) {
 			'before' => '<div class="w-footer__box">',
 			'after'  => '</div>',
 			'echo'   => false,
-			'active' => false,
+			'active' => true,
 		] );
 	}
 	if ( is_active_sidebar( 'footer_box3' ) ) {

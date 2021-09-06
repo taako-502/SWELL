@@ -1,6 +1,3 @@
-@import "./common/text_style";
-@import "./common/box_style";
-@import "./common/color_palette"; //優先度高くするため、最後に
 
 // フロントで読み込む
 .post_content {
@@ -46,7 +43,7 @@
         margin-bottom: 0 !important;
     }
 
-    @import "./common/post_content";
+    @import "./post_content";
 
     #sidebar & {
         margin: 0;
@@ -83,12 +80,12 @@
 // インナーブロック内のコンテンツは 小さめのマージン で。
 div[class*="is-style-"], //tinyMCE と 昔の 「スタイルブロック」用
 .wp-block-group__inner-container,
-.c-tabBody__item, //タブコンテンツ
-.wp-block-column, //カラム
-.cap_box_content, //キャプブロック
-.swell-block-dl__dd, //DLブロック
 .wp-block-cover__inner-container, //カバーブロック
 .wp-block-media-text__content, //メディアと文章ブロック
+.wp-block-column, //カラム
+.c-tabBody__item, //タブコンテンツ
+.cap_box_content, //キャプブロック
+.swell-block-dl__dd, //DLブロック
 .swell-block-accordion__body,  //アコーディオン
 .swell-block-step__body, //ステップブロック
 .faq_a,
@@ -100,7 +97,6 @@ div[class*="is-style-"], //tinyMCE と 昔の 「スタイルブロック」用
 }
 
 // フルワイドは 2em に戻す。
-.full_wide_content,
 .swell-block-fullWide__inner, //フルワイド
 .alignfull > .wp-block-group__inner-container,
 .alignfull > .wp-block-cover__inner-container {

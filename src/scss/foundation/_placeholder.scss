@@ -58,15 +58,6 @@
     content: "";
 }
 
-%figcaption {
-    display: block !important;
-    margin-top: .75em;
-    margin-bottom: 0; //core上書き
-    color: inherit; //core上書き
-    font-size: .8em;
-    text-align: center;
-    opacity: .8;
-}
 
 // 画像用のシャドウ
 %imageShadow {

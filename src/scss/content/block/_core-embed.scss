@@ -53,16 +53,6 @@
 //     display: none !important;
 // }
 
-
-.wp-block-embed {
-    // overflow: hidden; //ブログカードがおかしくなるよ
-    // YouTube とかには figcaption も設定できる
-    > figcaption {
-
-        @extend %figcaption;
-    }
-}
-
 .wp-block-embed-facebook,
 .wp-block-embed-twitter,
 .wp-block-embed-instagram {

@@ -8,13 +8,26 @@
 // root
 @import "foundation/root";
 
-//
+// object
 @import "object/**";
-@import "editor/editor";
-@import "editor/block/**";
+
+// content
+@import "content/common/caption";
+@import "content/common/text_style";
+@import "content/common/box_style";
+@import "content/common/color_palette"; //優先度高くするため、commonの中では最後で読み込む
+@import "content/editor";
+@import "content/block/**";
+
+// editor
 @import "editor/gutenberg/**";
 @import "editor/tinymce/**";
-@import "../gutenberg/blocks/**/_common.scss";
+
+// coreブロックの追加CSS
+@import "blocks/**";
+
+// swellブロック
 @import "../gutenberg/blocks/**/index.scss";
+@import "../gutenberg/blocks/**/_common.scss";
 @import "../gutenberg/blocks/**/_editor.scss";
 

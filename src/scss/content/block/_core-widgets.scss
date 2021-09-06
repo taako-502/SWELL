@@ -16,27 +16,3 @@
     padding-left: 0;
     list-style: none;
 }
-
-
-.wp-block-social-links {
-
-    .post_content & {
-        padding: 0;
-        list-style: none;
-    }
-
-    .wp-block-social-link {
-        margin: 4px;
-    }
-
-    a {
-        color: inherit;
-    }
-
-    &.is-style-logos-only {
-
-        a {
-            padding: 0;
-        }
-    }
-}

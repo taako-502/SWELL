@@ -8,13 +8,15 @@ require_once T_DIRE . '/lib/load/front.php';
 require_once T_DIRE . '/lib/load/admin.php';
 require_once T_DIRE . '/lib/load/block_assets.php';
 
+
 add_action( 'init', function() {
 
 	if ( 1 ) {
 		add_filter( 'should_load_separate_core_block_assets', '__return_true' );
+		// wp_enqueue_style( 'wp-block-library' );
 	}
 
-	// add_action( 'wp_head', 'gutenberg_maybe_inline_styles', 1 ); より前で処理
+	// ( 'wp_head', 'gutenberg_maybe_inline_styles', 1 ); より前で処理
 	add_action( 'wp_head', __NAMESPACE__ . '\pre_parse_blocks', 0 );
 	function pre_parse_blocks() {
 		if ( \SWELL_Theme::is_separate_css() ) {
@@ -22,7 +24,6 @@ add_action( 'init', function() {
 		}
 	}
 }, 9 );
-
 
 
 add_action( 'wp_body_open', __NAMESPACE__ . '\wp_enqueue_scripts__ttt', 8 );
@@ -42,7 +43,7 @@ function wp_enqueue_scripts__ttt() {
 }
 </style>
 	<?php
-	// echo '<pre class="dump-blocks u-fz-s">';
-	// var_dump( array_keys( \SWELL_Theme::$used_blocks ) );
-	// echo '</pre>';
+	echo '<pre class="dump-blocks u-fz-s pc_">';
+	var_dump( array_keys( \SWELL_Theme::$used_blocks ) );
+	echo '</pre>';
 }

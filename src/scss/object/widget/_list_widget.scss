@@ -1,27 +1,6 @@
 /*
     リスト系のウィジェットに関するもの
 */
-// 「最新の投稿」は 「>」アイコン なし
-.widget_recent_entries {
-
-    li {
-        position: relative;
-        margin: 0;
-        border-bottom: solid 1px var(--color_border);
-    }
-
-    a {
-        position: relative;
-        display: block;
-        padding: .75em .5em;
-        color: inherit;
-        line-height: 1.4;
-
-        &:hover {
-            background-color: rgba(150, 150, 150, .05);
-        }
-    }
-}
 
 // 基本スタイル
 .wp-block-categories,
@@ -85,6 +64,7 @@
     }
 }
 
+// ドロップダウン時のフォームラベル
 .widget_categories,
 .wp-block-categories {
 

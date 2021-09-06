@@ -91,17 +91,32 @@ function load_front_styles() {
 function load_separated_styles() {
 
 	$separated_blocks = [
-		'loos/accordion'   => '/build/blocks/accordion/index.css',
-		'loos/balloon'     => '/build/blocks/balloon/index.css',
-		'loos/banner-link' => '/build/blocks/banner-link/index.css',
-		'loos/cap-block'   => '/build/blocks/cap-block/index.css',
-		'loos/columns'     => '/build/blocks/columns/index.css',
-		'loos/dl'          => '/build/blocks/dl/index.css',
-		'loos/faq'         => '/build/blocks/faq/index.css',
-		'loos/full-wide'   => '/build/blocks/full-wide/index.css',
-		'loos/step'        => '/build/blocks/step/index.css',
-		'loos/tab'         => '/build/blocks/tab/index.css',
-		'core/columns'     => '/build/blocks/tab/index.css',
+		'core/button'       => '/assets/css/blocks/button.css',
+		'core/calendar'     => '/assets/css/blocks/calendar.css',
+		'core/columns'      => '/assets/css/blocks/columns.css',
+		'core/cover'        => '/assets/css/blocks/cover.css',
+		'core/file'         => '/assets/css/blocks/file.css',
+		'core/gallery'      => '/assets/css/blocks/gallery.css',
+		'core/media-text'   => '/assets/css/blocks/media-text.css',
+		'core/latest-posts' => '/assets/css/blocks/latest-posts.css',
+		'core/pullquote'    => '/assets/css/blocks/pullquote.css',
+		'core/search'       => '/assets/css/blocks/search.css',
+		'core/separator'    => '/assets/css/blocks/separator.css',
+		'core/social-links' => '/assets/css/blocks/social-links.css',
+		'core/table'        => '/assets/css/blocks/table.css',
+		'core/tag-cloud'    => '/assets/css/blocks/tag-cloud.css',
+
+		// swell
+		'loos/accordion'    => '/build/blocks/accordion/index.css',
+		'loos/balloon'      => '/build/blocks/balloon/index.css',
+		'loos/banner-link'  => '/build/blocks/banner-link/index.css',
+		'loos/cap-block'    => '/build/blocks/cap-block/index.css',
+		'loos/columns'      => '/build/blocks/columns/index.css',
+		'loos/dl'           => '/build/blocks/dl/index.css',
+		'loos/faq'          => '/build/blocks/faq/index.css',
+		'loos/full-wide'    => '/build/blocks/full-wide/index.css',
+		'loos/step'         => '/build/blocks/step/index.css',
+		'loos/tab'          => '/build/blocks/tab/index.css',
 	];
 
 	// 使われたブロックだけ読み込むかどうか
