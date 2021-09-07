@@ -1,4 +1,4 @@
-// import DOM from './data/domData';
+import { postRestApi } from '@swell-js/helper/callRestApi';
 
 window.isSwlAdCtConnecting = false;
 
@@ -9,7 +9,7 @@ const observerOptions = {
 };
 
 /**
- * 広告タグのクリックを計測
+ * 広告タグ、ボタンの計測
  */
 export default function () {
 	// IntersectionObserverをブラウザがサポートしているかどうか
@@ -20,14 +20,16 @@ export default function () {
 	// fetch使えるか
 	if (!window.fetch) return;
 
-	// ajaxUrl正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
+	// restUrlを正常に取得できるか
+	const restUrl = window?.swellVars?.restUrl;
+	if (restUrl === undefined) return;
 
-	// nonce
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
+	// postIDセット
+	const content = document.querySelector('#content');
+	const postID = content.getAttribute('data-postid');
+	if (!postID) return;
+
+	window.swellVars.postID = postID;
 
 	// 広告タグ機能の計測
 	adBoxCount();
@@ -36,22 +38,15 @@ export default function () {
 	buttonCount();
 }
 
-// ajax処理
-const sendCountFetch = async (params) => {
-	// ajaxUrl を正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
+/**
+ * REST APIの呼び出し
+ */
+const callRestApi = async (route, params) => {
+	const restUrl = window.swellVars.restUrl;
 
-	// nonce を正常に取得できるか
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
-
-	params.append('nonce', ajaxNonce);
-
-	const responseJSON = await fetch(ajaxUrl, {
+	/* eslint no-unused-vars: 0 */
+	const _res = fetch(restUrl + route, {
 		method: 'POST',
-		cache: 'no-cache',
 		body: params,
 	}).then((response) => {
 		if (response.ok) {
@@ -61,7 +56,9 @@ const sendCountFetch = async (params) => {
 		throw new TypeError('Failed ajax!');
 	});
 
-	// console.log(responseJSON);
+	// レスポンス確認時
+	// const res = await _res;
+	// console.log('route:' + route, JSON.parse(res));
 };
 
 /**
@@ -81,8 +78,6 @@ const buttonCount = () => {
 			if (entry.isIntersecting) {
 				const button = entry.target;
 				const buttonID = button.getAttribute('data-id');
-				// console.log('view!', buttonID);
-
 				window.isSwlAdCtConnecting = true;
 				setTimeout(() => {
 					window.isSwlAdCtConnecting = false;
@@ -123,24 +118,32 @@ const buttonCount = () => {
 
 	// そのページ自体の表示回数の計測
 	if (buttonIDs.length > 0) {
-		// console.log('buttonIDs', buttonIDs);
 		ctButtonData(buttonIDs, 'pv');
 	}
 };
 
+// ボタンイベントの処理
 const ctButtonData = (buttonID, ctName) => {
-	const postID = window.swellVars.postID || 0;
+	const postID = window?.swellVars?.postID;
 	if (!postID) return;
 
 	// 受け渡すデータ
-	const params = new URLSearchParams(); // WPのajax通す時は URLSearchParams 使う
-	params.append('action', 'swell_ct_btn_data');
-	params.append('btnid', buttonID);
-	params.append('postid', postID);
-	params.append('ct_name', ctName);
+	const params = { postid: postID, btnid: buttonID, ct_name: ctName };
 
-	// ajax実行
-	sendCountFetch(params);
+	// fetch
+	postRestApi('swell-ct-btn-data', params);
+};
+
+// 広告イベントの処理
+const ctAdData = (adData) => {
+	// 受け渡すデータ
+	const params = { adid: adData.adID, ct_name: adData.ctName };
+	if (adData.target) {
+		params.target = adData.target;
+	}
+
+	// fetch
+	postRestApi('swell-ct-ad-data', params);
 };
 
 /**
@@ -167,7 +170,7 @@ const adBoxCount = () => {
 				// 少しだけ遅らせてpvカウントや他の計測とのバッティングを回避
 				const delayTime = window.isSwlAdCtConnecting ? 120 : 10;
 				setTimeout(() => {
-					countAdBoxImp(adID);
+					ctAdData({ adID, ctName: 'imp' });
 				}, delayTime);
 
 				//表示計測は一度だけでいいので、一回処理されれば削除
@@ -190,78 +193,53 @@ const adBoxCount = () => {
 		if ('text' === adType) {
 			const adLink = adBox.querySelector('a');
 			if (adLink) {
-				adLink.onclick = function (e) {
-					e.preventDefault();
-					countAdClicked(adID, 'tag');
-					adLink.onclick = () => true;
-					adLink.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'tag' };
+				adLink.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adLink.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 		} else {
 			// クリック計測
 			const adImg = adBox.querySelector('.p-adBox__img a');
 			if (adImg) {
-				adImg.onclick = function (e) {
-					e.preventDefault();
-					countAdClicked(adID, 'tag');
-					adImg.onclick = () => true;
-					adImg.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'tag' };
+				adImg.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adImg.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 			const adBtn1 = adBox.querySelector('.-btn1');
 			if (adBtn1) {
-				adBtn1.onclick = function (e) {
-					e.preventDefault();
-					countAdClicked(adID, 'btn1');
-					adBtn1.onclick = () => true;
-					adBtn1.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'btn1' };
+				adBtn1.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adBtn1.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 			const adBtn2 = adBox.querySelector('.-btn2');
 			if (adBtn2) {
-				adBtn2.onclick = function (e) {
-					e.preventDefault();
-					countAdClicked(adID, 'btn2');
-					adBtn2.onclick = () => true;
-					adBtn2.click();
-				};
+				const adData = { adID, ctName: 'click', target: 'adBtn2' };
+				adBtn2.addEventListener('click', (e) => clickedAdEvent(e, adData));
+				adBtn2.addEventListener('mousedown', (e) => clickedAdEvent(e, adData));
 			}
 		}
 	});
 
 	// そのページ自体の表示回数の計測
 	if (adIDs.length > 0) {
-		// console.log(adIDs);
-		countPageView(adIDs.join(','));
+		ctAdData({ adID: adIDs.join(','), ctName: 'pv' });
 	}
 };
 
-const countAdClicked = async (adID, target) => {
-	// 受け渡すデータ（WPのajax通す時は URLSearchParams 使う）
-	const params = new URLSearchParams();
-	params.append('action', 'swell_clicked_ad');
-	params.append('id', adID); //広告ID
-	params.append('target', target); // 何をクリックしたか
+const clickedAdEvent = (e, adData) => {
+	// ホイールボタン以外での mousedown は無効化
+	if ('mousedown' === e.type && 1 !== e.button) {
+		return;
+	}
 
-	sendCountFetch(params);
-};
+	// クリックされたボックス
+	const adBox = document.querySelector(`.p-adBox[data-id="${adData.adID}"]`);
+	if (null === adBox) return;
 
-// PVカウント
-const countPageView = async (adIDs) => {
-	// 受け渡すデータ（WPのajax通す時は URLSearchParams 使う）
-	const params = new URLSearchParams();
-	params.append('action', 'swell_ct_ad_pv');
-	params.append('id', adIDs);
+	// 二重計測防止
+	const clicked = adBox.getAttribute('data-clicked');
+	if (clicked) return;
 
-	sendCountFetch(params);
-};
-
-// IMPカウント
-const countAdBoxImp = async (adID) => {
-	// 受け渡すデータ（WPのajax通す時は URLSearchParams 使う）
-	const params = new URLSearchParams();
-	params.append('action', 'swell_ct_ad_imp');
-	params.append('id', adID);
-
-	sendCountFetch(params);
+	adBox.setAttribute('data-clicked', '1');
+	ctAdData(adData);
 };
