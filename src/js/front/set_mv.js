@@ -3,7 +3,7 @@
 // console.log('SWELL: set_mv.js');
 
 const isPC = 959 < window.innerWidth ? true : false;
-const isMobile = 600 > window.innerWidth ? true : false;
+// const isMobile = 600 > window.innerWidth ? true : false;
 
 /**
  * メインスライダー
@@ -106,7 +106,7 @@ function setMvSlider(mainVisual, mvInner) {
 	};
 
 	// swiperオプション上書き
-	let slidesPV = isMobile ? swellVars.mvSlideNumSp : swellVars.mvSlideNum;
+	let slidesPV = isPC ? swellVars.mvSlideNum : swellVars.mvSlideNumSp;
 	slidesPV = parseFloat(slidesPV);
 
 	//スライド表示枚数による分岐

@@ -928,9 +928,12 @@ trait Get {
 		}
 
 		$loading = $args['loading'] ?? 'none';
-		if ( 'lazysizes' === $loading ) {
+		if ( 'lazysizes' === $loading || 'swiper' === $loading ) {
 			$attrs['srcset']      = $args['placeholder'] ?? self::$placeholder;
-			$attrs['data-srcset'] = $srcset;
+			$attrs['data-srcset'] = $srcset ?: $src;
+			if ( 'swiper' === $loading ) {
+				$attrs['class'] = 'swiper-lazy';
+			}
 		} else {
 			$attrs['srcset'] = $srcset ?: $src;
 
@@ -955,33 +958,37 @@ trait Get {
 		// PC画像
 		$picture_img = '';
 		$pc_imgid    = self::get_setting( "slider{$i}_imgid" );
+		$pc_imgurl   = self::get_setting( "slider{$i}_img" );
+		$sp_imgid    = self::get_setting( "slider{$i}_imgid_sp" );
+		$sp_imgurl   = self::get_setting( "slider{$i}_img_sp" );
 		$img_alt     = self::get_setting( "slider{$i}_alt" );
 		$img_class   = 'img' === self::get_setting( 'mv_slide_size' ) ? 'p-mainVisual__img' : 'p-mainVisual__img u-obf-cover';
 
-		if ( 1 === $i && $pc_imgid ) {
+		if ( 1 !== $i ) {
+			$lazy_type = 'swiper';
+		}
+
+		if ( $pc_imgid ) {
 			$picture_img = self::get_image( $pc_imgid, [
 				'class'   => $img_class,
 				'alt'     => $img_alt,
 				'loading' => $lazy_type,
 			] );
+		} elseif ( $pc_imgurl ) {
+			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . ' swiper-lazy">';
 		} elseif ( 1 === $i ) {
-
 			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '">';
-
-		} elseif ( $pc_imgid ) {
-			$picture_img = self::get_image( $pc_imgid, [
-				'class'   => $img_class,
-				'alt'     => $img_alt,
-				'loading' => 'swiper',
-			] );
 		}
 
-		// SP画像
-		$source         = '';
-		$sp_imgid       = self::get_setting( "slider{$i}_imgid_sp" );
-		$picture_source = $sp_imgid ? self::get_img_source( $sp_imgid, [
-			'loading' => $lazy_type,
-		] ) : '';
+		// SP用画像
+		$picture_source = '';
+		if ( $sp_imgid ) {
+			$picture_source = self::get_img_source( $sp_imgid, [
+				'loading' => $lazy_type,
+			] );
+		} elseif ( $sp_imgurl ) {
+			$picture_source = '<source media="(max-width: 959px)" data-srcset="' . esc_url( $sp_imgurl ) . '" class="swiper-lazy">';
+		}
 
 		return $picture_source . $picture_img;
 	}
@@ -995,7 +1002,9 @@ trait Get {
 
 		if ( false !== strpos( $meta, 'http' ) ) {
 			$id = attachment_url_to_postid( $meta );
-			update_post_meta( $post_id, 'swell_meta_ttlbg', (string) $id );
+			if ( $id ) {
+				update_post_meta( $post_id, 'swell_meta_ttlbg', (string) $id );
+			}
 		} else {
 			$id = (int) $meta;
 		}
@@ -1019,7 +1028,9 @@ trait Get {
 
 		if ( false !== strpos( $meta, 'http' ) ) {
 			$id = attachment_url_to_postid( $meta );
-			update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			if ( $id ) {
+				update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			}
 		} else {
 			$id = (int) $meta;
 		}
