@@ -13,7 +13,25 @@ function wp_enqueue_scripts() {
 	load_front_styles();
 	load_front_scripts();
 	load_plugins();
+
+	// add_filter( 'style_loader_tag', __NAMESPACE__ . '\load_css_async', 10, 4 );
 }
+
+// CSSを非同期で読み込む
+function load_css_async( $html, $handle, $href, $media ) {
+
+	if ( 'swell_luminous' === $handle ) {
+		// 元の link 要素の HTML（改行が含まれているようなので前後の空白文字を削除）
+		$default_html = trim( $html );
+
+		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+		$html = '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . '" media="print" onload="this.media=\'all\'">' .
+		'<noscript> ' . $default_html . '</noscript>' . PHP_EOL;
+		}
+
+	return $html;
+}
+
 
 /**
  * フロント用のスクリプト
