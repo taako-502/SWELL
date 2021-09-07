@@ -221,7 +221,7 @@ function hook_rest_api_init() {
 					ob_start();
 
 					// ループ回す
-					$post_id = $_POST['post_id'] ?: '';
+					$post_id = $_POST['post_id'] ?? '';
 
 					$the_query = new \WP_Query( [
 						'p'              => $post_id,

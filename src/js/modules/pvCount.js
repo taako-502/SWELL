@@ -1,4 +1,5 @@
 import DOM from './data/domData';
+import { postRestApi } from '@swell-js/helper/callRestApi';
 
 /**
  * PVカウント処理
@@ -13,17 +14,6 @@ export const pvCount = () => {
 	if (!isCount) return;
 
 	// 受け渡すデータ
-	const params = new URLSearchParams();
-	params.append('postid', postID);
-
-	fetch(window.swellVars.restUrl + 'swell-ct-pv', {
-		method: 'POST',
-		body: params,
-	}).then((response) => {
-		if (response.ok) {
-			// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
-			return response.json();
-		}
-		throw new TypeError('Failed ajax!');
-	});
+	const params = { postid: postID };
+	postRestApi('swell-ct-pv', params);
 };

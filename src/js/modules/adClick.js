@@ -1,3 +1,5 @@
+import { postRestApi } from '@swell-js/helper/callRestApi';
+
 window.isSwlAdCtConnecting = false;
 
 const observerOptions = {
@@ -122,32 +124,26 @@ const buttonCount = () => {
 
 // ボタンイベントの処理
 const ctButtonData = (buttonID, ctName) => {
-	const postID = window.swellVars.postID;
-	// 受け渡すデータ
-	const route = 'swell-ct-btn-data';
-	const params = new URLSearchParams();
-	params.append('btnid', buttonID);
-	params.append('postid', postID);
-	params.append('ct_name', ctName);
+	const postID = window?.swellVars?.postID;
+	if (!postID) return;
 
-	// REST API呼び出し
-	callRestApi(route, params);
+	// 受け渡すデータ
+	const params = { postid: postID, btnid: buttonID, ct_name: ctName };
+
+	// fetch
+	postRestApi('swell-ct-btn-data', params);
 };
 
 // 広告イベントの処理
 const ctAdData = (adData) => {
 	// 受け渡すデータ
-	const route = 'swell-ct-ad-data';
-	const params = new URLSearchParams();
-	params.append('adid', adData.adID); //広告ID
-	params.append('ct_name', adData.ctName);
-
+	const params = { adid: adData.adID, ct_name: adData.ctName };
 	if (adData.target) {
-		params.append('target', adData.target);
+		params.target = adData.target;
 	}
 
-	// REST API呼び出し
-	callRestApi(route, params);
+	// fetch
+	postRestApi('swell-ct-ad-data', params);
 };
 
 /**

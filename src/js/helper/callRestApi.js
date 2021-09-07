@@ -28,7 +28,6 @@ export const postRestApi = async (route, params, doneFunc = undefined, failFunc 
 			throw new TypeError(`Failed callRestApi: ${response.status}`);
 		})
 		.then((jsonData) => {
-			// console.log('done: ', jsonData);
 			if (doneFunc) {
 				doneFunc(jsonData); // jsonData: fetch で response.json()された値
 			}
