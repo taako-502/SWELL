@@ -1,102 +1,49 @@
-/* eslint: no-alert: 0 */
-
-// データリセット
-const ajaxToClearData = (actionName) => {
-	let resetAction = '';
-	if ('swell_reset_pv' === actionName) {
-		resetAction = 'PVのリセット';
-	} else if ('swell_reset_settings' === actionName) {
-		resetAction = 'カスタマイザーのリセット';
-	}
-
-	// ajaxUrl正常に取得できるか
-	if (window.swellVars === undefined) return;
-	const ajaxUrl = window.swellVars.ajaxUrl;
-	if (ajaxUrl === undefined) return;
-
-	// nonce
-	const ajaxNonce = window.swellVars.ajaxNonce;
-	if (ajaxNonce === undefined) return;
-
-	(function ($) {
-		$.ajax({
-			type: 'POST',
-			url: ajaxUrl,
-			data: {
-				action: actionName,
-				nonce: ajaxNonce,
-			},
-		})
-			.done(function (returnData) {
-				// リクエスト成功時
-				alert(returnData);
-			})
-			.fail(function () {
-				// リクエスト失敗時
-				alert(resetAction + 'に失敗しました。');
-			});
-	})(window.jQuery);
-};
+import { postRestApi } from '@swell-js/helper/callRestApi';
+/* eslint no-alert: 0 */
+/* eslint no-console: 0 */
 
 /**
- * 設定ページのタブ切り替え
+ * データリセットボタンの処理
  */
 addEventListener('DOMContentLoaded', function () {
-	/*
-	const tabNavs = document.querySelectorAll('.nav-tab');
-	const tabContents = document.querySelectorAll('.tab-contents');
+	// nonceを正常に取得できるか
+	const nonce = window?.wpApiSettings?.nonce;
+	if (nonce === undefined) return;
 
-	if (location.hash) {
-		const hashTarget = document.querySelector(location.hash);
-		const hashTab = document.querySelector('[href="' + location.hash + '"]');
-		const actTabNav = document.querySelector('.nav-tab.act_');
-		const actTabContent = document.querySelector('.tab-contents.act_');
-		if (hashTarget && hashTab && actTabNav && actTabContent) {
-			actTabNav.classList.remove('act_');
-			actTabContent.classList.remove('act_');
-			hashTarget.classList.add('act_');
-			hashTab.classList.add('act_');
+	const params = {
+		_wpnonce: nonce,
+	};
+
+	const doneFunc = (response) => {
+		alert(response);
+	};
+
+	const failFunc = () => {
+		alert('リセットに失敗しました。');
+	};
+
+	const clickedFunc = (actionName) => {
+		if (window.confirm('本当にリセットしてもいいですか？')) {
+			params.action = actionName;
+			postRestApi('swell-reset-settings', params, doneFunc, failFunc);
 		}
-	}
-	
-	for (let i = 0; i < tabNavs.length; i++) {
-		tabNavs[i].addEventListener('click', function (e) {
-			e.preventDefault();
-			const targetHash = e.target.getAttribute('href');
-
-			// History APIでURLを書き換える（ location.hash でやると 移動してしまう)
-			history.replaceState(null, null, targetHash);
-
-			if (!tabNavs[i].classList.contains('act_')) {
-				document.querySelector('.nav-tab.act_').classList.remove('act_');
-				tabNavs[i].classList.add('act_');
-
-				document.querySelector('.tab-contents.act_').classList.remove('act_');
-				tabContents[i].classList.add('act_');
-			}
-		});
-	}
-	*/
+	};
 
 	// カスタマイザーのクリア（設定画面）
 	const resetBtn = document.getElementById('swell_settings_btn___reset_settings');
 	if (null !== resetBtn) {
-		resetBtn.addEventListener('click', function (e) {
+		resetBtn.addEventListener('click', (e) => {
 			e.preventDefault();
-			if (window.confirm('本当にリセットしてもいいですか？')) {
-				ajaxToClearData('swell_reset_settings');
-			}
+			clickedFunc('customizer');
 		});
 	}
 
 	// PVリセット
 	const pvResetBtn = document.getElementById('swell_settings_btn___reset_pv');
 	if (null !== pvResetBtn) {
-		pvResetBtn.addEventListener('click', function (e) {
+		pvResetBtn.addEventListener('click', (e) => {
 			e.preventDefault();
-			if (window.confirm('本当にリセットしてもいいですか？')) {
-				ajaxToClearData('swell_reset_pv');
-			}
+			clickedFunc('pv');
 		});
 	}
 });

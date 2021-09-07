@@ -31,8 +31,15 @@ trait Attrs {
 	public static function content_attrs() {
 		$attrs = '';
 		if ( is_single() || is_page() || ( ! is_front_page() && is_home() ) ) {
-			$attrs .= ' data-postid="' . get_queried_object_id() . '"';
+			$the_id = get_queried_object_id();
+			$attrs .= ' data-postid="' . $the_id . '"';
 		}
+
+		$is_bot = self::is_bot() || is_robots();
+		if ( is_singular( self::$post_types_for_pvct ) && ! is_user_logged_in() && ! $is_bot ) {
+			$attrs .= ' data-pvct="true"';
+		}
+
 		echo trim( apply_filters( 'swell_content_attrs', $attrs ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 

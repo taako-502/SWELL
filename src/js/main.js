@@ -26,7 +26,8 @@ import { setupFixHeader, setFixHeaderPosition } from '@swell-js/modules/setupFix
 import addClickEvents from '@swell-js/modules/addClickEvents';
 import adClick from '@swell-js/modules/adClick';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
-import { ajaxToLoadContents } from '@swell-js/modules/wpAjax';
+import { pvCount } from '@swell-js/modules/pvCount';
+import { lazyLoadContents } from '@swell-js/modules/lazyLoadContents';
 import { removeNoreferrer } from '@swell-js/modules/setPostContent';
 
 /**
@@ -54,6 +55,12 @@ const urlHash = location.hash;
  * PCとSPで画像切り替える場合の処理
  */
 // method.LazyHook(isPC);
+
+window.onpageshow = function (event) {
+	if (event.persisted) {
+		// なんらかの処理
+	}
+};
 
 /**
  * DOMContentLoaded
@@ -140,12 +147,15 @@ window.addEventListener('load', function () {
 		if (null !== hashTarget) smoothScroll(hashTarget, smoothOffset);
 	}
 
+	// PVカウント
+	pvCount();
+
 	// コンテンツの後読み込み
-	ajaxToLoadContents();
+	lazyLoadContents();
 
 	/**
 	 * SWELLへのリンクを検知して noreferrer 削除する
-	 * ! ajaxToLoadContents よりあとで !
+	 * ! lazyLoadContents よりあとで !
 	 */
 	removeNoreferrer();
 

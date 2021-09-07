@@ -1,4 +1,5 @@
 (function ($) {
+	// eslint-disable-next-line no-console
 	console.log('SWELL: Loaded ad_tag.js.');
 
 	$(function () {
@@ -104,24 +105,29 @@
 
 		// リセットボタン
 		$('.swl-adDataResetBtn').on('click', function () {
+			// eslint-disable-next-line no-alert
 			if (window.confirm('本当にリセットしてもいいですか？')) {
 				const $this = $(this);
 				const adID = $this.attr('data-id');
+				const nonce = window.wpApiSettings.nonce;
 
 				$.ajax({
 					type: 'POST',
-					url: window.swellVars.ajaxUrl,
+					url: window.swellVars.restUrl + 'swell-reset-ad-data',
+					beforeSend(xhr) {
+						xhr.setRequestHeader('X-WP-Nonce', nonce);
+					},
 					data: {
-						action: 'swell_reset_ad_data',
-						nonce: window.swellVars.ajaxNonce,
 						id: adID,
 					},
 				})
 					.done(function (returnData) {
+						// eslint-disable-next-line no-alert
 						alert(returnData);
 						location.reload();
 					})
 					.fail(function () {
+						// eslint-disable-next-line no-alert
 						alert('リセットに失敗しました。');
 					});
 			}
