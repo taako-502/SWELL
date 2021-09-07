@@ -43,6 +43,10 @@ function load_front_scripts() {
 	// 管理画面用をログイン時のみ読み込む（ツールバーのキャッシュクリア処理に使用）
 	if ( is_user_logged_in() ) {
 		wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.min.js', [], SWELL_VERSION, true );
+		wp_localize_script( 'swell_admin_script', 'wpApiSettings', [
+			'root'  => esc_url_raw( rest_url() ),
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+		] );
 	}
 }
 

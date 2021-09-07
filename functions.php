@@ -91,9 +91,6 @@ class SWELL_Theme extends \SWELL_Theme\Theme_Data {
 		// REST API
 		require_once T_DIRE . '/lib/rest_api.php';
 
-		// Ajax
-		require_once T_DIRE . '/lib/ajax.php';
-
 		// その他、フック処理
 		require_once T_DIRE . '/lib/hooks.php';
 

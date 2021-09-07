@@ -1,3 +1,7 @@
+import { postRestApi } from '@swell-js/helper/callRestApi';
+/* eslint no-console: 0 */
+/* eslint no-alert: 0 */
+
 /**
  * 管理画面用スクリプト
  *   ※ 管理画面の全ページ & ログイン時はフロント側でも 読み込む。
@@ -40,59 +44,27 @@ document.addEventListener('DOMContentLoaded', function () {
 	})();
 });
 
-/**
- * ajax処理を実行する関数
- */
-const callRestApi = async (params, doneFunc, failFunc) => {
-	// restUrlを正常に取得できるか
-	const restUrl = window?.swellVars?.restUrl;
-	if (restUrl === undefined) return;
-
-	const _res = fetch(restUrl + 'swell-reset-cache', {
-		method: 'POST',
-		body: params,
-	})
-		.then((response) => {
-			if (response.ok) {
-				// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
-				return response.json();
-			}
-			throw new TypeError('Failed ajax!');
-		})
-		.then((json) => {
-			doneFunc(json);
-		})
-		.catch((error) => {
-			failFunc(error);
-		});
-
-	// レスポンス確認時
-	// const res = await _res;
-	// console.log('route:' + route, JSON.parse(res));
-};
-
 // キャッシュクリア処理
-const ajaxToClearCache = function (action) {
+const callClearCache = function (action) {
 	// nonceを正常に取得できるか
 	const nonce = window?.wpApiSettings?.nonce;
 	if (nonce === undefined) return;
 
-	const params = new URLSearchParams(); // WPのajax通す時は URLSearchParams 使う
-	params.append('action', action);
-	params.append('_wpnonce', nonce);
+	const params = {
+		action,
+		_wpnonce: nonce,
+	};
 
 	const doneFunc = (response) => {
 		alert(response);
 		location.reload();
 	};
-	const failFunc = (err) => {
+	const failFunc = () => {
 		alert('キャッシュクリアに失敗しました。');
-		console.error(err);
-		// location.reload();
 	};
 
 	// ajax処理
-	callRestApi(params, doneFunc, failFunc);
+	postRestApi('swell-reset-cache', params, doneFunc, failFunc);
 };
 
 /**
@@ -104,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCacheBtn) {
 		clearCacheBtn.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('cache');
+			callClearCache('cache');
 		});
 	}
 
@@ -113,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCacheBtn2) {
 		clearCacheBtn2.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('cache');
+			callClearCache('cache');
 		});
 	}
 
@@ -122,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCardBtn) {
 		clearCardBtn.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('card_cache');
+			callClearCache('card_cache');
 		});
 	}
 
@@ -131,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	if (null !== clearCardBtn2) {
 		clearCardBtn2.addEventListener('click', function (e) {
 			e.preventDefault();
-			ajaxToClearCache('card_cache');
+			callClearCache('card_cache');
 		});
 	}
 });

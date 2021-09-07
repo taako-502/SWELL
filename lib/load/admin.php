@@ -32,7 +32,7 @@ function hook_admin_enqueue_scripts( $hook_suffix ) {
 	wp_enqueue_style( 'swell_admin_style', $assets . '/css/admin.css', [], SWELL_VERSION );
 
 	// 管理画面用JS（共通）
-	wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.min.js', ['jquery' ], SWELL_VERSION, true );
+	wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.min.js', [], SWELL_VERSION, true );
 
 	// ページの種類で分岐
 	if ( 'post.php' === $hook_suffix || 'post-new.php' === $hook_suffix ) {
