@@ -24,6 +24,7 @@ trait Status {
 		return self::$use[ $key ];
 	}
 
+
 	/**
 	 * $use の値を取得
 	 */
@@ -119,11 +120,20 @@ trait Status {
 		return false;
 	}
 
+
 	/**
 	 * タームアーカイブページかどうか
 	 */
 	public static function is_term() {
 		return is_category() || is_tag() || is_tax();
+	}
+
+
+	/**
+	 * 管理者権限を持つかどうか。
+	 */
+	public static function is_administrator() {
+		return current_user_can( 'manage_options' );
 	}
 
 
@@ -146,12 +156,14 @@ trait Status {
 		return ( defined( 'REST_REQUEST' ) && REST_REQUEST );
 	}
 
+
 	/**
 	 * ウィジェットプレビューiframeの中かどうか
 	 */
 	public static function is_iframe() {
 		return ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST );
 	}
+
 
 	/**
 	 * ウィジェットプレビューiframeの中かどうか

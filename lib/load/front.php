@@ -61,6 +61,10 @@ function load_front_scripts() {
 	// 管理画面用をログイン時のみ読み込む（ツールバーのキャッシュクリア処理に使用）
 	if ( is_user_logged_in() ) {
 		wp_enqueue_script( 'swell_admin_script', $build . '/js/admin/admin_script.min.js', [], SWELL_VERSION, true );
+		wp_localize_script( 'swell_admin_script', 'wpApiSettings', [
+			'root'  => esc_url_raw( rest_url() ),
+			'nonce' => wp_create_nonce( 'wp_rest' ),
+		] );
 	}
 }
 
@@ -252,8 +256,7 @@ function global_vars_on_front() {
 
 	$global_vars = [
 		// 'direUri' => T_DIRE_URI,
-		// 'apiPath' => rest_url() .'wp/v2/',
-		'postID'          => is_singular() ? get_queried_object_id() : 0,
+		'restUrl'         => rest_url() . 'wp/v2/',
 		'ajaxUrl'         => admin_url( 'admin-ajax.php' ),
 		'ajaxNonce'       => wp_create_nonce( 'swell-ajax-nonce' ),
 		'isLoggedIn'      => $is_login ? '1' : '',
@@ -263,7 +266,6 @@ function global_vars_on_front() {
 		'tocListTag'      => $SETTING['index_list_tag'],
 		'tocTarget'       => $SETTING['toc_target'],
 		'tocMinnum'       => $SETTING['toc_minnum'],
-		'isCountPV'       => is_singular( SWELL::$post_types_for_pvct ) && ! $is_login && ! $is_bot,
 	];
 
 	// メインビジュアルスライダー
