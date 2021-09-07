@@ -47,6 +47,18 @@ class Top {
 		Style::add( '.p-mainVisual__inner', 'height:' . $mv_slide_height_sp );
 		Style::add( '.p-mainVisual__inner', 'height:' . $mv_slide_height_pc, 'pc' );
 
+		// 画像の高さそのまま使う時、かつスライドの表示枚数が複数の時、画面表示の瞬間に高さのチラツキ防止するために横幅先に決定させる
+		if ( 'img' === $SETTING['mv_slide_size'] ) {
+			$pc_num    = (float) $SETTING['mv_slide_num'];
+			$pc_num_sp = (float) $SETTING['mv_slide_num_sp'];
+			if ( $pc_num > 1 ) {
+				Style::add_root( '--swl-mv_slide_width--pc', floor( 100 / $pc_num ) . 'vw' );
+			}
+			if ( $pc_num_sp > 1 ) {
+				Style::add_root( '--swl-mv_slide_width--sp', floor( 100 / $pc_num_sp ) . 'vw' );
+			}
+		}
+
 		// メボタンの丸み
 		Style::add_root( '--mv_btn_radius', $SETTING['mv_btn_radius'] . 'px' );
 
@@ -76,6 +88,15 @@ class Top {
 
 		$ps_style     = [];
 		$ps_style_tab = [];
+
+		$pc_num    = (float) $SETTING['ps_num'];
+		$pc_num_sp = (float) $SETTING['ps_num_sp'];
+		if ( $pc_num > 1 ) {
+			Style::add_root( '--swl-post_slide_width--pc', floor( 100 / $pc_num ) . '%' );
+		}
+		if ( $pc_num_sp > 1 ) {
+			Style::add_root( '--swl-post_slide_width--sp', floor( 100 / $pc_num_sp ) . '%' );
+		}
 
 		// 背景色
 		$ps_bg_color = $SETTING['ps_bg_color'];

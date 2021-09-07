@@ -83,6 +83,11 @@
     }
 }
 
+
+.p-postslider__swiper:not(.swiper-container-initialized) {
+    visibility: hidden;
+}
+
 .p-postSlider__title {
     position: relative;
     z-index: 1;
@@ -108,8 +113,13 @@
 
     .p-postList__item {
         position: static;
+        width: var(--swl-post_slide_width--pc, 100%);
         height: auto;
         padding: 0 var(--ps_space);
+
+        @include sp {
+            width: var(--swl-post_slide_width--sp, 100%);
+        }
     }
 
     .p-postList__link {

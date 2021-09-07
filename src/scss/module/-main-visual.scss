@@ -80,6 +80,18 @@
 
 .-height-img {
 
+    .p-mainVisual__slide {
+        width: var(--swl-mv_slide_width--pc, 100%);
+
+        @include sp {
+            width: var(--swl-mv_slide_width--sp, 100%);
+        }
+    }
+
+    .p-mainVisual__inner:not(.swiper-container-initialized) {
+        visibility: hidden;
+    }
+
     .swiper-lazy:not(.swiper-lazy-loaded) {
         height: 0px;
     }

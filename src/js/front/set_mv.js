@@ -96,13 +96,13 @@ function setMvSlider(mainVisual, mvInner) {
 			prevEl: '.p-mainVisual .swiper-button-prev',
 		},
 		runCallbacksOnInit: true,
-		on: {
-			init() {
-				setTimeout(() => {
-					mvInner.classList.add('show_');
-				}, 10);
-			},
-		},
+		// on: {
+		// 	init() {
+		// 		setTimeout(() => {
+		// 			mvInner.classList.add('show_');
+		// 		}, 10);
+		// 	},
+		// },
 	};
 
 	// swiperオプション上書き

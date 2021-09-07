@@ -962,7 +962,7 @@ trait Get {
 			$picture_img = self::get_image( $pc_imgid, [
 				'class'   => $img_class,
 				'alt'     => $img_alt,
-				// 'loading' => $lazy_type,
+				'loading' => $lazy_type,
 			] );
 		} elseif ( 1 === $i ) {
 
