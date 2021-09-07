@@ -956,20 +956,21 @@ trait Get {
 		$picture_img = '';
 		$pc_imgid    = self::get_setting( "slider{$i}_imgid" );
 		$img_alt     = self::get_setting( "slider{$i}_alt" );
+		$img_class   = 'img' === self::get_setting( 'mv_slide_size' ) ? 'p-mainVisual__img' : 'p-mainVisual__img u-obf-cover';
 
 		if ( 1 === $i && $pc_imgid ) {
 			$picture_img = self::get_image( $pc_imgid, [
-				'class'   => 'p-mainVisual__img u-obf-cover',
+				'class'   => $img_class,
 				'alt'     => $img_alt,
-				'loading' => $lazy_type,
+				// 'loading' => $lazy_type,
 			] );
 		} elseif ( 1 === $i ) {
 
-			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="p-mainVisual__img u-obf-cover">';
+			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '">';
 
 		} elseif ( $pc_imgid ) {
 			$picture_img = self::get_image( $pc_imgid, [
-				'class'   => 'p-mainVisual__img u-obf-cover',
+				'class'   => $img_class,
 				'alt'     => $img_alt,
 				'loading' => 'swiper',
 			] );
