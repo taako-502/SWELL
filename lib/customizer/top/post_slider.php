@@ -277,11 +277,19 @@ Customizer::add( $section, 'ps_bg_color', [
 ] );
 
 // 記事スライダーエリアの背景画像
-Customizer::add( $section, 'bg_pickup', [
-	'classname'   => '',
+Customizer::add( $section, 'ps_bgimg_id', [
 	'label'       => '記事スライダーエリアの背景画像',
-	'type'        => 'image',
+	'type'        => 'media',
+	'mime_type'   => 'image',
 ] );
+
+// 古いデータだけ残っている場合
+if ( ! \SWELL_Theme::get_setting( 'ps_bgimg_id' ) && \SWELL_Theme::get_setting( 'bg_pickup' ) ) {
+	Customizer::add( $section, 'bg_pickup', [
+		'label' => '【旧】記事スライダーエリアの背景画像',
+		'type'  => 'image',
+	] );
+}
 
 // 背景画像の透過設定
 Customizer::add( $section, 'ps_img_opacity', [

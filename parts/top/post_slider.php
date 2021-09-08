@@ -71,8 +71,27 @@ $inner_class = ( 'wide' === $SETTING['pickup_pad_lr'] ) ? ' l-container' : '';
 $pc_size     = round( 100 / $slide_num_pc, 1 ) . 'vw';
 $sp_size     = round( 100 / $slide_num_sp, 1 ) . 'vw';
 $thumb_sizes = '(min-width: 960px) ' . $pc_size . ', ' . $sp_size;
+
+// 背景画像
+$bgimg     = '';
+$bgimg_url = SWELL_Theme::get_setting( 'bg_pickup' );
+$bgimg_id  = SWELL_Theme::get_setting( 'ps_bgimg_id' );
+$style     = 'opacity: ' . $SETTING['ps_img_opacity'] . ';';
+
+if ( $bgimg_id ) {
+	$bgimg = SWELL_Theme::get_image( $bgimg_id, [
+		'class'       => 'p-postSlider__imgLayer c-filterLayer__img u-obf-cover',
+		'loading'     => apply_filters( 'swell_top_area_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type,
+		'style'       => $style,
+		'aria-hidden' => 'true',
+	]);
+} elseif ( $bgimg_url ) {
+	$bgimg = '<img src="' . esc_attr( $bgimg_url ) . '" class="p-postSlider__imgLayer c-filterLayer__img u-obf-cover" style="' . esc_attr( $style ) . '">';
+}
+
 ?>
-<div id="post_slider" class="p-postSlider <?=esc_attr( $slider_class )?>">
+<div id="post_slider" class="p-postSlider c-filterLayer <?=esc_attr( $slider_class )?>">
+	<?php echo $bgimg; //phpcs:ignore?>
 	<div class="p-postSlider__inner<?=esc_attr( $inner_class )?>">
 		<?php if ( $pickup_title ) : ?>
 			<div class="p-postSlider__title">

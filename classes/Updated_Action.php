@@ -262,7 +262,7 @@ class Updated_Action {
 			'slider4_img_sp'    => 'slider4_imgid_sp',
 			'slider5_img'       => 'slider5_imgid',
 			'slider5_img_sp'    => 'slider5_imgid_sp',
-			// 'bg_pickup'         => 'ps_bgimg_id',
+			'bg_pickup'         => 'ps_bgimg_id',
 
 		];
 		foreach ( $switch_keys as $url_key => $id_key ) {
@@ -272,7 +272,7 @@ class Updated_Action {
 				$img_id = attachment_url_to_postid( $img_url ) ?: 0;
 
 				if ( $img_id ) {
-					// unset( $SETTINGS[ $url_key ] );
+					unset( $SETTINGS[ $url_key ] );
 					$SETTINGS[ $id_key ] = $img_id;
 					$is_changed          = 1;
 				}

@@ -133,12 +133,6 @@ class Top {
 
 		Style::add( '.p-postSlider', $ps_style );
 
-		// 背景画像 & 不透明度
-		$post_slider__before = ( $SETTING['bg_pickup'] === '' )
-			? 'content:none'
-			: 'opacity: ' . $SETTING['ps_img_opacity'] . ';background-image: url(' . $SETTING['bg_pickup'] . ')';
-		Style::add( '#post_slider::before', $post_slider__before );
-
 		// スライド間の余白
 		if ( ! $SETTING['ps_no_space'] ) {
 			$ps_space = '8px';
@@ -150,7 +144,6 @@ class Top {
 		Style::add_root( '--ps_space', $ps_space );
 
 		// その他
-		$post_slider         = [];
 		$ps_swiper_container = [];
 		if ( $SETTING['ps_on_pagination'] ) {
 			// ページネーションがあればpaddingつける
