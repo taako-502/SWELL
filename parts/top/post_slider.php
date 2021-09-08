@@ -76,7 +76,7 @@ $thumb_sizes = '(min-width: 960px) ' . $pc_size . ', ' . $sp_size;
 	<div class="p-postSlider__inner<?=esc_attr( $inner_class )?>">
 		<?php if ( $pickup_title ) : ?>
 			<div class="p-postSlider__title">
-				<?=wp_kses_post( $SETTING['pickup_title'] )?>
+				<?=wp_kses( $SETTING['pickup_title'], SWELL_Theme::$allowed_text_html )?>
 			</div>
 		<?php endif; ?>
 		<div class="p-postSlider__swiper swiper-container">
