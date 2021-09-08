@@ -22,13 +22,19 @@ Customizer::add(
 	$section,
 	'ttlbg_dflt_imgid',
 	[
-		'classname'   => '',
 		'label'       => 'タイトル背景用デフォルト画像',
 		'description' => '投稿ページの「タイトル背景画像」でアイキャッチ画像よりも優先させたい画像がある場合に設定してください。',
 		'type'        => 'media',
 		'mime_type'   => 'image',
 	]
 );
+// 古いデータだけ残っている場合
+if ( ! \SWELL_Theme::get_setting( 'ttlbg_dflt_imgid' ) && \SWELL_Theme::get_setting( 'ttlbg_default_img' ) ) {
+	Customizer::add( $section, 'ttlbg_default_img', [
+		'label' => '【旧】タイトル背景用デフォルト画像',
+		'type'  => 'image',
+	] );
+}
 
 
 // 画像フィルター

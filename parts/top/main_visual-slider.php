@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * メインビジュアル
  */
-$slider_images = $variable;
+$slider_images = SWELL_Theme::get_mv_slide_imgs();
 
 // 設定
 $SETTING       = SWELL_Theme::get_setting();
@@ -14,10 +14,7 @@ $mv_img_filter = $SETTING['mv_img_filter'];
 <div class="p-mainVisual__inner swiper-container">
 	<div class="swiper-wrapper">
 	<?php
-		$ct = 0;
-		foreach ( $slider_images as $i => $value ) :
-		++$i;
-		++$ct;
+		foreach ( $slider_images as $i => $img_data ) :
 	?>
 		<div class="p-mainVisual__slide swiper-slide c-filterLayer -<?=esc_attr( $mv_img_filter )?>">
 			<picture class="p-mainVisual__imgLayer c-filterLayer__img">

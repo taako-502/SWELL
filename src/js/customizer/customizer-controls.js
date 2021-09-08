@@ -1,7 +1,7 @@
 /* eslint camelcase : 0*/
 (function ($) {
 	// Wait until the customizer has finished loading.
-
+	window.swlCoustomizer = {};
 	wp.customize.bind('ready', function () {
 		// $('.customize-control-title.-big').click(function(e){
 		// 	$(this).toggleClass('is-closed');
@@ -254,21 +254,32 @@
 		});
 
 		// 次のスライドを表示
-		function toggle__nextSlide(val, num) {
-			if (val) {
-				$('.customize-control.-slide-num-' + num).removeClass('-hide_');
+		function toggle__nextSlide(i) {
+			const idVal = window.swlCoustomizer['slider' + i + '_imgid'];
+			const urlVal = window.swlCoustomizer['slider' + i + '_img'];
+			const hasImg = idVal || urlVal;
+
+			const next = i + 1;
+			if (hasImg) {
+				$('.customize-control.-slide-num-' + next).removeClass('-hide_');
 			} else {
-				$('.customize-control.-slide-num-' + num).addClass('-hide_');
+				$('.customize-control.-slide-num-' + next).addClass('-hide_');
 			}
 		}
+
 		// そのスライドがセットされているかどうか
-		function set__hasMvImage(val, num) {
-			if (val) {
+		function set__hasMvImage(num) {
+			const idVal = window.swlCoustomizer['slider' + num + '_imgid'];
+			const urlVal = window.swlCoustomizer['slider' + num + '_img'];
+			const hasImg = idVal || urlVal;
+			if (hasImg) {
 				$('.customize-control.-slide-num-' + num).addClass('has-image');
 			} else {
 				$('.customize-control.-slide-num-' + num).removeClass('has-image');
 			}
 		}
+
+		// btn設定
 		function toggle__mvBtnSettingw(val, num) {
 			if (val) {
 				$('#customize-control-loos_customizer-slider' + num + '_btncol').removeClass(
@@ -286,13 +297,29 @@
 		}
 
 		for (let i = 1; 5 > i; i++) {
-			wp.customize('loos_customizer[slider' + i + '_img]', function (value) {
-				const nextNum = i + 1;
-				set__hasMvImage(value.get(), i);
-				toggle__nextSlide(value.get(), nextNum);
+			const key_id = `slider${i}_imgid`;
+			wp.customize(`loos_customizer[${key_id}]`, function (value) {
+				window.swlCoustomizer[key_id] = value.get();
+				set__hasMvImage(i);
+				toggle__nextSlide(i);
+
 				value.bind(function (to) {
-					set__hasMvImage(to, i);
-					toggle__nextSlide(to, nextNum);
+					window.swlCoustomizer[key_id] = to;
+					set__hasMvImage(i);
+					toggle__nextSlide(i);
+				});
+			});
+
+			const key_url = `slider${i}_imgid`;
+			wp.customize(`loos_customizer[${key_url}]`, function (value) {
+				window.swlCoustomizer[key_url] = value.get();
+				set__hasMvImage(i);
+				toggle__nextSlide(i);
+
+				value.bind(function (to) {
+					window.swlCoustomizer[key_url] = to;
+					set__hasMvImage(i);
+					toggle__nextSlide(i);
 				});
 			});
 
@@ -305,8 +332,12 @@
 		}
 
 		// 画像２枚目があるかどうか
-		function toggle__mvSliderSettings(val) {
-			if ('' !== val) {
+		function toggle__mvSliderSettings() {
+			const idVal = window.swlCoustomizer.slider2_imgid;
+			const urlVal = window.swlCoustomizer.slider2_img;
+			const hasImg = idVal || urlVal;
+
+			if (hasImg) {
 				$('.customize-control.-mv-slider-setting').removeClass('-hide_');
 				$('.customize-control.-slider-area-bigttl').addClass('-desc-hidden');
 			} else {
@@ -314,10 +345,21 @@
 				$('.customize-control.-slider-area-bigttl').removeClass('-desc-hidden');
 			}
 		}
-		wp.customize('loos_customizer[slider2_img]', function (value) {
-			toggle__mvSliderSettings(value.get());
+
+		wp.customize('loos_customizer[slider2_imgid]', function (value) {
+			window.swlCoustomizer.slider2_imgid = value.get();
+			toggle__mvSliderSettings();
 			value.bind(function (to) {
-				toggle__mvSliderSettings(to);
+				window.swlCoustomizer.slider2_imgid = to;
+				toggle__mvSliderSettings();
+			});
+		});
+		wp.customize('loos_customizer[slider2_img]', function (value) {
+			window.swlCoustomizer.slider2_img = value.get();
+			toggle__mvSliderSettings();
+			value.bind(function (to) {
+				window.swlCoustomizer.slider2_img = to;
+				toggle__mvSliderSettings();
 			});
 		});
 
@@ -404,4 +446,4 @@
 			});
 		});
 	});
-})(jQuery);
+})(window.jQuery);

@@ -175,169 +175,130 @@ Customizer::big_title(
 
 for ( $i = 1; $i < 6; $i++ ) {
 	// Setting
-	Customizer::sub_title(
-		$section,
-		'mv_subttl_slider' . $i,
-		[
-			'classname' => 'swell-mv-slider -on-border -slide-num-' . $i,
-			'label'     => 'スライド[' . $i . ']',
-		]
-	);
+	Customizer::sub_title( $section, "mv_subttl_slider{$i}", [
+		'classname' => "swell-mv-slider -on-border -slide-num-{$i}",
+		'label'     => "スライド[{$i}]",
+	] );
 
 	// スライド画像 PC
-	Customizer::add(
-		$section,
-		'slider' . $i . '_imgid',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'スライド画像 [' . $i . ']（PC用）',
-			'type'        => 'media',
-			'mime_type'   => 'image',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_imgid", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "スライド画像 [{$i}]（PC用）",
+		'type'        => 'media',
+		'mime_type'   => 'image',
+	] );
+
+	// 古いデータだけ残っている場合
+	if ( ! \SWELL_Theme::get_setting( "slider{$i}_imgid" ) && \SWELL_Theme::get_setting( "slider{$i}_img" ) ) {
+		Customizer::add( $section, "slider{$i}_img", [
+			'classname' => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+			'label'     => "【旧】スライド画像 [{$i}]（PC用）",
+			'type'      => 'image',
+		] );
+	}
 
 	// スライド画像 SP
-	Customizer::add(
-		$section,
-		'slider' . $i . '_imgid_sp',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'スライド画像 [' . $i . ']（スマホ用）',
-			'type'        => 'media',
-			'mime_type'   => 'image',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_imgid_sp", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "スライド画像 [{$i}]（SP用）",
+		'type'        => 'media',
+		'mime_type'   => 'image',
+	] );
+	// 古いデータだけ残っている場合
+	if ( ! \SWELL_Theme::get_setting( "slider{$i}_imgid_sp" ) && \SWELL_Theme::get_setting( "slider{$i}_img_sp" ) ) {
+		Customizer::add( $section, "slider{$i}_img_sp", [
+			'classname' => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+			'label'     => "【旧】スライド画像 [{$i}]（SP用）",
+			'type'      => 'image',
+		] );
+	}
 
 	// メインテキスト
-	Customizer::add(
-		$section,
-		'slider' . $i . '_title',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'メインテキスト [' . $i . ']',
-			'type'        => 'text',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_title", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "メインテキスト [{$i}]",
+		'type'        => 'text',
+	] );
 
 	// サブテキスト
-	Customizer::add(
-		$section,
-		'slider' . $i . '_text',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'サブテキスト [' . $i . ']',
-			'type'        => 'textarea',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_text", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "サブテキスト [{$i}",
+		'type'        => 'textarea',
+	] );
 
 	// ブログパーツID
-	Customizer::add(
-		$section,
-		'slider' . $i . '_parts_id',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'ブログパーツID [' . $i . ']',
-			'type'        => 'text',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_parts_id", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "ブログパーツID [{$i}",
+		'type'        => 'text',
+	] );
 
 	// スライドalt
-	Customizer::add(
-		$section,
-		'slider' . $i . '_alt',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'alt属性値 [' . $i . '] ',
-			'type'        => 'text',
-			'sanitize'    => 'sanitize_text_field',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_alt", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "alt属性値 [{$i}]",
+		'type'        => 'text',
+		'sanitize'    => 'sanitize_text_field',
+	] );
 
 	// リンク先URL
-	Customizer::add(
-		$section,
-		'slider' . $i . '_url',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'リンク先URL [' . $i . '] ',
-			'type'        => 'text',
-			'sanitize'    => 'esc_url_raw',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_url", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "リンク先URL [{$i}]",
+		'type'        => 'text',
+		'sanitize'    => 'esc_url_raw',
+	] );
 
 	// ボタンテキスト
-	Customizer::add(
-		$section,
-		'slider' . $i . '_btn_text',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'ボタンテキスト [' . $i . '] ',
-			'type'        => 'text',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_btn_text", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "ボタンテキスト [{$i}]",
+		'type'        => 'text',
+	] );
 
 	// テキストの位置
-	Customizer::add(
-		$section,
-		'slider' . $i . '_txtpos',
-		[
-			'classname'   => 'swell-mv-slider -radio-button -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'テキストの位置 [' . $i . '] ',
-			'description' => '※ ブログパーツの中には適用されません。',
-			'type'        => 'radio',
-			'choices'     => [
-				'l' => '左',
-				'c' => '中央',
-				'r' => '右',
-			],
-		]
-	);
+	Customizer::add( $section, "slider{$i}_txtpos", [
+		'classname'   => "swell-mv-slider -radio-button -ttl-mt-small -slide-num-{$i}",
+		'label'       => "テキストの位置 [{$i}]",
+		'description' => '※ ブログパーツの中には適用されません。',
+		'type'        => 'radio',
+		'choices'     => [
+			'l' => '左',
+			'c' => '中央',
+			'r' => '右',
+		],
+	] );
 
 	// テキストカラー
-	Customizer::add(
-		$section,
-		'slider' . $i . '_txtcol',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'テキストカラー [' . $i . '] ',
-			'type'        => 'color',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_txtcol", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "テキストカラー [{$i}]",
+		'type'        => 'color',
+	] );
 
 	// テキストシャドウカラー
-	Customizer::add(
-		$section,
-		'slider' . $i . '_shadowcol',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'テキストシャドウカラー [' . $i . '] ',
-			'type'        => 'color',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_shadowcol", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "テキストシャドウカラー [{$i}]",
+		'type'        => 'color',
+	] );
 
 	// ボタンカラー
-	Customizer::add(
-		$section,
-		'slider' . $i . '_btncol',
-		[
-			'classname'   => 'swell-mv-slider -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'ボタンカラー [' . $i . '] ',
-			'type'        => 'color',
-		]
-	);
+	Customizer::add( $section, "slider{$i}_btncol", [
+		'classname'   => "swell-mv-slider -ttl-mt-small -slide-num-{$i}",
+		'label'       => "ボタンカラー [{$i}]",
+		'type'        => 'color',
+	] );
 
 	// ボタンタイプ
-	Customizer::add(
-		$section,
-		'slider' . $i . '_btntype',
-		[
-			'classname'   => 'swell-mv-slider -radio-button -ttl-mt-small -slide-num-' . $i,
-			'label'       => 'ボタンタイプ [' . $i . '] ',
-			'type'        => 'radio',
-			'choices'     => [
-				'n' => '白抜き',
-				'b' => 'ボーダー',
-			],
-		]
-	);
+	Customizer::add( $section, "slider{$i}_btntype", [
+		'classname'   => "swell-mv-slider -radio-button -ttl-mt-small -slide-num-{$i}",
+		'label'       => "ボタンタイプ [{$i}]",
+		'type'        => 'radio',
+		'choices'     => [
+			'n' => '白抜き',
+			'b' => 'ボーダー',
+		],
+	] );
 }

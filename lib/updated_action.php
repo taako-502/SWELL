@@ -8,6 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 add_action( 'init', '\SWELL_Theme\Updated_Action\updated_hook', 1 );
 function updated_hook() {
+	// \SWELL_Theme\Updated_Action::db_update();
 
 	$now_ver  = \SWELL_Theme::$swell_version;
 	$old_ver  = get_option( 'swell_version' ); // データベースに保存されているバージョン

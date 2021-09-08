@@ -7,15 +7,7 @@ $mv_class = 'p-mainVisual';
 
 // スライド / １枚画像 / 動画 で処理を分ける
 if ( 'slider' === $mv_type ) {
-	$slider_images = [
-		$SETTING['slider1_imgid'],
-		$SETTING['slider2_imgid'],
-		$SETTING['slider3_imgid'],
-		$SETTING['slider4_imgid'],
-		$SETTING['slider5_imgid'],
-	];
-	$slider_images = array_filter( $slider_images, 'strlen' ); // 空要素削除
-
+	$slider_images = SWELL_Theme::get_mv_slide_imgs();
 	if ( count( $slider_images ) > 1 ) {
 
 		$mv_class .= ' -type-slider -motion-' . $SETTING['mv_slide_animation'];
