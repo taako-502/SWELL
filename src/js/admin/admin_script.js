@@ -1,6 +1,7 @@
 import { postRestApi } from '@swell-js/helper/callRestApi';
 /* eslint no-console: 0 */
 /* eslint no-alert: 0 */
+/* eslint no-unused-vars: 0 */
 
 /**
  * 管理画面用スクリプト

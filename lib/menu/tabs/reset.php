@@ -1,4 +1,4 @@
-<?php  if ( ! defined( 'ABSPATH' ) ) exit; ?>
+<?php if ( ! defined( 'ABSPATH' ) ) exit; ?>
 
 <h2>キャッシュのクリア</h2>
 	<div class="swell_reset_btn">
@@ -19,6 +19,19 @@
 	</div>
 	<p class="description">
 		SWELLで保持しているブログカードのキャッシュデータを全て削除します。
+	</p>
+<br>
+<hr>
+<br>
+
+<h2>古いデータを更新する</h2>
+
+	<div class="swell_reset_btn">
+		<button id="swell_settings_btn___do_update_action" type="button" name="submit" class="button button-primary">データを更新する</button>
+	</div>
+	<p class="description">
+		旧バージョン用のデータを最新バージョンに合わせたものに変換します。
+		<br>本来はバージョンアップデート時に自動で処理されていますが、稀に処理が完了せず表示がおかしくなることがあります。その場合はこちらのボタンから再度データの変換処理を行ってください。
 	</p>
 <br>
 <hr>
