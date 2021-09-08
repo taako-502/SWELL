@@ -41,7 +41,6 @@ Customizer::big_title( $section, 'header_logo', [
 // ロゴ画像の設定
 Customizer::add( $section, 'logo_id', [
 	'label'       => 'ロゴ画像の設定',
-	// 'description' => 'ロゴ画像を設定してください。',
 	'type'        => 'media',
 	'mime_type'   => 'image',
 	'partial'     => [
@@ -50,6 +49,13 @@ Customizer::add( $section, 'logo_id', [
 		'render_callback'     => ['\SWELL_THEME\Customizer\Partial', 'head_logo' ],
 	],
 ] );
+// 古いデータだけ残っている場合
+if ( ! \SWELL_Theme::get_setting( 'logo_id' ) && \SWELL_Theme::get_setting( 'logo' ) ) {
+	Customizer::add( $section, 'logo', [
+		'label' => '【旧】ロゴ画像',
+		'type'  => 'image',
+	] );
+}
 
 // 画像サイズ（PC）
 Customizer::add( $section, 'logo_size_pc', [
@@ -160,6 +166,13 @@ Customizer::add( $section, 'logo_top_id', [
 		'render_callback'     => ['\SWELL_THEME\Customizer\Partial', 'head_logo' ],
 	],
 ] );
+// 古いデータだけ残っている場合
+if ( ! \SWELL_Theme::get_setting( 'logo_top_id' ) && \SWELL_Theme::get_setting( 'logo_top' ) ) {
+	Customizer::add( $section, 'logo_top', [
+		'label' => '【旧】透過時のロゴ画像',
+		'type'  => 'image',
+	] );
+}
 
 
 // ■ ヘッダーの追従設定

@@ -26,7 +26,7 @@ class SWELL_PARTS{
 	 */
 	public static function head_logo( $is_fixbar = false ) {
 		
-		if ( \SWELL_Theme::site_data( 'logo_id' ) ) {
+		if ( \SWELL_Theme::site_data( 'logo_id' ) || \SWELL_Theme::site_data( 'logo_url' ) ) {
 			$logo = \SWELL_Theme::get_pluggable_parts( 'head_logo' );
 			$logo_class = '-img';
 		} else {

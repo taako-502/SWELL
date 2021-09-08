@@ -9,16 +9,15 @@ use \SWELL_Theme as SWELL;
 if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 	function swl_parts__head_logo() {
 
-		$logo_id     = SWELL::site_data( 'logo_id' );
-		$logo_top_id = SWELL::site_data( 'logo_top_id' ) ?: $logo_id;
+		$logo_id = SWELL::site_data( 'logo_id' );
 
 		// トップページのヒーロヘッダーを利用するかどうか。
 		$use_overlay_header = ( SWELL::is_top() && ! is_paged() && SWELL::get_setting( 'header_transparent' ) !== 'no' );
 
 		// 後方互換用。ロゴURLが直接指定されている場合。
-		if ( has_filter( 'swell_head_logo' ) ) {
+		if ( has_filter( 'swell_head_logo' ) || ! $logo_id ) {
 			$logo     = apply_filters( 'swell_head_logo', SWELL::site_data( 'logo_url' ) );
-			$logo_top = apply_filters( 'swell_head_logo_top', wp_get_attachment_url( $logo_top_id ) );
+			$logo_top = apply_filters( 'swell_head_logo_top', SWELL::site_data( 'logo_top_url' ) ) ?: $logo;
 
 			if ( $use_overlay_header ) {
 				echo '<img src="' . esc_url( $logo_top ) . '" alt="' . esc_attr( SWELL::site_data( 'title' ) ) . '" class="c-headLogo__img -top">' .
@@ -31,7 +30,8 @@ if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 			return;
 		}
 
-		$logo_sizes = apply_filters( 'swell_head_logo_sizes', '(max-width: 959px) 50vw, 800px' );
+		$logo_top_id = SWELL::site_data( 'logo_top_id' ) ?: $logo_id;
+		$logo_sizes  = apply_filters( 'swell_head_logo_sizes', '(max-width: 959px) 50vw, 800px' );
 
 		if ( ! $use_overlay_header ) {
 			// 通常時
