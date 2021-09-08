@@ -14,7 +14,7 @@ $wp_customize->add_section( $section, [
 
 // SNSリンク設定
 Customizer::sub_title( $section, 'sns_link', [
-	'label'     => 'SNSリンク設定',
+	'label' => 'SNSリンク設定',
 ] );
 
 $sns_array = [
@@ -33,7 +33,6 @@ $sns_array = [
 ];
 foreach ( $sns_array as $sns_key => $sns_name ) {
 	Customizer::add( $section, $sns_key . '_url', [
-		// 'label'       => '',
 		'description' => $sns_name . 'ページURL',
 		'type'        => 'text',
 		'sanitize'    => 'wp_filter_nohtml_kses',

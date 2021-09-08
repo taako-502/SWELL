@@ -51,6 +51,6 @@ Customizer::sub_title( $section, 'term_navigation', [
 
 // カテゴリーページに表示する
 Customizer::add( $section, 'show_category_nav', [
-	'label'       => 'カテゴリーページに表示する',
-	'type'        => 'checkbox',
+	'label' => 'カテゴリーページに表示する',
+	'type'  => 'checkbox',
 ] );
