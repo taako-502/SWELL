@@ -21,14 +21,17 @@ if ( ! is_admin() ) {
 		add_filter( 'the_content', __NAMESPACE__ . '\add_toc', 12 );
 
 		// URLの自動ブログカード化機能: プラグインなどで不具合があるページだけオフにしたりできるように apply_filters 付き
-		$remove_url_to_card = apply_filters( 'swell_remove_url_to_card', \SWELL_Theme::get_option( 'remove_url2card' ) );
+		$remove_url_to_card = apply_filters( 'swell_remove_url_to_card', SWELL::get_option( 'remove_url2card' ) );
 		if ( ! $remove_url_to_card ) {
 			add_filter( 'the_content', __NAMESPACE__ . '\url_to_blog_card', 12 );
 		}
 
-		if ( 'lazysizes' === \SWELL_Theme::$lazy_type ) {
+		if ( 'lazysizes' === SWELL::$lazy_type ) {
 			add_filter( 'the_content', __NAMESPACE__ . '\add_lazysizes', 12 );
 		}
+
+		add_filter( 'the_content', __NAMESPACE__ . '\check_luminous', 12 );
+		add_filter( 'swell_do_blog_parts', __NAMESPACE__ . '\check_luminous', 12 );
 
 	}, 99 );
 };
@@ -50,7 +53,7 @@ add_action( 'wp_loaded', function () {
 	add_filter( 'widget_text_content', __NAMESPACE__ . '\add_toc_on_widget', 12 );
 	add_filter( 'widget_text_content', __NAMESPACE__ . '\remove_empty_p', 12 );
 
-	if ( 'lazysizes' === \SWELL_Theme::$lazy_type ) {
+	if ( 'lazysizes' === SWELL::$lazy_type ) {
 		add_filter( 'widget_text', __NAMESPACE__ . '\add_lazysizes', 12 );
 		add_filter( 'widget_text_content', __NAMESPACE__ . '\add_lazysizes', 12 );
 	}
@@ -94,7 +97,7 @@ function add_toc( $content, $is_content_hook = true ) {
 	// ウィジェットですでにswell_tocで生成されている時に本文エリアでの2重生成を防ぐ
 	// if ( SWELL::$added_toc ) return $content;
 
-	$SETTING = \SWELL_Theme::get_setting();
+	$SETTING = SWELL::get_setting();
 	$toc_ad  = '';
 	$toc     = '';
 
@@ -212,10 +215,10 @@ function add_lazysizes( $content ) {
 		}
 
 		// インライン画像の場合は -no-lb つけるだけ
-		if ( 'img' === $tag && strpos( $props, 'style=' ) !== false ) {
-			$props = str_replace( ' class="', ' class="-no-lb ', $props );
-			return '<' . $tag . $props . '>';
-		}
+		// if ( 'img' === $tag && strpos( $props, 'style=' ) !== false ) {
+		// 	$props = str_replace( ' class="', ' class="-no-lb ', $props );
+		// 	return '<' . $tag . $props . '>';
+		// }
 
 		// srcを取得
 		preg_match( '/\ssrc="([^"]*)"/', $props, $src_matches );
@@ -228,8 +231,10 @@ function add_lazysizes( $content ) {
 		// srcset を data-srcsetへ
 		$props = str_replace( ' srcset=', ' data-srcset=', $props );
 
-		// width , height指定を取得
-		$props = SWELL::set_aspectratio( $props, $src );
+		// width , height指定を取得（インライン画像の場合は styleでサイズ指定されてるのでそれが消えないようにスキップ）
+		if ( strpos( $props, 'style=' ) === false && strpos( $props, 'width:' ) === false ) {
+			$props = SWELL::set_aspectratio( $props, $src );
+		}
 
 		// クラスの追加
 		if ( strpos( $props, 'class=' ) === false ) {
@@ -251,6 +256,29 @@ function add_lazysizes( $content ) {
 
 	}, $content );
 
+	return $content;
+}
+
+
+/**
+ * Luminousをオンにするクラスがあるかどうか
+ */
+function check_luminous( $content ) {
+
+	if ( SWELL::is_use( 'luminous' ) ) return $content;
+
+	// クラスの中身を調べる
+	$is_matched = preg_match_all( '/class="([^"]*)"/', $content, $matches );
+	if ( ! $is_matched ) return $content;
+
+	if ( ! empty( $matches ) ) {
+		foreach ( $matches[1] as $classnames ) {
+
+			if ( false !== strpos( $classnames, 'u-lb-on' ) ) {
+				SWELL::set_use( 'luminous', true );
+			}
+		}
+	}
 	return $content;
 }
 
@@ -296,10 +324,10 @@ function url_matches_callback( $matches ) {
 	$post_id = url_to_postid( $url );
 	if ( $post_id ) {
 		// 内部リンク
-		return \SWELL_Theme::get_internal_blog_card( $post_id );
+		return SWELL::get_internal_blog_card( $post_id );
 	} else {
 		// 外部リンク
-		return \SWELL_Theme::get_external_blog_card( $url );
+		return SWELL::get_external_blog_card( $url );
 	}
 	return $url;
 

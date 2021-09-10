@@ -128,7 +128,7 @@ if ( ! function_exists( __NAMESPACE__ . '\blog_parts' ) ) :
 		$content = \SWELL_Theme::get_blog_parts_content( $args );
 
 		return '<div class="p-blogParts post_content' . esc_attr( $bp_class ) . '" data-partsID="' . esc_attr( $parts_id ) . '">' .
-			do_blocks( do_shortcode( $content ) ) .
+			\SWELL_Theme::do_blog_parts( $content ) .
 		'</div>';
 	}
 endif;
@@ -320,7 +320,7 @@ if ( ! function_exists( __NAMESPACE__ . '\balloon' ) ) :
 
 		$icon_src = '';
 		if ( ! empty( $bln_icon ) ) {
-			$icon_img = '<img src="' . esc_url( $bln_icon ) . '" alt="" class="c-balloon__iconImg -no-lb" width="80px" height="80px">';
+			$icon_img = '<img src="' . esc_url( $bln_icon ) . '" alt="" class="c-balloon__iconImg" width="80px" height="80px">';
 			$icon_img = SWELL::set_lazyload( $icon_img, SWELL::$lazy_type );
 			$icon_src = '<div class="c-balloon__icon -' . esc_attr( $bln_icon_shape ) . '">' .
 				$icon_img .

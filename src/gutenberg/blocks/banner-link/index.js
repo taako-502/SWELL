@@ -193,7 +193,7 @@ registerBlockType(metadata.name, {
 			[`has-text-align-${alignment}`]: 'center' !== alignment,
 			[`is-vertically-aligned-${verticalAlignment}`]: 'center' !== verticalAlignment,
 		});
-		const imgClass = classnames('c-bannerLink__img -no-lb', {
+		const imgClass = classnames('c-bannerLink__img', {
 			[`wp-image-${imageID}`]: imageID,
 		});
 

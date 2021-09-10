@@ -33,7 +33,7 @@ function cb_blog_parts( $attrs ) {
 		// エディター上のプレビュー表示
 		$content = apply_filters( 'the_content', $content );
 	} else {
-		$content = do_blocks( do_shortcode( $content ) );
+		$content = \SWELL_Theme::do_blog_parts( $content );
 	}
 
 	return '<div class="' . esc_attr( $bp_class ) . '" data-partsID="' . esc_attr( $parts_id ) . '">' . $content . '</div>';

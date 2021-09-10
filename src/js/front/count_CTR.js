@@ -2,7 +2,7 @@ import { postRestApi } from '@swell-js/helper/callRestApi';
 /* eslint camelcase: 0 */
 /* eslint no-console: 0 */
 
-console.log('count_CTR.js');
+// console.log('count_CTR.js');
 
 window.isSwlAdCtConnecting = false;
 

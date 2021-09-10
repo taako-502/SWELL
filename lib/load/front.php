@@ -113,15 +113,6 @@ function load_plugins() {
 	// pjax使うかどうか
 	$pjax = SWELL::is_use( 'pjax' );
 
-	// Luminous
-	$is_luminous_page = is_single() || is_page() || is_category() || is_tag() || is_tax();
-	$is_luminous_page = $is_luminous_page && ! SWELL::get_setting( 'remove_luminous' );
-	if ( $pjax || $is_luminous_page ) {
-		// wp_enqueue_script( 'swell_luminous' );
-		wp_enqueue_script( 'swell_set_luminous', T_DIRE_URI . '/build/js/front/set_luminous.min.js', [ 'swell_luminous' ], SWELL_VERSION, true );
-		wp_enqueue_style( 'swell_luminous', T_DIRE_URI . '/assets/css/plugins/luminous.css', [], SWELL_VERSION );
-	}
-
 	// mv
 	$mv_type = SWELL::get_setting( 'main_visual_type' );
 	if ( $pjax || SWELL::is_top() && ! is_paged() && 'none' !== $mv_type ) {
