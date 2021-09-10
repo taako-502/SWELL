@@ -360,7 +360,6 @@ if ( ! function_exists( __NAMESPACE__ . '\full_wide_content' ) ) :
 
 			$class    .= ' lazyload';
 			$add_attr .= 'data-bg="' . $args['bgimg'] . '"';
-			SWELL::set_use( 'lazysizes', true );
 
 		} elseif ( isset( $args['bg'] ) ) {
 

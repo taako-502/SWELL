@@ -79,6 +79,10 @@ function hook_wp_footer_1() {
 		echo "<script>document.documentElement.setAttribute('data-has-theadfix', '1');</script>";
 	}
 
+	if ( $pjax || SWELL::is_use( 'count_CTR' ) ) {
+		wp_enqueue_script( 'swell_count_CTR', T_DIRE_URI . '/build/js/front/count_CTR.min.js', [], SWELL_VERSION, true );
+	}
+
 	// clipboard.js
 	if ( $pjax || SWELL::is_use( 'clipboard' ) ) {
 		wp_enqueue_script( 'swell_set_urlcopy', T_DIRE_URI . '/build/js/front/set_urlcopy.min.js', [ 'clipboard' ], SWELL_VERSION, true );

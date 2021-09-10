@@ -1,4 +1,8 @@
 import { postRestApi } from '@swell-js/helper/callRestApi';
+/* eslint camelcase: 0 */
+/* eslint no-console: 0 */
+
+console.log('count_CTR.js');
 
 window.isSwlAdCtConnecting = false;
 
@@ -11,23 +15,39 @@ const observerOptions = {
 /**
  * 広告タグ、ボタンの計測
  */
-export default function () {
+function count_CTR() {
 	// IntersectionObserverをブラウザがサポートしているかどうか
 	const isObserveSupported =
 		window.IntersectionObserver && 'isIntersecting' in IntersectionObserverEntry.prototype;
-	if (!isObserveSupported) return;
+	if (!isObserveSupported) {
+		console.error('IntersectionObserver is not supported.');
+		return;
+	}
 
 	// fetch使えるか
-	if (!window.fetch) return;
+	if (!window.fetch) {
+		console.error('fetch() is not supported.');
+		return;
+	}
 
 	// restUrlを正常に取得できるか
 	const restUrl = window?.swellVars?.restUrl;
-	if (restUrl === undefined) return;
+	if (restUrl === undefined) {
+		console.error('restUrl not found.');
+		return;
+	}
 
 	// postIDセット
 	const content = document.querySelector('#content');
+	if (null === content) {
+		console.error('#content not found.');
+		return;
+	}
 	const postID = content.getAttribute('data-postid');
-	if (!postID) return;
+	if (!postID) {
+		console.error('data-postid not found.');
+		return;
+	}
 
 	window.swellVars.postID = postID;
 
@@ -37,29 +57,6 @@ export default function () {
 	// ボタンの計測
 	buttonCount();
 }
-
-/**
- * REST APIの呼び出し
- */
-const callRestApi = async (route, params) => {
-	const restUrl = window.swellVars.restUrl;
-
-	/* eslint no-unused-vars: 0 */
-	const _res = fetch(restUrl + route, {
-		method: 'POST',
-		body: params,
-	}).then((response) => {
-		if (response.ok) {
-			// console.log などで一回 response.json() 確認で使うと、responseJSONでbodyがlockされるので注意
-			return response.json();
-		}
-		throw new TypeError('Failed ajax!');
-	});
-
-	// レスポンス確認時
-	// const res = await _res;
-	// console.log('route:' + route, JSON.parse(res));
-};
 
 /**
  * ボタンの計測
@@ -107,12 +104,8 @@ const buttonCount = () => {
 
 		const buttonLink = button.querySelector('a');
 		if (buttonLink) {
-			buttonLink.onclick = function (e) {
-				e.preventDefault();
-				ctButtonData(buttonID, 'click');
-				buttonLink.onclick = () => true;
-				buttonLink.click();
-			};
+			buttonLink.addEventListener('click', (e) => clickedButtonEvent(e, buttonID));
+			buttonLink.addEventListener('mousedown', (e) => clickedButtonEvent(e, buttonID));
 		}
 	});
 
@@ -243,3 +236,30 @@ const clickedAdEvent = (e, adData) => {
 	adBox.setAttribute('data-clicked', '1');
 	ctAdData(adData);
 };
+
+const clickedButtonEvent = (e, buttonID) => {
+	// ホイールボタン以外での mousedown は無効化
+	if ('mousedown' === e.type && 1 !== e.button) {
+		return;
+	}
+
+	const button = e.currentTarget;
+
+	// 二重計測防止
+	const clicked = button.getAttribute('data-clicked');
+	if (clicked) return;
+
+	button.setAttribute('data-clicked', '1');
+
+	ctButtonData(buttonID, 'click');
+};
+
+window.addEventListener('load', function () {
+	// 広告タグのクリック計測(非ログイン時のみ)
+	if (!window.swellVars.isLoggedIn) count_CTR();
+});
+
+// Pjax用
+if (window.SWELLHOOK) {
+	window.SWELLHOOK.barbaAfter.add(count_CTR);
+}

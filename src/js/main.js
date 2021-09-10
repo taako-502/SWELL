@@ -24,7 +24,6 @@ import setGnavClass from '@swell-js/modules/setGnavClass';
 import changeDeviceSize from '@swell-js/modules/changeDeviceSize';
 import { setupFixHeader, setFixHeaderPosition } from '@swell-js/modules/setupFixHeader';
 import addClickEvents from '@swell-js/modules/addClickEvents';
-import adClick from '@swell-js/modules/adClick';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
 import { pvCount } from '@swell-js/modules/pvCount';
 import { lazyLoadContents } from '@swell-js/modules/lazyLoadContents';
@@ -158,9 +157,6 @@ window.addEventListener('load', function () {
 	 * ! lazyLoadContents よりあとで !
 	 */
 	removeNoreferrer();
-
-	// 広告タグのクリック計測(非ログイン時のみ)
-	if (!window.swellVars.isLoggedIn) adClick();
 });
 
 /**
