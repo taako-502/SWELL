@@ -20,28 +20,12 @@ import deprecated from './deprecated';
 import blockIcon from './_icon';
 import CapBlockSidebar from './_sidebar';
 import getBlockIcon from '@swell-guten/utils/getBlockIcon';
+import sliceIconData from '@swell-guten/utils/sliceIconData';
 
 /**
  * @others dependencies
  */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-/**
- * 普通のアイコンと fontawesome を分けるための関数
- */
-const sliceIconData = (iconClass) => {
-	let iconData;
-
-	// FAだったら配列が返される
-	if (null !== iconClass.match(/fas |fab |far /)) {
-		iconData = iconClass.split(' ');
-		iconData[1] = iconData[1].replace('fa-', '');
-		return iconData;
-	}
-
-	// FA以外は普通に文字列のまま
-	return iconClass;
-};
 
 /**
  * キャプションのアイコンを取得

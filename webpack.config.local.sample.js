@@ -27,6 +27,7 @@ const blocks = [
 	'faq',
 	'faq-item',
 	'full-wide',
+	'link-list',
 	'post-link',
 	'post-list',
 	'restricted-area',

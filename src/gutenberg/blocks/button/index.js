@@ -19,33 +19,15 @@ import {
 import metadata from './block.json';
 import deprecated from './deprecated';
 import blockIcon from './_icon';
-import getBlockIcon from '@swell-guten/utils/getBlockIcon';
 import ButtonSidebar from './_sidebar';
+import getBlockIcon from '@swell-guten/utils/getBlockIcon';
+import sliceIconData from '@swell-guten/utils/sliceIconData';
 
 /**
  * @others dependencies
  */
 import classnames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
-/* eslint jsx-a11y/no-autofocus: 0 */
-
-/**
- * 普通のアイコンと fontawesome を分けるための関数
- */
-const sliceIconData = (iconClass) => {
-	let iconData;
-
-	// FAだったら配列が返される
-	if (null !== iconClass.match(/fas |fab |far /)) {
-		iconData = iconClass.split(' ');
-		iconData[1] = iconData[1].replace('fa-', '');
-		return iconData;
-	}
-
-	// FA以外は普通に文字列のまま
-	return iconClass;
-};
 
 /**
  * ボタンブロック

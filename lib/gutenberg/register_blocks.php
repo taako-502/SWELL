@@ -54,6 +54,7 @@ function register_normal_blocks() {
 		'faq',
 		'faq-item',
 		'full-wide',
+		'link-list',
 		'step',
 		'step-item',
 		'tab',

@@ -26,6 +26,7 @@ import example from './_example';
 import TabSidebar from './_sidebar';
 import TabNavList from './components/TabNavList';
 import getBlockIcon from '@swell-guten/utils/getBlockIcon';
+import moveAt from '@swell-guten/utils/moveAt';
 
 /**
  * @others dependencies
@@ -36,25 +37,6 @@ import classnames from 'classnames';
  * ブロッククラス名
  */
 const blockName = 'swell-block-tab';
-
-// 配列の要素を移動させる
-function moveAt(array, index, at) {
-	// 移動下と移動先が同じ場合や、どちらかが配列の長さを超える場合は return
-	if (index === at || index > array.length - 1 || at > array.length - 1) {
-		return array;
-	}
-
-	const value = array[index];
-	const tail = array.slice(index + 1);
-
-	array.splice(index);
-
-	Array.prototype.push.apply(array, tail);
-
-	array.splice(at, 0, value);
-
-	return array;
-}
 
 // clientIdからタブIDを生成する （split使うよりsubstring+indexOfの方が速いっぽい）
 function generateTabId(clientId) {

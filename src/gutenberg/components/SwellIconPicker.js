@@ -8,7 +8,7 @@ import { BaseControl, ButtonGroup, Button } from '@wordpress/components';
 /**
  * アイコンリスト
  */
-const icons = [
+const defaultIcons = [
 	'icon-check',
 	'icon-quill',
 	'icon-pen',
@@ -39,7 +39,10 @@ const icons = [
 /**
  * SwellIconPicker
  */
-const SwellIconPicker = memo(({ iconName, onClick }) => {
+const SwellIconPicker = memo((props) => {
+	const { iconName, onClick } = props;
+	const icons = props.icons ? props.icons : defaultIcons;
+
 	return (
 		<BaseControl>
 			<ButtonGroup className='swl-btns--icons'>

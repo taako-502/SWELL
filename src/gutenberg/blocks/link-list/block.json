@@ -1,0 +1,134 @@
+{
+    "apiVersion": 2,
+    "name": "loos/link-list",
+    "title": "リンクリスト",
+    "description": "XXXXXXXXX",
+    "category": "swell-blocks",
+    "keywords": [
+        "swell",
+        "link",
+        "list"
+    ],
+    "supports": {
+        "anchor": true,
+        "className": false
+    },
+    "example": {
+    },
+    "attributes": {
+        "catchOrder": {
+            "type": "string",
+            "default": "media-text"
+        },
+        "catchTitle": {
+            "type": "string",
+            "source": "html",
+            "selector": ".swell-block-linkList__title"
+        },
+        "catchImageUrl": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".swell-block-linkList__img",
+            "attribute": "src"
+        },
+        "catchImageAlt": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".swell-block-linkList__img",
+            "attribute": "alt"
+        },
+        "catchImageID": {
+            "type": "number"
+        },
+        "linkList": {
+            "type": "array",
+            "source": "query",
+            "selector": ".swell-block-linkList__link",
+            "query": {
+                "text": {
+                    "type": "string",
+                    "source": "html",
+                    "selector": "span"
+                },
+                "url": {
+                    "type": "string",
+                    "source": "attribute",
+                    "attribute": "href"
+                },
+                "target": {
+                    "type": "string",
+                    "source": "attribute",
+                    "attribute": "target"
+                },
+                "rel": {
+                    "type": "string",
+                    "source": "attribute",
+                    "attribute": "rel"
+                }
+            },
+            "default": [
+                {
+                    "text": "",
+                    "url": "",
+                    "isNewTab":"",
+                    "rel": ""
+                },
+                {
+                    "text": "",
+                    "url": "",
+                    "isNewTab":"",
+                    "rel": ""
+                },
+                {
+                    "text": "",
+                    "url": "",
+                    "isNewTab":"",
+                    "rel": ""
+                }
+            ]
+        },
+        "listType": {
+            "type": "string",
+            "default": "button"
+        },
+        "listIconPos": {
+            "type": "string",
+            "default": "left"
+        },
+        "listIconName": {
+            "type": "string"
+        },
+        "btnIconPos": {
+            "type": "string",
+            "default": "left"
+        },
+        "btnIconName": {
+            "type": "string"
+        },
+        "btnText": {
+            "type": "string",
+            "source": "html",
+            "selector": ".swell-block-linkList__btn > span"
+        },
+        "btnColor": {
+            "type": "string"
+        },
+        "btnHrefUrl": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".swell-block-linkList__btn",
+            "attribute": "href"
+        },
+        "btnIsNewTab": {
+            "type": "boolean",
+            "default": false
+        },
+        "btnRel": {
+            "type": "string",
+            "source": "attribute",
+            "selector": ".swell-block-linkList__btn",
+            "attribute": "rel"
+        }
+    },
+    "textdomain": "swell"
+}
