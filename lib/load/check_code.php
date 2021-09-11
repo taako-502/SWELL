@@ -3,6 +3,10 @@ namespace SWELL_Theme\Load_Files;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+
+/**
+ * スクリプトが必要なショートコードがあるかどうか
+ */
 add_filter( 'do_shortcode_tag', function ( $output, $tag, $attr, $m ) {
 	if ( 'ad_tag' === $tag ) {
 		\SWELL_Theme::set_use( 'count_CTR', true );
@@ -55,6 +59,9 @@ function check_luminous( $block_content, $block ) {
 }
 
 
+/**
+ * 計測対象のボタンがあるかどうか
+ */
 add_filter( 'render_block_loos/button', __NAMESPACE__ . '\render_swell_button', 10, 2 );
 function render_swell_button( $block_content, $block ) {
 	if ( isset( $block['attrs']['isCount'] ) && $block['attrs']['isCount'] ) {
@@ -65,6 +72,9 @@ function render_swell_button( $block_content, $block ) {
 }
 
 
+/**
+ * スクリプトが必要なフルワイドかどうか
+ */
 add_filter( 'render_block_loos/full-wide', __NAMESPACE__ . '\render_full_wide', 10, 2 );
 function render_full_wide( $block_content, $block ) {
 	if ( ! \SWELL_Theme::is_use( 'rellax' ) ) {
