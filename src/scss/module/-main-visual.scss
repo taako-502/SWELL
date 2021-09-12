@@ -80,7 +80,8 @@
 
 .-height-img {
 
-    .p-mainVisual__slide {
+    // スライダーの時だけ
+    .swiper-slide {
         width: var(--swl-mv_slide_width--pc, 100%);
 
         @include sp {
@@ -88,7 +89,8 @@
         }
     }
 
-    .p-mainVisual__inner:not(.swiper-container-initialized) {
+    // スライダーの時だけ
+    .swiper-container:not(.swiper-container-initialized) {
         visibility: hidden;
     }
 
