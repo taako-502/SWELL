@@ -18,19 +18,19 @@ function wp_enqueue_scripts() {
 }
 
 // CSSを非同期で読み込む
-function load_css_async( $html, $handle, $href, $media ) {
+// function load_css_async( $html, $handle, $href, $media ) {
 
-	if ( 'swell_luminous' === $handle ) {
-		// 元の link 要素の HTML（改行が含まれているようなので前後の空白文字を削除）
-		$default_html = trim( $html );
+// 	if ( 'swell_luminous' === $handle ) {
+// 		// 元の link 要素の HTML（改行が含まれているようなので前後の空白文字を削除）
+// 		$default_html = trim( $html );
 
-		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
-		$html = '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . '" media="print" onload="this.media=\'all\'">' .
-		'<noscript> ' . $default_html . '</noscript>' . PHP_EOL;
-		}
+// 		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+// 		$html = '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . '" media="print" onload="this.media=\'all\'">' .
+// 		'<noscript> ' . $default_html . '</noscript>' . PHP_EOL;
+// 		}
 
-	return $html;
-}
+// 	return $html;
+// }
 
 
 /**
