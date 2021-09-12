@@ -247,6 +247,16 @@ class Updated_Action {
 		$SETTINGS   = self::$customizer_data;
 		$is_changed = 0;
 
+		// デモサイトのロゴを削除
+		if ( isset( $SETTINGS['logo'] ) && false !== strpos( $SETTINGS['logo'], 'demo.swell-theme.com' ) ) {
+			unset( $SETTINGS['logo'] );
+			$is_changed = 1;
+		}
+		if ( isset( $SETTINGS['logo_top'] ) && false !== strpos( $SETTINGS['logo_top'], 'demo.swell-theme.com' ) ) {
+			unset( $SETTINGS['logo_top'] );
+			$is_changed = 1;
+		}
+
 		$switch_keys = [
 			'logo'              => 'logo_id',
 			'logo_top'          => 'logo_top_id',
