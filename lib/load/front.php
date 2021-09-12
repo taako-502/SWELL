@@ -156,20 +156,18 @@ function load_separated_styles() {
 			if ( ! isset( SWELL::$used_blocks[ $name ] ) ) {
 				continue;
 			}
-
 			load_separated_css( $path, $name );
 		}
 	} else {
-		foreach ( $separated_blocks as $name => $path ) {
-			load_separated_css( $path, $name );
-		}
+		wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/blocks.css', [], SWELL_VERSION );
+		// foreach ( $separated_blocks as $name => $path ) load_separated_css( $path, $name ); }
 	}
 
 }
 
 function load_separated_css( $css_path, $name ) {
 	// インライン出力するかどうか
-	if ( 0 ) {
+	if ( \SWELL_Theme::get_option( 'load_style_inline' ) ) {
 		$css = '';
 		$css = SWELL::get_file_contents( T_DIRE . $css_path );
 		// $css = str_replace( '../', T_DIRE_URI . '/assets/', $css );

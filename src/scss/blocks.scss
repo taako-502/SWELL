@@ -1,0 +1,7 @@
+@charset "utf-8";
+
+// coreブロックの追加CSS
+@import "blocks/**";
+
+// swellブロック
+@import "../gutenberg/blocks/**/index.scss";

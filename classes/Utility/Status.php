@@ -352,7 +352,7 @@ trait Status {
 	 * 必要なCSSだけを読み込むかどうか
 	 */
 	public static function is_separate_css() {
-		$flag = true;
+		$flag = (bool) \SWELL_Theme::get_option( 'separate_style' );
 
 		if ( self::is_term() ) {
 			$flag = false;

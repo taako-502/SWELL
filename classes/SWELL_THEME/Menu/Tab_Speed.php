@@ -202,7 +202,8 @@ class Tab_Speed {
 	public static function file_load_settings( $page_name, $cb ) {
 		$section_name  = 'swell_section_file_load';
 		$load_settings = [
-			'load_style_inline' => ['SWELLのCSSをインラインで読み込む', '' ],
+			'load_style_inline' => [ 'SWELLのCSSをインラインで読み込む', '' ],
+			'separate_style'    => [ 'CSSを分割し、できるだけそのページに必要なものだけ読み込む【β機能】', '※ 全てのCSSが最適化されて読み込まれるわけではありません。分割読み込みに対応しているファイル' ],
 		];
 
 		add_settings_section(

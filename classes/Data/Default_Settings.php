@@ -35,6 +35,7 @@ trait Default_Settings {
 			'remove_balloon'         => '',
 
 			'load_style_inline'      => '',
+			'separate_style'      => '',
 			'jquery_to_foot'         => '1',
 			'remove_jqmigrate'       => '1',
 			'load_jquery'            => '',
