@@ -63,7 +63,7 @@
         transition: opacity .75s, visibility .75s;
         transition-delay: .25s;
 
-        &:not(.show_) {
+        &:not(.swiper-container-initialized) {
             visibility: hidden;
             opacity: 0;
         }
@@ -82,14 +82,17 @@
 }
 
 .p-postSlider {
-    visibility: hidden;
     opacity: 0;
+    animation: FadeIn .75s ease .25s 1 normal both;
+}
+
+.p-postSlider__swiper {
     transition: opacity .75s, visibility .75s;
     transition-delay: .25s;
 
-    &.show_ {
-        visibility: visible;
-        opacity: 1;
+    &:not(.swiper-container-initialized) {
+        visibility: hidden;
+        opacity: 0;
     }
 }
 

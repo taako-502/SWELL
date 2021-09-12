@@ -1,6 +1,8 @@
 /* eslint no-undef: 0 */
 // import { Luminous, LuminousGallery } from 'luminous-lightbox';
 
+// console.log('set_luminous.js');
+
 const setDataLuminous = (img) => {
 	// data-srcがあれば読み取る
 	let src = img.getAttribute('data-src');
@@ -21,7 +23,7 @@ const setDataLuminous = (img) => {
 };
 
 const setLuminousGallery = () => {
-	const galleys = document.querySelectorAll('.post_content .wp-block-gallery');
+	const galleys = document.querySelectorAll('.post_content .wp-block-gallery:not(.u-lb-off)');
 
 	// なければreturn
 	if (1 > galleys.length) {
@@ -53,18 +55,23 @@ function setLuminous() {
 
 	// ギャラリーブロックの画像は先にグループ化して処理
 	setLuminousGallery();
+	const isSetPostImg = '1' === window.swlLuminousVars?.postImg;
 
+	let targetSelector = '.u-lb-on img, img.u-lb-on ';
+	if (isSetPostImg) {
+		targetSelector += ', .post_content .wp-block-image:not(.u-lb-off) img';
+	}
 	// 残った普通の画像
-	const contentImgs = document.querySelectorAll('.post_content img:not(.-no-lb)');
+	const lbOnImgs = document.querySelectorAll(targetSelector);
 
 	// 画像が一枚もなければreturn
-	if (1 > contentImgs.length) return;
+	if (1 > lbOnImgs.length) return;
 
 	// あとで設定できるようにする？
 	// const isGroup = false;
 	// const imglist = [];
 
-	contentImgs.forEach((img) => {
+	lbOnImgs.forEach((img) => {
 		const imgParent = img.parentNode;
 
 		// 親がaタグの場合はスキップ
@@ -72,11 +79,11 @@ function setLuminous() {
 
 		const imgClassName = img.className;
 
-		// 画像に すでに luminous がついていればスキップ
+		// 画像に すでに luminous クラスがついていればスキップ
 		if (-1 !== imgClassName.indexOf('luminous')) return;
 
-		// 画像に -no-lb がついていれば continue
-		// if (-1 !== imgClassName.indexOf('-no-lb')) return;
+		// 画像に -no-lb がついていればスキップ
+		if (-1 !== imgClassName.indexOf('-no-lb')) return;
 
 		// 画像src取得できなければスキップ
 		if (!setDataLuminous(img)) return;

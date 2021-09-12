@@ -55,18 +55,21 @@ function hook_wp_loaded() {
 
 	// NO IMAGE画像
 	$noimg_id              = $SETTING['noimg_id'];
-	$noimg_url             = wp_get_attachment_url( $noimg_id ) ?: T_DIRE_URI . '/assets/img/no_img.png';
+	$noimg_url             = wp_get_attachment_url( $noimg_id ) ?: SWELL::get_setting( 'no_image' ) ?: T_DIRE_URI . '/assets/img/no_img.png';
 	$noimg_m_url           = $noimg_id ? wp_get_attachment_image_url( $noimg_id, 'medium' ) : $noimg_url;
-	SWELL::$noimg['id']    = $noimg_id;
+	SWELL::$noimg['id']    = absint( $noimg_id );
 	SWELL::$noimg['url']   = $noimg_url;
 	SWELL::$noimg['small'] = $noimg_m_url;
 
 	// ロゴ画像
-	$logo_id                         = $SETTING['logo_id'];
-	$logo_url                        = wp_get_attachment_url( $logo_id );
-	SWELL::$site_data['logo_id']     = $logo_id;
-	SWELL::$site_data['logo_url']    = $logo_url;
-	SWELL::$site_data['logo_top_id'] = $SETTING['logo_top_id'];
+	$logo_id                          = $SETTING['logo_id'];
+	$logo_url                         = wp_get_attachment_url( $logo_id ) ?: SWELL::get_setting( 'logo' );
+	$logo_top_id                      = $SETTING['logo_top_id'];
+	$logo_top_url                     = wp_get_attachment_url( $logo_top_id ) ?: SWELL::get_setting( 'logo_top' );
+	SWELL::$site_data['logo_id']      = $logo_id;
+	SWELL::$site_data['logo_url']     = $logo_url;
+	SWELL::$site_data['logo_top_id']  = $logo_top_id;
+	SWELL::$site_data['logo_top_url'] = $logo_top_url;
 
 	// キャッチフレーズ
 	SWELL::$site_data['catchphrase'] = get_option( 'blogdescription' );

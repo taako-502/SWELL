@@ -3,7 +3,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 use \SWELL_Theme as SWELL;
 
-
 if ( ! function_exists( 'swl_parts__page_title' ) ) :
 	function swl_parts__page_title( $args ) {
 		$title     = $args['title'] ?? '';
@@ -16,22 +15,29 @@ if ( ! function_exists( 'swl_parts__page_title' ) ) :
 			$title .= '<small class="c-pageTitle__subTitle u-fz-14">– ' . $subtitle . ' –</small>';
 		}
 
-		if ( ! $nowrap ) {
-
-			$title_style = '';
-			if ( $has_inner ) {
-				$title       = '<span class="c-pageTitle__inner">' . $title . '</span>';
-				$title_style = is_archive() ? SWELL::get_setting( 'archive_title_style' ) : SWELL::get_setting( 'page_title_style' );
-			}
-
-			if ( $title_style ) {
-				$title = '<h1 class="c-pageTitle" data-style="' . $title_style . '">' . $title . '</h1>';
-			} else {
-				$title = '<h1 class="c-pageTitle">' . $title . '</h1>';
-			}
+		// 旧バージョンではh1の中だけ出力してた
+		if ( $nowrap ) {
+			echo wp_kses( $title, SWELL::$allowed_text_html );
+			return;
 		}
 
-		echo wp_kses_post( $title );
+		// 先にエスケープ
+		$title = wp_kses( $title, SWELL::$allowed_text_html );
+
+		$title_style = '';
+		if ( $has_inner ) {
+			$title       = '<span class="c-pageTitle__inner">' . $title . '</span>';
+			$title_style = is_archive() ? SWELL::get_setting( 'archive_title_style' ) : SWELL::get_setting( 'page_title_style' );
+		}
+
+		if ( $title_style ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<h1 class="c-pageTitle" data-style="' . esc_attr( $title_style ) . '">' . $title . '</h1>';
+		} else {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo '<h1 class="c-pageTitle">' . $title . '</h1>';
+		}
+
 	}
 endif;
 

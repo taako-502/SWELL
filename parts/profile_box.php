@@ -2,9 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * SNSなどのアイコンリストを出力するパーツテンプレート。
- *
- * @param int $variable : SWELL_Theme::get_parts()で渡される変数。
+ * プロフィールウィジェット
  */
 
 // 引数から受け取る情報
@@ -18,19 +16,13 @@ $btn_text       = $variable['btn_text'];
 $btn_color      = $variable['btn_color'];
 $show_user_sns  = $variable['show_user_sns'];
 $is_icon_circle = $variable['is_icon_circle'];
-
-// wp_get_sidebars_widgets();  // = get_option( 'sidebars_widgets' );
-
-// echo '<pre style="margin-left: 100px;">';
-// var_dump( wp_get_sidebars_widgets() );
-// echo '</pre>';
 ?>
 <div class="p-profileBox">
 	<?php if ( $user_bg ) : ?>
 		<figure class="p-profileBox__bg">
 			<?php
-				$bg_img_id = \SWELL_Theme::get_imgid_from_url( $user_bg );
-				\SWELL_Theme::get_image( $bg_img_id, [
+				$bg_img_id = SWELL_Theme::get_imgid_from_url( $user_bg );
+				SWELL_Theme::get_image( $bg_img_id, [
 					'class'   => 'p-profileBox__bgImg',
 					'sizes'   => '(max-width: 959px) 100vw, 320px',
 					'echo'    => true,
@@ -41,8 +33,8 @@ $is_icon_circle = $variable['is_icon_circle'];
 	<?php if ( $user_icon ) : ?>
 		<figure class="p-profileBox__icon">
 			<?php
-				$icon_img_id = \SWELL_Theme::get_imgid_from_url( $user_icon );
-				\SWELL_Theme::get_image( $icon_img_id, [
+				$icon_img_id = SWELL_Theme::get_imgid_from_url( $user_icon );
+				SWELL_Theme::get_image( $icon_img_id, [
 					'size'    => 'medium',
 					'class'   => 'p-profileBox__iconImg',
 					'width'   => '120',
@@ -56,18 +48,18 @@ $is_icon_circle = $variable['is_icon_circle'];
 	<div class="p-profileBox__name u-fz-m">
 		<?=esc_html( $user_name )?>
 	</div>
-	<?php if ( $user_job ) : ?>
+	<?php if ( $user_job ) : ?>	
 		<div class="p-profileBox__job u-thin">
 			<?=esc_html( $user_job )?>
 		</div>
 	<?php endif; ?>
 	<?php if ( $user_profile ) : ?>
 		<div class="p-profileBox__text">
-			<?=wp_kses_post( nl2br( $user_profile ) )?>
+			<?=wp_kses( nl2br( do_shortcode( $user_profile ) ), SWELL_Theme::$allowed_text_html )?>
 			<?php if ( $btn_link ) : ?>
 				<div class="p-profileBox__btn is-style-btn_normal">
 					<a href="<?=esc_url( $btn_link )?>" style="background:<?=esc_attr( $btn_color )?>" class="p-profileBox__btnLink">
-						<?=wp_kses_post( do_shortcode( $btn_text ) )?>
+						<?=wp_kses( do_shortcode( $btn_text ), SWELL_Theme::$allowed_text_html )?>
 					</a>
 				</div>
 			<?php endif; ?>

@@ -262,6 +262,7 @@ class Updated_Action {
 			'slider4_img_sp'    => 'slider4_imgid_sp',
 			'slider5_img'       => 'slider5_imgid',
 			'slider5_img_sp'    => 'slider5_imgid_sp',
+			'bg_pickup'         => 'ps_bgimg_id',
 
 		];
 		foreach ( $switch_keys as $url_key => $id_key ) {

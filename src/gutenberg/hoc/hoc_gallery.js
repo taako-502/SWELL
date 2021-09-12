@@ -26,23 +26,8 @@ const lbOptions = [
 	},
 ];
 
-const imgSizes = [
-	{
-		label: '指定しない',
-		value: '',
-	},
-	{
-		label: '少し小さく表示',
-		value: 'size_s',
-	},
-	{
-		label: '小さく表示',
-		value: 'size_xs',
-	},
-];
-
 /**
- * 画像ブロック用HOC
+ * ギャラリーブロック用HOC
  */
 export default ({ attributes, setAttributes }) => {
 	const nowClass = attributes.className || '';
@@ -50,11 +35,6 @@ export default ({ attributes, setAttributes }) => {
 	let selectedLbOption = lbOptions.find((option) => hasClass(nowClass, option.value));
 	if (selectedLbOption) {
 		selectedLbOption = selectedLbOption.value;
-	}
-
-	let selectedImgSize = imgSizes.find((option) => hasClass(nowClass, option.value));
-	if (selectedImgSize) {
-		selectedImgSize = selectedImgSize.value;
 	}
 
 	return (
@@ -67,16 +47,6 @@ export default ({ attributes, setAttributes }) => {
 					options={lbOptions}
 					onChange={(val) => {
 						const newClass = setClass(nowClass, val, ['u-lb-on', 'u-lb-off']);
-						setAttributes({ className: newClass });
-					}}
-				/>
-				<SelectControl
-					label='画像の表示サイズ'
-					value={selectedImgSize}
-					// className='-partlist'
-					options={imgSizes}
-					onChange={(val) => {
-						const newClass = setClass(nowClass, val, ['size_s', 'size_xs']);
 						setAttributes({ className: newClass });
 					}}
 				/>

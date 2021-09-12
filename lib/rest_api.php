@@ -230,8 +230,8 @@ function hook_rest_api_init() {
 					] );
 					if ( $the_query->have_posts() ) :
 					while ( $the_query->have_posts() ) :
-						$the_query->the_post();
-						\SWELL_Theme::get_parts( 'parts/single/after_article' );
+							$the_query->the_post();
+							\SWELL_Theme::get_parts( 'parts/single/after_article' );
 					endwhile;
 					endif;
 					wp_reset_postdata();
@@ -323,6 +323,20 @@ function hook_rest_api_init() {
 			}
 
 			return 'リセットに成功しました。';
+		},
+	] );
+
+	// 設定のクリア
+	register_rest_route( 'wp/v2', '/swell-do-update-action', [
+		'methods'             => 'POST',
+		'permission_callback' => [ '\SWELL_Theme', 'is_administrator' ],
+		'callback'            => function() {
+			try {
+				\SWELL_Theme\Updated_Action::db_update();
+			} catch ( \Throwable $th ) {
+				return '更新に失敗しました。';
+			}
+			return '更新に成功しました。';
 		},
 	] );
 }

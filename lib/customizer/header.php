@@ -22,14 +22,14 @@ Customizer::big_title( $section, 'header_color', [
 
 // ヘッダー背景色
 Customizer::add( $section, 'color_header_bg', [
-	'label'       => 'ヘッダー背景色',
-	'type'        => 'color',
+	'label' => 'ヘッダー背景色',
+	'type'  => 'color',
 ] );
 
 // ヘッダー文字色
 Customizer::add( $section, 'color_header_text', [
-	'label'       => 'ヘッダー文字色',
-	'type'        => 'color',
+	'label' => 'ヘッダー文字色',
+	'type'  => 'color',
 ] );
 
 
@@ -40,20 +40,26 @@ Customizer::big_title( $section, 'header_logo', [
 
 // ロゴ画像の設定
 Customizer::add( $section, 'logo_id', [
-	'label'       => 'ロゴ画像の設定',
-	// 'description' => 'ロゴ画像を設定してください。',
-	'type'        => 'media',
-	'mime_type'   => 'image',
-	'partial'     => [
+	'label'     => 'ロゴ画像の設定',
+	'type'      => 'media',
+	'mime_type' => 'image',
+	'partial'   => [
 		'selector'            => '.c-headLogo',
 		'container_inclusive' => true,
 		'render_callback'     => ['\SWELL_THEME\Customizer\Partial', 'head_logo' ],
 	],
 ] );
+// 古いデータだけ残っている場合
+if ( ! \SWELL_Theme::get_setting( 'logo_id' ) && \SWELL_Theme::get_setting( 'logo' ) ) {
+	Customizer::add( $section, 'logo', [
+		'label' => '【旧】ロゴ画像',
+		'type'  => 'image',
+	] );
+}
 
 // 画像サイズ（PC）
 Customizer::add( $section, 'logo_size_pc', [
-	// 'label'       => '画像サイズ（PC）',
+	// 'label' => '画像サイズ（PC）',
 	'description' => '画像サイズ（PC）: 32~120px',
 	'type'        => 'number',
 	'input_attrs' => [
@@ -66,7 +72,7 @@ Customizer::add( $section, 'logo_size_pc', [
 
 // 画像サイズ（PC追従ヘッダー）
 Customizer::add( $section, 'logo_size_pcfix', [
-	// 'label'       => '画像サイズ（PC追従ヘッダー）',
+	// 'label' => '画像サイズ（PC追従ヘッダー）',
 	'description' => '画像サイズ（PC追従ヘッダー）: 24~48px',
 	'type'        => 'number',
 	'input_attrs' => [
@@ -79,7 +85,7 @@ Customizer::add( $section, 'logo_size_pcfix', [
 
 // 画像サイズ（SP）
 Customizer::add( $section, 'logo_size_sp', [
-	// 'label'       => '画像サイズ（SP）',
+	// 'label' => '画像サイズ（SP）',
 	'description' => '画像サイズ（SP）: 40~80px',
 	'type'        => 'number',
 	'input_attrs' => [
@@ -110,9 +116,9 @@ Customizer::add( $section, 'header_layout', [
 
 // ヘッダーのレイアウト(SP)
 Customizer::add( $section, 'header_layout_sp', [
-	'label'       => 'ヘッダーのレイアウト(SP)',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => 'ヘッダーのレイアウト(SP)',
+	'type'    => 'select',
+	'choices' => [
 		'left_right'    => 'ロゴ：左 / メニュー：右',
 		'center_right'  => 'ロゴ:中央 / メニュー：右',
 		'center_left'   => 'ロゴ:中央 / メニュー：左',
@@ -121,9 +127,9 @@ Customizer::add( $section, 'header_layout_sp', [
 
 // ヘッダー境界線
 Customizer::add( $section, 'header_border', [
-	'label'       => 'ヘッダー境界線',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => 'ヘッダー境界線',
+	'type'    => 'select',
+	'choices' => [
 		''       => 'なし',
 		'border' => '線',
 		'shadow' => '影',
@@ -139,9 +145,9 @@ Customizer::big_title( $section, 'top_header', [
 
 // ヘッダーの背景を透明にするかどうか
 Customizer::add( $section, 'header_transparent', [
-	'label'       => 'ヘッダーの背景を透明にするかどうか',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => 'ヘッダーの背景を透明にするかどうか',
+	'type'    => 'select',
+	'choices' => [
 		'no'     => 'しない',
 		't_fff'  => 'する(文字色：白)',
 		't_000'  => 'する(文字色：黒)',
@@ -150,16 +156,23 @@ Customizer::add( $section, 'header_transparent', [
 
 // 透過時のロゴ画像
 Customizer::add( $section, 'logo_top_id', [
-	'classname'   => '-top-header-setting',
-	'label'       => '透過時のロゴ画像',
-	'type'        => 'media',
-	'mime_type'   => 'image',
-	'partial'     => [
+	'classname' => '-top-header-setting',
+	'label'     => '透過時のロゴ画像',
+	'type'      => 'media',
+	'mime_type' => 'image',
+	'partial'   => [
 		'selector'            => '.c-headLogo',
 		'container_inclusive' => true,
 		'render_callback'     => ['\SWELL_THEME\Customizer\Partial', 'head_logo' ],
 	],
 ] );
+// 古いデータだけ残っている場合
+if ( ! \SWELL_Theme::get_setting( 'logo_top_id' ) && \SWELL_Theme::get_setting( 'logo_top' ) ) {
+	Customizer::add( $section, 'logo_top', [
+		'label' => '【旧】透過時のロゴ画像',
+		'type'  => 'image',
+	] );
+}
 
 
 // ■ ヘッダーの追従設定
@@ -169,14 +182,14 @@ Customizer::big_title( $section, 'fix_head', [
 
 // ヘッダーを追従させる（PC）
 Customizer::add( $section, 'fix_header', [
-	'label'       => 'ヘッダーを追従させる（PC）',
-	'type'        => 'checkbox',
+	'label'   => 'ヘッダーを追従させる（PC）',
+	'type'    => 'checkbox',
 ] );
 
 // ヘッダーを追従させる（SP）
 Customizer::add( $section, 'fix_header_sp', [
-	'label'       => 'ヘッダーを追従させる（SP）',
-	'type'        => 'checkbox',
+	'label'   => 'ヘッダーを追従させる（SP）',
+	'type'    => 'checkbox',
 ] );
 
 // 追従ヘッダー（PC）の背景不透明度
@@ -208,8 +221,8 @@ Customizer::add( $section, 'color_head_bar_bg', [
 
 // ヘッダーバー文字色
 Customizer::add( $section, 'color_head_bar_text', [
-	'label'       => 'ヘッダーバー文字色',
-	'type'        => 'color',
+	'label'   => 'ヘッダーバー文字色',
+	'type'    => 'color',
 ] );
 
 
@@ -221,14 +234,14 @@ Customizer::sub_title( $section, 'headbar_content', [
 
 // SNSアイコンリストを表示する
 Customizer::add( $section, 'show_icon_list', [
-	'label'       => 'SNSアイコンリストを表示する',
-	'type'        => 'checkbox',
+	'label'   => 'SNSアイコンリストを表示する',
+	'type'    => 'checkbox',
 ] );
 
 // コンテンツが空でもボーダーとして表示する
 Customizer::add( $section, 'show_head_border', [
-	'label'       => 'コンテンツが空でもボーダーとして表示する',
-	'type'        => 'checkbox',
+	'label'   => 'コンテンツが空でもボーダーとして表示する',
+	'type'    => 'checkbox',
 ] );
 
 
@@ -239,9 +252,9 @@ Customizer::big_title( $section, 'phrase', [
 
 // キャッチフレーズの表示位置
 Customizer::add( $section, 'phrase_pos', [
-	'label'       => 'キャッチフレーズの表示位置',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => 'キャッチフレーズの表示位置',
+	'type'    => 'select',
+	'choices' => [
 		'none'      => __( 'Don\'t show', 'swell' ),
 		'head_bar'  => 'ヘッダーバーに表示',
 		'head_wrap' => 'ヘッダーロゴの近くに表示',
@@ -250,8 +263,8 @@ Customizer::add( $section, 'phrase_pos', [
 
 // キャッチフレーズにタイトル表示
 Customizer::add( $section, 'show_title', [
-	'label'       => 'キャッチフレーズに「| ' . \SWELL_Theme::site_data( 'title' ) . '」を表示する',
-	'type'        => 'checkbox',
+	'label'   => 'キャッチフレーズに「| ' . \SWELL_Theme::site_data( 'title' ) . '」を表示する',
+	'type'    => 'checkbox',
 ] );
 
 
@@ -262,9 +275,9 @@ Customizer::big_title( $section, 'head_menu_pc', [
 
 // マウスホバーエフェクト
 Customizer::add( $section, 'headmenu_effect', [
-	'label'       => 'マウスホバーエフェクト',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => 'マウスホバーエフェクト',
+	'type'    => 'select',
+	'choices' => [
 		'line_center' => 'ラインの出現（中央から）',
 		'line_left'   => 'ラインの出現（左から）',
 		'block'       => 'ブロックの出現',
@@ -300,17 +313,17 @@ Customizer::add( $section, 'gnav_bg_type', [
 // ヘッダーメニュー背景色
 Customizer::add( $section, 'color_gnav_bg', [
 	'classname'   => '-gnav-bg-setting',
-	// 'label'       => 'ヘッダーメニュー背景色',
+	// 'label'   => 'ヘッダーメニュー背景色',
 	'description' => '色指定が空の時はメインカラーと同じ色になります。',
 	'type'        => 'color',
 ] );
 
 // サブメニューの背景色
 Customizer::add( $section, 'head_submenu_bg', [
-	'classname'   => '-radio-button',
-	'label'       => 'サブメニューの背景色',
-	'type'        => 'radio',
-	'choices'     => [
+	'classname' => '-radio-button',
+	'label'     => 'サブメニューの背景色',
+	'type'      => 'radio',
+	'choices'   => [
 		'white' => 'ホワイト',
 		'main'  => 'メインカラー',
 	],
@@ -329,8 +342,8 @@ Customizer::sub_title( $section, 'sp_headmenu_loop', [
 
 // ヘッダーメニューをループさせる
 Customizer::add( $section, 'sp_head_nav_loop', [
-	'label'       => 'ヘッダーメニューをループさせる',
-	'type'        => 'checkbox',
+	'label' => 'ヘッダーメニューをループさせる',
+	'type'  => 'checkbox',
 ] );
 
 
@@ -341,9 +354,9 @@ Customizer::big_title( $section, 'head_search_btn', [
 
 // 検索ボタンの表示位置（PC）
 Customizer::add( $section, 'search_pos', [
-	'label'       => '検索ボタンの表示位置（PC）',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => '検索ボタンの表示位置（PC）',
+	'type'    => 'select',
+	'choices' => [
 		'none'      => __( 'Don\'t show', 'swell' ),
 		'head_bar'  => 'ヘッダーバー内のアイコンリストに表示',
 		'head_menu' => 'ヘッダーメニューに表示',
@@ -352,9 +365,9 @@ Customizer::add( $section, 'search_pos', [
 
 // 検索ボタンの表示設定（SP）
 Customizer::add( $section, 'search_pos_sp', [
-	'label'       => '検索ボタンの表示設定（SP）',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => '検索ボタンの表示設定（SP）',
+	'type'    => 'select',
+	'choices' => [
 		'none'   => __( 'Don\'t show', 'swell' ),
 		'header' => 'カスタムボタンにセット',
 	],
@@ -369,14 +382,14 @@ Customizer::big_title( $section, 'menu_btn', [
 
 // アイコン下に表示するテキスト
 Customizer::add( $section, 'menu_btn_label', [
-	'label'       => 'アイコン下に表示するテキスト',
-	'type'        => 'text',
+	'label' => 'アイコン下に表示するテキスト',
+	'type'  => 'text',
 ] );
 
 // メニューボタン背景色
 Customizer::add( $section, 'menu_btn_bg', [
-	'label'       => 'メニューボタン背景色',
-	'type'        => 'color',
+	'label' => 'メニューボタン背景色',
+	'type'  => 'color',
 ] );
 
 
@@ -396,14 +409,14 @@ Customizer::add( $section, 'custom_btn_icon', [
 
 // アイコン下に表示するテキスト
 Customizer::add( $section, 'custom_btn_label', [
-	'label'       => 'アイコン下に表示するテキスト',
-	'type'        => 'text',
+	'label' => 'アイコン下に表示するテキスト',
+	'type'  => 'text',
 ] );
 
 // カスタムボタン背景色
 Customizer::add( $section, 'custom_btn_bg', [
-	'label'       => 'カスタムボタン背景色',
-	'type'        => 'color',
+	'label' => 'カスタムボタン背景色',
+	'type'  => 'color',
 ] );
 
 // リンク先URL

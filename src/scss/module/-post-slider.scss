@@ -3,11 +3,14 @@
 
 .p-postSlider {
     position: relative;
+    padding-top: var(--swl-post_slide_padY, 16px);
+    padding-bottom: var(--swl-post_slide_padY, 16px);
     overflow: hidden;
 
-    // &::before {
-    // @extendあるので main.css で
-    // }
+    @include mobile {
+        padding-top: var(--swl-post_slide_padY--mb, 16px);
+        padding-bottom: var(--swl-post_slide_padY--mb, 16px);
+    }
 
     .swiper-container {
         position: relative;
@@ -83,6 +86,11 @@
     }
 }
 
+
+.p-postslider__swiper:not(.swiper-container-initialized) {
+    visibility: hidden;
+}
+
 .p-postSlider__title {
     position: relative;
     z-index: 1;
@@ -104,12 +112,18 @@
     align-items: stretch;
 }
 
+/* stylelint-disable-next-line  no-duplicate-selectors */
 .p-postSlider {
 
     .p-postList__item {
         position: static;
+        width: var(--swl-post_slide_width--pc, 100%);
         height: auto;
         padding: 0 var(--ps_space);
+
+        @include sp {
+            width: var(--swl-post_slide_width--sp, 100%);
+        }
     }
 
     .p-postList__link {

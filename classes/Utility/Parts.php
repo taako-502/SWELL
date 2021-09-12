@@ -90,6 +90,15 @@ trait Parts {
 	}
 
 
+	/*
+	 * ブログパーツの出力処理
+	 */
+	public static function do_blog_parts( $content ) {
+		$content = do_blocks( do_shortcode( $content ) );
+		return apply_filters( 'swell_do_blog_parts', $content );
+	}
+
+
 	/**
 	 * キャッシュ機能付きのサイドバー呼び出し
 	 */
@@ -170,6 +179,5 @@ trait Parts {
 			'after'  => '</div>',
 		] );
 	}
-
 
 }

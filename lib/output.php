@@ -79,6 +79,17 @@ function hook_wp_footer_1() {
 		echo "<script>document.documentElement.setAttribute('data-has-theadfix', '1');</script>";
 	}
 
+	if ( $pjax || SWELL::is_use( 'count_CTR' ) ) {
+		wp_enqueue_script( 'swell_count_CTR', T_DIRE_URI . '/build/js/front/count_CTR.min.js', [], SWELL_VERSION, true );
+	}
+
+	// Luminous
+	if ( $pjax || SWELL::is_use( 'luminous' ) ) {
+		wp_enqueue_style( 'swell_luminous', T_DIRE_URI . '/assets/css/plugins/luminous.css', [], SWELL_VERSION );
+		wp_enqueue_script( 'swell_set_luminous', T_DIRE_URI . '/build/js/front/set_luminous.min.js', [ 'swell_luminous' ], SWELL_VERSION, true );
+		wp_localize_script( 'swell_set_luminous', 'swlLuminousVars', [ 'postImg' => ! SWELL::get_setting( 'remove_luminous' ) ] );
+	}
+
 	// clipboard.js
 	if ( $pjax || SWELL::is_use( 'clipboard' ) ) {
 		wp_enqueue_script( 'swell_set_urlcopy', T_DIRE_URI . '/build/js/front/set_urlcopy.min.js', [ 'clipboard' ], SWELL_VERSION, true );

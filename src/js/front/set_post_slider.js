@@ -75,7 +75,7 @@ function setPostSlider() {
 							nextNav.style.top = thumbHelfH + 'px';
 						}
 					}
-					pSlider.classList.add('show_');
+					// pSlider.classList.add('show_');
 				}, 10);
 			},
 		},

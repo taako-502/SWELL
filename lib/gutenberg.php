@@ -7,10 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * render_hook
  */
-require __DIR__ . '/gutenberg/render_hook/core_list.php';
 require __DIR__ . '/gutenberg/render_hook/core_table.php';
 require __DIR__ . '/gutenberg/render_hook/faq.php';
-require __DIR__ . '/gutenberg/render_hook/full_wide.php';
 
 
 /**

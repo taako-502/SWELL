@@ -68,11 +68,6 @@
 
 .p-mainVisual__imgLayer {
 
-    .-height-img & {
-        //メインビジュアルで画像そのまま使う時
-        position: relative;
-    }
-
     .-motion-leftToRight & {
         transform: scale(1.15);
 
@@ -82,13 +77,38 @@
     }
 }
 
-// .p-mainVisual__img {
-//     display: block;
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-// }
 
+.-height-img {
+
+    // スライダーの時だけ
+    .swiper-slide {
+        width: var(--swl-mv_slide_width--pc, 100%);
+
+        @include sp {
+            width: var(--swl-mv_slide_width--sp, 100%);
+        }
+    }
+
+    // スライダーの時だけ
+    .swiper-container:not(.swiper-container-initialized) {
+        visibility: hidden;
+    }
+
+    .swiper-lazy:not(.swiper-lazy-loaded) {
+        height: 0px;
+    }
+
+    .p-mainVisual__imgLayer {
+        position: relative;
+        height: auto;
+    }
+
+    .p-mainVisual__img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
 
 .p-mainVisual:not(.-motion-no) {
 

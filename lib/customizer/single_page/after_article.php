@@ -25,23 +25,20 @@ Customizer::sub_title( $section, 'sns_cta_check', [
 
 // Twitterフォローボタン
 Customizer::add( $section, 'show_tw_follow_btn', [
-	'classname'   => '',
-	'label'       => 'Twitterフォローボタン',
-	'type'        => 'checkbox',
+	'label' => 'Twitterフォローボタン',
+	'type'  => 'checkbox',
 ] );
 
 // Instagramフォローボタン
 Customizer::add( $section, 'show_insta_follow_btn', [
-	'classname'   => '',
-	'label'       => 'Instagramフォローボタン',
-	'type'        => 'checkbox',
+	'label' => 'Instagramフォローボタン',
+	'type'  => 'checkbox',
 ] );
 
 // Facebookいいねボタン
 Customizer::add( $section, 'show_fb_like_box', [
-	'classname'   => '',
-	'label'       => 'Facebookいいねボタン',
-	'type'        => 'checkbox',
+	'label' => 'Facebookいいねボタン',
+	'type'  => 'checkbox',
 ] );
 
 // TwitterのユーザーID
@@ -88,31 +85,27 @@ Customizer::big_title( $section, 'pn_links', [
 
 // 前後記事へのページリンクを表示
 Customizer::add( $section, 'show_page_links', [
-	'classname'   => '',
-	'label'       => '前後記事へのページリンクを表示',
-	'type'        => 'checkbox',
+	'label' => '前後記事へのページリンクを表示',
+	'type'  => 'checkbox',
 ] );
 
 // ページリンクにサムネイル画像を表示する
 Customizer::add( $section, 'show_page_link_thumb', [
-	'classname'   => '',
-	'label'       => 'ページリンクにサムネイル画像を表示する',
-	'type'        => 'checkbox',
+	'label' => 'ページリンクにサムネイル画像を表示する',
+	'type'  => 'checkbox',
 ] );
 
 // 同じカテゴリーの記事を取得する
 Customizer::add( $section, 'pn_link_is_same_term', [
-	'classname'   => '',
-	'label'       => '同じカテゴリーの記事を取得する',
-	'type'        => 'checkbox',
+	'label' => '同じカテゴリーの記事を取得する',
+	'type'  => 'checkbox',
 ] );
 
 // 前後記事へのページリンクのデザイン
 Customizer::add( $section, 'page_link_style', [
-	'classname'   => '',
-	'label'       => '前後記事へのページリンクのデザイン',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => '前後記事へのページリンクのデザイン',
+	'type'    => 'select',
+	'choices' => [
 		'normal' => '標準',
 		'simple' => 'シンプル',
 	],
@@ -126,23 +119,20 @@ Customizer::big_title( $section, 'post_author', [
 
 // 著者情報を表示
 Customizer::add( $section, 'show_author', [
-	'classname'   => '',
-	'label'       => '著者情報を表示',
-	'type'        => 'checkbox',
+	'label' => '著者情報を表示',
+	'type'  => 'checkbox',
 ] );
 
 // 著者ページへのリンクを表示する
 Customizer::add( $section, 'show_author_link', [
-	'classname'   => '',
-	'label'       => '著者ページへのリンクを表示する',
-	'type'        => 'checkbox',
+	'label' => '著者ページへのリンクを表示する',
+	'type'  => 'checkbox',
 ] );
 
 // 著者情報エリアのタイトル
 Customizer::add( $section, 'post_author_title', [
-	'classname'   => '',
-	'label'       => '著者情報エリアのタイトル',
-	'type'        => 'text',
+	'label' => '著者情報エリアのタイトル',
+	'type'  => 'text',
 ] );
 
 // ■ 関連記事エリアの設定
@@ -152,24 +142,21 @@ Customizer::big_title( $section, 'related_posts', [
 
 // 関連記事を表示
 Customizer::add( $section, 'show_related_posts', [
-	'classname'   => '',
-	'label'       => '関連記事を表示',
-	'type'        => 'checkbox',
+	'label' => '関連記事を表示',
+	'type'  => 'checkbox',
 ] );
 
 // 関連記事エリアのタイトル
 Customizer::add( $section, 'related_post_title', [
-	'classname'   => '',
-	'label'       => '関連記事エリアのタイトル',
-	'type'        => 'text',
+	'label' => '関連記事エリアのタイトル',
+	'type'  => 'text',
 ] );
 
 // 関連記事のレイアウト
 Customizer::add( $section, 'related_post_style', [
-	'classname'   => '',
-	'label'       => '関連記事のレイアウト',
-	'type'        => 'select',
-	'choices'     => [
+	'label'   => '関連記事のレイアウト',
+	'type'    => 'select',
+	'choices' => [
 		'card' => 'カード型',
 		'list' => 'リスト型',
 	],
@@ -195,14 +182,12 @@ Customizer::big_title( $section, 'comment_area', [
 
 // コメントエリアを表示
 Customizer::add( $section, 'show_comments', [
-	'classname'   => '',
-	'label'       => 'コメントエリアを表示',
-	'type'        => 'checkbox',
+	'label' => 'コメントエリアを表示',
+	'type'  => 'checkbox',
 ] );
 
 
 Customizer::add( $section, 'comments_title', [
-	'classname'   => '',
-	'label'       => '関連記事エリアのタイトル',
-	'type'        => 'text',
+	'label' => '関連記事エリアのタイトル',
+	'type'  => 'text',
 ] );

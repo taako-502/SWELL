@@ -14,15 +14,34 @@ addEventListener('DOMContentLoaded', function () {
 		_wpnonce: nonce,
 	};
 
-	const doneFunc = (response) => {
-		alert(response);
-	};
+	// 古いデータを更新する
+	const updateActionBtn = document.getElementById('swell_settings_btn___do_update_action');
+	if (null !== updateActionBtn) {
+		updateActionBtn.addEventListener('click', (e) => {
+			e.preventDefault();
 
-	const failFunc = () => {
-		alert('リセットに失敗しました。');
-	};
+			const doneFunc = (response) => {
+				alert(response);
+				location.reload();
+			};
+
+			const failFunc = () => {
+				alert('更新に失敗しました。');
+			};
+
+			postRestApi('swell-do-update-action', params, doneFunc, failFunc);
+		});
+	}
 
 	const clickedFunc = (actionName) => {
+		const doneFunc = (response) => {
+			alert(response);
+		};
+
+		const failFunc = () => {
+			alert('リセットに失敗しました。');
+		};
+
 		if (window.confirm('本当にリセットしてもいいですか？')) {
 			params.action = actionName;
 			postRestApi('swell-reset-settings', params, doneFunc, failFunc);

@@ -6,24 +6,6 @@
 // 影などを濃い目に
 .block-editor-block-preview__container {
 
-    // 分かりにくいので濃いめに。
-    .is-style-shadow > img,
-    .is-style-shadow > video {
-        box-shadow: 0 2px 16px 1px rgba(0, 0, 0, .5), 0 4px 4px -4px rgba(0, 0, 0, .25);
-    }
-
-    // 分かりにくいので濃いめに。
-    .is-style-photo_frame > img,
-    .is-style-photo_frame > video {
-        border: solid 16px #fff;
-        box-shadow: 0 0 0 2px rgba(0, 0, 0, .5);
-    }
-
-    // 分かりにくいので濃いめに。
-    .is-style-border > img,
-    .is-style-photo_frame > video {
-        border-width: 8px;
-    }
 
     // タブブロックのコンテンツを表示
     [data-type="loos/tab-body"]:first-child {

@@ -844,6 +844,7 @@ trait Get {
 			'class'       => $args['class'] ?? '',
 			'srcset'      => $args['srcset'] ?? false,
 			'sizes'       => $args['sizes'] ?? false,
+			'style'       => $args['style'] ?? false,
 			'aria-hidden' => $args['aria-hidden'] ?? false,
 		];
 
@@ -928,9 +929,12 @@ trait Get {
 		}
 
 		$loading = $args['loading'] ?? 'none';
-		if ( 'lazysizes' === $loading ) {
+		if ( 'lazysizes' === $loading || 'swiper' === $loading ) {
 			$attrs['srcset']      = $args['placeholder'] ?? self::$placeholder;
-			$attrs['data-srcset'] = $srcset;
+			$attrs['data-srcset'] = $srcset ?: $src;
+			if ( 'swiper' === $loading ) {
+				$attrs['class'] = 'swiper-lazy';
+			}
 		} else {
 			$attrs['srcset'] = $srcset ?: $src;
 
@@ -947,40 +951,73 @@ trait Get {
 		return "<source $source_props >";
 	}
 
+	/**
+	 * メインビジュアルのスライダー画像データ
+	 */
+	public static function get_mv_slide_imgs() {
+
+		$cached_data = wp_cache_get( 'mv_slide_imgs', 'swell' );
+		if ( $cached_data ) return $cached_data;
+
+		$data = [];
+		for ( $i = 1; $i < 6; $i++ ) {
+			$imgid  = self::get_setting( "slider{$i}_imgid" );
+			$imgurl = self::get_setting( "slider{$i}_img" ); // 古いデータ
+			if ( $imgid || $imgurl ) {
+				$data[ $i ] = [
+					'id'     => $imgid,
+					'url'    => $imgurl,
+					'id_sp'  => self::get_setting( "slider{$i}_imgid_sp" ),
+					'url_sp' => self::get_setting( "slider{$i}_img_sp" ), // 古いデータ
+				];
+			}
+		}
+
+		wp_cache_set( 'mv_slide_imgs', $data, 'swell' );
+		return $data;
+	}
 
 	/**
 	 * メインビジュアルのスライダー画像
 	 */
 	public static function get_mv_slide_img( $i, $lazy_type = 'none' ) {
+		$slide_imgs = self::get_mv_slide_imgs();
+		$img_data   = $slide_imgs[ $i ];
+
 		// PC画像
 		$picture_img = '';
-		$pc_imgid    = self::get_setting( "slider{$i}_imgid" );
+		$pc_imgid    = $img_data['id'] ?? self::get_setting( "slider{$i}_imgid" );
+		$pc_imgurl   = $img_data['url'] ?? self::get_setting( "slider{$i}_img" );
+		$sp_imgid    = $img_data['id_sp'] ?? self::get_setting( "slider{$i}_imgid_sp" );
+		$sp_imgurl   = $img_data['url_sp'] ?? self::get_setting( "slider{$i}_img_sp" );
 		$img_alt     = self::get_setting( "slider{$i}_alt" );
+		$img_class   = 'img' === self::get_setting( 'mv_slide_size' ) ? 'p-mainVisual__img' : 'p-mainVisual__img u-obf-cover';
 
-		if ( 1 === $i && $pc_imgid ) {
+		if ( 1 !== $i ) {
+			$lazy_type = 'swiper';
+		}
+
+		if ( $pc_imgid ) {
 			$picture_img = self::get_image( $pc_imgid, [
-				'class'   => 'p-mainVisual__img u-obf-cover',
+				'class'   => $img_class,
 				'alt'     => $img_alt,
 				'loading' => $lazy_type,
 			] );
+		} elseif ( $pc_imgurl ) {
+			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . ' swiper-lazy">';
 		} elseif ( 1 === $i ) {
-
-			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="p-mainVisual__img u-obf-cover">';
-
-		} elseif ( $pc_imgid ) {
-			$picture_img = self::get_image( $pc_imgid, [
-				'class'   => 'p-mainVisual__img u-obf-cover',
-				'alt'     => $img_alt,
-				'loading' => 'swiper',
-			] );
+			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '">';
 		}
 
-		// SP画像
-		$source         = '';
-		$sp_imgid       = self::get_setting( "slider{$i}_imgid_sp" );
-		$picture_source = $sp_imgid ? self::get_img_source( $sp_imgid, [
-			'loading' => $lazy_type,
-		] ) : '';
+		// SP用画像
+		$picture_source = '';
+		if ( $sp_imgid ) {
+			$picture_source = self::get_img_source( $sp_imgid, [
+				'loading' => $lazy_type,
+			] );
+		} elseif ( $sp_imgurl ) {
+			$picture_source = '<source media="(max-width: 959px)" data-srcset="' . esc_url( $sp_imgurl ) . '" class="swiper-lazy">';
+		}
 
 		return $picture_source . $picture_img;
 	}
@@ -988,25 +1025,41 @@ trait Get {
 
 	/**
 	 * 投稿の背景画像IDを取得
+	 * rerurn: idあれば intで返す　URLあれば文字列で返す
 	 */
 	public static function get_post_ttlbg_id( $post_id ) {
 		$meta = get_post_meta( $post_id, 'swell_meta_ttlbg', true );
-
 		if ( false !== strpos( $meta, 'http' ) ) {
+			// まだ画像のとき
 			$id = attachment_url_to_postid( $meta );
-			update_post_meta( $post_id, 'swell_meta_ttlbg', (string) $id );
+
+			// idに変換できなければURLのまま返す
+			if ( ! $id ) return $meta;
+
+			// IDで再保存
+			$updated = update_post_meta( $post_id, 'swell_meta_ttlbg', (string) $id );
+			if ( ! $updated ) return $meta;
+
 		} else {
-			$id = (int) $meta;
+			$id = $meta;
 		}
 
-		if ( $id ) return $id;
+		if ($id ) return absint( $id );
 
-		$id = $id
-			?: self::get_setting( 'ttlbg_dflt_imgid' )
-			?: get_post_thumbnail_id( $post_id )
-			?: self::get_noimg( 'id' );
+		// デフォルト画像
+		$id = self::get_setting( 'ttlbg_dflt_imgid' );
+		if ($id ) return absint( $id );
 
-		return $id;
+		// デフォルト画像 URLでのデータだけ残ってしまっている場合
+		$url = self::get_setting( 'ttlbg_default_img' );
+		if ( $url ) return $url;
+
+		// アイキャッチ
+		$id = get_post_thumbnail_id( $post_id );
+		if ($id ) return absint( $id );
+
+		// NOIMAGE
+		return self::get_noimg( 'id' ) ?: self::get_noimg( 'url' );
 	}
 
 
@@ -1018,19 +1071,31 @@ trait Get {
 
 		if ( false !== strpos( $meta, 'http' ) ) {
 			$id = attachment_url_to_postid( $meta );
-			update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			// idに変換できなければURLのまま返す
+			if ( ! $id ) return $meta;
+
+			$updated = update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			if ( ! $updated ) return $meta;
 		} else {
-			$id = (int) $meta;
+			$id = $meta;
 		}
 
-		if ( $id ) return $id;
+		if ($id ) return absint( $id );
 
-		$id = $id
-			?: self::get_setting( 'ttlbg_dflt_imgid' )
-			?: self::get_term_thumb_id( $term_id )
-			?: self::get_noimg( 'id' );
+		// デフォルト画像
+		$id = self::get_setting( 'ttlbg_dflt_imgid' );
+		if ($id ) return absint( $id );
 
-		return $id;
+		// デフォルト画像 URLでのデータだけ残ってしまっている場合
+		$url = self::get_setting( 'ttlbg_default_img' );
+		if ( $url ) return $url;
+
+		// アイキャッチ
+		$id = self::get_term_thumb_id( $term_id );
+		if ($id ) return absint( $id );
+
+		// NOIMAGE
+		return self::get_noimg( 'id' ) ?: self::get_noimg( 'url' );
 	}
 
 
@@ -1042,12 +1107,14 @@ trait Get {
 
 		if ( false !== strpos( $meta, 'http' ) ) {
 			$id = attachment_url_to_postid( $meta );
-			update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
-		} else {
-			$id = (int) $meta;
-		}
+			// idに変換できなければURLのまま返す
+			if ( ! $id ) return $meta;
 
-		return $id;
+			$updated = update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			if ( ! $updated ) return $meta;
+
+		}
+		return absint( $meta );
 	}
 
 }

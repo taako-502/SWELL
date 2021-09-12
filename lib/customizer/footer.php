@@ -21,27 +21,27 @@ Customizer::big_title( $section, 'foot_color', [
 
 // フッター背景色
 Customizer::add( $section, 'color_footer_bg', [
-	'label'       => 'フッター背景色',
-	'type'        => 'color',
+	'label' => 'フッター背景色',
+	'type'  => 'color',
 ] );
 
 // フッター文字色
 Customizer::add( $section, 'color_footer_text', [
-	'label'       => 'フッター文字色',
-	'type'        => 'color',
+	'label' => 'フッター文字色',
+	'type'  => 'color',
 ] );
 
 
 // ウィジェットエリアの背景色
 Customizer::add( $section, 'color_footwdgt_bg', [
-	'label'       => 'ウィジェットエリアの背景色',
-	'type'        => 'color',
+	'label' => 'ウィジェットエリアの背景色',
+	'type'  => 'color',
 ] );
 
 // ウィジェットエリアの文字色
 Customizer::add( $section, 'color_footwdgt_text', [
-	'label'       => 'ウィジェットエリアの文字色',
-	'type'        => 'color',
+	'label' => 'ウィジェットエリアの文字色',
+	'type'  => 'color',
 ] );
 
 
@@ -52,8 +52,8 @@ Customizer::big_title( $section, 'foot_copy', [
 
 // コピーライト
 Customizer::add( $section, 'copyright', [
-	'label'       => 'コピーライトのテキスト',
-	'type'        => 'text',
+	'label' => 'コピーライトのテキスト',
+	'type'  => 'text',
 ] );
 
 
@@ -64,12 +64,12 @@ Customizer::big_title( $section, 'foot_other', [
 
 // フッターとフッター直前ウィジェットの間の余白をなく
 Customizer::add( $section, 'footer_no_mt', [
-	'label'       => '「フッター」と「フッター直前ウィジェット」の間の余白をなくす',
-	'type'        => 'checkbox',
+	'label' => '「フッター」と「フッター直前ウィジェット」の間の余白をなくす',
+	'type'  => 'checkbox',
 ] );
 
 // フッターにSNSアイコンリストを表示する
 Customizer::add( $section, 'show_foot_icon_list', [
-	'label'       => 'フッターにSNSアイコンリストを表示する',
-	'type'        => 'checkbox',
+	'label' => 'フッターにSNSアイコンリストを表示する',
+	'type'  => 'checkbox',
 ] );

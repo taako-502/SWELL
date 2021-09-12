@@ -51,7 +51,9 @@ $excerpt = SWELL_Theme::get_excerpt( $post_data, $excerpt_length );
 					endif;
 				?>
 				<?php if ( ! empty( $excerpt ) ) : ?>
-					<div class="p-postList__excerpt u-thin"><?=wp_kses_post( $excerpt )?></div>
+					<div class="p-postList__excerpt">
+						<?php echo $excerpt; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</div>
 				<?php endif; ?>
 				<div class="p-postList__meta">
 					<?php
@@ -67,21 +69,15 @@ $excerpt = SWELL_Theme::get_excerpt( $post_data, $excerpt_length );
 						);
 
 						if ( 'beside_date' === $cat_pos ) :
-							SWELL_Theme::pluggable_parts( 'post_list_category', [
-								'post_id' => $the_id,
-							] );
+							SWELL_Theme::pluggable_parts( 'post_list_category', [ 'post_id' => $the_id ] );
 						endif;
 
 						if ( $show_pv ) :
-							SWELL_Theme::pluggable_parts( 'post_list_pv', [
-								'post_id' => $the_id,
-							] );
+							SWELL_Theme::pluggable_parts( 'post_list_pv', [ 'post_id' => $the_id ] );
 						endif;
 
 						if ( $show_author ) :
-							SWELL_Theme::pluggable_parts( 'post_list_author', [
-								'author_id' => $post_data->post_author,
-							] );
+							SWELL_Theme::pluggable_parts( 'post_list_author', [ 'author_id' => $post_data->post_author ] );
 					endif;
 					?>
 				</div>

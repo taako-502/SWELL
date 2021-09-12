@@ -91,7 +91,7 @@ if ( ! function_exists( 'swl_parts__blog_card' ) ) :
 		if ( '' === $thumb || $noimg ) {
 			$card_class .= ' -noimg';
 		} else {
-			$card_img   = '<img src="' . esc_url( $thumb ) . '" alt="" class="c-postThumb__img u-obf-cover -no-lb" width="320" height="180">';
+			$card_img   = '<img src="' . esc_url( $thumb ) . '" alt="" class="c-postThumb__img u-obf-cover" width="320" height="180">';
 			$card_thumb = '<div class="p-blogCard__thumb c-postThumb"><figure class="c-postThumb__figure">' .
 			$card_img . '</figure></div>';
 		}

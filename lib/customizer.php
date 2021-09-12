@@ -60,6 +60,8 @@ function load_scripts() {
 add_action( 'customize_register', __NAMESPACE__ . '\register_customize_settings', 99 );
 function register_customize_settings( $wp_customize ) {
 
+	\SWELL_Theme::$setting = get_option( \SWELL_Theme::DB_NAME_CUSTOMIZER ) ?: [];
+
 	// デフォルトカスタマイザーの削除
 	$wp_customize->remove_section( 'background_image' ); // 背景画像
 	$wp_customize->remove_section( 'header_image' ); // ヘッダーメディア

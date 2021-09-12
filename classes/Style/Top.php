@@ -47,6 +47,18 @@ class Top {
 		Style::add( '.p-mainVisual__inner', 'height:' . $mv_slide_height_sp );
 		Style::add( '.p-mainVisual__inner', 'height:' . $mv_slide_height_pc, 'pc' );
 
+		// 画像の高さそのまま使う時、かつスライドの表示枚数が複数の時、画面表示の瞬間に高さのチラツキ防止するために横幅先に決定させる
+		if ( 'img' === $SETTING['mv_slide_size'] ) {
+			$pc_num    = (float) $SETTING['mv_slide_num'];
+			$pc_num_sp = (float) $SETTING['mv_slide_num_sp'];
+			if ( $pc_num > 1 ) {
+				Style::add_root( '--swl-mv_slide_width--pc', floor( 100 / $pc_num ) . 'vw' );
+			}
+			if ( $pc_num_sp > 1 ) {
+				Style::add_root( '--swl-mv_slide_width--sp', floor( 100 / $pc_num_sp ) . 'vw' );
+			}
+		}
+
 		// メボタンの丸み
 		Style::add_root( '--mv_btn_radius', $SETTING['mv_btn_radius'] . 'px' );
 
@@ -74,8 +86,38 @@ class Top {
 	 */
 	public static function post_slider( $SETTING ) {
 
-		$ps_style     = [];
-		$ps_style_tab = [];
+		// スライドがページ表示の瞬間にでかくなるのを防ぐための横幅定義
+		$pc_num    = (float) $SETTING['ps_num'];
+		$pc_num_sp = (float) $SETTING['ps_num_sp'];
+		if ( $pc_num > 1 ) {
+			Style::add_root( '--swl-post_slide_width--pc', floor( 100 / $pc_num ) . '%' );
+		}
+		if ( $pc_num_sp > 1 ) {
+			Style::add_root( '--swl-post_slide_width--sp', floor( 100 / $pc_num_sp ) . '%' );
+		}
+
+		// 上下の余白量
+		switch ( $SETTING['pickup_pad_tb'] ) {
+			case 'small':
+				$ps_pad    = '16px';
+				$ps_pad_mb = '16px';
+				break;
+			case 'middle':
+				$ps_pad    = '40px';
+				$ps_pad_mb = '5vw';
+				break;
+			case 'wide':
+				$ps_pad    = '64px';
+				$ps_pad_mb = '8vw';
+				break;
+			default:
+				break;
+		}
+
+		Style::add_root( '--swl-post_slide_padY', $ps_pad );
+		Style::add_root( '--swl-post_slide_padY--mb', $ps_pad_mb );
+
+		$ps_style = [];
 
 		// 背景色
 		$ps_bg_color = $SETTING['ps_bg_color'];
@@ -89,36 +131,7 @@ class Top {
 			$ps_style[] = 'color:' . $pickup_font_color;
 		}
 
-		// 上下の余白量
-		switch ( $SETTING['pickup_pad_tb'] ) {
-			case 'small':
-				$ps_style[] = 'padding-top:16px';
-				$ps_style[] = 'padding-bottom:16px';
-				break;
-			case 'middle':
-				$ps_style[]     = 'padding-top:5vw';
-				$ps_style[]     = 'padding-bottom:5vw';
-				$ps_style_tab[] = 'padding-top:40px';
-				$ps_style_tab[] = 'padding-bottom:40px';
-				break;
-			case 'wide':
-				$ps_style[]     = 'padding-top:8vw';
-				$ps_style[]     = 'padding-bottom:8vw';
-				$ps_style_tab[] = 'padding-top:64px';
-				$ps_style_tab[] = 'padding-bottom:64px';
-				break;
-			default:
-				break;
-		}
-
 		Style::add( '.p-postSlider', $ps_style );
-		Style::add( '.p-postSlider', $ps_style_tab, 'tab' );
-
-		// 背景画像 & 不透明度
-		$post_slider__before = ( $SETTING['bg_pickup'] === '' )
-			? 'content:none'
-			: 'opacity: ' . $SETTING['ps_img_opacity'] . ';background-image: url(' . $SETTING['bg_pickup'] . ')';
-		Style::add( '#post_slider::before', $post_slider__before );
 
 		// スライド間の余白
 		if ( ! $SETTING['ps_no_space'] ) {
@@ -131,7 +144,6 @@ class Top {
 		Style::add_root( '--ps_space', $ps_space );
 
 		// その他
-		$post_slider         = [];
 		$ps_swiper_container = [];
 		if ( $SETTING['ps_on_pagination'] ) {
 			// ページネーションがあればpaddingつける

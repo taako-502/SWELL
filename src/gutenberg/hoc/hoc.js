@@ -13,6 +13,7 @@ import { useEffect } from '@wordpress/element';
 import HocParagraph from './hoc_paragraph';
 import HocGroup from './hoc_group';
 import HocImage from './hoc_image';
+import HocGallery from './hoc_gallery';
 import HocTable from './hoc_table';
 import HocColumns from './hoc_columns';
 import HocList from './hoc_list';
@@ -83,6 +84,10 @@ const addSwellHoc = createHigherOrderComponent((BlockEdit) => {
 			case 'core/image':
 				if (attributes.url) SwellHoc = HocImage;
 				break;
+			case 'core/gallery':
+				if (attributes.ids) SwellHoc = HocGallery;
+				break;
+
 			case 'core/table':
 				SwellHoc = HocTable;
 				break;
