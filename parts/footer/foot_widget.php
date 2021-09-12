@@ -13,7 +13,6 @@ if ( IS_MOBILE && is_active_sidebar( 'footer_sp' ) ) {
 	] );
 } else {
 	// フッターウィジェット 1 ~ 3
-	ob_start();
 	$widget_ct = 0;
 	if ( is_active_sidebar( 'footer_box1' ) ) {
 		$widget_ct++;
