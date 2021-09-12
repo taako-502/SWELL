@@ -100,7 +100,7 @@ function load_front_styles() {
 		wp_enqueue_style( 'main_style', $assets . '/css/main.css', [], SWELL_VERSION );
 	}
 
-	// 切り分け済みのブロックCSS
+	// 切り分けたCSSの読み込み
 	load_separated_styles();
 
 	// カスタムフォーマット用CSS
