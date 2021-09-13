@@ -27,30 +27,6 @@
 //     max-width: 100% !important;
 // }
 
-.wp-block-image.is-style-border img,
-.wp-block-video.is-style-border video {
-    border: solid 1px rgba(0, 0, 0, .1);
-}
-
-
-.wp-block-image.is-style-photo_frame img,
-.wp-block-video.is-style-photo_frame video {
-    border: solid 4px #fff;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
-
-    @include pc {
-        border: solid 6px #fff;
-    }
-}
-
-
-.wp-block-image.is-style-shadow img,
-.wp-block-video.is-style-shadow video {
-
-    @extend %imageShadow;
-}
-
-
 // スタイルプレビューで影などを濃くする
 .block-editor-block-preview__container {
 
