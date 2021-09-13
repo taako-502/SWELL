@@ -62,10 +62,19 @@ function hook_wp_loaded() {
 	SWELL::$noimg['small'] = $noimg_m_url;
 
 	// ロゴ画像
-	$logo_id                          = $SETTING['logo_id'];
-	$logo_url                         = wp_get_attachment_url( $logo_id ) ?: SWELL::get_setting( 'logo' );
-	$logo_top_id                      = $SETTING['logo_top_id'];
-	$logo_top_url                     = wp_get_attachment_url( $logo_top_id ) ?: SWELL::get_setting( 'logo_top' );
+	$logo_id      = $SETTING['logo_id'];
+	$logo_url     = wp_get_attachment_url( $logo_id ) ?: SWELL::get_setting( 'logo' );
+	$logo_top_id  = $SETTING['logo_top_id'];
+	$logo_top_url = wp_get_attachment_url( $logo_top_id ) ?: SWELL::get_setting( 'logo_top' );
+
+	// デモサイトのロゴのときは未設定状態に戻す
+	if ( false !== strpos( $logo_url, 'demo.swell-theme.com' ) ) {
+		$logo_url = '';
+	}
+	if ( false !== strpos( $logo_top_url, 'demo.swell-theme.com' ) ) {
+		$logo_top_url = '';
+	}
+
 	SWELL::$site_data['logo_id']      = $logo_id;
 	SWELL::$site_data['logo_url']     = $logo_url;
 	SWELL::$site_data['logo_top_id']  = $logo_top_id;
