@@ -21,6 +21,10 @@
             height: 100%;
         }
     }
+    // スライダーの時だけ
+    .swiper-container:not(.swiper-container-initialized) {
+        visibility: hidden;
+    }
 
     .swiper-wrapper {
         //align-items: stretch;
@@ -80,6 +84,11 @@
 
 .-height-img {
 
+    // プレースホルダー画像時
+    [src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="] {
+        height: 0px;
+    }
+
     // スライダーの時だけ
     .swiper-slide {
         width: var(--swl-mv_slide_width--pc, 100%);
@@ -87,15 +96,6 @@
         @include sp {
             width: var(--swl-mv_slide_width--sp, 100%);
         }
-    }
-
-    // スライダーの時だけ
-    .swiper-container:not(.swiper-container-initialized) {
-        visibility: hidden;
-    }
-
-    .swiper-lazy:not(.swiper-lazy-loaded) {
-        height: 0px;
     }
 
     .p-mainVisual__imgLayer {

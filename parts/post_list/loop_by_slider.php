@@ -45,7 +45,7 @@ $ps_num_sp = SWELL_Theme::get_setting( 'ps_num_sp' );
 						'cat_pos'   => $cat_pos,
 						'size'      => 'large',
 						'sizes'     => $thumb_sizes,
-						'lazy_type' => $ct > $ps_num_sp ? 'swiper' : 'none',
+						'lazy_type' => $ct > $ps_num_sp ? SWELL_Theme::$lazy_type : 'none',
 					]
 				);
 			?>
