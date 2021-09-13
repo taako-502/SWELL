@@ -103,11 +103,39 @@ function load_front_styles() {
 	// 切り分けたCSSの読み込み
 	load_separated_styles();
 
+	// ページ種別ごとの読み込み
+	load_page_styles();
+
 	// カスタムフォーマット用CSS
 	$custom_format_css = SWELL::get_editor( 'custom_format_css' );
 	if ( $custom_format_css ) {
 		wp_add_inline_style( 'main_style', $custom_format_css );
 	}
+}
+
+
+function load_page_styles() {
+	// $separated_styles = [
+	// 	'core/button'     => '/assets/css/blocks/button.css',
+	// 	'core/calendar'   => '/assets/css/blocks/calendar.css',
+	// 	'core/categories' => '/assets/css/blocks/categories.css',
+	// ];
+
+	// // 使われたブロックだけ読み込むかどうか
+	// if ( SWELL::is_separate_css() ) {
+	// 	if ( SWELL::is_widget_iframe() ) SWELL::$used_blocks = [];
+
+	// 	foreach ( $separated_styles as $name => $path ) {
+
+	// 		// if ( false !== stripos( $name, 'loos/' ) ) {}
+	// 		if ( ! isset( SWELL::$used_blocks[ $name ] ) ) {
+	// 			continue;
+	// 		}
+	// 		load_separated_css( $path, $name );
+	// 	}
+	// } else {
+	// 	wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/blocks.css', [], SWELL_VERSION );
+	// }
 }
 
 function load_separated_styles() {
