@@ -119,6 +119,80 @@ class Style {
 
 	}
 
+	/**
+	 * パーツ化したCSSファイルの読み込み
+	 */
+	public static function set_modules() {
+
+		// サイト全体の画像を丸くするかどうか
+		if ( SWELL::get_setting( 'to_site_rounded' ) ) {
+			self::add_module( '-site-radius' );
+		}
+
+		// 以下、フロントのみ必要なCSSを
+		if ( is_admin() ) return;
+
+		// ページ表示時のアニメーション
+		if ( ! SWELL::get_setting( 'remove_page_fade' ) ) {
+			self::add_module( '-loaded-animation' );
+		}
+
+		// frame-on は 2パターンあるので、 !frame-off で判定
+		if ( '-frame-off' !== SWELL::get_frame_class() ) {
+			self::add_module( '-frame-on' );
+		}
+
+		// スマホヘッダーメニュー
+		if ( SWELL::is_use( 'sp_head_nav' ) ) {
+			self::add_module( 'sp-head-nav' );
+		}
+
+		// ヘッダーレイアウト
+		if ( 'series_right' === SWELL::get_setting( 'header_layout' ) || 'series_left' === SWELL::get_setting( 'header_layout' ) ) {
+			self::add_module( '-header-series' );
+		} else {
+			self::add_module( '-header-parallel' );
+		}
+
+		// グロナビ背景の上書き
+		if ( 'overwrite' === SWELL::get_setting( 'gnav_bg_type' ) ) {
+			self::add_module( '-gnav-overwrite' );
+		}
+
+		// グロナビとスマホメニューのサブメニューの展開方式
+		if ( SWELL::is_use( 'acc_submenu' ) ) {
+			self::add_module( '-submenu-acc' );
+		} else {
+			self::add_module( '-submenu-normal' );
+		}
+
+		// お知らせバー
+		if ( 'none' !== SWELL::get_setting( 'info_bar_pos' ) ) {
+			self::add_module( '-info-bar' );
+		}
+
+		// MV
+		if ( SWELL::is_use( 'mv' ) ) {
+			self::add_module( '-main-visual' );
+		};
+
+		// 記事スライダー
+		if ( SWELL::is_use( 'post_slider' ) ) {
+			self::add_module( '-post-slider' );
+		}
+
+		if ( is_single() || is_page() ) {
+			$the_id = get_queried_object_id();
+			if ( SWELL::is_show_comments( $the_id ) ) {
+				self::add_module( 'comments' );
+			};
+
+			// if ( is_single() ) {
+			// }
+
+		}
+	}
+
 
 	/**
 	 * カスタムスタイルの生成（フロント用）
@@ -126,11 +200,6 @@ class Style {
 	public static function front_style() {
 		$SETTING     = SWELL::get_setting();
 		$frame_class = SWELL::get_frame_class();
-
-		// ページ表示時のアニメーション
-		if ( ! $SETTING['remove_page_fade'] ) {
-			self::add_module( '-loaded-animation' );
-		}
 
 		// カラーのセット
 		Style\Color::front( $SETTING );
@@ -151,34 +220,12 @@ class Style {
 		Style\Header::header_menu_btn( $SETTING['menu_btn_bg'], $SETTING['custom_btn_bg'] );
 		Style\Header::logo( $SETTING['logo_size_sp'], $SETTING['logo_size_pc'], $SETTING['logo_size_pcfix'] );
 
-		// ヘッダーレイアウト
-		if ( 'series_right' === $SETTING['header_layout'] || 'series_left' === $SETTING['header_layout'] ) {
-			self::add_module( '-header-series' );
-		} else {
-			self::add_module( '-header-parallel' );
-		}
-
 		// gnav周り
-		Style\Header::gnav( $SETTING['color_head_hov'], $SETTING['headmenu_effect'], $SETTING['head_submenu_bg'] );
-
-		// グロナビ背景の上書き
-		if ( 'overwrite' === $SETTING['gnav_bg_type'] ) {
-			$color_gnav_bg = $SETTING['color_gnav_bg'] ?: $SETTING['color_main'];
-			self::add_root( '--color_gnav_bg', $color_gnav_bg );
-			self::add_module( '-gnav-overwrite' );
-		}
-
-		// グロナビとスマホメニューのサブメニューの展開方式
-		if ( SWELL::is_use( 'acc_submenu' ) ) {
-			self::add_module( '-submenu-acc' );
-		} else {
-			self::add_module( '-submenu-normal' );
-		}
+		Style\Header::gnav();
 
 		// お知らせバー
 		if ( 'none' !== $SETTING['info_bar_pos'] ) {
-			self::add_module( '-info-bar' );
-			Style\Header::info_bar( $SETTING );
+			Style\Header::info_bar();
 		}
 
 		// トップページの１ページ目だけに使用するスタイル
@@ -289,11 +336,6 @@ class Style {
 		$cat_bg_color = $SETTING['pl_cat_bg_color'] ?: $color_main;
 		Style\Post_List::category( $SETTING['pl_cat_bg_style'], $cat_bg_color, $SETTING['pl_cat_txt_color'] );
 
-		// サイト全体の画像を丸くするかどうか
-		if ( $SETTING['to_site_rounded'] ) {
-			self::add_module( '-site-radius' );
-		}
-
 		// 見出し
 		$color_htag = $SETTING['color_htag'] ?: $color_main;
 		Style\Post::h2( $SETTING['h2_type'], $color_htag );
@@ -338,7 +380,6 @@ class Style {
 		$output_style .= '@media screen and (max-width: 599px){:root{' . self::$root_styles['mobile'] . '}' . $styles['mobile'] . '}';
 
 		// モジュールの連結
-		self::$modules;
 		foreach ( self::$modules as $filename ) {
 
 			$include_path  = T_DIRE . '/assets/css/module/' . $filename . '.css';
@@ -349,6 +390,28 @@ class Style {
 		}
 
 		return $output_style;
+	}
+
+	/**
+	 * 生成したCSSの出力
+	 */
+	public static function load_modules( $is_inline ) {
+		self::set_modules();
+
+		$return = '';
+		foreach ( self::$modules as $filename ) {
+
+			if ( $is_inline ) {
+				$include_path = T_DIRE . '/assets/css/module/' . $filename . '.css';
+				$return      .= SWELL::get_file_contents( $include_path );
+			} else {
+				$include_path = T_DIRE_URI . '/assets/css/module/' . $filename . '.css';
+				wp_enqueue_style( "swell-module-{$filename}", $include_path, ['main_style' ], SWELL_VERSION );
+			}
+		}
+
+		$return = str_replace( '@charset "UTF-8";', '', $return );
+		return $return;
 	}
 
 }

@@ -227,3 +227,29 @@ table.is-style-double,
     }
 }
 
+
+.c-scrollHint {
+    margin-top: 3em;
+    margin-bottom: 2px !important;
+    // margin: 3em 0 2px;
+    text-align: right;
+    animation: FloatHorizontal 2s ease-in-out infinite alternate;
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        font-size: 12px;
+        line-height: 1;
+        vertical-align: middle;
+        opacity: .75;
+
+        i {
+            margin-left: 4px;
+            font-size: 16px;
+        }
+    }
+
+    + .wp-block-table {
+        margin-top: 0 !important;
+    }
+}

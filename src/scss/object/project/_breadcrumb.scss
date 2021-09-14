@@ -16,7 +16,7 @@
 
     //ページタイトル
     .-body-solid &.-bg-on {
-        box-shadow: inset 0 -1px 8px $color_thin_shadow;
+        box-shadow: inset 0 -1px 8px rgba(0, 0, 0, .06);
     }
 
     // パンくずリストの背景効果がないケース

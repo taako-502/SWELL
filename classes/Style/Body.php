@@ -82,7 +82,6 @@ class Body {
 
 		// frame-on は 2パターンあるので、 !frame-off で判定
 		if ( '-frame-off' !== $frame_class ) {
-			Style::add_module( '-frame-on' );
 			Style::add_root( '--color_content_bg', '#fff' );
 		} else {
 			Style::add_root( '--color_content_bg', $color_bg );

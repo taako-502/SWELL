@@ -1,10 +1,8 @@
-
 .p-pnLinks {
     display: flex;
     align-items: stretch;
     justify-content: space-between;
-
-    @extend %postParts_margin;
+    margin: 2em 0; //%postParts_margin;
 
     &.-thumb-on {
 
@@ -22,25 +20,32 @@
 .p-pnLinks__item {
     position: relative;
     width: 49%;
-    min-height: 4em;
     font-size: 3vw;
 
     @include tab {
         font-size: 13px;
     }
 
+    &::before {
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+        display: block;
+        width: .5em;
+        height: .5em;
+        // background-color: rgba(#fff, .2);
+        content: "";
+        pointer-events: none;
+
+    }
+
     &.-prev {
 
-        .p-pnLinks__link::before {
-            position: absolute;
-            top: 50%;
-            display: inline-block;
-            // text-align: center;
-            transform: translateY(-50%);
-
-            @extend %swellicon;
-            @extend .icon-chevron-small-left::before;
-
+        &::before {
+            left: .35em;
+            border-bottom: solid 1px currentColor;
+            border-left: solid 1px currentColor;
+            transform: rotate(45deg) translateY(-50%);
         }
 
         @include tab {
@@ -60,16 +65,13 @@
 
         .p-pnLinks__link {
             justify-content: flex-end;
+        }
 
-            &::before {
-                position: absolute;
-                top: 50%;
-                display: inline-block;
-                transform: translateY(-50%);
-
-                @extend %swellicon;
-                @extend .icon-chevron-small-right::before;
-            }
+        &::before {
+            right: .35em;
+            border-right: solid 1px currentColor;
+            border-bottom: solid 1px currentColor;
+            transform: rotate(-45deg) translateY(-50%);
         }
 
         @include tab {
@@ -92,6 +94,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
+    min-height: 4em;
     padding: .5em 1em;
     line-height: 1.4;
     transition: .25s;
@@ -130,11 +133,11 @@
 
         .p-pnLinks__link {
             padding-left: 1.5em;
+        }
 
-            &::before {
-                left: 0;
-                font-size: 1.2em;
-            }
+        &::before {
+            left: 0;
+            font-size: 1.2em;
         }
     }
 
@@ -142,11 +145,11 @@
 
         .p-pnLinks__link {
             padding-right: 1.5em;
+        }
 
-            &::before {
-                right: 0;
-                font-size: 1.2em;
-            }
+        &::before {
+            right: 0;
+            font-size: 1.2em;
         }
     }
 }
@@ -158,19 +161,16 @@
         .p-pnLinks__link {
             border-left: solid 1.25em var(--color_main);
 
-            &::before {
-                left: -1.25em;
-                width: 1.25em;
-                color: #fff;
-                text-align: center;
-            }
-
             @include tab {
 
                 &:hover {
                     box-shadow: 1px 1px 2px var(--swl-color_shadow);
                 }
             }
+        }
+
+        &::before {
+            color: #fff;
         }
     }
 
@@ -179,19 +179,16 @@
         .p-pnLinks__link {
             border-right: solid 1.25em var(--color_main);
 
-            &::before {
-                right: -1.25em;
-                width: 1.25em;
-                color: #fff;
-                text-align: center;
-            }
-
             @include tab {
 
                 &:hover {
                     box-shadow: -1px 1px 2px var(--swl-color_shadow);
                 }
             }
+        }
+
+        &::before {
+            color: #fff;
         }
     }
 }

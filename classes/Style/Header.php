@@ -1,6 +1,7 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -94,13 +95,25 @@ class Header {
 	/**
 	 * グローバルナビ
 	 */
-	public static function gnav( $color_head_hov, $headmenu_effect, $head_submenu_bg ) {
+	public static function gnav() {
+
+		// グロナビ背景の上書き
+		if ( 'overwrite' === SWELL::get_setting( 'gnav_bg_type' ) ) {
+			Style::add_root(
+				'--color_gnav_bg',
+				SWELL::get_setting( 'color_gnav_bg' ) ?: SWELL::get_setting( 'color_main' )
+			);
+		}
+
+		// SWELL::get_setting( 'color_head_hov' );
+		SWELL::get_setting( 'headmenu_effect' );
+		SWELL::get_setting( 'head_submenu_bg' );
 
 		$gnav_a_after        = [];
 		$sp_head_nav_current = [];
 
 		// ヘッダーメニューボーダー  メイン色かテキスト色か a::afterは親のみ
-		if ( $color_head_hov === 'main' ) {
+		if ( 'main' === SWELL::get_setting( 'color_head_hov' ) ) {
 			$gnav_a_after[]        = 'background:var(--color_main)';
 			$sp_head_nav_current[] = 'border-bottom-color:var(--color_main)';
 		} else {
@@ -110,7 +123,7 @@ class Header {
 
 		$gnav_li_hover_a_after = [];
 		// グロナビのホバーエフェクト
-		switch ( $headmenu_effect ) {
+		switch ( SWELL::get_setting( 'headmenu_effect' ) ) {
 			case 'line_center':
 				$gnav_a_after[]          = 'width:100%;height:2px;transform:scaleX(0)';
 				$gnav_li_hover_a_after[] = 'transform: scaleX(1)';
@@ -147,12 +160,9 @@ class Header {
 		}
 
 		// サブメニューの色
-		$submenu_color = '#333';
-		$submenu_bg    = '#fff';
-		if ( $head_submenu_bg === 'main' ) {
-			$submenu_color = '#fff';
-			$submenu_bg    = 'var(--color_main)';
-		}
+		$subbg_is_white = 'main' !== SWELL::get_setting( 'head_submenu_bg' );
+		$submenu_color  = $subbg_is_white ? '#333' : '#fff';
+		$submenu_bg     = $subbg_is_white ? '#fff' : 'var(--color_main)';
 		Style::add( '.c-gnav .sub-menu', [
 			'color:' . $submenu_color,
 			'background:' . $submenu_bg,
@@ -163,20 +173,20 @@ class Header {
 	/**
 	 * お知らせバー
 	 */
-	public static function info_bar( $SETTING ) {
+	public static function info_bar() {
 
 		$infoBar      = [];
 		$infoBar__btn = [];
 
 		// テキスト色
-		$infoBar[] = 'color:' . $SETTING['color_info_text'];
+		$infoBar[] = 'color:' . SWELL::get_setting( 'color_info_text' );
 
 		// 背景
-		$bgcol_01 = $SETTING['color_info_bg'];
-		$bgcol_02 = $SETTING['color_info_bg2'];
+		$bgcol_01 = SWELL::get_setting( 'color_info_bg' );
+		$bgcol_02 = SWELL::get_setting( 'color_info_bg2' );
 
-		if ( $SETTING['info_bar_effect'] === 'gradation' ) {
-			// 背景効果：グラデーション
+		// 背景グラデーションかどうか
+		if ( 'gradation' === SWELL::get_setting( 'info_bar_effect' ) ) {
 			if ( $bgcol_02 ) {
 				$gradation_bg = 'repeating-linear-gradient(' .
 					'100deg,' .
@@ -197,13 +207,14 @@ class Header {
 
 			$infoBar[] = 'background-image:' . $gradation_bg;
 		} else {
-			 $infoBar[] = 'background-color:' . $bgcol_01;
+			$infoBar[] = 'background-color:' . $bgcol_01;
 		}
+
 		// $head_style .= '.c-infoBar{'. $notice_style .'}';
 		Style::add( '.c-infoBar', $infoBar );
 
 		// フォントサイズ
-		switch ( $SETTING['info_bar_size'] ) {
+		switch ( SWELL::get_setting( 'info_bar_size' ) ) {
 			case 'small':
 				$fz_tab    = '12px';
 				$fz_mobile = '3vw';
@@ -221,7 +232,7 @@ class Header {
 		Style::add( '.c-infoBar__text', 'font-size:' . $fz_tab, 'tab' );
 
 		// ボタンの色
-		$color_info_btn = $SETTING['color_info_btn'] ?: $SETTING['color_main'];
+		$color_info_btn = SWELL::get_setting( 'color_info_btn' ) ?: SWELL::get_setting( 'color_main' );
 		$infoBar__btn[] = 'background-color:' . $color_info_btn . ' !important';
 		Style::add( '.c-infoBar__btn', $infoBar__btn );
 

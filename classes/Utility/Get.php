@@ -313,7 +313,9 @@ trait Get {
 		if ( $term_id ) {
 
 			$thumb_id = self::get_term_thumb_id( $term_id );
-
+			if ( is_string( $thumb_id ) ) {
+				$thumb_url = $thumb_id; // 昔はURLデータを保存してた
+			}
 		} elseif ( has_post_thumbnail( $post_id ) ) {
 
 			$thumb_id = get_post_thumbnail_id( $post_id );

@@ -1,0 +1,13 @@
+// タームナビゲーション
+.p-termNavigation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0 4px;
+    font-size: 11px;
+
+    .l-topTitleArea & {
+        margin-top: .75rem;
+    }
+}

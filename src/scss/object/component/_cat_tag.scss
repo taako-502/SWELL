@@ -1,42 +1,15 @@
-// カテゴリ・タグ
-.p-articleMetas {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 0 1px;
-    font-size: 12px;
+.c-categoryList::before,
+.c-tagList::before {
+
+    @extend %swellicon;
 }
-
-.p-articleMetas.-top {
-    margin-top: .5em;
-
-    .p-articleMetas__termList {
-        font-size: 11px;
-    }
-}
-
-.p-articleMetas__termList {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin: 0 .25em 0 0;
-}
-
-.p-articleMetas__times,
-.p-articleMetas__author {
-    margin: .25em .25em .25em 0;
-}
-
 
 .c-categoryList {
 
     color: var(--color_main); //アイコンをメインカラーにしたい
     &::before {
-        // position: relative;
-        // top: 1px;
         margin-right: .5em;
 
-        @extend %swellicon;
         @extend .icon-folder::before;
     }
 }
@@ -47,8 +20,6 @@
         margin-right: .5em;
         color: inherit;
         content: "\e935";
-
-        @extend %swellicon;
     }
 }
 
@@ -71,20 +42,6 @@
     background-color: var(--color_main);
 }
 
-
-// タームナビゲーション
-.p-termNavigation {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 1rem;
-    padding: 0 4px;
-    font-size: 11px;
-
-    .l-topTitleArea & {
-        margin-top: .75rem;
-    }
-}
 
 .l-mainContent .c-categoryList__link.-current {
     color: inherit;

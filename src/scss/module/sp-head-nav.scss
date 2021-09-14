@@ -1,3 +1,6 @@
+@import "../foundation/mixin/media";
+
+// 構造：.l-header__spNav > .p-spHeadMenu
 
 // スマホヘッダーメニュー
 .p-spHeadMenu {
@@ -35,6 +38,10 @@
 
     @include pc {
         display: none;
+    }
+
+    &.swiper-container:not(.swiper-container-initialized) .p-spHeadMenu {
+        visibility: hidden;
     }
 
     a {

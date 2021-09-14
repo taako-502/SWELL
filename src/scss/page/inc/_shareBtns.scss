@@ -1,9 +1,6 @@
-
 .c-shareBtns {
-
-    @extend %postParts_margin;
+    margin: 2em 0; //%postParts_margin;
 }
-
 
 .c-shareBtns__message {
     width: 100%;

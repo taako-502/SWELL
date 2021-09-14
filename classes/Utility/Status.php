@@ -348,6 +348,20 @@ trait Status {
 	}
 
 
+
+	/**
+	 * 必要なCSSだけを読み込むかどうか
+	 */
+	public static function is_load_css_inline() {
+		$cached_flag = wp_cache_get( 'is_load_css_inline', 'swell' );
+		if ( $cached_flag ) return $cached_flag;
+
+		$flag = \SWELL_Theme::get_option( 'load_style_inline' );
+
+		wp_cache_set( 'is_load_css_inline', $flag, 'swell' );
+		return $flag;
+	}
+
 	/**
 	 * 必要なCSSだけを読み込むかどうか
 	 */

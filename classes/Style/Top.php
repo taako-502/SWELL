@@ -1,6 +1,7 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -9,7 +10,7 @@ class Top {
 
 	public static function init() {
 
-		$SETTING = \SWELL_Theme::get_setting();
+		$SETTING = SWELL::get_setting();
 
 		// コンテンツ上の余白量
 		Style::add( '.top #content', 'padding-top:' . $SETTING['top_content_mt'] );
@@ -20,15 +21,13 @@ class Top {
 		}
 
 		// MV
-		if ( $SETTING['main_visual_type'] !== 'none' ) {
+		if ( SWELL::is_use( 'mv' ) ) {
 			self::mv( $SETTING );
-			Style::add_module( '-main-visual' );
 		};
 
 		// 記事スライダー
-		if ( $SETTING['show_post_slide'] !== 'off' ) {
+		if ( SWELL::is_use( 'post_slider' ) ) {
 			self::post_slider( $SETTING );
-			Style::add_module( '-post-slider' );
 		}
 	}
 

@@ -2,7 +2,7 @@
 
 .p-authorBox {
     padding: 5vw;
-    border: solid 1px $color_border;
+    border: solid 1px var(--swl-color_border);
 
     @include mobile {
         text-align: center;
@@ -37,7 +37,7 @@
             flex-direction: column;
             width: calc(100% - 160px - 1.5em);
             padding-left: 1.5em;
-            border-left: solid 1px $color_border;
+            border-left: solid 1px var(--swl-color_border);
         }
     }
 
@@ -83,7 +83,7 @@
         line-height: 3;
         letter-spacing: .5px;
         text-align: center;
-        border: solid 1px $color_border;
+        border: solid 1px var(--swl-color_border);
 
         &::after {
             position: absolute;
@@ -100,7 +100,7 @@
         width: 100px;
         height: 100px;
         object-fit: cover;
-        border: solid 2px $color_border;
+        border: solid 2px var(--swl-color_border);
         border-radius: 50%;
     }
 }

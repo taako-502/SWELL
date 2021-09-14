@@ -1,11 +1,13 @@
 @import "../foundation/mixin/**";
+
+:root {
+    --swl-radius--8: 8px;
+}
 //2px
 .c-shareBtns__btn,
 .p-blogCard__inner::before,
-.p-articleThumb__img,
-.p-profileBox,
-.p-profileBox__bgImg,
-.p-profileBox__iconList,
+.c-categoryList__link,
+.c-tagList__link,
 .p-toc {
     border-radius: 2px;
 }
@@ -15,6 +17,9 @@ input[type="text"],
 input[type="number"],
 // input[type="number"],
 textarea,
+.p-articleThumb__img,
+.p-profileBox,
+.p-profileBox__bg,
 .c-searchForm__submit,
 .p-authorBox__moreLink,
 .-related .p-postList__thumb,
@@ -38,8 +43,7 @@ textarea,
 
 //8px
 .p-snsCta,
-.p-authorBox,
-.p-commentArea {
+.p-authorBox {
     border-radius: 8px;
 }
 

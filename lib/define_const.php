@@ -41,7 +41,7 @@ add_action( 'after_setup_theme', function() {
 add_action( 'wp_loaded', __NAMESPACE__ . '\hook_wp_loaded', 11 );
 function hook_wp_loaded() {
 
-	$SETTING      = \SWELL_Theme::get_setting();
+	$SETTING      = SWELL::get_setting();
 	$is_customize = is_customize_preview();
 
 	SWELL::set_use( 'pjax', ( 'pjax' === $SETTING['use_pjax'] && ! $is_customize ) );
@@ -111,10 +111,16 @@ function hook_wp_loaded() {
 
 
 /**
- * 主な条件分岐タグを定数化
+ * 条件分岐が有効になってから定義するもの
  */
 add_action( 'wp', __NAMESPACE__ . '\hook_wp', 2 );
 function hook_wp() {
 	define( 'IS_TOP', SWELL::is_top() );
 	define( 'IS_TERM', SWELL::is_term() );
+	if ( SWELL::is_top() && ! is_paged() ) {
+
+		SWELL::set_use( 'mv', 'none' !== SWELL::get_setting( 'main_visual_type' ) );
+		SWELL::set_use( 'post_slider', 'on' === SWELL::get_setting( 'show_post_slide' ) );
+	}
+
 }
