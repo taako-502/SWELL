@@ -1,3 +1,5 @@
+@import "../foundation/mixin/media";
+
 .l-topTitleArea {
     position: relative;
     display: flex;
@@ -53,8 +55,8 @@
 }
 
 // IEでは align-items: center + min-height がきかない
-_:lang(x)::-ms-backdrop,
-.l-topTitleArea {
-    min-height: auto !important;
-    padding: 2em 0 !important;
-}
+// _:lang(x)::-ms-backdrop,
+// .l-topTitleArea {
+//     min-height: auto !important;
+//     padding: 2em 0 !important;
+// }

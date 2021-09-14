@@ -4,11 +4,12 @@
 @import "../foundation/mixin/**";
 // @import "../foundation/placeholder";
 
+@import "./inc/postTitle";
+@import "./inc/password_form";
 @import "./inc/articleMetas";
 @import "./inc/articleThumb";
 @import "./inc/articleFoot";
+@import "./inc/bottom_section";
 @import "./inc/shareBtns";
 @import "./inc/snsCta";
-@import "./inc/pnLinks";
 @import "./inc/authorBox";
-// @import "./inc/comments";

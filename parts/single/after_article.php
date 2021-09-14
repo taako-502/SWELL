@@ -3,7 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 $the_id    = get_the_ID();
 $post_data = get_post( $the_id );
 
-if ( SWELL_Theme::get_setting( 'show_page_links' ) ) : // 前の記事・次の記事
+if ( SWELL_Theme::is_show_page_links() ) : // 前の記事・次の記事
 	SWELL_Theme::get_parts( 'parts/single/prev_next_link' );
 endif;
 

@@ -1,6 +1,7 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -10,53 +11,48 @@ class Page {
 	/**
 	 * タイトル横の日付
 	 */
-	public static function title_date( $show_title_date, $show_title_date_sp ) {
-		if ( ! $show_title_date ) style::add( '.single .c-postTitle__date', 'display:none', 'pc' );
-		if ( ! $show_title_date_sp ) style::add( '.single .c-postTitle__date', 'display:none', 'sp' );
+	public static function title_date() {
+
+		if ( ! SWELL::get_setting( 'show_title_date' ) ) {
+			style::add( '.single .c-postTitle__date', 'display:none', 'pc' );
+		}
+		if ( ! SWELL::get_setting( 'show_title_date_sp' ) ) {
+			style::add( '.single .c-postTitle__date', 'display:none', 'sp' );
+		}
 	}
 
 
 	/**
 	 * タイトル背景
 	 */
-	public static function title_bg( $ttlbg_overlay_color, $ttlbg_overlay_opacity ) {
+	public static function title_bg() {
+
 		style::add( '.l-topTitleArea.c-filterLayer::before', [
-			'background-color:' . $ttlbg_overlay_color,
-			'opacity:' . $ttlbg_overlay_opacity,
+			'background-color:' . SWELL::get_setting( 'ttlbg_overlay_color' ),
+			'opacity:' . SWELL::get_setting( 'ttlbg_overlay_opacity' ),
 			'content:""',
 		]);
 	}
 
 
 	/**
-	 * 記事のフォントサイズ
+	 * 目次関連
 	 */
-	public static function font_size( $fz_sp, $fz_pc ) {
-		style::add( ['#main_content .post_content', '#lp-content .post_content' ], 'font-size:' . $fz_sp );
-		style::add( ['#main_content .post_content', '#lp-content .post_content' ], 'font-size:' . $fz_pc, 'tab' );
-	}
+	public static function toc() {
 
-
-	/**
-	 * 目次 toc_dotcol_main
-	 */
-	public static function toc( $toc_before_color, $toc_before_custom_color ) {
+		// 目次liカラー
+		$toc_before_color = SWELL::get_setting( 'toc_before_color' );
 		if ( 'main' === $toc_before_color ) {
 			style::add( ['.p-toc__list.is-style-index li::before' ], 'color:var(--color_main)' );
 		} elseif ( 'custom' === $toc_before_color ) {
-			style::add( ['.p-toc__list.is-style-index li::before' ], 'color:' . $toc_before_custom_color );
+			style::add( ['.p-toc__list.is-style-index li::before' ], 'color:' . SWELL::get_setting( 'toc_before_custom_color' ) );
 		}
-	}
 
-
-	/**
-	 * 目次広告
-	 */
-	public static function toc_ad( $show_alone_post, $show_alone_page ) {
-		if ( ! $show_alone_post ) {
+		// 目次広告
+		if ( ! SWELL::get_setting( 'show_toc_ad_alone_post' ) ) {
 			style::add( '.single.-index-off .w-beforeToc', 'display:none' );
 		}
-		if ( ! $show_alone_page ) {
+		if ( ! SWELL::get_setting( 'show_toc_ad_alone_page' ) ) {
 			style::add( '.page.-index-off .w-beforeToc', 'display:none' );
 		}
 	}
@@ -65,7 +61,10 @@ class Page {
 	/**
 	 * シェアボタン
 	 */
-	public static function share_btn( $share_btn_style ) {
+	public static function share_btn() {
+
+		$share_btn_style = SWELL::get_setting( 'share_btn_style' );
+
 		$btn_mr  = '';
 		$btn_css = [];
 		switch ( $share_btn_style ) {

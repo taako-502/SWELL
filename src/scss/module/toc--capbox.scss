@@ -1,0 +1,26 @@
+@import "../foundation/mixin/media";
+
+// ベース
+@import "./inc/toc";
+
+
+.p-toc.-capbox {
+
+    overflow: hidden;
+    border: solid 1px var(--color_main);
+
+    .p-toc__ttl {
+        padding: .5em;
+        color: #fff;
+        background-color: var(--color_main);
+    }
+
+    .p-toc__list {
+        padding: 1.5em 1em;
+
+        @include tab {
+            padding-left: 2em;
+        }
+    }
+}
+

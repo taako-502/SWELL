@@ -125,18 +125,30 @@ function load_page_styles() {
 	if ( SWELL::is_widget_iframe() ) return;
 
 	$separated_styles = [
+		'home'    => '/assets/css/page/home.css',
 		'single'  => '/assets/css/page/single.css',
 		'page'    => '/assets/css/page/page.css',
+		'author'  => '/assets/css/page/author.css',
+		'term'    => '/assets/css/page/term.css',
 		'archive' => '/assets/css/page/archive.css',
+		'404'     => '/assets/css/page/404.css',
 	];
 
 	$parts = [];
-	if ( is_single() ) {
+	if ( is_home() ) {
+		$parts['home'] = true;
+	} elseif ( is_single() ) {
 		$parts['single'] = true;
 	} elseif ( is_page() ) {
 		$parts['page'] = true;
+	} elseif ( SWELL::is_term() ) {
+		$parts['term'] = true;
+	} elseif ( is_author() ) {
+		$parts['author'] = true;
 	} elseif ( is_archive() ) {
 		$parts['archive'] = true;
+	} elseif ( is_404() ) {
+		$parts['404'] = true;
 	}
 	foreach ( $separated_styles as $name => $path ) {
 		if ( ! isset( $parts[ $name ] ) ) continue;

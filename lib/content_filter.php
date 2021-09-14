@@ -109,7 +109,7 @@ function add_toc( $content, $is_content_hook = true ) {
 			'<span class="p-toc__ttl">' . $SETTING['toc_title'] . '</span></div>';
 
 		// 目次広告コード
-		if ( SWELL::is_show_toc_ad( true ) ) {
+		if ( SWELL::is_show_toc_ad() ) {
 			$toc_ad = \SWELL_PARTS::toc_ad();
 		}
 

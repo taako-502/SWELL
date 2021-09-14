@@ -1,0 +1,20 @@
+@import "../foundation/mixin/media";
+
+// ベース
+@import "./inc/toc";
+
+
+.p-toc.-border {
+
+    padding: 1.75em .5em 1.5em;
+    border-top: solid 2px var(--color_main);
+    border-bottom: solid 2px var(--color_main);
+
+    @include tab {
+        padding: 1.75em 1em 1.5em;
+    }
+
+    .p-toc__ttl {
+        margin-bottom: .75em;
+    }
+}

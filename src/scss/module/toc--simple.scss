@@ -1,0 +1,17 @@
+@import "../foundation/mixin/media";
+
+// ベース
+@import "./inc/toc";
+
+.p-toc.-simple {
+
+    padding: 1.25em;
+    border: solid 1px var(--color_border);
+
+    .p-toc__ttl {
+        margin-bottom: 1em;
+        padding: 0 .5em .75em;
+        text-align: left;
+        border-bottom: dashed 1px var(--color_border);
+    }
+}

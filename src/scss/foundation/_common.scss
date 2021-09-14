@@ -65,6 +65,12 @@ a {
     color: var(--color_link);
 }
 
+// フォントサイズ
+#main_content .post_content,
+#lp-content .post_content {
+    font-size: var(--swl-content_font_size, 16px);
+}
+
 
 .ad_area {
     min-height: 80px;

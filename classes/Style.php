@@ -171,6 +171,10 @@ class Style {
 			self::add_module( '-info-bar' );
 		}
 
+		if ( SWELL::is_show_ttltop() ) {
+			self::add_module( 'top-title-area' );
+		}
+
 		// MV
 		if ( SWELL::is_use( 'mv' ) ) {
 			self::add_module( '-main-visual' );
@@ -181,16 +185,25 @@ class Style {
 			self::add_module( '-post-slider' );
 		}
 
+		// 目次
+		if ( is_single() || is_page() || SWELL::is_term() ) {
+			self::add_module( 'toc--' . SWELL::get_setting( 'index_style' ) );
+		}
+
+		if ( is_single() ) {
+			if ( SWELL::is_show_page_links() ) {
+				self::add_module( 'pn-links--' . SWELL::get_setting( 'page_link_style' ) );
+			}
+		}
+
+		// コメント
 		if ( is_single() || is_page() ) {
 			$the_id = get_queried_object_id();
 			if ( SWELL::is_show_comments( $the_id ) ) {
 				self::add_module( 'comments' );
 			};
-
-			// if ( is_single() ) {
-			// }
-
 		}
+
 	}
 
 
@@ -201,8 +214,11 @@ class Style {
 		$SETTING     = SWELL::get_setting();
 		$frame_class = SWELL::get_frame_class();
 
+		self::add_root( '--swl-content_font_size', $SETTING['post_font_size_sp'] );
+		self::add_root( '--swl-content_font_size', $SETTING['post_font_size_pc'], 'tab' );
+
 		// カラーのセット
-		Style\Color::front( $SETTING );
+		Style\Color::front();
 
 		// Body
 		Style\Body::font( $SETTING['body_font_family'] );
@@ -232,17 +248,13 @@ class Style {
 		if ( SWELL::is_top() && ! is_paged() ) Style\Top::init();
 
 		// タイトルデザイン
-		Style\Title::section( $SETTING['sec_title_style'] );
+		Style\Title::section();
 
 		// 投稿ページ
-		Style\Page::title_date( $SETTING['show_title_date'], $SETTING['show_title_date_sp'] );
-		Style\Page::title_bg( $SETTING['ttlbg_overlay_color'], $SETTING['ttlbg_overlay_opacity'] );
-		Style\Page::share_btn( $SETTING['share_btn_style'] );
-		Style\Page::toc( $SETTING['toc_before_color'], $SETTING['toc_before_custom_color'] );
-		Style\Page::toc_ad( $SETTING['show_toc_ad_alone_post'], $SETTING['show_toc_ad_alone_page'] );
-
-		// コンテンツのフォントサイズ
-		Style\Page::font_size( $SETTING['post_font_size_sp'], $SETTING['post_font_size_pc'] );
+		Style\Page::title_date();
+		Style\Page::title_bg();
+		Style\Page::share_btn();
+		Style\Page::toc();
 
 		// Footer周り
 		Style\Footer::pagetop_btn( $SETTING['pagetop_style'] );
@@ -284,7 +296,7 @@ class Style {
 		$color_main = $SETTING['color_main'];
 
 		// カラー用CSS変数のセット
-		Style\Color::common( $SETTING, $EDITOR );
+		Style\Color::common();
 
 		// ボタン
 		Style\Post::btn();
@@ -378,16 +390,6 @@ class Style {
 		$output_style .= '@media screen and (max-width: 959px){:root{' . self::$root_styles['sp'] . '}' . $styles['sp'] . '}';
 		$output_style .= '@media screen and (min-width: 600px){:root{' . self::$root_styles['tab'] . '}' . $styles['tab'] . '}';
 		$output_style .= '@media screen and (max-width: 599px){:root{' . self::$root_styles['mobile'] . '}' . $styles['mobile'] . '}';
-
-		// モジュールの連結
-		foreach ( self::$modules as $filename ) {
-
-			$include_path  = T_DIRE . '/assets/css/module/' . $filename . '.css';
-			$output_style .= SWELL::get_file_contents( $include_path );
-
-			// $include_path = T_DIRE_URI . '/assets/css/module/' . $filename . '.css';
-			// wp_enqueue_style( 'swell-module' . $filename, $include_path, ['main_style' ], SWELL_VERSION );
-		}
 
 		return $output_style;
 	}

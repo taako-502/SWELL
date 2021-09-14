@@ -31,6 +31,11 @@ trait Get {
 	 * フレーム設定を取得する
 	 */
 	public static function get_frame_class() {
+
+		// キャッシュ取得
+		$cached_class = wp_cache_get( 'frame_class', 'swell' );
+		if ( $cached_class ) return $cached_class;
+
 		$content_frame = self::get_setting( 'content_frame' );
 		$frame_scope   = self::get_setting( 'frame_scope' );
 
@@ -58,7 +63,9 @@ trait Get {
 			}
 		}
 
-		return apply_filters( 'swell_frame_class', $frame_class );
+		$frame_class = apply_filters( 'swell_frame_class', $frame_class );
+		wp_cache_set( 'frame_class', $frame_class, 'swell' );
+		return $frame_class;
 	}
 
 
