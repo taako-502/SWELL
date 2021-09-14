@@ -982,7 +982,7 @@ trait Get {
 	 */
 	public static function get_mv_slide_img( $i, $lazy_type = 'none' ) {
 		$slide_imgs = self::get_mv_slide_imgs();
-		$img_data   = $slide_imgs[ $i ];
+		$img_data   = $slide_imgs[ $i ] ?? [];
 
 		// PC画像
 		$picture_img = '';
@@ -994,7 +994,8 @@ trait Get {
 		$img_class   = 'img' === self::get_setting( 'mv_slide_size' ) ? 'p-mainVisual__img' : 'p-mainVisual__img u-obf-cover';
 
 		if ( 1 !== $i ) {
-			$lazy_type = 'swiper';
+			// $lazy_type = 'swiper';
+			$lazy_type = self::$lazy_type;
 		}
 
 		if ( $pc_imgid ) {
