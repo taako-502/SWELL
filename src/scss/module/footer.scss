@@ -1,5 +1,6 @@
 @charset "UTF-8";
-
+@import "../foundation/mixin/media";
+@import "./inc/w-footer";
 
 .l-footer {
     position: relative;
@@ -83,4 +84,4 @@
 }
 
 
-@import "./footer/modals";
+@import "./inc/foot_modals";

@@ -204,6 +204,8 @@ class Style {
 			};
 		}
 
+		self::add_module( 'footer' );
+
 	}
 
 
