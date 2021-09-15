@@ -197,9 +197,10 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 
 		$img_class = 'c-bannerLink__img';
 
-		// 説明欄に直接画像URLがある場合
-		$img_url = $item->description;
-		if ( $img_url ) {
+		// 説明欄に直接画像URLがある場合 (タームの説明文が入ってくることに注意。)
+		$img_url = trim( $item->description );
+
+		if ( $img_url && 0 === strpos( $img_url, 'http' ) ) {
 			$img_id = SWELL::get_imgid_from_url( $img_url );
 			$thumb  = SWELL::get_image( $img_id, [
 				'class'   => $img_class,
