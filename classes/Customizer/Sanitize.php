@@ -95,6 +95,7 @@ class Sanitize {
 			'tif|tiff'     => 'image/tiff',
 			'ico'          => 'image/x-icon',
 			'svg'          => 'image/svg+xml',
+			'webp'         => 'image/webp',
 		];
 		$file  = wp_check_filetype( $image, $mimes );
 		return ( $file['ext'] ? $image : $setting->default );
