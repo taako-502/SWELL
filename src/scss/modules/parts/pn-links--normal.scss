@@ -1,44 +1,10 @@
-@import "../foundation/mixin/media";
+@import "../../foundation/mixin/media";
 
 // ベース
 @import "./inc/pnLinks";
 
-// .p-pnLinks.-style-simple
+// .p-pnLinks.-style-normal
 .p-pnLinks {
-
-    @include tab {
-
-        .p-pnLinks__link:hover {
-            opacity: .8;
-        }
-    }
-
-    .-prev {
-
-        .p-pnLinks__link {
-            padding-left: 1.5em;
-        }
-
-        &::before {
-            left: 0;
-            font-size: 1.2em;
-        }
-    }
-
-    .-next {
-
-        .p-pnLinks__link {
-            padding-right: 1.5em;
-        }
-
-        &::before {
-            right: 0;
-            font-size: 1.2em;
-        }
-    }
-}
-
-.p-pnLinks.-style-normal {
 
     .-prev {
 

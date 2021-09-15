@@ -1,5 +1,4 @@
-@import "../foundation/variable";
-@import "../foundation/mixin/**";
+@import "../../foundation/mixin/media";
 
 
 .lp {
@@ -49,7 +48,7 @@
             @include sp {
                 padding: 0 3vw;
 
-                & > h2 {
+                > h2 {
                     margin-right: -3vw;
                     margin-left: -3vw;
                 }
@@ -98,7 +97,7 @@
     position: relative;
 
     .-style-border & {
-        border: solid 1px $color_border;
+        border: solid 1px var(--swl-color_border);
     }
 
     .-style-shadow & {

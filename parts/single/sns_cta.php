@@ -1,14 +1,10 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$args     = $variable ?: [
-	'tw_id'    => '',
-	'insta_id' => '',
-	'fb_url'   => '',
-];
-$tw_id    = $args['tw_id'];
-$fb_url   = $args['fb_url'];
-$insta_id = $args['insta_id'];
+$sns_cta_data = SWELL_Theme::get_sns_cta_data();
+$tw_id        = $sns_cta_data['tw_id'];
+$fb_url       = $sns_cta_data['fb_url'];
+$insta_id     = $sns_cta_data['insta_id'];
 
 $has_follow_btn = ( $tw_id || $insta_id );
 

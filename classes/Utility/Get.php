@@ -1127,4 +1127,22 @@ trait Get {
 		return absint( $meta );
 	}
 
+
+	/**
+	 * SNS CTAのデータ
+	 */
+	public static function get_sns_cta_data() {
+		$cached_data = wp_cache_get( 'sns_cta_data', 'swell' );
+		if ( $cached_data ) return $cached_data;
+
+		$data = apply_filters( 'swell_get_sns_cta_data', [
+			'tw_id'    => self::get_setting( 'show_tw_follow_btn' ) ? self::get_setting( 'tw_follow_id' ) : '',
+			'fb_url'   => self::get_setting( 'show_fb_like_box' ) ? self::get_setting( 'fb_like_url' ) : '',
+			'insta_id' => self::get_setting( 'show_insta_follow_btn' ) ? self::get_setting( 'insta_follow_id' ) : '',
+		] );
+
+		wp_cache_set( 'sns_cta_data', $data, 'swell' );
+		return $data;
+	}
+
 }

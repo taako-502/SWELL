@@ -126,7 +126,7 @@ class Style {
 
 		// サイト全体の画像を丸くするかどうか
 		if ( SWELL::get_setting( 'to_site_rounded' ) ) {
-			self::add_module( '-site-radius' );
+			self::add_module( 'site-radius' );
 		}
 
 		// 以下、フロントのみ必要なCSSを
@@ -134,65 +134,84 @@ class Style {
 
 		// ページ表示時のアニメーション
 		if ( ! SWELL::get_setting( 'remove_page_fade' ) ) {
-			self::add_module( '-loaded-animation' );
+			self::add_module( 'loaded-animation' );
 		}
 
 		// frame-on は 2パターンあるので、 !frame-off で判定
 		if ( '-frame-off' !== SWELL::get_frame_class() ) {
-			self::add_module( '-frame-on' );
+			self::add_module( 'frame-on' );
 		}
 
 		// スマホヘッダーメニュー
 		if ( SWELL::is_use( 'sp_head_nav' ) ) {
-			self::add_module( 'sp-head-nav' );
+			self::add_module( 'parts/sp-head-nav' );
+		}
+
+		// ヘッダーの透過設定
+
+		if ( SWELL::is_top() && ! is_paged() && 'no' !== SWELL::get_setting( 'header_transparent' ) ) {
+			self::add_module( 'parts/top-header' );
 		}
 
 		// ヘッダーレイアウト
 		if ( 'series_right' === SWELL::get_setting( 'header_layout' ) || 'series_left' === SWELL::get_setting( 'header_layout' ) ) {
-			self::add_module( '-header-series' );
+			self::add_module( 'parts/header-series' );
 		} else {
-			self::add_module( '-header-parallel' );
+			self::add_module( 'parts/header-parallel' );
 		}
 
 		// グロナビ背景の上書き
 		if ( 'overwrite' === SWELL::get_setting( 'gnav_bg_type' ) ) {
-			self::add_module( '-gnav-overwrite' );
+			self::add_module( 'parts/gnav-overwrite' );
 		}
 
 		// グロナビとスマホメニューのサブメニューの展開方式
 		if ( SWELL::is_use( 'acc_submenu' ) ) {
-			self::add_module( '-submenu-acc' );
+			self::add_module( 'submenu-acc' );
 		} else {
-			self::add_module( '-submenu-normal' );
+			self::add_module( 'submenu-normal' );
 		}
 
 		// お知らせバー
 		if ( 'none' !== SWELL::get_setting( 'info_bar_pos' ) ) {
-			self::add_module( '-info-bar' );
+			self::add_module( 'parts/info-bar' );
 		}
 
 		if ( SWELL::is_show_ttltop() ) {
-			self::add_module( 'top-title-area' );
+			self::add_module( 'parts/top-title-area' );
 		}
 
 		// MV
 		if ( SWELL::is_use( 'mv' ) ) {
-			self::add_module( '-main-visual' );
+			self::add_module( 'parts/main-visual' );
 		};
 
 		// 記事スライダー
 		if ( SWELL::is_use( 'post_slider' ) ) {
-			self::add_module( '-post-slider' );
+			self::add_module( 'parts/post-slider' );
+		}
+
+		// ピックアップバナー
+		if ( SWELL::is_show_pickup_banner() ) {
+			if ( 'slide' === SWELL::get_setting( 'pickbnr_layout_sp' ) ) {
+				self::add_module( 'parts/pickup-banner--slide' );
+			} else {
+				self::add_module( 'parts/pickup-banner' );
+			}
 		}
 
 		// 目次
 		if ( is_single() || is_page() || SWELL::is_term() ) {
-			self::add_module( 'toc--' . SWELL::get_setting( 'index_style' ) );
+			self::add_module( 'parts/toc--' . SWELL::get_setting( 'index_style' ) );
 		}
 
 		if ( is_single() ) {
 			if ( SWELL::is_show_page_links() ) {
-				self::add_module( 'pn-links--' . SWELL::get_setting( 'page_link_style' ) );
+				self::add_module( 'parts/pn-links--' . SWELL::get_setting( 'page_link_style' ) );
+			}
+
+			if ( SWELL::is_show_sns_cta() ) {
+				self::add_module( 'parts/sns-cta' );
 			}
 		}
 
@@ -200,11 +219,35 @@ class Style {
 		if ( is_single() || is_page() ) {
 			$the_id = get_queried_object_id();
 			if ( SWELL::is_show_comments( $the_id ) ) {
-				self::add_module( 'comments' );
+				self::add_module( 'parts/comments' );
 			};
 		}
 
-		self::add_module( 'footer' );
+		self::add_module( 'parts/footer' );
+
+		// ページ種別ごとのファイル
+		if ( is_home() ) {
+			self::add_module( 'page/home' );
+		} elseif ( is_singular( 'lp' ) ) {
+			self::add_module( 'page/lp' );
+		} elseif ( is_single() ) {
+			self::add_module( 'page/single' );
+		} elseif ( is_page() ) {
+			self::add_module( 'page/page' );
+		} elseif ( SWELL::is_term() ) {
+			self::add_module( 'page/term' );
+		} elseif ( is_author() ) {
+			self::add_module( 'page/author' );
+		} elseif ( is_archive() ) {
+			self::add_module( 'page/archive' );
+		} elseif ( is_404() ) {
+			self::add_module( 'page/404' );
+		}
+
+		// カスタマイザープレビュー時
+		if ( is_customize_preview() ) {
+			self::add_module( 'customizer-preview' );
+		}
 
 	}
 
@@ -406,11 +449,11 @@ class Style {
 		foreach ( self::$modules as $filename ) {
 
 			if ( $is_inline ) {
-				$include_path = T_DIRE . '/assets/css/module/' . $filename . '.css';
+				$include_path = T_DIRE . '/assets/css/modules/' . $filename . '.css';
 				$return      .= SWELL::get_file_contents( $include_path );
 			} else {
-				$include_path = T_DIRE_URI . '/assets/css/module/' . $filename . '.css';
-				wp_enqueue_style( "swell-module-{$filename}", $include_path, ['main_style' ], SWELL_VERSION );
+				$include_path = T_DIRE_URI . '/assets/css/modules/' . $filename . '.css';
+				wp_enqueue_style( "swell-{$filename}", $include_path, [ 'main_style' ], SWELL_VERSION );
 			}
 		}
 

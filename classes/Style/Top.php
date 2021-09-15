@@ -15,11 +15,6 @@ class Top {
 		// コンテンツ上の余白量
 		Style::add( '.top #content', 'padding-top:' . $SETTING['top_content_mt'] );
 
-		// ヘッダーの透過設定
-		if ( $SETTING['header_transparent'] !== 'no' ) {
-			Style::add_module( '-top-header' );
-		}
-
 		// MV
 		if ( SWELL::is_use( 'mv' ) ) {
 			self::mv( $SETTING );

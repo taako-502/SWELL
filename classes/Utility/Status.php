@@ -333,6 +333,9 @@ trait Status {
 	 */
 	public static function is_show_pickup_banner() {
 
+		$cached_flag = wp_cache_get( 'is_show_pickup_banner', 'swell' );
+		if ( $cached_flag ) return $cached_flag;
+
 		if ( is_paged() ) return false;
 		if ( ! has_nav_menu( 'pickup_banner' ) ) return false;
 
@@ -344,7 +347,9 @@ trait Status {
 			$is_show = self::get_setting( 'pickbnr_show_under' );
 		}
 
-		return apply_filters( 'swell_is_show_pickup_banner', $is_show );
+		$is_show = apply_filters( 'swell_is_show_pickup_banner', $is_show );
+		wp_cache_set( 'is_show_pickup_banner', $is_show, 'swell' );
+		return $is_show;
 	}
 
 
@@ -355,6 +360,15 @@ trait Status {
 	public static function is_show_page_links() {
 		$is_show = self::get_setting( 'show_page_links' );
 		return apply_filters( 'swell_is_show_page_links', $is_show );
+	}
+
+
+	/**
+	 * 投稿ページの前の記事・次の記事リンクを使用するかどうか
+	 */
+	public static function is_show_sns_cta() {
+		$data = self::get_sns_cta_data();
+		return ( $data['tw_id'] || $data['fb_url'] || $data['insta_id'] );
 	}
 
 

@@ -1,9 +1,5 @@
 @charset "UTF-8";
-
-// settingファイル
-@import "../foundation/mixin/**";
-// @import "../foundation/placeholder";
-
+@import "../../foundation/mixin/media";
 @import "./inc/postTitle";
 @import "./inc/secTitle";
 @import "./inc/password_form";
@@ -12,5 +8,4 @@
 @import "./inc/articleFoot";
 @import "./inc/bottom_section";
 @import "./inc/shareBtns";
-@import "./inc/snsCta";
 @import "./inc/authorBox";

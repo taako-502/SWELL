@@ -1,9 +1,5 @@
-@import "../foundation/variable";
-@import "../foundation/mixin/**";
+@import "../../foundation/mixin/media";
 
-//=========================================================
-// お知らせ表示
-//=========================================================
 .c-infoBar {
     position: relative;
     width: 100%;

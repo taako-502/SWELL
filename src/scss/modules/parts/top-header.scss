@@ -1,7 +1,6 @@
+//ヘッダー透過設定時、かつトップページでしか読み込まれないファイル
 
-//ヘッダー透過設定時、かつトップページでしか読み込まれない
-@import "../foundation/variable";
-@import "../foundation/mixin/**";
+@import "../../foundation/mixin/media";
 
 #body_wrap {
     padding-top: 0 !important;

@@ -23,10 +23,11 @@ function load_css_async( $html, $handle, $href, $media ) {
 
 	$target_handles = [
 		'swell_luminous',
-		'swell-module-footer',
-		'swell-module-pn-links--normal',
-		'swell-module-pn-links--simple',
-		'swell-module-comments',
+		'swell-parts/footer',
+		'swell-parts/pn-links--normal',
+		'swell-parts/pn-links--simple',
+		'swell-parts/comments',
+		'swell-parts/sns-cta',
 	];
 
 	if ( in_array( $handle, $target_handles, true ) ) {
@@ -113,7 +114,7 @@ function load_front_styles() {
 	load_separated_styles();
 
 	// ページ種別ごとの読み込み
-	load_page_styles();
+	// load_page_styles();
 
 	// 動的CSS（カスマイザーの設定値で変わるCSS）
 	wp_register_style( 'swell_custom', false ); // phpcs:ignore
@@ -128,50 +129,11 @@ function load_front_styles() {
 }
 
 
-function load_page_styles() {
+// function load_page_styles() {
 
-	if ( SWELL::is_widget_iframe() ) return;
+// 	if ( SWELL::is_widget_iframe() ) return;
 
-	$separated_styles = [
-		'home'    => '/assets/css/page/home.css',
-		'single'  => '/assets/css/page/single.css',
-		'page'    => '/assets/css/page/page.css',
-		'author'  => '/assets/css/page/author.css',
-		'term'    => '/assets/css/page/term.css',
-		'archive' => '/assets/css/page/archive.css',
-		'404'     => '/assets/css/page/404.css',
-	];
-
-	$parts = [];
-	if ( is_home() ) {
-		$parts['home'] = true;
-	} elseif ( is_single() ) {
-		$parts['single'] = true;
-	} elseif ( is_page() ) {
-		$parts['page'] = true;
-	} elseif ( SWELL::is_term() ) {
-		$parts['term'] = true;
-	} elseif ( is_author() ) {
-		$parts['author'] = true;
-	} elseif ( is_archive() ) {
-		$parts['archive'] = true;
-	} elseif ( is_404() ) {
-		$parts['404'] = true;
-	}
-	foreach ( $separated_styles as $name => $path ) {
-		if ( ! isset( $parts[ $name ] ) ) continue;
-		load_separated_css( $path, $name );
-	}
-
-	// カスタマイザープレビュー時
-	if ( is_customize_preview() ) {
-		wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/module/-is-customizer.css', [], SWELL_VERSION );
-	}
-	// LP
-	if ( is_singular( 'lp' ) ) {
-		wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/module/-lp.css', [], SWELL_VERSION );
-	}
-}
+// }
 
 function load_separated_styles() {
 
