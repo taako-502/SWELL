@@ -43,7 +43,7 @@ if ( $SETTING['info_bar_pos'] === 'head_top' ) SWELL_Theme::get_parts( 'parts/he
 <?php
 
 // FIXヘッダー
-if ( $SETTING['fix_header'] ) SWELL_Theme::get_parts( 'parts/header/fix_header', $header_class );
+if ( SWELL_Theme::is_use( 'fix_header' ) ) SWELL_Theme::get_parts( 'parts/header/fix_header', $header_class );
 
 // お知らせバー（下部表示）
 if ( $SETTING['info_bar_pos'] === 'head_bottom' ) SWELL_Theme::get_parts( 'parts/header/info_bar' );

@@ -14,7 +14,7 @@
     }
 
     &.-height-full {
-        height: calc(var(--swl-mv-height, 100vh) - var(--swl-headerH, 0px) - var(--swl-adminbar_height, 0px));
+        height: calc(var(--swl-mv-height, 100vh) - var(--swl-headerH, 0px) - var(--swl-adminbarH, 0px));
 
         .p-mainVisual__inner {
             height: 100%;

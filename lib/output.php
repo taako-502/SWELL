@@ -64,6 +64,10 @@ function hook_wp_footer_1() {
 		wp_enqueue_script( 'swell_lazysizes', T_DIRE_URI . '/assets/js/plugins/lazysizes.min.js', [], SWELL_VERSION, true );
 	}
 
+	if ( $pjax || SWELL::is_use( 'fix_header' ) ) {
+		wp_enqueue_script( 'swell_set_fix_header', T_DIRE_URI . '/build/js/front/set_fix_header.min.js', [], SWELL_VERSION, true );
+	}
+
 	if ( $pjax || SWELL::is_use( 'ol_start' ) ) {
 		wp_enqueue_script( 'swell_set_olstart', T_DIRE_URI . '/build/js/front/set_olstart.min.js', [], SWELL_VERSION, true );
 	}

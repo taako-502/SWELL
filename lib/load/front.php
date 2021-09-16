@@ -28,6 +28,7 @@ function load_css_async( $html, $handle, $href, $media ) {
 		'swell-parts/pn-links--simple',
 		'swell-parts/comments',
 		'swell-parts/sns-cta',
+		'swell-parts/fix-header',
 	];
 
 	if ( in_array( $handle, $target_handles, true ) ) {

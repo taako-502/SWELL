@@ -177,6 +177,10 @@ class Style {
 			self::add_module( 'parts/info-bar' );
 		}
 
+		if ( SWELL::is_use( 'fix_header' ) ) {
+			self::add_module( 'parts/fix-header' );
+		}
+
 		if ( SWELL::is_show_ttltop() ) {
 			self::add_module( 'parts/top-title-area' );
 		}

@@ -12,7 +12,7 @@
 
         @include sp {
             position: sticky;
-            top: var(--swl-adminbar_height, 0);
+            top: var(--swl-adminbarH, 0);
         }
     }
 }
@@ -153,5 +153,4 @@
 }
 
 
-@import "./header/gnav";
-@import "./header/fixHeader";
+// @import "./header/gnav";

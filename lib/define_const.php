@@ -52,6 +52,7 @@ function hook_wp_loaded() {
 	SWELL::set_use( 'card_cache__ex', $SETTING['cache_blogcard_ex'] );
 	SWELL::set_use( 'acc_submenu', $SETTING['acc_submenu'] );
 	SWELL::set_use( 'sp_head_nav', has_nav_menu( 'sp_head_menu' ) );
+	SWELL::set_use( 'fix_header', $SETTING['fix_header'] );
 
 	// NO IMAGE画像
 	$noimg_id              = $SETTING['noimg_id'];
