@@ -122,8 +122,6 @@ trait Parts {
 
 			// dynamic_sidebarの出力をキャッシュ
 			wp_cache_set( "widget_{$key}", $html, 'swell' );
-		} else {
-			$html .= '<p style="color:red">chaced!</p>';
 		}
 
 		// 前後にHTMLあれば付ける
