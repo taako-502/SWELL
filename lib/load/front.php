@@ -100,11 +100,9 @@ function load_front_styles() {
 		$main_style = str_replace( '../', T_DIRE_URI . '/assets/', $main_style );
 		$main_style = str_replace( '@charset "UTF-8";', '', $main_style );
 
-		// 空でmain_styleを登録しておく
+		// 空で登録しておく
 		wp_register_style( 'main_style', false ); // phpcs:ignore
 		wp_enqueue_style( 'main_style' );
-
-		// インラインで吐き出し
 		wp_add_inline_style( 'main_style', $main_style );
 
 	} else {
@@ -113,9 +111,6 @@ function load_front_styles() {
 
 	// 切り分けたCSSの読み込み
 	load_separated_styles();
-
-	// ページ種別ごとの読み込み
-	// load_page_styles();
 
 	// 動的CSS（カスマイザーの設定値で変わるCSS）
 	wp_register_style( 'swell_custom', false ); // phpcs:ignore
@@ -129,12 +124,6 @@ function load_front_styles() {
 	}
 }
 
-
-// function load_page_styles() {
-
-// 	if ( SWELL::is_widget_iframe() ) return;
-
-// }
 
 function load_separated_styles() {
 
@@ -186,9 +175,20 @@ function load_separated_styles() {
 			load_separated_css( $path, $name );
 		}
 	} else {
-		wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/blocks.css', [], SWELL_VERSION );
-		// foreach ( $separated_blocks as $name => $path ) load_separated_css( $path, $name ); }
-	}
+
+		// インライン出力するかどうか
+		if ( SWELL::is_load_css_inline() ) {
+
+			$block_style = SWELL::get_file_contents( T_DIRE . '/assets/css/blocks.css' );
+			$block_style = str_replace( '@charset "UTF-8";', '', $block_style );
+
+			wp_register_style( 'swell_blocks', false ); // phpcs:ignore
+			wp_enqueue_style( 'swell_blocks' );
+			wp_add_inline_style( 'swell_blocks', $block_style );
+		} else {
+			wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/blocks.css', [], SWELL_VERSION );
+		}
+}
 
 }
 
