@@ -15,7 +15,9 @@ function wp_enqueue_scripts() {
 	load_front_styles();
 	load_front_scripts();
 
-	add_filter( 'style_loader_tag', __NAMESPACE__ . '\load_css_async', 10, 4 );
+	if ( SWELL::get_option( 'load_style_async' ) ) {
+		add_filter( 'style_loader_tag', __NAMESPACE__ . '\load_css_async', 10, 4 );
+	}
 }
 
 // CSSを非同期で読み込む
