@@ -203,9 +203,10 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 		if ( $img_url && 0 === strpos( $img_url, 'http' ) ) {
 			$img_id = SWELL::get_imgid_from_url( $img_url );
 			$thumb  = SWELL::get_image( $img_id, [
-				'class'   => $img_class,
-				'sizes'   => $sizes,
-				'loading' => $lazy_type,
+				'class'    => $img_class,
+				'sizes'    => $sizes,
+				'loading'  => $lazy_type,
+				'decoding' => 'async',
 			]);
 
 		} elseif ( $item->type === 'post_type' ) {
@@ -216,6 +217,7 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 				'sizes'     => $sizes,
 				'class'     => $img_class,
 				'lazy_type' => $lazy_type,
+				'decoding'  => 'async',
 			] );
 
 		} elseif ( $item->type === 'taxonomy' ) {
@@ -224,12 +226,13 @@ if ( ! function_exists( 'swl_parts__pickup_banner' ) ) :
 				'sizes'     => $sizes,
 				'class'     => $img_class,
 				'lazy_type' => $lazy_type,
+				'decoding'  => 'async',
 			] );
 		}
 
 		// 画像なければ NO IMAGE
 		if ( ! $thumb ) {
-			$thumb = '<img src="' . esc_url( SWELL::get_noimg( 'url' ) ) . '" alt="" class="' . esc_attr( $img_class ) . '" loading="lazy">';
+			$thumb = '<img src="' . esc_url( SWELL::get_noimg( 'url' ) ) . '" alt="" class="' . esc_attr( $img_class ) . '" decoding="async">';
 		}
 
 	?>
