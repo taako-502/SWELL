@@ -72,6 +72,21 @@ a {
 }
 
 
+#fix_bottom_menu {
+    position: fixed;
+    bottom: -60px;
+    left: 0;
+
+    @include pc {
+        display: none;
+    }
+
+    &::before {
+
+        @extend %absLayer;
+    }
+}
+
 .ad_area {
     min-height: 80px;
     margin: 3em auto;

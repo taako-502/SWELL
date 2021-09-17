@@ -204,6 +204,11 @@ class Style {
 			}
 		}
 
+		// 下部固定メニュー
+		if ( has_nav_menu( 'fix_bottom_menu' ) ) {
+			self::add_module( 'parts/fix_bottom_menu' );
+		}
+
 		// 目次
 		if ( is_single() || is_page() || SWELL::is_term() ) {
 			self::add_module( 'parts/toc--' . SWELL::get_setting( 'index_style' ) );
