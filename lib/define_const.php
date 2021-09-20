@@ -120,6 +120,12 @@ function hook_wp() {
 	define( 'IS_TERM', SWELL::is_term() );
 	if ( SWELL::is_top() && ! is_paged() ) {
 
+		// mvタイプ
+		$mv_type                = SWELL::get_setting( 'main_visual_type' );
+		SWELL::$site_data['mv'] = $mv_type;
+		if ( 'slider' === $mv_type && count( SWELL::get_mv_slide_imgs() ) === 1 ) {
+			SWELL::$site_data['mv'] = 'single';
+		}
 		SWELL::set_use( 'mv', 'none' !== SWELL::get_setting( 'main_visual_type' ) );
 		SWELL::set_use( 'post_slider', 'on' === SWELL::get_setting( 'show_post_slide' ) );
 	}

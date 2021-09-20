@@ -238,12 +238,11 @@ function load_plugins() {
 
 	// mv
 	if ( $pjax || SWELL::is_use( 'mv' ) ) {
-		$is_slider = 'slider' === SWELL::get_setting( 'main_visual_type' );
-		$deps      = $is_slider ? ['swell_script', 'swell_swiper' ] : ['swell_script' ];
-		wp_enqueue_script( 'swell_set_mv', T_DIRE_URI . '/build/js/front/set_mv.min.js', $deps, SWELL_VERSION, true );
-
-		if ( $is_slider ) {
+		if ( 'slider' === SWELL::site_data( 'mv' ) ) {
 			wp_enqueue_style( 'swell_swiper' );
+			wp_enqueue_script( 'swell_set_mv', T_DIRE_URI . '/build/js/front/set_mv.min.js', [ 'swell_script', 'swell_swiper' ], SWELL_VERSION, true );
+		} else {
+			wp_enqueue_script( 'swell_set_mv', T_DIRE_URI . '/build/js/front/set_mv.min.js', [ 'swell_script' ], SWELL_VERSION, true );
 		}
 	}
 
@@ -296,7 +295,7 @@ function global_vars_on_front() {
 	];
 
 	// メインビジュアルスライダー
-	if ( 'slider' === $SETTING['main_visual_type'] ) {
+	if ( 'slider' === SWELL::site_data( 'mv' ) ) {
 		$global_vars += [
 			'mvSlideEffect' => $SETTING['mv_slide_effect'],
 			'mvSlideSpeed'  => $SETTING['mv_slide_speed'],
