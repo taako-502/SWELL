@@ -17,6 +17,9 @@ const balloonSetList = [
 	},
 ];
 
+const iconPlaceholder =
+	'https://0.gravatar.com/avatar/00000000000000000000000000000000?s=128&d=mp&r=g';
+
 Object.keys(swellBalloons).forEach(function (key) {
 	const balData = swellBalloons[key];
 	balloonSetList.push({
@@ -30,7 +33,7 @@ const BalloonPrev = ({ balData }) => {
 	return (
 		<div className={`c-balloon -bln-${align}`} data-col={col}>
 			<div className={`c-balloon__icon -${shape}`}>
-				<img className='c-balloon__iconImg' src={icon} alt='' />
+				<img className='c-balloon__iconImg' src={icon || iconPlaceholder} alt='' />
 				<span className='c-balloon__iconName'>{name}</span>
 			</div>
 			<div className={`c-balloon__body -${type} -border-${border}`}>
@@ -94,8 +97,8 @@ export default memo(({ balloonID, setAttributes }) => {
 
 			<div className='description u-mt-5'>
 				<a
-					href={addQueryArgs('edit.php', {
-						post_type: 'speech_balloon',
+					href={addQueryArgs('admin.php', {
+						page: 'swell_balloon',
 					})}
 					target='_blank'
 					rel='noreferrer'

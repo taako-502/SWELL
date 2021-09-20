@@ -10,7 +10,11 @@ class Admin_Menu {
 	private static $instance;
 
 	// ページスラッグ
-	const PAGE_SLUG     = 'swell_settings';
+	const PAGE_SLUG = [
+		'settings' => 'swell_settings',
+		'balloon'  => 'swell_balloon',
+	];
+
 	const SUB_PAGE_SLUG = [
 		'editor'   => 'swell_settings_editor',
 		'ads'      => 'swell_settings_ads',
@@ -72,24 +76,35 @@ class Admin_Menu {
 			__( 'SWELL Settings', 'swell' ), // ページタイトルタグ
 			__( 'SWELL Settings', 'swell' ), // メニュータイトル
 			'manage_options', // 必要な権限
-			self::PAGE_SLUG, // このメニューを参照するスラッグ名
+			self::PAGE_SLUG['settings'], // このメニューを参照するスラッグ名
 			[self::$instance, 'swell_setting' ], // 表示内容
 			'', // アイコン
 			29 // 管理画面での表示位置
 		);
 
+		// 「ふきだし」を追加
+		add_menu_page(
+			__( 'Balloons', 'swell' ), // ページタイトルタグ
+			__( 'Balloons', 'swell' ), // メニュータイトル
+			'manage_options', // 必要な権限
+			self::PAGE_SLUG['balloon'], // このメニューを参照するスラッグ名
+			[self::$instance, 'balloon_setting' ], // 表示内容
+			'dashicons-format-chat', // アイコン
+			28 // 管理画面での表示位置
+		);
+
 		// トップメニュー複製
 		add_submenu_page(
-			self::PAGE_SLUG,
+			self::PAGE_SLUG['settings'],
 			__( 'SWELL Settings', 'swell' ),
 			__( 'SWELL Settings', 'swell' ), // サブ側の名前
 			'manage_options',
-			self::PAGE_SLUG, // 親と同じに
+			self::PAGE_SLUG['settings'], // 親と同じに
 			[self::$instance, 'swell_setting' ]
 		);
 		// サブメニュー
 		add_submenu_page(
-			self::PAGE_SLUG,
+			self::PAGE_SLUG['settings'],
 			__( 'Editor Settings', 'swell' ),
 			__( 'Editor Settings', 'swell' ),
 			'manage_options',
@@ -101,7 +116,7 @@ class Admin_Menu {
 
 		// サブメニュー
 		add_submenu_page(
-			self::PAGE_SLUG,
+			self::PAGE_SLUG['settings'],
 			$adstxt_title,
 			$adstxt_title,
 			'manage_options',
@@ -109,7 +124,7 @@ class Admin_Menu {
 			[self::$instance, 'ads_txt_setting' ]
 		);
 		add_submenu_page(
-			self::PAGE_SLUG,
+			self::PAGE_SLUG['settings'],
 			__( 'SWELLERS\'', 'swell' ),
 			__( 'SWELLERS\'', 'swell' ),
 			'manage_options',
@@ -136,6 +151,12 @@ class Admin_Menu {
 		require_once T_DIRE . '/lib/menu/swell_menu.php';
 	}
 
+	/**
+	 * 「ふきだし」の内容
+	 */
+	public function balloon_setting() {
+		require_once T_DIRE . '/lib/menu/swell_menu_balloon.php';
+	}
 
 	/**
 	 * サブメニューの表示内容

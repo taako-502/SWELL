@@ -269,4 +269,13 @@ trait Others {
 		return false;
 	}
 
+	/**
+	 * DB上のテーブルの存在チェック
+	 */
+	public static function check_table_exists( $table_name ) {
+		global $wpdb;
+		$sql     = "SHOW TABLES LIKE '{$table_name}'";
+		$results = $wpdb->get_results( $sql );
+		return ! empty( $results );
+	}
 }

@@ -265,7 +265,6 @@ add_shortcode( 'ad_tag', __NAMESPACE__ . '\ad_tag' );
  */
 if ( ! function_exists( __NAMESPACE__ . '\balloon' ) ) :
 	function balloon( $args, $content = null ) {
-
 		$bln_icon       = '';
 		$bln_name       = '';
 		$bln_col        = 'gray';
@@ -276,32 +275,40 @@ if ( ! function_exists( __NAMESPACE__ . '\balloon' ) ) :
 
 		$q_args = [];
 		if ( isset( $args['id'] ) ) {
-			$q_args['p'] = $args['id'];
+			$q_args['id'] = $args['id'];
 		} elseif ( isset( $args['set'] ) ) {
 			$q_args['title'] = $args['set'];
 		}
 
 		// ふきだしセットの指定があれば取得
-		if ( ! empty( $q_args ) ) {
-			$q_args = array_merge( [
-				'post_type'      => 'speech_balloon',
-				'no_found_rows'  => true,
-				'posts_per_page' => 1,
-			], $q_args );
+		global $wpdb;
+		$table_name = 'swell_balloon';
 
-			$the_query = new \WP_Query( $q_args );
-			while ( $the_query->have_posts() ) :
-				$the_query->the_post();
-				$post_id        = get_the_ID();
-				$bln_icon       = get_post_meta( $post_id, 'balloon_icon', true );
-				$bln_name       = get_post_meta( $post_id, 'balloon_icon_name', true );
-				$bln_col        = get_post_meta( $post_id, 'balloon_col', true );
-				$bln_type       = get_post_meta( $post_id, 'balloon_type', true );
-				$bln_align      = get_post_meta( $post_id, 'balloon_align', true );
-				$bln_border     = get_post_meta( $post_id, 'balloon_border', true );
-				$bln_icon_shape = get_post_meta( $post_id, 'balloon_icon_shape', true );
-			endwhile;
-			wp_reset_postdata();
+		if ( ! empty( $q_args ) && \SWELL_Theme::check_table_exists( $table_name ) ) {
+
+			if ( isset( $q_args['id'] ) ) {
+				// IDでデータ取得
+				$sql   = "SELECT * FROM {$table_name} WHERE id = %d";
+				$query = $wpdb->prepare( $sql, $q_args['id'] );
+			} elseif ( isset( $q_args['title'] ) ) {
+				// タイトルでデータ取得
+				$sql   = "SELECT * FROM {$table_name} WHERE title = %d";
+				$query = $wpdb->prepare( $sql, $q_args['title'] );
+			}
+
+			$results = $wpdb->get_row( $query, ARRAY_A );
+
+			if ( $results ) {
+				$bln_data = json_decode( $results['data'], true );
+
+				if ( isset( $bln_data['icon'] ) ) $bln_icon        = $bln_data['icon'];
+				if ( isset( $bln_data['name'] ) ) $bln_name        = $bln_data['name'];
+				if ( isset( $bln_data['col'] ) ) $bln_col          = $bln_data['col'];
+				if ( isset( $bln_data['type'] ) ) $bln_type        = $bln_data['type'];
+				if ( isset( $bln_data['align'] ) ) $bln_align      = $bln_data['align'];
+				if ( isset( $bln_data['border'] ) ) $bln_border    = $bln_data['border'];
+				if ( isset( $bln_data['shape'] ) ) $bln_icon_shape = $bln_data['shape'];
+			}
 		}
 
 		if ( isset( $args['icon'] ) ) $bln_icon             = $args['icon'];

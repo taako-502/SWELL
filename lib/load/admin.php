@@ -86,6 +86,13 @@ function hook_admin_enqueue_scripts( $hook_suffix ) {
 			})'
 		);
 		wp_enqueue_style( 'wp-codemirror' );
+	} elseif ( strpos( $hook_suffix, 'swell_balloon' ) !== false ) {
+		// ふきだし管理画面
+		wp_enqueue_style( 'swell_settings_css', $assets . '/css/admin/settings.css', [], SWELL_VERSION );
+		wp_enqueue_style( 'swell_balloon_css', $assets . '/css/admin/balloon.css', ['wp-components', 'wp-block-editor' ], SWELL_VERSION );
+
+		$asset_file = include T_DIRE . '/build/js/admin/balloon/index.asset.php';
+		wp_enqueue_script( 'swell_balloon_js', $build . '/js/admin/balloon/index.js', $asset_file['dependencies'], SWELL_VERSION, true );
 	}
 
 	// 投稿タイプで分岐
@@ -94,7 +101,6 @@ function hook_admin_enqueue_scripts( $hook_suffix ) {
 		wp_enqueue_script( 'swell_ad_js', $build . '/js/admin/ad_tag.min.js', ['jquery' ], SWELL_VERSION, false );
 	} elseif ( 'speech_balloon' === $post_type ) {
 		wp_enqueue_style( 'swell_balloon_css', $assets . '/css/admin/balloon.css', [], SWELL_VERSION );
-		wp_enqueue_script( 'swell_balloon_js', $build . '/js/admin/balloon.min.js', ['jquery' ], SWELL_VERSION, false );
 	}
 }
 

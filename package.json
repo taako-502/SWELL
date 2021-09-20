@@ -14,6 +14,7 @@
         "build:js": "npm run build:js:front && npm run build:js:admin && npm run build:js:customizer",
         "build:js:front": "cross-env TYPE=front npx webpack --config webpack.config.scripts.js",
         "build:js:admin": "cross-env TYPE=admin npx webpack --config webpack.config.scripts.js",
+        "build:js:admin-react": "wp-scripts build --config webpack.config.admin.js",
         "build:js:customizer": "cross-env TYPE=customizer npx webpack --config webpack.config.scripts.js",
         "watch:css": "nodemon --watch src -e scss -x \"npm run build:css\"",
         "watch:js": "nodemon --watch src/js --ignore **/plugin/** --ignore **/admin/** -e js -x \"npm run build:js\"",

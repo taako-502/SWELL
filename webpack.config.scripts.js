@@ -38,7 +38,7 @@ if ('front' === process.env.TYPE) {
 	entryFiles = [
 		'admin_script',
 		'ad_tag',
-		'balloon',
+		// 'balloon',
 		'colorpicker',
 		'count_title',
 		'mediauploader',

@@ -52,7 +52,7 @@
 	<rule ref="WordPress">
 		<!-- This rule does not apply here since the _s prefix should be changed by the theme author. -->
 		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed"/>
-		
+
 		<!-- ファイル冒頭のコメントを必要とするルールを除外 -->
 		<exclude name="Squiz.Commenting.FileComment.Missing" />
 
@@ -86,7 +86,7 @@
 
 		<!-- 関数の引数へのコメント強制を除外 -->
 		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag" />
-		
+
 		<!-- クラスへのコメント強制を除外 -->
 		<exclude name="Squiz.Commenting.ClassComment.Missing" />
 
@@ -111,12 +111,12 @@
 		<!-- 変数の snake_case ルールを除外 ( $SETTING などに影響) -->
 		<exclude name="WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase" />
 		<exclude name="WordPress.NamingConventions.ValidVariableName.InterpolatedVariableNotSnakeCase" />
-		
+
 
 		<!-- 関数の snake_case ルールを除外 -->
 		<exclude name="WordPress.NamingConventions.ValidFunctionName.FunctionNameInvalid" />
-		
-		
+
+
 		<!-- ファイル名を_から始めた時に出るエラーを除外 -->
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
@@ -131,15 +131,15 @@
 		<!-- "translation:" コメントがなくても許す -->
 		<exclude name="WordPress.WP.I18n.MissingTranslatorsComment" />
 
-		
+
 		<!-- $_REQUEST などにエラー出さない -->
 		<exclude name="WordPress.Security.ValidatedSanitizedInput.InputNotSanitized" />
 		<exclude name="WordPress.Security.ValidatedSanitizedInput.MissingUnslash" />
-		
+
 
 		<!-- $post_id などの変数名にエラーをださない -->
 		<!-- <exclude name="WordPress.WP.GlobalVariablesOverride.OverrideProhibited" /> -->
-		
+
 			<!-- PHP省略タグを許可 -->
 		<exclude name="Generic.PHP.DisallowShortOpenTag.EchoFound" />
 
@@ -175,6 +175,12 @@
 		<!-- meta queryへの警告を停止 -->
 		<exclude name="WordPress.DB.SlowDBQuery.slow_db_query_meta_key" />
 
+		<!-- $wpdbの警告を停止 -->
+		<exclude name="WordPress.DB.DirectDatabaseQuery.NoCaching" />
+		<exclude name="WordPress.DB.DirectDatabaseQuery.DirectQuery" />
+		<exclude name="WordPress.DB.PreparedSQL.InterpolatedNotPrepared" />
+		<exclude name="WordPress.DB.PreparedSQL.NotPrepared" />
+
 		<!-- Yoda記法以外への警告を停止 -->
 		<exclude name="WordPress.PHP.YodaConditions.NotYoda" />
 
@@ -185,7 +191,7 @@
 
 	<!-- array()禁止して []を使う こと -->
 	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found"/>
-	
+
 	<!-- <rule ref="WPThemeReview"/> -->
 
 	<!--
@@ -246,7 +252,7 @@
 
 		<!-- 無名関数を許可 -->
 		<exclude name="PHPCompatibility.FunctionDeclarations.NewClosure.Found" />
-		
+
 		<!-- namespace を許可 -->
 		<exclude name="PHPCompatibility.Keywords.NewKeywords.t_namespaceFound" />
 

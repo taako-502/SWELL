@@ -339,6 +339,154 @@ function hook_rest_api_init() {
 			return '更新に成功しました。';
 		},
 	] );
+
+	// ふきだし設定ページ
+	register_rest_route('wp/v2', '/swell-balloon', [
+		// データの取得
+		[
+			'methods'             => 'GET',
+			'permission_callback' => function( $request ) {
+				return current_user_can( 'create_speech_balloon' );
+			},
+			'callback'            => function( $request ) {
+				global $wpdb;
+				$table_name = 'swell_balloon';
+
+				// テーブルが存在しない場合は終了
+				if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) wp_die( json_encode( [] ) );
+
+				// データ取得
+				if ( isset( $request['id'] ) ) {
+					// 個別取得（ID指定あり）
+					$sql     = "SELECT * FROM {$table_name} WHERE id = %d";
+					$query   = $wpdb->prepare( $sql, $request['id'] );
+					$results = $wpdb->get_row( $query, ARRAY_A );
+
+					if ( ! $results ) {
+						wp_die( [] );
+					}
+
+					$results['data'] = json_decode( $results['data'], true );
+					return $results;
+				} else {
+					// 全件取得
+					$sql  = "SELECT * FROM {$table_name}";
+					$rows = $wpdb->get_results( $sql, ARRAY_A );
+
+					if ( empty( $rows ) ) {
+						return [];
+					}
+
+					$results = [];
+
+					foreach ( $rows as $row ) {
+						$results[] = [
+							'id'    => $row['id'],
+							'title' => $row['title'],
+							'data'  => json_decode( $row['data'], true ),
+						];
+					}
+
+					return $results;
+				}
+			},
+		],
+		// データの登録・更新
+		[
+			'methods'             => 'POST',
+			'permission_callback' => function( $request ) {
+				return current_user_can( 'create_speech_balloon' );
+			},
+			'callback'            => function( $request ) {
+				$id    = isset( $request['id'] ) ? $request['id'] : null;
+				$title = isset( $request['title'] ) ? trim( $request['title'] ) : null;
+				$data  = isset( $request['data'] ) ? json_encode( $request['data'] ) : null;
+
+				global $wpdb;
+				$table_name = 'swell_balloon';
+
+				// テーブルが存在しない場合は終了
+				if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) wp_die( json_encode( [] ) );
+
+				// タイトルが空の場合は終了
+				if ( ! $title ) wp_die();
+
+				if ( $id ) {
+					// 更新
+					$result = $wpdb->update(
+						$table_name,
+						[
+							'title' => $title,
+							'data'  => $data,
+						],
+						['id' => $id ],
+						[
+							'%s',
+							'%s',
+						],
+						[ '%d' ]
+					);
+					if ( $result !== false ) {
+						return [
+							'message'  => '吹き出しセットを更新しました。',
+						];
+					}
+				} else {
+					// 新規登録
+					$result = $wpdb->insert(
+						$table_name,
+						[
+							'title' => $title,
+							'data'  => $data,
+						],
+						[
+							'%s',
+							'%s',
+						]
+					);
+					if ( $result ) {
+						return [
+							'insertId' => $wpdb->insert_id,
+							'message'  => '吹き出しセットを登録しました。',
+						];
+					}
+				}
+
+				wp_die();
+			},
+		],
+		// データの削除
+		[
+			'methods'             => 'DELETE',
+			'permission_callback' => function( $request ) {
+				return current_user_can( 'create_speech_balloon' );
+			},
+			'callback'            => function( $request ) {
+				$id = isset( $request['id'] ) ? $request['id'] : null;
+
+				global $wpdb;
+				$table_name = 'swell_balloon';
+
+				// テーブルが存在しない場合は終了
+				if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) wp_die( json_encode( [] ) );
+
+				// IDが空の場合は終了
+				if ( ! $id ) wp_die();
+
+				$result = $wpdb->delete(
+					$table_name,
+					[ 'id' => $id ],
+					[ '%d' ]
+				);
+
+				if ( $result ) {
+					return json_encode( [] );
+				}
+
+				wp_die();
+			},
+		],
+	]);
 }
 
 

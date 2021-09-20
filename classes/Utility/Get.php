@@ -120,37 +120,34 @@ trait Get {
 	 */
 	public static function get_balloon_data() {
 		$return_data = [];
-		$args        = [
-			'post_type'      => 'speech_balloon',
-			'no_found_rows'  => true,
-			'posts_per_page' => -1,
-		];
-		$the_query   = new \WP_Query( $args );
 
-		while ( $the_query->have_posts() ) :
-			$the_query->the_post();
-			$balloon_id         = get_the_ID();
-			$balloon_title      = get_the_title();
-			$balloon_icon       = get_post_meta( $balloon_id, 'balloon_icon', true );
-			$balloon_name       = get_post_meta( $balloon_id, 'balloon_icon_name', true ) ?: get_the_title();
-			$balloon_col        = get_post_meta( $balloon_id, 'balloon_col', true );
-			$balloon_type       = get_post_meta( $balloon_id, 'balloon_type', true );
-			$balloon_align      = get_post_meta( $balloon_id, 'balloon_align', true );
-			$balloon_border     = get_post_meta( $balloon_id, 'balloon_border', true );
-			$balloon_icon_shape = get_post_meta( $balloon_id, 'balloon_icon_shape', true );
+		global $wpdb;
+		$table_name = 'swell_balloon';
 
-			$return_data[ $balloon_id ] = [
-				'title'  => $balloon_title,
-				'icon'   => $balloon_icon,
-				'name'   => $balloon_name,
-				'col'    => $balloon_col,
-				'type'   => $balloon_type,
-				'align'  => $balloon_align,
-				'border' => $balloon_border,
-				'shape'  => $balloon_icon_shape,
+		// テーブルが存在しない場合は終了
+		if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) return [];
+
+		$sql     = "SELECT * FROM {$table_name}";
+		$results = $wpdb->get_results( $sql, ARRAY_A );
+
+		if ( empty( $results ) ) {
+			return [];
+		}
+
+		foreach ( $results as $row ) {
+			$bln_data = json_decode( $row['data'], true );
+
+			$return_data[ $row['id'] ] = [
+				'title'  => $row['title'],
+				'icon'   => isset( $bln_data['icon'] ) ? $bln_data['icon'] : '',
+				'name'   => isset( $bln_data['name'] ) ? $bln_data['name'] : '',
+				'col'    => isset( $bln_data['col'] ) ? $bln_data['col'] : 'gray',
+				'type'   => isset( $bln_data['type'] ) ? $bln_data['type'] : 'speaking',
+				'align'  => isset( $bln_data['align'] ) ? $bln_data['align'] : 'left',
+				'border' => isset( $bln_data['border'] ) ? $bln_data['border'] : 'none',
+				'shape'  => isset( $bln_data['shape'] ) ? $bln_data['shape'] : 'circle',
 			];
-		endwhile;
-		wp_reset_postdata();
+		}
 
 		return $return_data;
 	}

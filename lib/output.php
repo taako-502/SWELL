@@ -132,13 +132,14 @@ function hook_wp_footer_20() {
 function hook_admin_head() {
 
 	global $hook_suffix;
-	$is_editor     = 'post.php' === $hook_suffix || 'post-new.php' === $hook_suffix;
-	$is_swell_page = strpos( $hook_suffix, 'swell_settings' ) !== false;
+	$is_editor       = 'post.php' === $hook_suffix || 'post-new.php' === $hook_suffix;
+	$is_swell_page   = strpos( $hook_suffix, 'swell_settings' ) !== false;
+	$is_balloon_page = strpos( $hook_suffix, 'swell_balloon' ) !== false;
 
 	global $post_type;
 	$is_usePreviewPage = 'speech_balloon' === $post_type;
 
-	if ( $is_editor || $is_swell_page || $is_usePreviewPage ) {
+	if ( $is_editor || $is_swell_page || $is_balloon_page || $is_usePreviewPage ) {
 		// ブロックエディターなどで読み込ませたい inlineスタイル
 		echo '<style id="loos-block-style">' . Style::output( 'editor' ) . '</style>' . PHP_EOL;
 	}
