@@ -82,10 +82,12 @@ class Theme_Data {
 	// キャッシュキー
 	public static $cache_keys = [
 		'style' => [ // スタイルに関わるキャッシュキー
+			'style_common',
 			'style_top',
 			'style_single',
 			'style_page',
-			'style_other',
+			'style_archive',
+			// 'style_other',
 		],
 		'header' => [ // ヘッダーに関わるキャッシュキー
 			'header_top',

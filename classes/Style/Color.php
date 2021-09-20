@@ -96,12 +96,6 @@ class Color {
 			Style::add( '.l-footer__widgetArea', 'color:' . $color_footwdgt_text );
 		}
 
-		// その他 :: ここまで変数化するべきか？
-		Style::add_root( '--color_fbm_text', $SETTING['color_fbm_text'] );
-		Style::add_root( '--color_fbm_bg', $SETTING['color_fbm_bg'] );
-		Style::add_root( '--fbm_opacity', $SETTING['fbm_opacity'] );
-		Style::add_root( '--fix_header_opacity', $SETTING['fix_header_opacity'] );
-
 	}
 
 }

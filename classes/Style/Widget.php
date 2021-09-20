@@ -1,6 +1,7 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -55,10 +56,10 @@ class Widget {
 	 */
 	public static function title( $sidettl_type, $sidettl_type_sp, $frame_class ) {
 
-		$is_on_frame = ( '-frame-off' !== $frame_class );
-
-		$styles    = self::get_widget_title_style( $sidettl_type, $is_on_frame );
-		$styles_sp = $sidettl_type_sp ? self::get_widget_title_style( $sidettl_type_sp, $is_on_frame ) : '';
+		$is_on_frame     = ( '-frame-off' !== $frame_class );
+		$styles          = self::get_widget_title_style( SWELL::get_setting( 'sidettl_type' ), $is_on_frame );
+		$sidettl_type_sp = SWELL::get_setting( 'sidettl_type_sp' );
+		$styles_sp       = $sidettl_type_sp ? self::get_widget_title_style( $sidettl_type_sp, $is_on_frame ) : '';
 
 		// スマホとPCでスタイルが分かれるかどうか
 		if ( $styles_sp ) {
@@ -80,9 +81,9 @@ class Widget {
 	/**
 	 * ウィジェットタイトル（SPメニュー）
 	 */
-	public static function spmenu_title( $spmenu_title_type ) {
+	public static function spmenu_title() {
 
-		$styles = self::get_widget_title_style( $spmenu_title_type );
+		$styles = self::get_widget_title_style( \SWELL_Theme::get_setting( 'spmenu_title_type' ) );
 		Style::add( '.c-widget__title.-spmenu', $styles['main'] );
 		Style::add( '.c-widget__title.-spmenu::before', $styles['before'] );
 		Style::add( '.c-widget__title.-spmenu::after', $styles['after'] );
@@ -92,9 +93,9 @@ class Widget {
 	/**
 	 * ウィジェットタイトル（フッター）
 	 */
-	public static function footer_title( $footer_title_type ) {
+	public static function footer_title() {
 
-		$styles = self::get_widget_title_style( $footer_title_type );
+		$styles = self::get_widget_title_style( \SWELL_Theme::get_setting( 'footer_title_type' ) );
 		Style::add( '.c-widget__title.-footer', $styles['main'] );
 		Style::add( '.c-widget__title.-footer::before', $styles['before'] );
 		Style::add( '.c-widget__title.-footer::after', $styles['after'] );

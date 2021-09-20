@@ -8,29 +8,14 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Top {
 
-	public static function init() {
-
-		$SETTING = SWELL::get_setting();
-
-		// コンテンツ上の余白量
-		Style::add( '.top #content', 'padding-top:' . $SETTING['top_content_mt'] );
-
-		// MV
-		if ( SWELL::is_use( 'mv' ) ) {
-			self::mv( $SETTING );
-		};
-
-		// 記事スライダー
-		if ( SWELL::is_use( 'post_slider' ) ) {
-			self::post_slider( $SETTING );
-		}
-	}
-
 
 	/**
 	 * メインビジュアル
 	 */
-	public static function mv( $SETTING ) {
+	public static function mv() {
+
+		$SETTING = SWELL::get_setting();
+
 		// 高さ
 		$mv_slide_height_sp = 'auto';
 		$mv_slide_height_pc = 'auto';
@@ -78,7 +63,9 @@ class Top {
 	/**
 	 * 記事スライダー
 	 */
-	public static function post_slider( $SETTING ) {
+	public static function post_slider() {
+
+		$SETTING = SWELL::get_setting();
 
 		// スライドがページ表示の瞬間にでかくなるのを防ぐための横幅定義
 		$pc_num    = (float) $SETTING['ps_num'];

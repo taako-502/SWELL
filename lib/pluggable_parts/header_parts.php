@@ -12,7 +12,7 @@ if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 		$logo_id = SWELL::site_data( 'logo_id' );
 
 		// トップページのヒーロヘッダーを利用するかどうか。
-		$use_overlay_header = ( SWELL::is_top() && ! is_paged() && SWELL::get_setting( 'header_transparent' ) !== 'no' );
+		$use_overlay_header = ( SWELL::is_use( 'top_header' ) );
 
 		// 後方互換用。ロゴURLが直接指定されている場合。
 		if ( has_filter( 'swell_head_logo' ) || ! $logo_id ) {

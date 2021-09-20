@@ -8,7 +8,7 @@ $header_class = SWELL_Theme::get_header_class(); // ヘッダーとfixバーへ�
 if ( $SETTING['info_bar_pos'] === 'head_top' ) SWELL_Theme::get_parts( 'parts/header/info_bar' );
 ?>
 <header id="header" class="l-header <?=esc_attr( $header_class )?>" data-spfix="<?=$SETTING['fix_header_sp'] ? '1' : '0'?>">
-	<?php SWELL_Theme::get_parts( 'parts/header/head_bar' ); // ヘッダーバー ?>
+	<?php if ( SWELL_Theme::is_use( 'head_bar' ) ) SWELL_Theme::get_parts( 'parts/header/head_bar' ); // ヘッダーバー ?>
 	<div class="l-header__inner l-container">
 		<div class="l-header__logo">
 			<?php echo SWELL_PARTS::head_logo(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>

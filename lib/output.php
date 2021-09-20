@@ -141,9 +141,7 @@ function hook_admin_head() {
 
 	if ( $is_editor || $is_swell_page || $is_usePreviewPage ) {
 		// ブロックエディターなどで読み込ませたい inlineスタイル
-		$style  = Style::output( 'editor' );
-		$style .= Style::load_modules( 1 );
-		echo '<style id="loos-block-style">' . $style . '</style>' . PHP_EOL;
+		echo '<style id="loos-block-style">' . Style::get_editor_css() . '</style>' . PHP_EOL;
 	}
 }
 

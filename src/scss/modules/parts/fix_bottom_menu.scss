@@ -8,18 +8,10 @@
 
 //メニューバー
 #fix_bottom_menu {
-    // position: fixed;
-    // bottom: -60px;
-    // left: 0;
     z-index: 100;
     width: 100%;
-    color: var(--color_fbm_text);
     box-shadow: 0 0 4px rgba(0, 0, 0, .1);
     transition: bottom .4s;
-
-    // @include pc {
-    //     display: none;
-    // }
 
     @include sp {
         // .l-footer__innerと同じ値
@@ -27,12 +19,9 @@
     }
 
     &::before {
-
         // @extend %absLayer;
         z-index: 0;
         display: block;
-        background: var(--color_fbm_bg);
-        opacity: var(--fbm_opacity);
     }
 
     .menu_list {

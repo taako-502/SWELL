@@ -92,9 +92,9 @@ trait Get {
 		}
 
 		// ヒーローヘッダーの時だけトップページに付与するクラス
-		$header_transparent = str_replace( '_', '-', self::get_setting( 'header_transparent' ) ); // no | t-fff | t-000
-		if ( self::is_top() && $header_transparent !== 'no' ) {
-			$header_class .= ' -transparent -' . $header_transparent;
+		if ( self::is_use( 'top_header' ) ) {
+			$header_transparent = str_replace( '_', '-', self::get_setting( 'header_transparent' ) ); // no | t-fff | t-000
+			$header_class      .= ' -transparent -' . $header_transparent;
 		}
 
 		wp_cache_set( 'header_class', $header_class, 'swell' );
@@ -1144,5 +1144,23 @@ trait Get {
 		wp_cache_set( 'sns_cta_data', $data, 'swell' );
 		return $data;
 	}
+
+	/**
+	 * ページ種別スラッグ（キャッシュ用）
+	 */
+	public static function get_page_type_slug() {
+		if ( self::is_top() && ! is_paged() ) {
+			return 'top';
+		} elseif ( is_single() ) {
+			return 'single';
+		} elseif ( is_page() ) {
+			return 'page';
+		} elseif ( self::is_archive() ) {
+			return 'archive';
+		} else {
+			return 'other';
+		}
+	}
+
 
 }

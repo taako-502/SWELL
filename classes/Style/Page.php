@@ -23,42 +23,6 @@ class Page {
 
 
 	/**
-	 * タイトル背景
-	 */
-	public static function title_bg() {
-
-		style::add( '.l-topTitleArea.c-filterLayer::before', [
-			'background-color:' . SWELL::get_setting( 'ttlbg_overlay_color' ),
-			'opacity:' . SWELL::get_setting( 'ttlbg_overlay_opacity' ),
-			'content:""',
-		]);
-	}
-
-
-	/**
-	 * 目次関連
-	 */
-	public static function toc() {
-
-		// 目次liカラー
-		$toc_before_color = SWELL::get_setting( 'toc_before_color' );
-		if ( 'main' === $toc_before_color ) {
-			style::add( ['.p-toc__list.is-style-index li::before' ], 'color:var(--color_main)' );
-		} elseif ( 'custom' === $toc_before_color ) {
-			style::add( ['.p-toc__list.is-style-index li::before' ], 'color:' . SWELL::get_setting( 'toc_before_custom_color' ) );
-		}
-
-		// 目次広告
-		if ( ! SWELL::get_setting( 'show_toc_ad_alone_post' ) ) {
-			style::add( '.single.-index-off .w-beforeToc', 'display:none' );
-		}
-		if ( ! SWELL::get_setting( 'show_toc_ad_alone_page' ) ) {
-			style::add( '.page.-index-off .w-beforeToc', 'display:none' );
-		}
-	}
-
-
-	/**
 	 * シェアボタン
 	 */
 	public static function share_btn() {

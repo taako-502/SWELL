@@ -1,0 +1,22 @@
+//ヘッダー透過設定時、かつトップページでしか読み込まれないファイル
+
+@import "../../foundation/mixin/media";
+@import "./inc/top-header";
+
+
+@include sp {
+
+    [data-spfix="0"] {
+        background: none;
+        box-shadow: none;
+
+        .l-header__inner {
+            color: var(--swl-color_top_header, #fff);
+        }
+
+        .c-headLogo__img.-common {
+            display: none;
+        }
+    }
+
+}

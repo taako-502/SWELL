@@ -1,5 +1,3 @@
-@import "../../foundation/mixin/media";
-
 .p-mainVisual {
     position: relative;
     width: 100%;
@@ -18,68 +16,6 @@
 
         .p-mainVisual__inner {
             height: 100%;
-        }
-    }
-    // スライダーの時だけ
-    .swiper-container:not(.swiper-container-initialized) {
-        visibility: hidden;
-    }
-
-    .swiper-wrapper {
-        //align-items: stretch;
-        align-content: stretch;
-    }
-
-    .swiper-button-prev {
-        left: 0;
-    }
-
-    .swiper-button-next {
-        right: 0;
-    }
-
-    .swiper-button-prev,
-    .swiper-button-next {
-        width: 40px;
-        height: 64px;
-        margin-top: -32px;
-        padding: 8px;
-        background: none;
-        background: rgba(0, 0, 0, .6);
-
-        @include mobile {
-            width: 24px;
-            height: 48px;
-            margin-top: -24px;
-            padding: 8px;
-        }
-
-        svg {
-            width: 100%;
-            height: 100%;
-
-            @include mobile {
-
-                polyline {
-                    stroke-width: 24;
-                }
-            }
-        }
-    }
-}
-
-.swiper-pagination-bullet-active {
-    background: #fff;
-}
-
-
-.p-mainVisual__imgLayer {
-
-    .-motion-leftToRight & {
-        transform: scale(1.15);
-
-        @include pc {
-            transform: scale(1.1);
         }
     }
 }
@@ -113,16 +49,6 @@
     }
 }
 
-.p-mainVisual:not(.-motion-no) {
-
-    .swiper-slide-active .p-mainVisual__imgLayer,
-    .swiper-slide-duplicate-active .p-mainVisual__imgLayer,
-    .swiper-slide-prev .p-mainVisual__imgLayer {
-        animation: var(--mv_slide_animation) 10s linear 0s 1 normal both;
-    }
-}
-
-
 .p-mainVisual__inner {
     position: relative;
 
@@ -130,17 +56,6 @@
         height: auto;
     }
 }
-
-.p-mainVisual__video {
-    position: relative;
-    z-index: -1; //なぜかtext_layerが下に潜ってしまう
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    pointer-events: none;
-}
-
 
 .p-mainVisual__slide {
     position: relative;

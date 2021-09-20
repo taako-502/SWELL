@@ -33,10 +33,10 @@ class Post_List {
 	/**
 	 * READ MORE
 	 */
-	public static function read_more( $post_list_read_more ) {
+	public static function read_more() {
 		Style::add(
 			['.-type-list2 .p-postList__body::after', '.-type-big .p-postList__body::after' ],
-			'content: "' . $post_list_read_more . ' »";'
+			'content: "' . \SWELL_Theme::get_setting( 'post_list_read_more' ) . ' »";'
 		);
 	}
 

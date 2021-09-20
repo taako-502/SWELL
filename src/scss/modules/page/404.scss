@@ -1,3 +1,12 @@
 @charset "UTF-8";
 @import "../../foundation/mixin/media";
-@import "./inc/ttl404";
+
+.c-ttl404 {
+    padding-top: 2em;
+    font-size: 4.6vw;
+    text-align: center;
+
+    @include tab {
+        font-size: 24px;
+    }
+}

@@ -1,17 +1,19 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Footer {
 
+
 	/**
 	 * ページトップボタン
 	 */
-	public static function pagetop_btn( $pagetop_style ) {
-		if ( $pagetop_style === 'fix_circle' ) {
+	public static function pagetop_btn() {
+		if ( SWELL::get_setting( 'pagetop_style' ) === 'fix_circle' ) {
 			Style::add( '#pagetop', 'border-radius:50%' );
 		}
 	}
@@ -19,8 +21,8 @@ class Footer {
 	/**
 	 * 目次ボタン
 	 */
-	public static function index_btn( $index_btn_style ) {
-		if ( $index_btn_style === 'circle' ) {
+	public static function index_btn() {
+		if ( SWELL::get_setting( 'index_btn_style' ) === 'circle' ) {
 			Style::add( '#fix_index_btn', 'border-radius:50%' );
 		}
 	}
@@ -28,12 +30,18 @@ class Footer {
 	/**
 	 * 固定フッターメニューが表示される場合の固定ボタンたち
 	 */
-	public static function fix_menu_btns( $show_fbm_pagetop, $show_fbm_index ) {
+	public static function fix_menu_btns() {
 
-		if ( $show_fbm_pagetop ) {
+		Style::add( '#fix_bottom_menu', 'color:' . SWELL::get_setting( 'color_fbm_text' ) );
+		Style::add( '#fix_bottom_menu::before', [
+			'background:' . SWELL::get_setting( 'color_fbm_bg' ),
+			'opacity:' . SWELL::get_setting( 'fbm_opacity' ),
+		] );
+
+		if ( SWELL::get_setting( 'show_fbm_pagetop' ) ) {
 			Style::add( '#pagetop', 'display:none', 'sp' );
 		}
-		if ( $show_fbm_index ) {
+		if ( SWELL::get_setting( 'show_fbm_index' ) ) {
 			Style::add( '#fix_index_btn', 'display:none', 'sp' );
 		}
 	}

@@ -337,76 +337,14 @@ function global_vars_on_front() {
  */
 function get_swl_front_css() {
 
-	// キャッシュ機能使うかどうか
-	$is_cache_style = ( SWELL::get_setting( 'cache_style' ) && ! is_customize_preview() );
-
 	// カスタマイザープレビュー時、変更が反映されるようにキャッシュクリアする
 	// if ( is_customize_preview() ) {
 	// 	delete_transient( 'swell_' . $cache_key );  // ~2.0.2を考慮
 	// 	delete_transient( 'swell_parts_' . $cache_key );
 	// }
 
-	// キャッシュを使うかどうか
-	if ( $is_cache_style ) {
-
-		// キャッシュキー
-		if ( SWELL::is_top() && ! is_paged() ) {
-			$cache_key = 'style_top';
-		} elseif ( is_single() ) {
-			$cache_key = 'style_single';
-		} elseif ( is_page() ) {
-			$cache_key = 'style_page';
-		} else {
-			$cache_key = 'style_other';
-		}
-
-		// キャッシュを取得
-		$style = get_transient( 'swell_parts_' . $cache_key );
-
-		if ( empty( $style ) ) {
-			$style = Style::output( 'front' );
-			set_transient( 'swell_parts_' . $cache_key, $style, 30 * DAY_IN_SECONDS ); // キャッシュデータの生成(有効：30日)
-		}
-	} else {
-		// キャッシュオフ時
-		$style = Style::output( 'front' );
-	}
-
-	// モジュールファイルの読み込み
-	$style .= Style::load_modules( SWELL::is_load_css_inline() );
-
-	// キャッシュさせないCSS
-	$style .= get_no_cache_css();
-
-	return $style;
-}
-
-
-/**
- * フロントCSS
- */
-function get_no_cache_css() {
-
-	$style = '';
-
-	// タブ
-	$is_android = SWELL::is_android();
-	if ( $is_android ) {
-		$style .= '.c-tabBody__item[aria-hidden="false"]{animation:none !important;display:block;}';
-	}
-
-	// Androidでは Noto-serif 以外はデフォルトフォントに指定。(游ゴシックでの太字バグがある & 6.0からデフォルトフォントが Noto-sans に。)
-	$font = SWELL::get_setting( 'body_font_family' );
-	if ( $is_android && 'serif' !== $font ) {
-		$style .= 'body{font-weight:400;font-family:sans-serif}';
-	}
-
-	// ページごとのカスタムCSS
-	if ( is_single() || is_page() || is_home() ) {
-		if ( get_post_meta( get_queried_object_id(), 'swell_meta_no_mb', true ) === '1' ) {
-			$style .= '#content{margin-bottom:0;}.w-beforeFooter{margin-top:0;}';
-		};
-	}
+	// キャッシュ可能naCSS
+	$style = Style::get_front_css();
 
 	return $style;
 }

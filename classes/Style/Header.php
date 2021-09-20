@@ -11,30 +11,31 @@ class Header {
 	/**
 	 * ヘッダーの境界線
 	 */
-	public static function header_border( $header_border ) {
-
-		$head_style = [];
-
+	public static function header_border() {
+		$header_border = SWELL::get_setting( 'header_border' );
 		if ( $header_border === 'border' ) {
-			$head_style[] = 'border-bottom: solid 1px rgba(0,0,0,.1)';
+			Style::add( '.l-header', 'border-bottom: solid 1px rgba(0,0,0,.1)' );
 		} elseif ( $header_border === 'shadow' ) {
-			$head_style[] = 'box-shadow: 0 1px 4px rgba(0,0,0,.12)';
+			Style::add( '.l-header', 'box-shadow: 0 1px 4px rgba(0,0,0,.12)' );
 		}
-		Style::add( '.l-header', $head_style );
+
 	}
 
 	/**
 	 * ヘッドバー
 	 */
-	public static function head_bar( $color_head_bar_bg, $color_head_bar_text, $show_head_border ) {
-		$color_head_bar_bg = $color_head_bar_bg ?: 'var(--color_main)';
-		Style::add( '.l-header__bar', [
-			'color:' . $color_head_bar_text,
-			'background:' . $color_head_bar_bg,
-		]);
+	public static function head_bar() {
+		$color_head_bar_bg = SWELL::get_setting( 'color_head_bar_bg' ) ?: 'var(--color_main)';
+
+		if ( SWELL::is_use( 'head_bar' ) ) {
+			Style::add( '.l-header__bar', [
+				'color:' . SWELL::get_setting( 'color_head_bar_text' ),
+				'background:' . $color_head_bar_bg,
+			]);
+		}
 
 		// ヘッドバーの内容がなくてもボーダーとして表示する（PCのみ）
-		if ( $show_head_border ) {
+		if ( SWELL::get_setting( 'show_head_border' ) ) {
 			Style::add( '.l-header', 'border-top: solid 4px ' . $color_head_bar_bg, 'pc' );
 		}
 	}
@@ -42,9 +43,9 @@ class Header {
 	/**
 	 * ヘッダー（SP）のレイアウト
 	 */
-	public static function header_sp_layout( $layout ) {
+	public static function header_sp_layout() {
 
-		switch ( $layout ) {
+		switch ( SWELL::get_setting( 'header_layout_sp' ) ) {
 			case 'center_right':
 				$menu_btn   = 'order:3';
 				$custom_btn = 'order:1';
@@ -73,7 +74,10 @@ class Header {
 	/**
 	 * スマホのヘッダーボタン
 	 */
-	public static function header_menu_btn( $menu_btn_bg, $custom_btn_bg ) {
+	public static function header_menu_btn() {
+		$menu_btn_bg   = SWELL::get_setting( 'menu_btn_bg' );
+		$custom_btn_bg = SWELL::get_setting( 'custom_btn_bg' );
+
 		if ( $menu_btn_bg !== '' ) {
 			Style::add( '.l-header__menuBtn', 'color:#fff;background-color:' . $menu_btn_bg );
 		}
@@ -85,10 +89,10 @@ class Header {
 	/**
 	 * ロゴ画像
 	 */
-	public static function logo( $logo_size_sp, $logo_size_pc, $logo_size_pcfix ) {
-		Style::add_root( '--logo_size_sp', $logo_size_sp . 'px' );
-		Style::add_root( '--logo_size_pc', $logo_size_pc . 'px' );
-		Style::add_root( '--logo_size_pcfix', $logo_size_pcfix . 'px' );
+	public static function logo() {
+		Style::add_root( '--logo_size_sp', SWELL::get_setting( 'logo_size_sp' ) . 'px' );
+		Style::add_root( '--logo_size_pc', SWELL::get_setting( 'logo_size_pc' ) . 'px' );
+		Style::add_root( '--logo_size_pcfix', SWELL::get_setting( 'logo_size_pcfix' ) . 'px' );
 	}
 
 
@@ -99,15 +103,8 @@ class Header {
 
 		// グロナビ背景の上書き
 		if ( 'overwrite' === SWELL::get_setting( 'gnav_bg_type' ) ) {
-			Style::add_root(
-				'--color_gnav_bg',
-				SWELL::get_setting( 'color_gnav_bg' ) ?: SWELL::get_setting( 'color_main' )
-			);
+			Style::add_root( '--color_gnav_bg', SWELL::get_setting( 'color_gnav_bg' ) ?: 'var(--color_main)' );
 		}
-
-		// SWELL::get_setting( 'color_head_hov' );
-		SWELL::get_setting( 'headmenu_effect' );
-		SWELL::get_setting( 'head_submenu_bg' );
 
 		$gnav_a_after        = [];
 		$sp_head_nav_current = [];
@@ -175,8 +172,7 @@ class Header {
 	 */
 	public static function info_bar() {
 
-		$infoBar      = [];
-		$infoBar__btn = [];
+		$infoBar = [];
 
 		// テキスト色
 		$infoBar[] = 'color:' . SWELL::get_setting( 'color_info_text' );
@@ -232,9 +228,8 @@ class Header {
 		Style::add( '.c-infoBar__text', 'font-size:' . $fz_tab, 'tab' );
 
 		// ボタンの色
-		$color_info_btn = SWELL::get_setting( 'color_info_btn' ) ?: SWELL::get_setting( 'color_main' );
-		$infoBar__btn[] = 'background-color:' . $color_info_btn . ' !important';
-		Style::add( '.c-infoBar__btn', $infoBar__btn );
+		$color_info_btn = SWELL::get_setting( 'color_info_btn' ) ?: 'var(--color_main)';
+		Style::add( '.c-infoBar__btn', 'background-color:' . $color_info_btn . ' !important' );
 
 	}
 }
