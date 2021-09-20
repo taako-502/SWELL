@@ -54,7 +54,7 @@ class Widget {
 	/**
 	 * ウィジェットタイトル
 	 */
-	public static function title( $sidettl_type, $sidettl_type_sp, $frame_class ) {
+	public static function title( $frame_class ) {
 
 		$is_on_frame     = ( '-frame-off' !== $frame_class );
 		$styles          = self::get_widget_title_style( SWELL::get_setting( 'sidettl_type' ), $is_on_frame );

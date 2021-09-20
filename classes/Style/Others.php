@@ -27,11 +27,10 @@ class Others {
 	public static function toc() {
 		$toc_before_color = SWELL::get_setting( 'toc_before_color' );
 		if ( 'main' === $toc_before_color ) {
-			$color = 'var(--color_main)';
+			style::add( '.p-toc__list.is-style-index li::before', 'color:var(--color_main)' );
 		} elseif ( 'custom' === $toc_before_color ) {
-			$color = SWELL::get_setting( 'toc_before_custom_color' );
+			style::add( '.p-toc__list.is-style-index li::before', 'color:' . SWELL::get_setting( 'toc_before_custom_color' ) );
 		}
-		style::add( '.p-toc__list.is-style-index li::before', 'color:' . $color );
 	}
 
 

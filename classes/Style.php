@@ -314,10 +314,10 @@ class Style {
 			}
 
 			if ( SWELL::is_use( 'mv' ) ) {
-				self::mv();
+				Style\Top::mv();
 			}
 			if ( SWELL::is_use( 'post_slider' ) ) {
-				self::post_slider();
+				Style\Top::post_slider();
 			}
 		}
 
