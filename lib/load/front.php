@@ -26,13 +26,12 @@ function load_css_async( $html, $handle, $href, $media ) {
 	$target_handles = [
 		'swell_luminous',
 		'swell-parts/footer',
-		'swell-parts/pn-links--normal',
-		'swell-parts/pn-links--simple',
 		'swell-parts/comments',
-		'swell-parts/sns-cta',
-		'swell-parts/fix-header',
-		'swell-parts/fix_bottom_menu',
-
+		// 'swell-parts/pn-links--normal',
+		// 'swell-parts/pn-links--simple',
+		// 'swell-parts/sns-cta',
+		// 'swell-parts/fix-header',
+		// 'swell-parts/fix_bottom_menu',
 	];
 
 	if ( in_array( $handle, $target_handles, true ) ) {
