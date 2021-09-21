@@ -63,7 +63,7 @@
         transition: opacity .75s, visibility .75s;
         transition-delay: .25s;
 
-        &:not(.swiper-container-initialized) {
+        &:not(.swiper-initialized) {
             visibility: hidden;
             opacity: 0;
         }
@@ -90,7 +90,7 @@
     transition: opacity .75s, visibility .75s;
     transition-delay: .25s;
 
-    &:not(.swiper-container-initialized) {
+    &:not(.swiper-initialized) {
         visibility: hidden;
         opacity: 0;
     }

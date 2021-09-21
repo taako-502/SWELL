@@ -1155,7 +1155,7 @@ trait Get {
 			return 'single';
 		} elseif ( is_page() ) {
 			return 'page';
-		} elseif ( self::is_archive() ) {
+		} elseif ( is_archive() ) {
 			return 'archive';
 		} else {
 			return 'other';

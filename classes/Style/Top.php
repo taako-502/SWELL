@@ -126,10 +126,10 @@ class Top {
 		Style::add_root( '--ps_space', $ps_space );
 
 		// その他
-		$ps_swiper_container = [];
+		$ps_swiper = [];
 		if ( $SETTING['ps_on_pagination'] ) {
 			// ページネーションがあればpaddingつける
-			$ps_swiper_container[] = 'padding-bottom:24px';
+			$ps_swiper[] = 'padding-bottom:24px';
 		}
 
 		// 左右の余白量
@@ -139,14 +139,14 @@ class Top {
 				break;
 			case 'wide': // コンテンツ幅に収める
 				if ( ! $SETTING['ps_no_space'] ) {
-					$ps_swiper_container[] = 'margin-left:-8px;margin-right:-8px;';
+					$ps_swiper[] = 'margin-left:-8px;margin-right:-8px;';
 				}
 				break;
 			default:
 				break;
 		}
 
-		Style::add( '#post_slider .swiper-container', $ps_swiper_container );
+		Style::add( '#post_slider .swiper', $ps_swiper );
 
 	}
 

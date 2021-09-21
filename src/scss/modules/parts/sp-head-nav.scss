@@ -40,7 +40,7 @@
         display: none;
     }
 
-    &.swiper-container:not(.swiper-container-initialized) .p-spHeadMenu {
+    &.swiper:not(.swiper-initialized) .p-spHeadMenu {
         visibility: hidden;
     }
 
