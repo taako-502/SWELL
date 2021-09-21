@@ -96,15 +96,11 @@ class Body {
 
 		if ( ! SWELL::get_setting( 'to_site_rounded' ) ) return;
 
-		// 2px丸める
-		$maru2 = [];
-		if ( 'fill' === SWELL::get_setting( 'sidettl_type' ) && '-frame-off' !== $frame_class ) {
-			$maru2[] = '.c-widget__title';
-		}
-		if ( 'block' === SWELL::get_setting( 'h2_type' ) ) {
-			$maru2[] = '.post_content h2';
-		}
-		Style::add( $maru2, 'border-radius:2px' );
-
+		// // 2px丸める
+		// $maru2 = [];
+		// if ( 'fill' === SWELL::get_setting( 'sidettl_type' ) && '-frame-off' !== $frame_class ) {
+		// 	$maru2[] = '.c-widget__title.-side';
+		// }
+		// Style::add( $maru2, 'border-radius:2px' );
 	}
 }

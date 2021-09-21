@@ -63,12 +63,9 @@
     justify-content: space-between;
     margin: 0;
     padding: 16px;
-    // padding: 1.5em 1em;
-    // border: solid 1px #555;
     transition: box-shadow .25s;
 
     @include tab {
-        // padding: 1.5em;
         padding: 24px;
     }
 
@@ -157,7 +154,7 @@
         &::before {
             display: block;
             border: solid 1px currentColor;
-            opacity: .9;
+            border-radius: var(--swl-radius--2, 0px);
 
             @extend %absLayer;
 
@@ -183,7 +180,6 @@
         @include tab {
             padding-top: 28px;
         }
-
     }
 }
 

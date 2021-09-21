@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     width: 48px;
     height: 48px;
     overflow: hidden;
@@ -11,10 +10,11 @@
     text-align: center;
     background: #fff;
     border: solid 1px var(--color_main);
+    border-radius: var(--swl-radius--8, 0px);
     box-shadow: var(--swl-box_shadow);
     cursor: pointer;
     opacity: .75;
-    transition: .25s;
+    transition: all .25s;
 
     @include pc {
 

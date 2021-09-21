@@ -22,6 +22,7 @@
     #main_content & {
         max-width: 800px;
         margin: 4em auto;
+        border-radius: var(--swl-radius--2, 0px);
 
         @include pc {
             width: 92%;

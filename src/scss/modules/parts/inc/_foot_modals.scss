@@ -9,9 +9,9 @@
     height: 100%;
     margin: -1em auto 0 !important; //closeボタンあるので少し上にずらす
     padding: 2em 1.5em;
-    // overflow-y: auto;
     color: #333;
     background: #fdfdfd;
+    border-radius: var(--swl-radius--4, 0px);
     transform: translateY(16px);
     transition: transform .5s;
 

@@ -23,6 +23,7 @@
     color: #333;
     background: #fff;
     border: 1px solid var(--swl-color_border);
+    border-radius: var(--swl-radius--4, 0px);
 
     @include tab {
         font-size: 14px;

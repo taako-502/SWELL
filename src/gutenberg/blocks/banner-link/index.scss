@@ -17,6 +17,7 @@
     margin-left: auto;
     overflow: hidden;
     text-align: center;
+    border-radius: var(--swl-radius--4, 0px);
 
     i {
         margin-right: .5em;
@@ -79,6 +80,7 @@ a.c-bannerLink:hover {
     display: block;
     font-size: 3.4vw;
     line-height: 1.4;
+    border-radius: var(--swl-radius--4, 0px);
 
     @include tab {
         font-size: 14px;
@@ -132,6 +134,7 @@ a.c-bannerLink:hover {
         width: calc(100% - 8px);
         height: calc(100% - 8px);
         border: solid 1px #fff;
+        border-radius: var(--swl-radius--4, 0px);
         content: "";
         pointer-events: none;
     }

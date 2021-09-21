@@ -48,13 +48,6 @@
             transform: rotate(45deg) translateY(-50%);
         }
 
-        @include tab {
-
-            .p-pnLinks__link:hover .p-pnLinks__title {
-                left: 4px;
-            }
-        }
-
         .p-pnLinks__thumb {
             margin-right: 8px;
         }
@@ -74,13 +67,6 @@
             transform: rotate(-45deg) translateY(-50%);
         }
 
-        @include tab {
-
-            .p-pnLinks__link:hover .p-pnLinks__title {
-                left: -4px;
-            }
-        }
-
         .p-pnLinks__thumb {
             order: 2;
             margin-left: 8px;
@@ -97,14 +83,15 @@
     min-height: 4em;
     padding: .5em 1em;
     line-height: 1.4;
-    transition: .25s;
-
+    border-radius: var(--swl-radius--2, 0px);
+    transition: box-shadow .25s;
 }
 
 .p-pnLinks__thumb {
     width: 48px;
     height: 32px;
     object-fit: cover;
+    border-radius: var(--swl-radius--4, 0px);
 
     @include tab {
         width: 72px;
@@ -112,9 +99,17 @@
     }
 }
 
-.p-pnLinks__title {
-    // hover時に動くように relative
-    position: relative;
-    left: 0;
-    transition: all .25s;
+@include tab {
+
+    .p-pnLinks__title {
+        transition: transform .25s;
+    }
+
+    .-prev > .p-pnLinks__link:hover .p-pnLinks__title {
+        transform: translateX(4px);
+    }
+
+    .-next > .p-pnLinks__link:hover .p-pnLinks__title {
+        transform: translateX(-4px);
+    }
 }

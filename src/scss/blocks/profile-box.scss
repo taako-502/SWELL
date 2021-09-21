@@ -4,6 +4,7 @@
 .p-profileBox {
     padding: 4px;
     border: solid 1px var(--color_border);
+    border-radius: var(--swl-radius--4, 0px);
 }
 
 .p-profileBox__bg {
@@ -11,6 +12,7 @@
     height: 160px;
     overflow: hidden;
     background: #ccc;
+    border-radius: var(--swl-radius--2, 0px);
 }
 
 .p-profileBox__bgImg {

@@ -102,6 +102,7 @@ $mc-pad--pc: 32px;
     .l-mainContent {
         padding: $mc-pad--sp;
         background: #fff;
+        border-radius: var(--swl-radius--4, 0px);
 
         @include pc {
             padding: $mc-pad--pc;
@@ -150,7 +151,9 @@ $mc-pad--pc: 32px;
 
         .c-widget {
             padding: 16px 16px;
+            overflow: hidden;
             background: #fff;
+            border-radius: var(--swl-radius--4, 0px);
         }
     }
 

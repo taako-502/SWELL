@@ -25,6 +25,7 @@
 .p-articleThumb__img {
     display: block;
     width: 100%;
+    border-radius: var(--swl-radius--8, 0px);
 }
 
 .p-articleThumb__figcaption {

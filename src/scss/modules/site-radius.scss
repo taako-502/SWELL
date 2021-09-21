@@ -1,31 +1,25 @@
-@import "../foundation/mixin/**";
+@import "../foundation/mixin/media";
 
 :root {
+    --swl-radius--2: 2px;
+    --swl-radius--4: 4px;
     --swl-radius--8: 8px;
 }
-//2px
-.c-shareBtns__btn,
-.p-blogCard__inner::before,
+
+// タグクラウド
 .c-categoryList__link,
 .c-tagList__link,
-.p-toc {
-    border-radius: 2px;
+.tag-cloud-link {
+    padding: 6px 10px;
+    border-radius: 16px;
 }
+
 
 //4px
 input[type="text"],
 input[type="number"],
-// input[type="number"],
 textarea,
-.p-articleThumb__img,
-.p-profileBox,
-.p-profileBox__bg,
-.c-searchForm__submit,
-.p-authorBox__moreLink,
 .-related .p-postList__thumb,
-.p-pickupBanners .c-bannerLink,
-.c-bannerLink__label,
-.p-pnLinks__thumb,
 [class*="is-style-big_icon_"],
 .is-style-border_sg,
 .is-style-border_dg,
@@ -39,18 +33,6 @@ textarea,
 .is-style-note_box,
 .is-style-stitch {
     border-radius: 4px;
-}
-
-//8px
-.p-snsCta,
-.p-authorBox {
-    border-radius: 8px;
-}
-
-// 40px
-.submit,
-.is-style-more_btn > a {
-    border-radius: 40px;
 }
 
 
@@ -97,16 +79,8 @@ textarea,
     border-radius: 16px;
 }
 
-// タームリンク
-.c-categoryList__link
-.c-tagList__link,
-.tag-cloud-link {
-    padding: 6px 12px;
-    border-radius: 16px;
-}
 
 // キャプション付きボックス
-
 .cap_box_ttl {
     border-radius: 2px 2px 0 0;
 }
@@ -127,7 +101,10 @@ textarea,
     border-radius: 2px;
 }
 
-// 投稿リストのREAD MORE
-.p-postList__body::after {
+
+// 40px
+.submit,
+.p-postList__body::after, // 投稿リストのREAD MORE
+.is-style-more_btn > a {
     border-radius: 40px;
 }

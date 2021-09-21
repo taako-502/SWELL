@@ -25,7 +25,7 @@ class Widget {
 				if ( $is_on_frame ) {
 					$title .= 'padding:.5em 1em;margin: -16px -16px 1.5em;';
 				} else {
-					$title .= 'padding:.5em .75em;';
+					$title .= 'padding:.5em .75em;border-radius:var(--swl-radius--2, 0px);';
 				}
 				$title .= 'background:var(--color_main);color:#fff;';
 				break;

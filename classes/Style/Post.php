@@ -263,7 +263,7 @@ class Post {
 				$is_col_fff   = true;
 				break;
 			case 'block':
-				$h2[]       = 'background:' . $colH . ';padding:.75em 1em;color:#fff';
+				$h2[]       = 'background:' . $colH . ';padding:.75em 1em;color:#fff;border-radius:var(--swl-radius--2, 0px)';
 				$is_col_fff = true;
 				break;
 			case 'tag_normal':

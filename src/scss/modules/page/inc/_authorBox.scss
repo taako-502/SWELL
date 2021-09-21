@@ -3,6 +3,7 @@
 .p-authorBox {
     padding: 5vw;
     border: solid 1px var(--swl-color_border);
+    border-radius: var(--swl-radius--8, 0px);
 
     @include mobile {
         text-align: center;
@@ -84,6 +85,7 @@
         letter-spacing: .5px;
         text-align: center;
         border: solid 1px var(--swl-color_border);
+        border-radius: var(--swl-radius--4, 0px);
 
         &::after {
             position: absolute;
