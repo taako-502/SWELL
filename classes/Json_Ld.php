@@ -63,6 +63,7 @@ class Json_Ld {
 
 	/**
 	 * 投稿・固定ページの JSON-LD
+	 * See: https://developers.google.com/search/docs/advanced/structured-data/article
 	 */
 	public static function get_article_json() {
 
@@ -83,21 +84,21 @@ class Json_Ld {
 			$description = wp_strip_all_tags( strip_shortcodes( $description ), true );
 			$description = mb_substr( $description, 0, 300 );
 		}
-		$thumb = get_the_post_thumbnail_url( $the_id, 'full' ) ?: SWELL::get_noimg( 'url' );
+		$thumb      = get_the_post_thumbnail_url( $the_id, 'full' ) ?: SWELL::get_noimg( 'url' );
+		$logo_url   = SWELL::site_data( 'logo_url' ) ?: T_DIRE_URI . '/assets/img/article_schrma_logo.png';
+		$author_url = get_the_author_meta( 'schema_url', $author_data->ID ) ?: $author_data->user_url ?: home_url( '/' );
 
 		$data = [
 			'url'                => $url,
 			'headline'           => $title,
 			'image_url'          => $thumb,
 			'author_name'        => $author_data->display_name ?: '',
+			'author_url'         => $author_url,
 			'publisher_name'     => SWELL::site_data( 'title' ) ?: '',
-			'publisher_logo_url' => SWELL::site_data( 'logo_url' ) ?: '',
+			'publisher_logo_url' => $logo_url,
 			'description'        => $description,
 		];
 		$data = apply_filters( 'swell_json_ld_article_data', $data, $the_id );
-
-		// publisher の logo が必須値なので、なければ出力しない。
-		if ( ! $data['publisher_logo_url'] ) return [];
 
 		return [
 			'@context'          => 'http://schema.org',
@@ -116,6 +117,7 @@ class Json_Ld {
 			'author'            => [
 				'@type'  => 'Person',
 				'name'   => $data['author_name'],
+				'url'    => $data['author_url'],
 			],
 			'publisher'         => [
 				'@type'  => 'Organization',
