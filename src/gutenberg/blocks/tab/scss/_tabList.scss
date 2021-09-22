@@ -285,13 +285,7 @@
 // ふきだし
 .is-style-balloon {
 
-    /*切り替えタブ*/
-    .-body-solid & .c-tabList__button {
-        box-shadow: var(--swl-box_shadow);
-    }
-
     .c-tabList__item {
-
         margin: 0 0 16px;
         padding: 0 4px;
         transition: background-color .1s, color .1s;

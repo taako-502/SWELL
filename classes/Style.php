@@ -176,6 +176,11 @@ class Style {
 	 */
 	public static function set_front_common_modules() {
 
+		// サイト全体の立体設定
+		if ( ! SWELL::get_setting( 'to_site_flat' ) ) {
+			self::add_module( 'site-solid' );
+		}
+
 		// サイト全体の画像を丸くするかどうか
 		if ( SWELL::get_setting( 'to_site_rounded' ) ) {
 			self::add_module( 'site-radius' );
