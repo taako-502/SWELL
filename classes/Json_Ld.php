@@ -85,7 +85,7 @@ class Json_Ld {
 			$description = mb_substr( $description, 0, 300 );
 		}
 		$thumb      = get_the_post_thumbnail_url( $the_id, 'full' ) ?: SWELL::get_noimg( 'url' );
-		$logo_url   = SWELL::site_data( 'logo_url' ) ?: T_DIRE_URI . '/assets/img/article_schrma_logo.png';
+		$logo_url   = SWELL::get_setting( 'publisher_logo_url' ) ?: T_DIRE_URI . '/assets/img/article_schrma_logo.png';
 		$author_url = get_the_author_meta( 'schema_url', $author_data->ID ) ?: $author_data->user_url ?: home_url( '/' );
 
 		$data = [
