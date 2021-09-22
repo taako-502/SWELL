@@ -28,7 +28,6 @@ import setIndexList from '@swell-js/modules/setIndexList';
 import setFixWidget from '@swell-js/modules/setFixWidget';
 import setGnavClass from '@swell-js/modules/setGnavClass';
 import changeDeviceSize from '@swell-js/modules/changeDeviceSize';
-// import { setupFixHeader, setFixHeaderPosition } from '@swell-js/modules/setupFixHeader';
 import addClickEvents from '@swell-js/modules/addClickEvents';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
 import { pvCount } from '@swell-js/modules/pvCount';

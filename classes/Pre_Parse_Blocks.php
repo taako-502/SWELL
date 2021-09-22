@@ -353,17 +353,18 @@ class Pre_Parse_Blocks {
 			\SWELL_Theme::$used_blocks['core/archives']   = true;
 			\SWELL_Theme::$used_blocks['widget/dropdown'] = true;
 			\SWELL_Theme::$used_blocks['widget/list']     = true;
-		} elseif ( 'widget_pages' === $classname || 'widget_nav_menu' === $classname || 'widget_rss' === $classname ) {
-			\SWELL_Theme::$used_blocks['widget/list'] = true;
 		} elseif ( 'widget_rss' === $classname ) {
-			\SWELL_Theme::$used_blocks['widget/rss'] = true;
+			\SWELL_Theme::$used_blocks['widget/list'] = true;
+			\SWELL_Theme::$used_blocks['widget/rss']  = true;
+		} elseif ( 'widget_pages' === $classname || 'widget_nav_menu' === $classname ) {
+			\SWELL_Theme::$used_blocks['widget/list'] = true;
 		} elseif ( 'widget_swell_prof_widget' === $classname ) {
 			\SWELL_Theme::$used_blocks['loos/profile-box'] = true;
 		}
+
 		// elseif ( 'widget_search' === $classname ) {
 		// 	\SWELL_Theme::$used_blocks['widget/search'] = true;
 		// }
-
 		// widget_meta
 	}
 
