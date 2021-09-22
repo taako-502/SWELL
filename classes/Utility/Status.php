@@ -392,11 +392,6 @@ trait Status {
 	 */
 	public static function is_separate_css() {
 		$flag = (bool) \SWELL_Theme::get_option( 'separate_style' );
-
-		if ( self::is_term() ) {
-			$flag = false;
-		}
-
 		return apply_filters( 'swell_is_separate_css', $flag );
 	}
 

@@ -11,28 +11,34 @@ class Pre_Parse_Blocks {
 	public static $dump           = [];
 
 	/**
-	 * check_widget_blocks
+	 * check blocks
 	 */
 	public static function init() {
 
 		// if ( ! ( is_singular( 'post' ) || is_page() ) ) return;
 
+		// ブロックチェック用フィルター追加
+		add_filter( 'render_block', [ __CLASS__, 'render_check' ], 10, 2 );
+
+		// メインコンテンツをパースしてチェック
 		if ( is_singular( 'post' ) || is_page() ) {
 			$post = get_post( get_queried_object_id() );
 			if ( $post ) {
-				// コンテンツをパースしてブロックをチェック
-				$parsed_content = parse_blocks( $post->post_content );
-				foreach ( $parsed_content as $block ) {
-					self::check_block( $block, \SWELL_Theme::$used_blocks );
-				}
-
-				// コンテンツの文字列を直接チェック
-				self::check_content_str( $post->post_content );
+				self::parse_content( $post->post_content );
+			}
+		} elseif ( \SWELL_Theme::is_term() ) {
+			$parts_id = get_term_meta( get_queried_object_id(), 'swell_term_meta_display_parts', 1 );
+			$parts    = $parts_id ? get_post( $parts_id ) : '';
+			if ( $parts ) {
+				self::parse_content( $parts->post_content );
 			}
 		}
 
 		// ウィジェットのチェック
 		self::parse_widgets();
+
+		// ブロックチェック用フィルター削除
+		remove_filter( 'render_block', [ __CLASS__, 'render_check' ], 10 );
 
 		// その他ページ種別等によってセットするもの
 		if ( \SWELL_Theme::is_show_pickup_banner() ) {
@@ -40,6 +46,106 @@ class Pre_Parse_Blocks {
 		}
 		if ( is_home() || is_archive() ) {
 			\SWELL_Theme::$used_blocks['loos/tab'] = true;
+		}
+	}
+
+	/**
+	 * check parse_content
+	 */
+	public static function parse_content( $content ) {
+
+		// $start = microtime( true );
+
+		// do_shortcodeでブログパーツなどを展開させ、'rende_block' フックでチェック。
+		foreach ( parse_blocks( do_shortcode( $content ) ) as $block ) {
+			self::check_parsed_block( $block );
+		}
+
+		// $end = microtime( true );
+		// var_dump( $end - $start );
+
+		// コンテンツの文字列を直接チェック
+		self::check_content_str( $content );
+	}
+
+	/**
+	 * render_checkフック時にブロックを記録する
+	 */
+	public static function render_check( $block_content, $block ) {
+		$block_name = $block['blockName'] ?? '';
+		if ( ! $block_name ) return $block_content;
+
+		self::push_used_blocks( $block_name, \SWELL_Theme::$used_blocks );
+		return $block_content;
+	}
+
+
+	/**
+	 * サイドバー内のrender_checkフック時にブロックを記録する
+	 * memo: キャッシュもできるように別処理にしている
+	 */
+	public static function siderbar_render_check( $block_content, $block ) {
+		$block_name = $block['blockName'] ?? '';
+		if ( ! $block_name ) return $block_content;
+
+		self::push_used_blocks( $block_name, self::$sidebar_blocks );
+		return $block_content;
+	}
+
+
+	/**
+	 * 使用されたブロックをリストに追加
+	 */
+	public static function check_parsed_block( $block ) {
+		$block_name = $block['blockName'] ?? '';
+		if ( ! $block_name ) return;
+
+		self::push_used_blocks( $block_name, \SWELL_Theme::$used_blocks );
+
+		// インナーブロックにも同じ処理を。
+		if ( ! empty( $block['innerBlocks'] ) ) {
+			foreach ( $block['innerBlocks'] as $innerBlock ) {
+				self::check_parsed_block( $innerBlock );
+			}
+		}
+
+		// ブログパーツ・再利用ブロックは展開して中身チェック
+		$parts_id = 0;
+		if ( 'loos/blog-parts' === $block_name ) {
+			$parts_id = $block['attrs']['partsID'] ?? 0;
+		} elseif ( 'core/block' === $block_name ) {
+			$parts_id = $block['attrs']['ref'] ?? 0;
+		}
+
+		$parts = $parts_id ? get_post( $parts_id ) : '';
+		if ( $parts ) {
+			self::parse_content( $parts->post_content );
+		}
+	}
+
+
+
+	/**
+	 * 使用されたブロックをリストに追加
+	 */
+	public static function push_used_blocks( $block_name, &$list ) {
+
+		// すでにリストに追加されていればreturn
+		if ( isset( $list[ $block_name ] ) ) return;
+
+		$list[ $block_name ] = true;
+
+		// parse_blocks() だけだと separate なコアCSSはフッターで読み込まれてしまうのでここでキューに追加
+		if ( false !== strpos( $block_name, 'core/' ) ) {
+			$core_name = str_replace( 'core/', '', $block_name );
+			wp_enqueue_style( "wp-block-{$core_name}" );
+			// wp_deregister_style で特定のコアブロックCSSの読み込み解除も可
+
+			// その他、共通パーツ等
+			if ( 'categories' !== $core_name || 'archives' !== $core_name ) {
+				$list['widget/dropdown'] = true;
+				$list['widget/list']     = true;
+			}
 		}
 	}
 
@@ -82,16 +188,30 @@ class Pre_Parse_Blocks {
 	 * サイドバーのチェック
 	 */
 	public static function parse_sidebar() {
-		add_filter( 'render_block', [ __CLASS__, 'check_sidebar_block' ], 10, 2 );
+
+		// キャッシュ
+		// $chached_data = '';
+		// if ( $chached_data && is_array( $chached_data ) ) {
+		// 	\SWELL_Theme::$used_blocks = array_merge( \SWELL_Theme::$used_blocks, $chached_data );
+		// 	return;
+		// }
+
+		// 共通のチェック処理とは別に登録
+		remove_filter( 'render_block', [ __CLASS__, 'render_check' ], 10 );
+		add_filter( 'render_block', [ __CLASS__, 'siderbar_render_check' ], 10, 2 );
+
 		ob_start();
 		if ( \SWELL_Theme::is_show_sidebar() ) {
 			\SWELL_Theme::get_parts( 'parts/sidebar_content' );
 		}
 		ob_clean();
 		// $sidebar = ob_get_clean();
-		remove_filter( 'render_block', [ __CLASS__, 'check_sidebar_block' ], 10, 2 );
 
-		// echo '<pre style="background:#efefef;margin:20px;padding:20px;">';
+		// 共通のチェック処理を再登録
+		remove_filter( 'render_block', [ __CLASS__, 'siderbar_render_check' ], 10, 2 );
+		add_filter( 'render_block', [ __CLASS__, 'render_check' ], 10, 2 );
+
+		// echo '<pre style="background:#e8f3ea;margin:20px;padding:20px;">';
 		// var_dump( self::$sidebar_blocks );
 		// echo '</pre>';
 
@@ -104,12 +224,10 @@ class Pre_Parse_Blocks {
 	 *  フロントページ専用ウィジェットのブロックチェック
 	 */
 	public static function parse_front_widget() {
-		add_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
 		ob_start();
 		\SWELL_Theme::outuput_widgets( 'front_top' );
 		\SWELL_Theme::outuput_widgets( 'front_bottom' );
 		ob_clean();
-		remove_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
 	}
 
 
@@ -117,7 +235,6 @@ class Pre_Parse_Blocks {
 	 * 投稿ページ専用ウィジェットのブロックチェック
 	 */
 	public static function parse_single_widget() {
-		add_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
 		ob_start();
 		\SWELL_Theme::outuput_cta();
 		\SWELL_Theme::outuput_content_widget( 'single', 'top' );
@@ -125,7 +242,6 @@ class Pre_Parse_Blocks {
 		\SWELL_Theme::outuput_widgets( 'before_related' );
 		\SWELL_Theme::outuput_widgets( 'after_related' );
 		ob_clean();
-		remove_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
 	}
 
 
@@ -133,19 +249,16 @@ class Pre_Parse_Blocks {
 	 * 固定ページ専用ウィジェットのブロックチェック
 	 */
 	public static function parse_page_widget() {
-		add_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
 		ob_start();
 		\SWELL_Theme::outuput_content_widget( 'page', 'top' );
 		\SWELL_Theme::outuput_content_widget( 'page', 'bottom' );
 		ob_clean();
-		remove_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
 	}
 
 	/**
 	 * その他のウィジェットのチェック
 	 */
 	public static function parse_other_area() {
-		add_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
 		ob_start();
 		\SWELL_Theme::outuput_widgets( 'footer_sp' );
 		\SWELL_Theme::outuput_widgets( 'footer_box1' );
@@ -155,57 +268,6 @@ class Pre_Parse_Blocks {
 		\SWELL_Theme::outuput_widgets( 'sp_menu_bottom' );
 		\SWELL_Theme::outuput_widgets( 'head_box' );
 		ob_clean();
-		remove_filter( 'render_block', [ __CLASS__, 'check_other_area_block' ], 10, 2 );
-	}
-
-
-	/**
-	 * 使用されたブロックをリストに追加
-	 */
-	public static function check_block( $block, &$list ) {
-		$block_name = $block['blockName'] ?? '';
-		if ( ! $block_name ) return;
-
-		// まだリストに追加されてない時だけ追加
-		if ( ! isset( $list[ $block_name ] ) ) {
-			$list[ $block_name ] = true;
-
-			// parse_blocks() だけだと separate なコアCSSはフッターで読み込まれてしまうのでここでキューに追加
-			if ( false !== strpos( $block_name, 'core/' ) ) {
-				$block_name = str_replace( 'core/', '', $block_name );
-				wp_enqueue_style( "wp-block-{$block_name}" );
-				// wp_deregister_style で特定のコアブロックCSSの読み込み解除も可
-
-				// その他、共通パーツ等
-				if ( 'categories' !== $block_name || 'archives' !== $block_name ) {
-					$list['widget/dropdown'] = true;
-					$list['widget/list']     = true;
-				}
-			}
-		}
-
-		// インナーブロックにも同じ処理を。
-		if ( ! empty( $block['innerBlocks'] ) ) {
-			self::check_block( $block['innerBlocks'], $list );
-		}
-	}
-
-
-	/**
-	 * サイドバーチェック
-	 */
-	public static function check_sidebar_block( $block_content, $block ) {
-		self::check_block( $block, self::$sidebar_blocks );
-		return $block_content;
-	}
-
-
-	/**
-	 * その他チェック
-	 */
-	public static function check_other_area_block( $block_content, $block ) {
-		self::check_block( $block, \SWELL_Theme::$used_blocks );
-		return $block_content;
 	}
 
 
