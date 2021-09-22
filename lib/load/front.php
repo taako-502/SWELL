@@ -131,7 +131,6 @@ function load_front_styles() {
 function load_separated_styles() {
 
 	$separated_blocks = [
-		'core/button'       => '/assets/css/blocks/button.css',
 		'core/calendar'     => '/assets/css/blocks/calendar.css',
 		'core/categories'   => '/assets/css/blocks/categories.css',
 		'core/columns'      => '/assets/css/blocks/columns.css',

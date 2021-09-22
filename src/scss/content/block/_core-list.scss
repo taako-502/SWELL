@@ -77,13 +77,13 @@ ol:not(.is-style-default)[class*="is-style-"] {
 ol:not(.is-style-default)[class*="is-style-"] {
     counter-reset: li;
 
-    & > li::before {
+    > li::before {
         counter-increment: li;
     }
 
     &[reversed] {
 
-        & > li::before {
+        > li::before {
             counter-increment: li -1;
         }
     }
@@ -145,7 +145,7 @@ ol.is-style-index {
 
     list-style-type: none;
 
-    & > li,
+    > li,
     ol > li {
         position: relative;
         margin-left: 2em;
@@ -173,7 +173,7 @@ ol.is-style-index {
         padding-left: 1em;
         counter-reset: li2;
 
-        & > li {
+        > li {
             // margin-left: 2em;
 
             &::before {
@@ -186,7 +186,7 @@ ol.is-style-index {
         ol {
             counter-reset: li3;
 
-            & > li {
+            > li {
                 // margin-left: 2.25em;
 
                 &::before {
@@ -335,7 +335,7 @@ ol.is-style-note_list {
             opacity: .75;
         }
 
-        & > li::before {
+        > li::before {
             content: counter(li2);
             counter-increment: li2;
         }
@@ -343,7 +343,7 @@ ol.is-style-note_list {
         ol {
             counter-reset: li3;
 
-            & > li::before {
+            > li::before {
                 content: counter(li3);
                 counter-increment: li3;
             }
@@ -366,7 +366,7 @@ ol.is-style-note_list {
 .border_bottom,
 .-list-under-dashed {
 
-    & > li {
+    > li {
         margin-bottom: .75em;
         padding-bottom: .75em;
         border-bottom: dashed 1px $color_border;

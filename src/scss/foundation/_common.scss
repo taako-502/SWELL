@@ -37,7 +37,10 @@ body {
         touch-action: none;
     }
 
+}
 
+a {
+    color: var(--color_link);
 }
 
 #wpadminbar {
@@ -50,19 +53,6 @@ body {
         z-index: 1;
     }
 
-}
-
-
-a {
-    color: var(--color_text);
-}
-
-// リンクカラー
-.post_content a,
-#comments p a,
-.textwidget a,
-.p-termHead__desc a {
-    color: var(--color_link);
 }
 
 // フォントサイズ

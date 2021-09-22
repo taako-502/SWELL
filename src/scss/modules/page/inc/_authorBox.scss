@@ -20,82 +20,6 @@
     //     padding: 2em;
     // }
 
-    &__l {
-        margin: 0 0 1em;
-        text-align: center;
-
-        @include tab {
-            width: 160px;
-            margin-bottom: 0;
-        }
-    }
-
-    &__r {
-        width: 100%;
-
-        @include tab {
-            display: flex;
-            flex-direction: column;
-            width: calc(100% - 160px - 1.5em);
-            padding-left: 1.5em;
-            border-left: solid 1px var(--swl-color_border);
-        }
-    }
-
-    &__name {
-        display: block;
-        margin-top: 8px;
-        color: inherit;
-        font-weight: bold;
-        line-height: 1.2;
-    }
-
-    &__position {
-        display: block;
-        margin-top: 4px;
-        font-style: italic;
-        line-height: 1.2;
-    }
-
-    &__desc {
-        width: 100%;
-    }
-
-    &__iconList {
-        margin-top: 8px;
-
-        @include mobile {
-            justify-content: center;
-        }
-    }
-
-    &__more {
-        padding-top: 1em;
-
-        @include tab {
-            margin-top: auto;
-        }
-    }
-
-    &__moreLink {
-        position: relative;
-        display: block;
-        padding: 0 1em;
-        line-height: 3;
-        letter-spacing: .5px;
-        text-align: center;
-        border: solid 1px var(--swl-color_border);
-        border-radius: var(--swl-radius--4, 0px);
-
-        &::after {
-            position: absolute;
-            top: 0;
-            right: 1em;
-            margin-left: .25em;
-            font-family: icomoon;
-            content: "\e930";
-        }
-    }
 
     .avatar {
         // display: block;
@@ -104,5 +28,83 @@
         object-fit: cover;
         border: solid 2px var(--swl-color_border);
         border-radius: 50%;
+    }
+}
+
+.p-authorBox__l {
+    margin: 0 0 1em;
+    text-align: center;
+
+    @include tab {
+        width: 160px;
+        margin-bottom: 0;
+    }
+}
+
+.p-authorBox__r {
+    width: 100%;
+
+    @include tab {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 160px - 1.5em);
+        padding-left: 1.5em;
+        border-left: solid 1px var(--swl-color_border);
+    }
+}
+
+.p-authorBox__name {
+    display: block;
+    margin-top: 8px;
+    color: inherit;
+    font-weight: bold;
+    line-height: 1.2;
+    text-decoration: none;
+}
+
+.p-authorBox__position {
+    display: block;
+    margin-top: 4px;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+.p-authorBox__desc {
+    width: 100%;
+}
+
+.p-authorBox__iconList {
+    margin-top: 8px;
+
+    @include mobile {
+        justify-content: center;
+    }
+}
+
+.p-authorBox__more {
+    padding-top: 1em;
+
+    @include tab {
+        margin-top: auto;
+    }
+}
+
+.p-authorBox__moreLink {
+    position: relative;
+    display: block;
+    padding: 0 1em;
+    line-height: 3;
+    letter-spacing: .5px;
+    text-align: center;
+    border: solid 1px var(--swl-color_border);
+    border-radius: var(--swl-radius--4, 0px);
+
+    &::after {
+        position: absolute;
+        top: 0;
+        right: 1em;
+        margin-left: .25em;
+        font-family: icomoon;
+        content: "\e930";
     }
 }

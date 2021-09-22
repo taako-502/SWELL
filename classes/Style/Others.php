@@ -100,8 +100,8 @@ class Others {
 	 * リンクに下線つけるかどうか
 	 */
 	public static function link() {
-		if ( SWELL::get_setting( 'show_link_underline' ) ) {
-			Style::add( ['.post_content a:not([class])', '.term_description a' ], 'text-decoration: underline' );
+		if ( ! SWELL::get_setting( 'show_link_underline' ) ) {
+			Style::add( 'a', 'text-decoration: none' );
 		}
 	}
 

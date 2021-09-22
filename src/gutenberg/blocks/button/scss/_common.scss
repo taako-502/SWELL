@@ -53,7 +53,7 @@
         padding: .75em 1.5em;
         line-height: 1.5;
         letter-spacing: 1px;
-        text-decoration: none !important;
+        text-decoration: none;
         background: var(--color_main);
 
         @include tab {
@@ -197,7 +197,7 @@
         padding: .75em 3em;
         color: #666;
         font-size: 3.4vw;
-        text-decoration: none !important;
+        text-decoration: none;
         background: #fff;
         box-shadow: 0 0 0 1px #dcdcdc;
         transition: box-shadow .25s, background-color .25s;

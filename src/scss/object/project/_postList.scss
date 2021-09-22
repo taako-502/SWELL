@@ -223,10 +223,12 @@
     z-index: 0;
     display: block;
     height: 100%;
+    color: inherit;
+    text-decoration: none;
 
-    .post_content & {
-        color: inherit;
-    }
+    // .post_content & {
+    //     color: inherit;
+    // }
 
     &:hover {
 

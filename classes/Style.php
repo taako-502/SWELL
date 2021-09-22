@@ -428,9 +428,9 @@ class Style {
 		Style\Editor::content_bg();
 		Style\Editor::balloon();
 
-		self::add( 'p > a:not([class])', 'color: var(--color_link)' );
+		self::add( 'a', 'color: var(--color_link)' );
 		if ( ! SWELL::get_setting( 'show_link_underline' ) ) {
-			self::add( 'p > a:not([class])', 'text-decoration: none' );
+			self::add( 'a', 'text-decoration: none' );
 		}
 
 		// サイト全体の画像を丸くするかどうか
