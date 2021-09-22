@@ -134,7 +134,7 @@ function load_separated_styles() {
 		'core/calendar'     => '/assets/css/blocks/calendar.css',
 		'core/categories'   => '/assets/css/blocks/categories.css',
 		'core/columns'      => '/assets/css/blocks/columns.css',
-		'core/cover'        => '/assets/css/blocks/cover.css',
+		// 'core/cover'        => '/assets/css/blocks/cover.css',
 		'core/embed'        => '/assets/css/blocks/embed.css',
 		'core/file'         => '/assets/css/blocks/file.css',
 		'core/gallery'      => '/assets/css/blocks/gallery.css',
