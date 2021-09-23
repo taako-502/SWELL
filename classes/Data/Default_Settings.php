@@ -66,6 +66,7 @@ trait Default_Settings {
 
 			// JSON-LD
 			'use_json_ld'            => '1',
+			'publisher_logo_url'     => '',
 
 			// 広告設定
 			'sc_ad_code'             => '',

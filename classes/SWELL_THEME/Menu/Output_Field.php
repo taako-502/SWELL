@@ -18,7 +18,7 @@ class Output_Field extends Admin_Menu {
 			'label'      => '',
 			'desc'       => '',
 			'type'       => '',
-			'input_type' => '',
+			'input_type' => 'text',
 			'choices'    => '',
 			'rows'       => 8,
 			'before'     => '',

@@ -20,11 +20,11 @@ if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 			$logo_top = apply_filters( 'swell_head_logo_top', SWELL::site_data( 'logo_top_url' ) ) ?: $logo;
 
 			if ( $use_overlay_header ) {
-				echo '<img src="' . esc_url( $logo_top ) . '" alt="' . esc_attr( SWELL::site_data( 'title' ) ) . '" class="c-headLogo__img -top">' .
-					'<img src="' . esc_url( $logo ) . '" alt="" class="c-headLogo__img -common" aria-hidden="true">';
+				echo '<img src="' . esc_url( $logo_top ) . '" alt="' . esc_attr( SWELL::site_data( 'title' ) ) . '" class="c-headLogo__img -top" decoding="async">' .
+					'<img src="' . esc_url( $logo ) . '" alt="" class="c-headLogo__img -common" loading="lazy" aria-hidden="true">';
 			} else {
 				// 通常時
-				echo '<img src="' . esc_url( $logo ) . '" alt="' . esc_attr( SWELL::site_data( 'title' ) ) . '" class="c-headLogo__img">';
+				echo '<img src="' . esc_url( $logo ) . '" alt="' . esc_attr( SWELL::site_data( 'title' ) ) . '" class="c-headLogo__img" decoding="async">';
 			}
 
 			return;
@@ -37,19 +37,21 @@ if ( ! function_exists( 'swl_parts__head_logo' ) ) :
 			// 通常時
 
 			$return = SWELL::get_image( $logo_id, [
-				'class'   => 'c-headLogo__img',
-				'sizes'   => $logo_sizes,
-				'alt'     => SWELL::site_data( 'title' ),
-				'loading' => 'eager',
+				'class'    => 'c-headLogo__img',
+				'sizes'    => $logo_sizes,
+				'alt'      => SWELL::site_data( 'title' ),
+				'loading'  => 'eager',
+				'decoding' => 'async',
 			] );
 
 		} else {
 			// ヘッダーオーバーレイ有効時
 			$logo_top = SWELL::get_image( $logo_top_id, [
-				'class'   => 'c-headLogo__img -top',
-				'sizes'   => $logo_sizes,
-				'alt'     => SWELL::site_data( 'title' ),
-				'loading' => 'eager',
+				'class'    => 'c-headLogo__img -top',
+				'sizes'    => $logo_sizes,
+				'alt'      => SWELL::site_data( 'title' ),
+				'loading'  => 'eager',
+				'decoding' => 'async',
 			] );
 
 			$common_logo = SWELL::get_image( $logo_id, [

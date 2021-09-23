@@ -39,7 +39,7 @@ function add_custom_post_columns( $columns ) {
 	}
 
 	// PV数表示
-	if ( in_array( $post_type, \SWELL_Theme::$post_types_for_pvct, true ) ) {
+	if ( \SWELL_Theme::is_administrator() && in_array( $post_type, \SWELL_Theme::$post_types_for_pvct, true ) ) {
 		$columns['swell_pv_ct'] = 'PV';
 	}
 	return $columns;
