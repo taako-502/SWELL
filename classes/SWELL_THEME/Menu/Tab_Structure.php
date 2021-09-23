@@ -30,18 +30,18 @@ class Tab_Structure {
 			]
 		);
 
-		add_settings_field(
-			'publisher_logo_url',
-			'',
-			$cb,
-			$page_name,
-			$section_name,
-			[
-				'id'     => 'publisher_logo_url',
-				'type'   => 'input',
-				'before' => '<p>Articleのpublisher.logo.url（AMP用）</p>',
-			]
-		);
-
+		// 非AMPでも必要になったら実装する
+		// add_settings_field(
+		// 	'publisher_logo_url',
+		// 	'',
+		// 	$cb,
+		// 	$page_name,
+		// 	$section_name,
+		// 	[
+		// 		'id'     => 'publisher_logo_url',
+		// 		'type'   => 'input',
+		// 		'before' => '<p>Articleのpublisher.logo.url</p>',
+		// 	]
+		// );
 	}
 }
