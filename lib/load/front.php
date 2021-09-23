@@ -131,26 +131,26 @@ function load_front_styles() {
 function load_separated_styles() {
 
 	$separated_blocks = [
-		'core/calendar'     => '/assets/css/blocks/calendar.css',
-		'core/categories'   => '/assets/css/blocks/categories.css',
-		'core/columns'      => '/assets/css/blocks/columns.css',
-		// 'core/cover'        => '/assets/css/blocks/cover.css',
-		'core/embed'        => '/assets/css/blocks/embed.css',
-		'core/file'         => '/assets/css/blocks/file.css',
-		'core/gallery'      => '/assets/css/blocks/gallery.css',
-		'core/media-text'   => '/assets/css/blocks/media-text.css',
-		'core/latest-posts' => '/assets/css/blocks/latest-posts.css',
-		'core/pullquote'    => '/assets/css/blocks/pullquote.css',
-		'core/search'       => '/assets/css/blocks/search.css',
-		'core/separator'    => '/assets/css/blocks/separator.css',
-		'core/social-links' => '/assets/css/blocks/social-links.css',
-		'core/table'        => '/assets/css/blocks/table.css',
-		'core/tag-cloud'    => '/assets/css/blocks/tag-cloud.css',
-		'widget/dropdown'   => '/assets/css/blocks/widget-dropdown.css',
-		// 'widget/list'       => '/assets/css/blocks/widget-list.css',
-		'widget/rss'        => '/assets/css/blocks/widget-rss.css',
+		'core/calendar'     => '/assets/css/modules/blocks/calendar.css',
+		'core/categories'   => '/assets/css/modules/blocks/categories.css',
+		'core/columns'      => '/assets/css/modules/blocks/columns.css',
+		'core/embed'        => '/assets/css/modules/blocks/embed.css',
+		'core/file'         => '/assets/css/modules/blocks/file.css',
+		'core/gallery'      => '/assets/css/modules/blocks/gallery.css',
+		'core/media-text'   => '/assets/css/modules/blocks/media-text.css',
+		'core/latest-posts' => '/assets/css/modules/blocks/latest-posts.css',
+		'core/pullquote'    => '/assets/css/modules/blocks/pullquote.css',
+		'core/search'       => '/assets/css/modules/blocks/search.css',
+		'core/separator'    => '/assets/css/modules/blocks/separator.css',
+		'core/social-links' => '/assets/css/modules/blocks/social-links.css',
+		'core/table'        => '/assets/css/modules/blocks/table.css',
+		'core/tag-cloud'    => '/assets/css/modules/blocks/tag-cloud.css',
+		'widget/dropdown'   => '/assets/css/modules/blocks/widget-dropdown.css',
+		'widget/rss'        => '/assets/css/modules/blocks/widget-rss.css',
+		// 'widget/list'       => '/assets/css/modules/blocks/widget-list.css',
 
 		// swell
+		'loos/profile-box'  => '/assets/css/modules/blocks/profile-box.css',
 		'loos/accordion'    => '/build/blocks/accordion/index.css',
 		'loos/ad-tag'       => '/build/blocks/ad-tag/index.css',
 		'loos/balloon'      => '/build/blocks/balloon/index.css',
@@ -162,7 +162,6 @@ function load_separated_styles() {
 		'loos/full-wide'    => '/build/blocks/full-wide/index.css',
 		'loos/step'         => '/build/blocks/step/index.css',
 		'loos/tab'          => '/build/blocks/tab/index.css',
-		'loos/profile-box'  => '/assets/css/blocks/profile-box.css',
 	];
 
 	// 使われたブロックだけ読み込むかどうか
