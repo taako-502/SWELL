@@ -7,6 +7,7 @@ if ( ! function_exists( 'LOOS_add_user_meta' ) ) :
 function LOOS_add_user_meta( $prof_items ) {
 	// 項目の追加
 	$prof_items['site2']         = 'サイト2';
+	$prof_items['schema_url']    = '構造化データ用URL';
 	$prof_items['position']      = '役職・肩書き';
 	$prof_items['facebook_url']  = 'Facebook URL';
 	$prof_items['twitter_url']   = 'Twitter URL';

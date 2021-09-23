@@ -83,10 +83,11 @@ if ( $bgimg_id ) {
 		'class'       => 'p-postSlider__imgLayer c-filterLayer__img u-obf-cover',
 		'loading'     => apply_filters( 'swell_top_area_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type,
 		'style'       => $style,
+		'decoding'    => 'async',
 		'aria-hidden' => 'true',
 	]);
 } elseif ( $bgimg_url ) {
-	$bgimg = '<img src="' . esc_attr( $bgimg_url ) . '" class="p-postSlider__imgLayer c-filterLayer__img u-obf-cover" style="' . esc_attr( $style ) . '">';
+	$bgimg = '<img src="' . esc_attr( $bgimg_url ) . '" class="p-postSlider__imgLayer c-filterLayer__img u-obf-cover" decoding="async" style="' . esc_attr( $style ) . '">';
 }
 
 ?>

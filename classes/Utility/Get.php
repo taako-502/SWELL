@@ -308,6 +308,7 @@ trait Get {
 		$term_id   = $args['term_id'] ?? 0;
 		$class     = $args['class'] ?? '';
 		$lazy_type = $args['lazy_type'] ?? self::$lazy_type;
+		$decoding  = $args['decoding'] ?? false;
 		$use_noimg = $args['use_noimg'] ?? true;
 		$echo      = $args['echo'] ?? false;
 		// $placeholder = $args['placeholder'] ?? ''; // 後方互換用
@@ -339,11 +340,12 @@ trait Get {
 		if ( $thumb_id ) {
 
 			$thumb = self::get_image( $thumb_id, [
-				'class'   => $class,
-				'alt'     => '',
-				'size'    => $args['size'] ?? 'full',
-				'srcset'  => $args['srcset'] ?? false,
-				'loading' => $lazy_type,
+				'class'    => $class,
+				'alt'      => '',
+				'size'     => $args['size'] ?? 'full',
+				'srcset'   => $args['srcset'] ?? false,
+				'decoding' => $decoding,
+				'loading'  => $lazy_type,
 			]);
 
 		} elseif ( $thumb_url ) {
@@ -854,6 +856,7 @@ trait Get {
 			'srcset'      => $args['srcset'] ?? false,
 			'sizes'       => $args['sizes'] ?? false,
 			'style'       => $args['style'] ?? false,
+			'decoding'    => $args['decoding'] ?? false,
 			'aria-hidden' => $args['aria-hidden'] ?? false,
 		];
 
@@ -1009,14 +1012,15 @@ trait Get {
 
 		if ( $pc_imgid ) {
 			$picture_img = self::get_image( $pc_imgid, [
-				'class'   => $img_class,
-				'alt'     => $img_alt,
-				'loading' => $lazy_type,
+				'class'    => $img_class,
+				'alt'      => $img_alt,
+				'loading'  => $lazy_type,
+				'decoding' => 'async',
 			] );
 		} elseif ( $pc_imgurl ) {
-			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . ' swiper-lazy">';
+			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . '" decoding="async">';
 		} elseif ( 1 === $i ) {
-			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '">';
+			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '" decoding="async">';
 		}
 
 		// SP用画像

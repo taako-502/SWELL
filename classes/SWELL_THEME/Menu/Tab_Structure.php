@@ -17,24 +17,31 @@ class Tab_Structure {
 			'',
 			$page_name
 		);
+		add_settings_field(
+			'use_json_ld',
+			'', // $label,
+			$cb,
+			$page_name,
+			$section_name,
+			[
+				'id'    => 'use_json_ld',
+				'type'  => 'checkbox',
+				'label' => 'JSON-LDを自動生成する',
+			]
+		);
 
-		$remove_settings = [
-			'use_json_ld' => 'JSON-LDを自動生成する',
-		];
-
-		foreach ( $remove_settings as $key => $label ) {
-			add_settings_field(
-				$key,
-				'', // $label,
-				$cb,
-				$page_name,
-				$section_name,
-				[
-					'id'    => $key,
-					'type'  => 'checkbox',
-					'label' => $label,
-				]
-			);
-		}
+		// 非AMPでも必要になったら実装する
+		// add_settings_field(
+		// 	'publisher_logo_url',
+		// 	'',
+		// 	$cb,
+		// 	$page_name,
+		// 	$section_name,
+		// 	[
+		// 		'id'     => 'publisher_logo_url',
+		// 		'type'   => 'input',
+		// 		'before' => '<p>Articleのpublisher.logo.url</p>',
+		// 	]
+		// );
 	}
 }
