@@ -1009,7 +1009,7 @@ trait Get {
 				'decoding' => 'async',
 			] );
 		} elseif ( $pc_imgurl ) {
-			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . ' swiper-lazy" decoding="async">';
+			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . '" decoding="async">';
 		} elseif ( 1 === $i ) {
 			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '" decoding="async">';
 		}
