@@ -5,41 +5,14 @@
     "description": "XXXXXXXXX",
     "category": "swell-blocks",
     "keywords": [
-        "swell",
-        "link",
-        "list"
+        "swell"
     ],
     "supports": {
         "anchor": true,
         "className": false
     },
-    "example": {
-    },
+    "example": {},
     "attributes": {
-        "catchOrder": {
-            "type": "string",
-            "default": "media-text"
-        },
-        "catchTitle": {
-            "type": "string",
-            "source": "html",
-            "selector": ".swell-block-linkList__title"
-        },
-        "catchImageUrl": {
-            "type": "string",
-            "source": "attribute",
-            "selector": ".swell-block-linkList__img",
-            "attribute": "src"
-        },
-        "catchImageAlt": {
-            "type": "string",
-            "source": "attribute",
-            "selector": ".swell-block-linkList__img",
-            "attribute": "alt"
-        },
-        "catchImageID": {
-            "type": "number"
-        },
         "linkList": {
             "type": "array",
             "source": "query",
@@ -70,19 +43,19 @@
                 {
                     "text": "",
                     "url": "",
-                    "isNewTab":"",
+                    "isNewTab": "",
                     "rel": ""
                 },
                 {
                     "text": "",
                     "url": "",
-                    "isNewTab":"",
+                    "isNewTab": "",
                     "rel": ""
                 },
                 {
                     "text": "",
                     "url": "",
-                    "isNewTab":"",
+                    "isNewTab": "",
                     "rel": ""
                 }
             ]
@@ -97,37 +70,6 @@
         },
         "listIconName": {
             "type": "string"
-        },
-        "btnIconPos": {
-            "type": "string",
-            "default": "left"
-        },
-        "btnIconName": {
-            "type": "string"
-        },
-        "btnText": {
-            "type": "string",
-            "source": "html",
-            "selector": ".swell-block-linkList__btn > span"
-        },
-        "btnColor": {
-            "type": "string"
-        },
-        "btnHrefUrl": {
-            "type": "string",
-            "source": "attribute",
-            "selector": ".swell-block-linkList__btn",
-            "attribute": "href"
-        },
-        "btnIsNewTab": {
-            "type": "boolean",
-            "default": false
-        },
-        "btnRel": {
-            "type": "string",
-            "source": "attribute",
-            "selector": ".swell-block-linkList__btn",
-            "attribute": "rel"
         }
     },
     "textdomain": "swell"
