@@ -139,6 +139,16 @@ export const clickEvents = {
 			smoothScroll(mvNext, smoothOffset - 8, 16);
 		}
 	},
+
+	clickLink(e) {
+		const clickedBox = e.currentTarget;
+		const a = clickedBox.querySelector('a');
+		a.onclick = (event) => {
+			event.stopPropagation();
+			return true;
+		};
+		a.click();
+	},
 };
 
 /**

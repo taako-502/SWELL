@@ -1,15 +1,10 @@
 .p-blogCard {
-
     display: block;
     width: 100%;
     max-width: 880px;
     margin: 2.5em auto 2em;
-    text-decoration: none;
+    cursor: pointer;
     transition: box-shadow .25s;
-    // 詳細度上げるための .post_content
-    .post_content & {
-        color: inherit;
-    }
 
     .wp-block-embed > & {
         margin: 0 auto;
@@ -104,8 +99,10 @@
 
 .p-blogCard__title {
     display: block;
+    color: inherit;
     font-weight: normal;
     line-height: 1.4;
+    text-decoration: none;
 
     @include mobile {
         font-size: 3.6vw;
@@ -155,6 +152,7 @@
             display: block;
             border: solid 1px currentColor;
             border-radius: var(--swl-radius--2, 0px);
+            pointer-events: none;
 
             @extend %absLayer;
 
