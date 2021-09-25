@@ -980,6 +980,9 @@ trait Get {
 		for ( $i = 1; $i < 6; $i++ ) {
 			$imgid  = self::get_setting( "slider{$i}_imgid" );
 			$imgurl = self::get_setting( "slider{$i}_img" ); // 古いデータ
+			if ( 1 === $i && ! $imgid && ! $imgurl ) {
+				$imgurl = 'https://picsum.photos/1600/1200';
+			}
 			if ( $imgid || $imgurl ) {
 				$data[ $i ] = [
 					'id'     => $imgid,
@@ -1024,8 +1027,6 @@ trait Get {
 			] );
 		} elseif ( $pc_imgurl ) {
 			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . '" decoding="async">';
-		} elseif ( 1 === $i ) {
-			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '" decoding="async">';
 		}
 
 		// SP用画像
