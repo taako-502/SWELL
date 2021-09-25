@@ -21,12 +21,9 @@ add_action( 'wp_body_open', __NAMESPACE__ . '\hook_wp_body_open', 1 );
 function hook_wp_head_9() {
 
 	echo PHP_EOL;
-
-	// 「SWELLERS' ID」の出力
 	output_meta_swellers_id();
-
-	// webフォントの出力
 	output_google_font();
+	output_noscript_css();
 }
 
 
@@ -189,6 +186,17 @@ function output_google_font() {
 	// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
 	echo '<link href="' . esc_url( $google_font ) . '" rel="stylesheet">' . PHP_EOL;
 }
+
+
+/**
+ * noscript時CSS
+ */
+function output_noscript_css() {
+	// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+	echo '<noscript><link href="' . esc_url( T_DIRE_URI . '/assets/css/noscript.css' ) . '" rel="stylesheet"></noscript>' . PHP_EOL;
+}
+
+
 
 
 /**

@@ -118,6 +118,9 @@ trait Others {
 			$image = str_replace( ' src="', ' loading="lazy" src="', $image );
 
 		} elseif ( $lazy_type === 'lazysizes' ) {
+
+			$noscript = $image;
+
 			$placeholder = $placeholder ?: self::$placeholder;
 			$image       = str_replace( ' src="', ' src="' . esc_url( $placeholder, ['http', 'https', 'data' ] ) . '" data-src="', $image );
 			$image       = str_replace( ' srcset="', ' data-srcset="', $image );
@@ -128,6 +131,8 @@ trait Others {
 				$props = self::set_aspectratio( $props );
 				return '<img' . $props . '>';
 			}, $image );
+
+			$image .= $noscript;
 		}
 
 		return $image;

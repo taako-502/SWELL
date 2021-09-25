@@ -313,8 +313,6 @@ trait Get {
 		$echo      = $args['echo'] ?? false;
 		// $placeholder = $args['placeholder'] ?? ''; // 後方互換用
 
-		$class .= ' -no-lb';
-
 		$thumb_id  = 0;
 		$thumb_url = '';
 
@@ -837,8 +835,9 @@ trait Get {
 		$echo = $args['echo'] ?? false;
 		$size = $args['size'] ?? 'full';
 
-		$html  = '';
-		$image = wp_get_attachment_image_src( $img_id, $size, false );
+		$html     = '';
+		$noscript = '';
+		$image    = wp_get_attachment_image_src( $img_id, $size, false );
 
 		if ( ! $image ) return '';
 
@@ -896,6 +895,10 @@ trait Get {
 			}
 
 			if ( 'lazysizes' === $loading ) {
+				// noscript画像
+				$noscript = '<noscript><img src="' . esc_attr( $src ) . '" class="' . esc_attr( $attrs['class'] ) . '" alt=""></noscript>';
+
+				// lazyloadクラス追加はnoscript画像生成後に。
 				$attrs['class'] .= ' lazyload';
 				if ( $width && $height ) {
 					$attrs['data-aspectratio'] = $width . '/' . $height;
@@ -912,10 +915,12 @@ trait Get {
 			$img_props .= ' ' . $name . '="' . esc_attr( $val ) . '"';
 		}
 
+		$img = "<img $img_props >" . $noscript;
+
 		if ( $echo ) {
-			echo "<img $img_props >"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $img; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
-		return "<img $img_props >";
+		return $img;
 	}
 
 
