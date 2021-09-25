@@ -46,6 +46,7 @@ class Pre_Parse_Blocks {
 		}
 		if ( is_home() || is_archive() ) {
 			\SWELL_Theme::$used_blocks['loos/tab'] = true;
+			// \SWELL_Theme::$used_blocks['loos/post-list'] = true;
 		}
 	}
 
@@ -313,6 +314,11 @@ class Pre_Parse_Blocks {
 				\SWELL_Theme::$used_blocks['loos/banner-link'] = true;
 			}
 		}
+		// if ( ! isset( \SWELL_Theme::$used_blocks['loos/post-list'] ) ) {
+		// 	if ( false !== strpos( $content, '[post_list' ) ) {
+		// 		\SWELL_Theme::$used_blocks['loos/post-list'] = true;
+		// 	}
+		// }
 		if ( ! isset( \SWELL_Theme::$used_blocks['loos/table'] ) ) {
 			if ( false !== strpos( $content, '<table' ) ) {
 				\SWELL_Theme::$used_blocks['core/table'] = true;
@@ -361,6 +367,10 @@ class Pre_Parse_Blocks {
 		} elseif ( 'widget_swell_prof_widget' === $classname ) {
 			\SWELL_Theme::$used_blocks['loos/profile-box'] = true;
 		}
+
+		// elseif ( 'widget_swell_new_posts' === $classname || 'widget_swell_popular_posts' === $classname ) {
+		// 	\SWELL_Theme::$used_blocks['loos/post-list'] = true;
+		// }
 
 		// elseif ( 'widget_search' === $classname ) {
 		// 	\SWELL_Theme::$used_blocks['widget/search'] = true;

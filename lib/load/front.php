@@ -150,6 +150,7 @@ function load_separated_styles() {
 		// 'widget/list'       => '/assets/css/modules/blocks/widget-list.css',
 
 		// swell
+		// 'loos/post-list'    => '/assets/css/modules/blocks/post-list.css',
 		'loos/profile-box'  => '/assets/css/modules/blocks/profile-box.css',
 		'loos/accordion'    => '/build/blocks/accordion/index.css',
 		'loos/ad-tag'       => '/build/blocks/ad-tag/index.css',

@@ -333,6 +333,8 @@ class Style {
 			if ( ! SWELL::get_setting( 'show_toc_ad_alone_post' ) ) {
 				style::add( '.single.-index-off .w-beforeToc', 'display:none' );
 			}
+
+			self::add_module( 'parts/related-posts--' . SWELL::get_setting( 'related_post_style' ) );
 		}
 
 		// 固定ページ

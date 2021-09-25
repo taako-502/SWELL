@@ -1,3 +1,5 @@
+// @import "../../foundation/mixin/**";
+
 //=========================================================
 // 投稿リスト ベース
 // 記事スライダーには card_list などはつかない
@@ -616,54 +618,6 @@
 }
 
 
-// 関連記事
-.-related {
-
-    .-type-card {
-
-        .p-postList__item {
-            margin-bottom: 1.5em;
-        }
-
-        @include tab {
-
-            .p-postList__item {
-                width: calc(100% / 3);
-
-
-                @media screen and (max-width: 1239px) {
-
-                    &:nth-child(7),
-                    &:nth-child(8) {
-                        display: none;
-                    }
-                }
-            }
-        }
-
-        @media screen and (min-width: 1240px) {
-
-            .p-postList__item {
-                width: 25%;
-            }
-        }
-    }
-
-    .-type-list {
-
-        @media screen and (min-width: 1240px) {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-
-            .p-postList__item {
-                width: 49%;
-            }
-        }
-
-    }
-}
-
 // インフィード
 @include mobile {
 
@@ -734,5 +688,15 @@
 
     .is-hide-last--sp .p-postList__item:last-child {
         display: none;
+    }
+}
+
+// ショートコードorブロックでの呼び出し
+.p-postListWrap {
+    position: relative;
+
+    // ブロックで記事内に呼び出された時
+    .post_content & {
+        margin-bottom: 6em;
     }
 }
