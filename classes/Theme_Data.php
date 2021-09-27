@@ -330,10 +330,10 @@ class Theme_Data {
 	/**
 	 * settingsデータを個別でセット
 	 */
-	// public static function set_setting( $key = null, $val = '' ) {
-	// 	if ( null === $key ) return;
-	// 	self::$setting[ $key ] = $val;
-	// }
+	public static function set_setting( $key = null, $val = '' ) {
+		if ( null === $key ) return;
+		self::$setting[ $key ] = $val;
+	}
 
 
 	/**
