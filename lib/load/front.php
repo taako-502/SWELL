@@ -118,7 +118,7 @@ function load_front_styles() {
 	// 動的CSS（カスマイザーの設定値で変わるCSS）
 	wp_register_style( 'swell_custom', false ); // phpcs:ignore
 	wp_enqueue_style( 'swell_custom' );
-	wp_add_inline_style( 'swell_custom', get_swl_front_css() );
+	wp_add_inline_style( 'swell_custom', Style::get_front_css() );
 
 	// カスタムフォーマット用CSS
 	$custom_format_css = SWELL::get_editor( 'custom_format_css' );
@@ -326,23 +326,4 @@ function global_vars_on_front() {
 	}
 
 	return $global_vars;
-}
-
-
-
-/**
- * フロントCSS
- */
-function get_swl_front_css() {
-
-	// カスタマイザープレビュー時、変更が反映されるようにキャッシュクリアする
-	// if ( is_customize_preview() ) {
-	// 	delete_transient( 'swell_' . $cache_key );  // ~2.0.2を考慮
-	// 	delete_transient( 'swell_parts_' . $cache_key );
-	// }
-
-	// キャッシュ可能naCSS
-	$style = Style::get_front_css();
-
-	return $style;
 }
