@@ -119,7 +119,7 @@ trait Others {
 
 		} elseif ( $lazy_type === 'lazysizes' ) {
 
-			$noscript = $image;
+			$noscript = '<noscript>' . $image . '</noscript>';
 
 			$placeholder = $placeholder ?: self::$placeholder;
 			$image       = str_replace( ' src="', ' src="' . esc_url( $placeholder, ['http', 'https', 'data' ] ) . '" data-src="', $image );
