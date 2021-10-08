@@ -5,11 +5,11 @@
 /**
  * @WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, createInterpolateElement } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { Button, ButtonGroup, TextControl } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
-import { close } from '@wordpress/icons';
+import { Icon, close, arrowLeft } from '@wordpress/icons';
 import { RichText, MediaUpload, ColorPalette } from '@wordpress/block-editor';
 
 /**
@@ -164,7 +164,7 @@ export default function BalloonEdit({ id, setId }) {
 		if (title === '') {
 			setFormError({
 				item: 'title',
-				message: 'タイトルを入力してください',
+				message: '※ ふきだしセットのタイトルを入力してください',
 			});
 			return;
 		}
@@ -228,20 +228,26 @@ export default function BalloonEdit({ id, setId }) {
 		}
 	};
 
+	/* eslint jsx-a11y/anchor-has-content: 0 */
+	const colorHelp = createInterpolateElement(
+		'※ ふきだしカラーは「SWELL設定」内の「<a>エディター設定</a>」から編集できます。',
+		{
+			a: <a href={settingUrl} target='_blank' rel='noreferrer' />,
+		}
+	);
+
 	return (
 		<>
-			<h1 className='swell_settings__title'>{pageTitle}</h1>
-			<p className='swell_settings__page_desc'>
-				※ ふきだしカラーは「SWELL設定」内の「
-				<a href={settingUrl} target='_blank' rel='noreferrer'>
-					エディター設定
-				</a>
-				」から編集できます。
-			</p>
+			<h1 className='swl-setting__title'>{pageTitle}</h1>
 			<hr className='wp-header-end' />
 			{apiMessage && !isWaiting && (
 				<div className={`notice is-dismissible ${apiMessage.status}`}>
-					<p>{apiMessage.text}</p>
+					<p>
+						{apiMessage.text}
+						<a href={listUrl} style={{ marginLeft: '8px' }}>
+							ふきだしセットの一覧に戻る
+						</a>
+					</p>
 					<Button
 						className='notice-dismiss'
 						onClick={() => {
@@ -253,8 +259,8 @@ export default function BalloonEdit({ id, setId }) {
 				</div>
 			)}
 			{isApiLoaded && (
-				<div className='swell_settings__body'>
-					<div className='swell_settings__controls'>
+				<div className='swl-setting__body'>
+					<div className='swl-setting__controls'>
 						<Button disabled={isWaiting} isPrimary onClick={saveBalloon}>
 							{saveLabel}
 						</Button>
@@ -262,36 +268,36 @@ export default function BalloonEdit({ id, setId }) {
 							<Button
 								disabled={isWaiting}
 								isDestructive
-								icon={close}
-								iconSize={16}
+								// icon={close}
+								// iconSize={16}
 								onClick={deleteBalloon}
 							>
-								このセットを削除
+								削除
 							</Button>
 						)}
 					</div>
 					<form onSubmit={saveBalloon}>
+						<div className='swl-setting__editTitle'>
+							<TextControl
+								placeholder='ふきだしセットのタイトルを入力...'
+								value={title}
+								onChange={(val) => {
+									setTitle(val);
+									// if (val === '') {
+									// 	setFormError({
+									// 		item: 'title',
+									// 		message: 'ふきだしセットのタイトルを入力してください',
+									// 	});
+									// } else {
+									// 	setFormError();
+									// }
+								}}
+							/>
+							{formError?.item === 'title' && (
+								<p className='swl-setting__error'>{formError.message}</p>
+							)}
+						</div>
 						<div className='swell_settings_balloon_edit' disabled={isWaiting}>
-							<div className='swell_settings_balloon_edit__title'>
-								<TextControl
-									placeholder='タイトル...'
-									value={title}
-									onChange={(val) => {
-										setTitle(val);
-										if (val === '') {
-											setFormError({
-												item: 'title',
-												message: 'タイトルを入力してください',
-											});
-										} else {
-											setFormError();
-										}
-									}}
-								/>
-								{formError?.item === 'title' && (
-									<p className='swell_settings__error'>{formError.message}</p>
-								)}
-							</div>
 							<div className='swell_settings_balloon_edit__inner -left'>
 								<div
 									className={`c-balloon -bln-${balloonData.align}`}
@@ -300,7 +306,7 @@ export default function BalloonEdit({ id, setId }) {
 									<div className={`c-balloon__icon -${balloonData.shape}`}>
 										{balloonData.icon && (
 											<Button
-												className='c-balloon__iconDelete'
+												className='swell_settings_balloon_edit__iconDelete'
 												isDestructive
 												icon={close}
 												iconSize={12}
@@ -327,9 +333,12 @@ export default function BalloonEdit({ id, setId }) {
 											render={({ open }) => (
 												<Button
 													onClick={open}
-													className='c-balloon__iconSelect'
+													className='swell_settings_balloon_edit__iconSelect'
 													label='画像を選択'
-												/>
+													showTooltip={false}
+												>
+													<span>画像を選択</span>
+												</Button>
 											)}
 										/>
 										<img
@@ -341,7 +350,7 @@ export default function BalloonEdit({ id, setId }) {
 										<RichText
 											className='c-balloon__iconName'
 											value={balloonData.name}
-											placeholder='名前...'
+											placeholder='アイコン表示名'
 											onChange={(val) => {
 												setBalloonData({
 													...balloonData,
@@ -483,11 +492,15 @@ export default function BalloonEdit({ id, setId }) {
 											});
 										}}
 									/>
+									<p className=''>{colorHelp}</p>
 								</div>
 							</div>
 						</div>
 					</form>
-					<a href={listUrl}>ふきだし一覧に戻る</a>
+					<a href={listUrl} className='swl-setting__backLink'>
+						<Icon icon={arrowLeft} />
+						ふきだしセットの一覧に戻る
+					</a>
 				</div>
 			)}
 		</>

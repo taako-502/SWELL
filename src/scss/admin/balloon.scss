@@ -6,6 +6,9 @@
 // プレビュー用
 @import "../object/parts/balloon";
 
+.toplevel_page_swell_balloon {
+    background: #fefefe;
+}
 
 // 一覧ページ
 .swell_settings_balloon {
@@ -84,10 +87,10 @@
 // 新規追加・編集ページ
 .swell_settings_balloon_edit {
     margin-bottom: 32px;
-    padding: 32px;
+    // padding: 32px;
     background: #fdfdfd;
     border-radius: 2px;
-    box-shadow: 0 2px 4px $color_shadow;
+    // box-shadow: 0 2px 4px $color_shadow;
 
     &[disabled] {
         opacity: .5;
@@ -101,52 +104,74 @@
     }
 
 
-    .c-balloon {
+    .c-balloon__text {
+        pointer-events: none;
+    }
 
-        .c-balloon__icon {
+    .c-balloon__icon {
+        width: 80px !important;
 
-            img {
-                height: 80px !important;
-            }
-        }
-
-        .c-balloon__iconSelect {
-            position: absolute;
-            left: 0;
-            width: 80px;
-            height: 80px;
-            padding: 0;
-
-            &:focus:not(:disabled) {
-                box-shadow: none;
-            }
-        }
-
-        .c-balloon__iconDelete {
-            position: absolute;
-            top: -13px;
-            right: -13px;
-            z-index: 1;
-            width: 26px;
-            min-width: 0 !important;
-            height: 26px;
-            padding: 0;
-            background: #fff;
-            border-radius: 50%;
-
-            &.is-destructive:focus:not(:disabled) {
-                color: #cc1818;
-                box-shadow: inset 0 0 0 1px #cc1818;
-            }
-        }
-
-        .c-balloon__icon:not(:hover) .c-balloon__iconDelete {
-
-            @media (min-width: 1200px) {
-                display: none;
-            }
+        img {
+            width: 80px !important;
+            max-width: 80px !important;
+            height: 80px !important;
         }
     }
+
+    .swell_settings_balloon_edit__iconSelect {
+        position: absolute;
+        left: 0;
+        width: 80px;
+        height: 80px;
+        padding: 0;
+        box-shadow: none;
+
+        span {
+            position: absolute;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: #fff;
+            font-size: 12px;
+            letter-spacing: .5px;
+            background-color: rgba(0, 0, 0, .5);
+            visibility: hidden;
+        }
+
+        &:hover span {
+            visibility: visible;
+        }
+    }
+
+
+    .swell_settings_balloon_edit__iconDelete {
+        position: absolute;
+        top: -13px;
+        right: -13px;
+        z-index: 10;
+        width: 26px;
+        min-width: 0 !important;
+        height: 26px;
+        padding: 0;
+        background: #fff;
+        border-radius: 50%;
+
+        // &.is-destructive:focus:not(:disabled) {
+        //     color: #cc1818;
+        //     box-shadow: inset 0 0 0 1px #cc1818;
+        // }
+    }
+
+    .c-balloon:not(:hover) .swell_settings_balloon_edit__iconDelete {
+
+        @media (min-width: 1200px) {
+            display: none;
+        }
+    }
+
 }
 
 .swell_settings_balloon_edit__inner {
@@ -155,7 +180,7 @@
 
         &.-left {
             flex-basis: 440px;
-            padding-top: 12px;
+            padding: 8px;
         }
 
         &.-right {
@@ -167,19 +192,11 @@
     }
 }
 
-.swell_settings_balloon_edit__title {
-    width: 100%;
-    margin-bottom: 32px;
-
-    .components-text-control {
-        max-width: 600px;
-    }
-}
 
 .swell_settings_balloon_edit__item {
     min-width: 40%;
     margin-right: 8px;
-    padding: 12px 0;
+    padding: 16px 0;
 }
 
 .swell_settings_balloon_edit__subttl {

@@ -112,10 +112,10 @@ export default function BalloonList() {
 	const balCode = _x('speech_balloon', 'code', 'swell');
 
 	// エディター設定URL
-	const settingUrl = addQueryArgs('admin.php', {
-		page: 'swell_settings_editor',
-		tab: 'balloon',
-	});
+	// const settingUrl = addQueryArgs('admin.php', {
+	// 	page: 'swell_settings_editor',
+	// 	tab: 'balloon',
+	// });
 
 	// ふきだし編集基本リンク
 	const editBaseUrl = addQueryArgs('admin.php', {
@@ -130,14 +130,7 @@ export default function BalloonList() {
 
 	return (
 		<>
-			<h1 className='swell_settings__title'>ふきだし</h1>
-			<p className='swell_settings__page_desc'>
-				※ ふきだしカラーは「SWELL設定」内の「
-				<a href={settingUrl} target='_blank' rel='noreferrer'>
-					エディター設定
-				</a>
-				」から編集できます。
-			</p>
+			<h1 className='swl-setting__title'>ふきだしセット一覧</h1>
 			<hr className='wp-header-end' />
 			{apiMessage && !isWaiting && (
 				<div className={`notice is-dismissible ${apiMessage.status}`}>
@@ -152,7 +145,7 @@ export default function BalloonList() {
 					</Button>
 				</div>
 			)}
-			<div className='swell_settings__body'>
+			<div className='swl-setting__body'>
 				<div className='swell_settings_balloon' disabled={isWaiting}>
 					<input
 						className='swell_settings_balloon__search'
@@ -209,7 +202,7 @@ export default function BalloonList() {
 											</div>
 										</a>
 										<input
-											className='swell_settings__codeCopyBox'
+											className='swl-setting__codeCopyBox'
 											type='text'
 											readOnly
 											value={tag}

@@ -24,4 +24,4 @@ if ( ! $table_exists ) {
 }
 ?>
 
-<div id="swell_setting_page" class="swell_settings"></div>
+<div id="swell_setting_page" class="swl-setting -balloon"></div>

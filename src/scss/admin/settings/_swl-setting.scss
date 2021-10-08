@@ -1,0 +1,74 @@
+// リニューアル後の設定ページ
+.swl-setting {
+    max-width: 1600px;
+    padding: 12px;
+
+    .swl-setting__title {
+        box-sizing: border-box;
+        margin: 0 0 1em;
+        padding: 0;
+        font-weight: 400;
+        line-height: 1;
+    }
+
+    .swl-setting__body {
+        padding: 0;
+    }
+
+    .swl-setting__editTitle {
+        width: 100%;
+        margin-bottom: 40px;
+
+        input {
+            font-size: 1.6em;
+            border-color: #8c8f94;
+        }
+
+    }
+
+    .swl-setting__error {
+        margin: 0;
+        color: #cc1818;
+        font-weight: bold;
+    }
+
+    // 更新・削除ボタン
+    .swl-setting__controls {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        .components-button {
+            justify-content: center;
+            min-width: 120px;
+
+            + .components-button {
+                margin-left: 16px;
+            }
+        }
+    }
+
+
+    .swl-setting__backLink {
+        display: inline-flex;
+        align-items: center;
+
+        svg {
+            width: 1.25em;
+            height: 1.25em;
+            margin-right: .25em;
+        }
+    }
+
+    // カラーパレット
+    .components-circular-option-picker__option::after {
+        box-sizing: border-box;
+    }
+
+    .swl-setting__codeCopyBox {
+        width: 100%;
+        background: #efefef;
+        border: solid 1px #ccc;
+        border-radius: 2px;
+    }
+}
