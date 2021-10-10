@@ -3,6 +3,10 @@
     max-width: 1600px;
     padding: 12px;
 
+    .notice {
+        margin: 0 0 16px;
+    }
+
     .swl-setting__title {
         box-sizing: border-box;
         margin: 0 0 1em;
@@ -67,8 +71,17 @@
 
     .swl-setting__codeCopyBox {
         width: 100%;
-        background: #efefef;
-        border: solid 1px #ccc;
+        min-height: 0;
+        padding: 6px 8px;
+        font-size: 13px;
+        line-height: 1;
+        background: #f9f9f9;
+        border: solid 1px #dedede;
         border-radius: 2px;
+    }
+
+    .swl-setting__search {
+        width: 100%;
+        max-width: 500px;
     }
 }

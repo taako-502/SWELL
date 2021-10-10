@@ -10,7 +10,7 @@ import { useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { Button } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
-import { close } from '@wordpress/icons';
+import { Icon, close, shortcode } from '@wordpress/icons';
 
 /**
  * @SWELL dependencies
@@ -145,89 +145,141 @@ export default function BalloonList() {
 					</Button>
 				</div>
 			)}
-			<div className='swl-setting__body'>
-				<div className='swell_settings_balloon' disabled={isWaiting}>
+			<div className='swl-setting__body swl-setting-balloon' disabled={isWaiting}>
+				<div className='swl-setting__controls'>
+					<a className='components-button is-primary' href={newEditUrl}>
+						新規ふきだし追加
+					</a>
 					<input
-						className='swell_settings_balloon__search'
+						className='swl-setting__search'
 						type='text'
-						placeHolder='ふきだしを検索...'
+						placeHolder='ふきだしセットを検索...'
 						value={searchWord}
 						onChange={(e) => {
 							setSearchWord(e.target.value);
 						}}
 					/>
-					{!filteredBalloonList.length ? (
-						<p>ふきだしデータがありません。</p>
-					) : (
-						<ul className='swell_settings_balloon__list'>
-							{filteredBalloonList.map(({ id, title, data }, idx) => {
-								const editUrl = addQueryArgs(editBaseUrl, { id });
-								const tag = `[${balCode} id="${id}"]${__(
-									'Your text…',
-									'swell'
-								)}[/${balCode}]`;
-
-								return (
-									<li key={idx} className='swell_settings_balloon__item'>
-										<a href={editUrl} className='swell_settings_balloon__link'>
-											<div className='swell_settings_balloon__ttl'>
-												{title}
-											</div>
-											<div
-												className={`c-balloon -bln-${data.align}`}
-												data-col={data.col}
-											>
-												<div className={`c-balloon__icon -${data.shape}`}>
-													<img
-														src={data.icon || iconPlaceholder}
-														alt=''
-														className='c-balloon__iconImg'
-														width='80px'
-													/>
-													<span className='c-balloon__iconName'>
-														{data.name}
-													</span>
-												</div>
-												<div
-													className={`c-balloon__body -${data.type} -border-${data.border}`}
-												>
-													<div className='c-balloon__text'>
-														ふきだしの内容がここに入ります
-														<span className='c-balloon__shapes'>
-															<span className='c-balloon__before'></span>
-															<span className='c-balloon__after'></span>
-														</span>
-													</div>
-												</div>
-											</div>
-										</a>
-										<input
-											className='swl-setting__codeCopyBox'
-											type='text'
-											readOnly
-											value={tag}
-											onFocus={(event) => {
-												event.target.select();
-											}}
-										/>
-										<Button
-											isDestructive
-											className='swell_settings_balloon__delete'
-											label='削除'
-											icon={close}
-											onClick={() => {
-												deleteBalloon(id);
-											}}
-										/>
-									</li>
-								);
-							})}
-						</ul>
-					)}
-					<a className='components-button is-primary' href={newEditUrl}>
-						新規ふきだし追加
-					</a>
 				</div>
+				{!filteredBalloonList.length ? (
+					<p>ふきだしデータがありません。</p>
+				) : (
+					<ul className='swl-setting-balloon__list'>
+						{filteredBalloonList.map(({ id, title, data }, idx) => {
+							const editUrl = addQueryArgs(editBaseUrl, { id });
+							const tag = `[${balCode} id="${id}"]${__(
+								'ふきだしテキストをここに入力',
+								'swell'
+							)}[/${balCode}]`;
+
+							const balloonPreview = (
+								<div
+									className={`c-balloon -bln-${data.align}`}
+									data-col={data.col}
+									aria-hidden='true'
+								>
+									<div className={`c-balloon__icon -${data.shape}`}>
+										<img
+											src={data.icon || iconPlaceholder}
+											alt=''
+											className='c-balloon__iconImg'
+											width='80px'
+										/>
+										<span className='c-balloon__iconName'>{data.name}</span>
+									</div>
+									<div
+										className={`c-balloon__body -${data.type} -border-${data.border}`}
+									>
+										<div className='c-balloon__text'>
+											ふきだしテキスト
+											<span className='c-balloon__shapes'>
+												<span className='c-balloon__before'></span>
+												<span className='c-balloon__after'></span>
+											</span>
+										</div>
+									</div>
+								</div>
+							);
+
+							const CodeToggle = (isShow = false) => {
+								const parentLi = document.querySelector(
+									`.swl-setting-balloon__item[data-id="${id}"]`
+								);
+								parentLi.classList.toggle('show-code');
+
+								if (isShow) {
+									parentLi.querySelector('.swl-setting__codeCopyBox').select();
+								}
+							};
+
+							return (
+								<li key={idx} className='swl-setting-balloon__item' data-id={id}>
+									<div key={idx} className='swl-setting-balloon__item__inner'>
+										<div className='swl-setting-balloon__btns'>
+											<Button
+												className='swl-setting-balloon__copyBtn swl-setting-balloon__btn'
+												label='ショートコードを表示する'
+												// icon={shortcode}
+												onClick={() => {
+													CodeToggle(true);
+												}}
+											>
+												<Icon icon={shortcode} data-role='open' />
+												<Icon icon={close} data-role='close' />
+											</Button>
+											<Button
+												isDestructive
+												className='swl-setting-balloon__delete swl-setting-balloon__btn'
+												label='このセットを削除する'
+												icon={close}
+												onClick={() => {
+													deleteBalloon(id);
+												}}
+											/>
+										</div>
+										{/* <div className='swl-setting-balloon__item__head'>
+										</div> */}
+										<a href={editUrl} className='swl-setting-balloon__link'>
+											<div className='swl-setting-balloon__ttl'>{title}</div>
+											{balloonPreview}
+										</a>
+										<div
+											className='swl-setting-balloon__code'
+											role='button'
+											tabIndex='0'
+											onClick={() => {
+												CodeToggle();
+											}}
+											onKeyDown={(event) => {
+												event.stopPropagation();
+												// check keys if you want
+												if (13 === event.keyCode) {
+													CodeToggle();
+												}
+											}}
+										>
+											<input
+												className='swl-setting__codeCopyBox code'
+												type='text'
+												readOnly
+												value={tag}
+												onClick={(event) => {
+													event.stopPropagation();
+												}}
+												onFocus={(event) => {
+													event.stopPropagation();
+													event.target.select();
+												}}
+											/>
+										</div>
+									</div>
+								</li>
+							);
+						})}
+					</ul>
+				)}
+				<a className='components-button is-primary' href={newEditUrl}>
+					新規ふきだし追加
+				</a>
 			</div>
 		</>
 	);

@@ -350,7 +350,7 @@ export default function BalloonEdit({ id, setId }) {
 										<RichText
 											className='c-balloon__iconName'
 											value={balloonData.name}
-											placeholder='アイコン表示名'
+											placeholder='アイコン名...'
 											onChange={(val) => {
 												setBalloonData({
 													...balloonData,

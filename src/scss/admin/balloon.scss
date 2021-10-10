@@ -10,77 +10,187 @@
     background: #fefefe;
 }
 
-// 一覧ページ
-.swell_settings_balloon {
+// ふきだし一覧ページ
+.swl-setting-balloon {
 
     &[disabled] {
         opacity: .5;
         pointer-events: none;
     }
 
-    .swell_settings__codeCopyBox {
-        position: absolute;
-        bottom: 0;
-        left: 8px;
-        width: calc(100% - 16px);
+    @media (min-width: 600px) {
+
+        .c-balloon__icon {
+            width: 72px;
+        }
+
+        .c-balloon .c-balloon__iconImg {
+            width: 72px;
+            height: 72px;
+        }
     }
 
+    .c-balloon__text {
+        font-size: 12px;
+    }
+
+    .c-balloon__iconName:empty::before {
+        content: "\00a0";
+    }
+
+    .swl-setting__search {
+        margin-left: auto;
+    }
 }
 
-.swell_settings_balloon__search {
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: 32px;
-}
 
-.swell_settings_balloon__list {
+.swl-setting-balloon__list {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -8px 2em;
+    margin: 0 -12px 2em;
 }
 
-.swell_settings_balloon__item {
+
+.swl-setting-balloon__item {
     position: relative;
     width: 33.3%;
     margin-bottom: 32px;
-    padding: 0 8px 40px;
+    padding: 0 12px;
+
+    @media screen and (max-width: 1500px) {
+        width: 50%;
+    }
 
     @media screen and (max-width: 782px) {
         width: 100%;
     }
 }
 
-.swell_settings_balloon__link {
-    display: block;
-    height: 100%;
-    padding: 12px;
-    color: inherit;
-    text-decoration: none;
-    background: #fdfdfd;
-    border-radius: 2px;
-    box-shadow: 0 2px 4px $color_shadow;
-
-    &:hover {
-        color: inherit;
-    }
+.swl-setting-balloon__item__inner {
+    position: relative;
+    // overflow: hidden;
+    // border-radius: 6px;
 }
 
-.swell_settings_balloon__ttl {
-    margin-bottom: 1em;
-    padding-right: 30px;
-    font-weight: bold;
-    font-size: 16px;
-}
+// .swl-setting-balloon__item__head {
+//     display: flex;
+//     align-items: center;
+//     padding: 8px;
 
-.swell_settings_balloon__delete {
+//     .swl-setting-balloon__btns {
+//         flex-shrink: 0;
+//         margin-left: auto;
+//     }
+// }
+
+
+.swl-setting-balloon__btns {
     position: absolute;
-    top: 8px;
-    right: 16px;
-    z-index: 1;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    padding: 8px;
+}
+
+.swl-setting-balloon__btn {
     width: 26px;
     min-width: 0 !important;
     height: 26px;
+    background-color: #fefefe; // ショートコード表示中もボタン表示するので
     border-radius: 50%;
+}
+
+.swl-setting-balloon__delete {
+    z-index: 1;
+    // position: absolute;
+    // top: 8px;
+    // right: 16px;
+    margin-left: 6px;
+
+}
+
+.swl-setting-balloon__copyBtn {
+    // justify-content: center;
+    padding: 6px;
+    box-shadow: inset 0 0 0 1px currentColor;
+
+    [data-role="open"] {
+        transform: scale(1.1);
+    }
+
+    [data-role="close"] {
+        display: none;
+    }
+
+
+}
+
+.swl-setting-balloon__item.show-code {
+
+    .swl-setting-balloon__copyBtn {
+
+        [data-role="open"] {
+            display: none;
+        }
+
+        [data-role="close"] {
+            display: block;
+        }
+    }
+}
+
+
+.swl-setting-balloon__link {
+    position: relative;
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    color: inherit;
+    text-decoration: none;
+    background: #fdfdfd;
+    border-radius: 6px;
+    box-shadow: 0 2px 16px -2px rgba(0, 0, 0, .1);
+    transition: box-shadow .25s;
+
+    &:hover {
+        color: inherit;
+        box-shadow: 0 2px 24px -2px rgba(0, 0, 0, .2);
+
+    }
+}
+
+.swl-setting-balloon__ttl {
+    min-height: 28px;
+    margin-right: 80px;
+    margin-bottom: 12px;
+    // margin-left: 4px;
+    font-size: 14px;
+}
+
+.swl-setting-balloon__code {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 12px;
+    background-color: rgba(#000, .5);
+    border-radius: 6px;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .25s;
+
+    .swl-setting-balloon__item.show-code & {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .swl-setting__codeCopyBox {
+        border: none;
+    }
 }
 
 
@@ -90,7 +200,7 @@
     // padding: 32px;
     background: #fdfdfd;
     border-radius: 2px;
-    // box-shadow: 0 2px 4px $color_shadow;
+    // box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
     &[disabled] {
         opacity: .5;
