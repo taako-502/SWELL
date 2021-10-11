@@ -1009,7 +1009,7 @@ trait Get {
 				'decoding' => 'async',
 			] );
 		} elseif ( $pc_imgurl ) {
-			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . ' swiper-lazy" decoding="async">';
+			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . '" decoding="async">';
 		} elseif ( 1 === $i ) {
 			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '" decoding="async">';
 		}
@@ -1079,7 +1079,7 @@ trait Get {
 			// idに変換できなければURLのまま返す
 			if ( ! $id ) return $meta;
 
-			$updated = update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			$updated = update_term_meta( $term_id, 'swell_term_meta_image', (string) $id );
 			if ( ! $updated ) return $meta;
 		} else {
 			$id = $meta;
@@ -1115,7 +1115,7 @@ trait Get {
 			// idに変換できなければURLのまま返す
 			if ( ! $id ) return $meta;
 
-			$updated = update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			$updated = update_term_meta( $term_id, 'swell_term_meta_image', (string) $id );
 			if ( ! $updated ) return $meta;
 
 		}
