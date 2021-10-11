@@ -96,49 +96,22 @@
     width: 26px;
     min-width: 0 !important;
     height: 26px;
-    background-color: #fefefe; // ショートコード表示中もボタン表示するので
+    background-color: #fefefe !important; // ショートコード表示中もボタン表示するので
     border-radius: 50%;
+}
+
+.swl-setting-balloon__copy {
+    margin: 0 6px;
 }
 
 .swl-setting-balloon__delete {
     z-index: 1;
-    // position: absolute;
-    // top: 8px;
-    // right: 16px;
-    margin-left: 6px;
-
 }
 
 .swl-setting-balloon__copyBtn {
-    // justify-content: center;
     padding: 6px;
     box-shadow: inset 0 0 0 1px currentColor;
-
-    [data-role="open"] {
-        transform: scale(1.1);
-    }
-
-    [data-role="close"] {
-        display: none;
-    }
-
-
 }
-
-.swl-setting-balloon__item.show-code {
-
-    .swl-setting-balloon__copyBtn {
-
-        [data-role="open"] {
-            display: none;
-        }
-
-        [data-role="close"] {
-            display: block;
-        }
-    }
-}
-
 
 .swl-setting-balloon__link {
     position: relative;
@@ -161,10 +134,10 @@
 
 .swl-setting-balloon__ttl {
     min-height: 28px;
-    margin-right: 80px;
+    margin-right: 95px;
     margin-bottom: 12px;
-    // margin-left: 4px;
     font-size: 14px;
+    word-break: break-all;
 }
 
 .swl-setting-balloon__code {

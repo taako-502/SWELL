@@ -10,19 +10,26 @@ import { useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { Button } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
-import { Icon, close, shortcode } from '@wordpress/icons';
+import { Icon, close, shortcode, stack } from '@wordpress/icons';
 
 /**
  * @SWELL dependencies
  */
 import { swellApiPath, iconPlaceholder } from './index';
 
+/**
+ * @Others dependencies
+ */
+import classnames from 'classnames';
+
 export default function BalloonList() {
 	// REST APIの通信中かどうか
 	const [isApiLoaded, setIsApiLoaded] = useState(false);
 
-	// 削除処理中かどうか
+	// 複製・削除処理中かどうか
 	const [isWaiting, setIsWaiting] = useState(false);
+
+	const [showCodeId, setShowCodeId] = useState();
 
 	// REST API レスポンスメッセージ
 	const [apiMessage, setApiMessage] = useState();
@@ -53,7 +60,6 @@ export default function BalloonList() {
 		if (!isApiLoaded) {
 			return;
 		}
-
 		// 正規表現向けの文字をエスケープ
 		const escapedSearchWord = searchWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -64,7 +70,44 @@ export default function BalloonList() {
 				return title.toLowerCase().match(regEx);
 			})
 		);
+
+		setShowCodeId();
 	}, [balloonList, searchWord]);
+
+	// ふきだしデータの複製
+	const copyBalloon = (id) => {
+		if (!id) return;
+
+		setIsWaiting(true);
+
+		// データ
+		apiFetch({
+			path: `${swellApiPath}-copy`,
+			method: 'POST',
+			data: { id },
+		})
+			.then((res) => {
+				// state更新
+
+				setBalloonList([res, ...balloonList]);
+
+				setApiMessage({
+					status: 'updated',
+					text: res.message || '複製しました。',
+				});
+
+				setIsWaiting(false);
+				setShowCodeId();
+			})
+			.catch((res) => {
+				setApiMessage({
+					status: 'error',
+					text: res.message || 'エラーが発生しました。',
+				});
+				setIsWaiting(false);
+				setShowCodeId();
+			});
+	};
 
 	// ふきだしデータの削除
 	const deleteBalloon = (id) => {
@@ -93,6 +136,7 @@ export default function BalloonList() {
 					});
 
 					setIsWaiting(false);
+					setShowCodeId();
 				})
 				.catch((res) => {
 					setApiMessage({
@@ -100,6 +144,7 @@ export default function BalloonList() {
 						text: res.message || 'エラーが発生しました。',
 					});
 					setIsWaiting(false);
+					setShowCodeId();
 				});
 		}
 	};
@@ -110,12 +155,6 @@ export default function BalloonList() {
 
 	// ショートコード名
 	const balCode = _x('speech_balloon', 'code', 'swell');
-
-	// エディター設定URL
-	// const settingUrl = addQueryArgs('admin.php', {
-	// 	page: 'swell_settings_editor',
-	// 	tab: 'balloon',
-	// });
 
 	// ふきだし編集基本リンク
 	const editBaseUrl = addQueryArgs('admin.php', {
@@ -153,7 +192,7 @@ export default function BalloonList() {
 					<input
 						className='swl-setting__search'
 						type='text'
-						placeHolder='ふきだしセットを検索...'
+						placeholder='ふきだしセットを検索...'
 						value={searchWord}
 						onChange={(e) => {
 							setSearchWord(e.target.value);
@@ -200,32 +239,47 @@ export default function BalloonList() {
 								</div>
 							);
 
-							const CodeToggle = (isShow = false) => {
-								const parentLi = document.querySelector(
-									`.swl-setting-balloon__item[data-id="${id}"]`
-								);
-								parentLi.classList.toggle('show-code');
-
-								if (isShow) {
-									parentLi.querySelector('.swl-setting__codeCopyBox').select();
-								}
-							};
-
 							return (
-								<li key={idx} className='swl-setting-balloon__item' data-id={id}>
+								<li
+									key={idx}
+									className={classnames('swl-setting-balloon__item', {
+										'show-code': showCodeId === id,
+									})}
+									data-id={id}
+								>
 									<div key={idx} className='swl-setting-balloon__item__inner'>
 										<div className='swl-setting-balloon__btns'>
 											<Button
 												className='swl-setting-balloon__copyBtn swl-setting-balloon__btn'
 												label='ショートコードを表示する'
-												// icon={shortcode}
 												onClick={() => {
-													CodeToggle(true);
+													if (showCodeId === id) {
+														setShowCodeId(undefined);
+													} else {
+														setShowCodeId(id);
+														// ショートコードの表示を待ってから全選択する
+														setTimeout(function () {
+															document
+																.querySelector(
+																	`.swl-setting-balloon__item[data-id="${id}"] .swl-setting__codeCopyBox`
+																)
+																.select();
+														}, 100);
+													}
 												}}
 											>
 												<Icon icon={shortcode} data-role='open' />
 												<Icon icon={close} data-role='close' />
 											</Button>
+											<Button
+												isSecondary
+												className='swl-setting-balloon__copy swl-setting-balloon__btn'
+												label='このセットを複製する'
+												icon={stack}
+												onClick={() => {
+													copyBalloon(id);
+												}}
+											/>
 											<Button
 												isDestructive
 												className='swl-setting-balloon__delete swl-setting-balloon__btn'
@@ -236,8 +290,6 @@ export default function BalloonList() {
 												}}
 											/>
 										</div>
-										{/* <div className='swl-setting-balloon__item__head'>
-										</div> */}
 										<a href={editUrl} className='swl-setting-balloon__link'>
 											<div className='swl-setting-balloon__ttl'>{title}</div>
 											{balloonPreview}
@@ -247,13 +299,13 @@ export default function BalloonList() {
 											role='button'
 											tabIndex='0'
 											onClick={() => {
-												CodeToggle();
+												setShowCodeId();
 											}}
 											onKeyDown={(event) => {
 												event.stopPropagation();
 												// check keys if you want
 												if (13 === event.keyCode) {
-													CodeToggle();
+													setShowCodeId();
 												}
 											}}
 										>

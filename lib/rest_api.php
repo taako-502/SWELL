@@ -370,7 +370,7 @@ function hook_rest_api_init() {
 					return $results;
 				} else {
 					// 全件取得
-					$sql  = "SELECT * FROM {$table_name}";
+					$sql  = "SELECT * FROM {$table_name} ORDER BY id DESC";
 					$rows = $wpdb->get_results( $sql, ARRAY_A );
 
 					if ( empty( $rows ) ) {
@@ -433,15 +433,25 @@ function hook_rest_api_init() {
 					}
 				} else {
 					// 新規登録
+
+					// 並び順の最大値を取得
+					$sql   = "SELECT MAX(order_no) AS order_no FROM {$table_name}";
+					$order = $wpdb->get_row( $sql, ARRAY_A );
+
+					// 並び順を決定
+					$order_no = $order ? $order['order_no'] + 1 : 1;
+
 					$result = $wpdb->insert(
 						$table_name,
 						[
-							'title' => $title,
-							'data'  => $data,
+							'title'    => $title,
+							'data'     => $data,
+							'order_no' => $order_no,
 						],
 						[
 							'%s',
 							'%s',
+							'%d',
 						]
 					);
 					if ( $result ) {
@@ -486,6 +496,63 @@ function hook_rest_api_init() {
 				wp_die();
 			},
 		],
+	]);
+
+	// ふきだし設定ページ（複製）
+	register_rest_route('wp/v2', '/swell-balloon-copy', [
+		'methods'             => 'POST',
+		'permission_callback' => function( $request ) {
+			return current_user_can( 'create_speech_balloon' );
+		},
+		'callback'            => function( $request ) {
+			$id = isset( $request['id'] ) ? $request['id'] : null;
+
+			global $wpdb;
+			$table_name = 'swell_balloon';
+
+			// IDが渡ってこない、またはテーブルが存在しない場合は終了
+			if ( ! $id || ! \SWELL_Theme::check_table_exists( $table_name ) ) wp_die( json_encode( [] ) );
+
+			// 複製元の吹き出しを取得
+			$sql     = "SELECT * FROM {$table_name} WHERE id = %d";
+			$query   = $wpdb->prepare( $sql, $request['id'] );
+			$results = $wpdb->get_row( $query, ARRAY_A );
+
+			// 複製元のふきだしが存在しない
+			if ( ! $results ) {
+				wp_die( [] );
+			}
+
+			// 並び順の最大値を取得
+			$sql   = "SELECT MAX(order_no) AS order_no FROM {$table_name}";
+			$order = $wpdb->get_row( $sql, ARRAY_A );
+
+			// 並び順を決定
+			$order_no = $order ? $order['order_no'] + 1 : 1;
+
+			// 複製したふきだしの登録
+			$wpdb->insert(
+				$table_name,
+				[
+					'title'    => "{$results['title']}_copy",
+					'data'     => $results['data'],
+					'order_no' => $order_no,
+				],
+				[
+					'%s',
+					'%s',
+					'%d',
+				]
+			);
+
+			// 複製したふきだしの取得
+			$sql     = "SELECT * FROM {$table_name} WHERE id = %d";
+			$query   = $wpdb->prepare( $sql, $wpdb->insert_id );
+			$results = $wpdb->get_row( $query, ARRAY_A );
+
+			$results['data'] = json_decode( $results['data'], true );
+			return $results;
+		},
 	]);
 }
 

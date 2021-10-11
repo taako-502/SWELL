@@ -202,6 +202,39 @@ export default function BalloonEdit({ id, setId }) {
 			});
 	};
 
+	// 複製
+	const copyBalloon = (event) => {
+		// 通常のフォームサブミットを停止
+		event.preventDefault();
+
+		// setIsWaiting(true);
+
+		apiFetch({
+			path: `${swellApiPath}-copy`,
+			method: 'POST',
+			data: { id },
+		})
+			.then((res) => {
+				setIsWaiting(false);
+				// 複製されたふきだしの編集画面に遷移
+				if (res.id) {
+					// ふきだし編集基本リンク
+					const editUrl = addQueryArgs('admin.php', {
+						page: 'swell_balloon',
+						id: res.id,
+					});
+					window.location.href = editUrl;
+				}
+			})
+			.catch((res) => {
+				setApiMessage({
+					status: 'error',
+					text: res.message || 'エラーが発生しました。',
+				});
+				setIsWaiting(false);
+			});
+	};
+
 	// ふきだしデータの削除
 	const deleteBalloon = () => {
 		if (!id) return;
@@ -265,15 +298,20 @@ export default function BalloonEdit({ id, setId }) {
 							{saveLabel}
 						</Button>
 						{!!id && (
-							<Button
-								disabled={isWaiting}
-								isDestructive
-								// icon={close}
-								// iconSize={16}
-								onClick={deleteBalloon}
-							>
-								削除
-							</Button>
+							<>
+								<Button disabled={isWaiting} isSecondary onClick={copyBalloon}>
+									複製
+								</Button>
+								<Button
+									disabled={isWaiting}
+									isDestructive
+									// icon={close}
+									// iconSize={16}
+									onClick={deleteBalloon}
+								>
+									削除
+								</Button>
+							</>
 						)}
 					</div>
 					<form onSubmit={saveBalloon}>
