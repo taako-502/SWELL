@@ -1079,7 +1079,7 @@ trait Get {
 			// idに変換できなければURLのまま返す
 			if ( ! $id ) return $meta;
 
-			$updated = update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			$updated = update_term_meta( $term_id, 'swell_term_meta_image', (string) $id );
 			if ( ! $updated ) return $meta;
 		} else {
 			$id = $meta;
@@ -1115,7 +1115,7 @@ trait Get {
 			// idに変換できなければURLのまま返す
 			if ( ! $id ) return $meta;
 
-			$updated = update_term_meta( $term_id, 'swell_meta_ttlbg', (string) $id );
+			$updated = update_term_meta( $term_id, 'swell_term_meta_image', (string) $id );
 			if ( ! $updated ) return $meta;
 
 		}
