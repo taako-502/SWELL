@@ -1,0 +1,32 @@
+@import "../../foundation/mixin/media";
+
+// 関連記事
+.p-relatedPosts {
+
+    .p-postList__item {
+        margin-bottom: 1.5em;
+    }
+
+    @include tab {
+
+        .p-postList__item {
+            width: calc(100% / 3);
+
+
+            @media screen and (max-width: 1239px) {
+
+                &:nth-child(7),
+                &:nth-child(8) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 1240px) {
+
+        .p-postList__item {
+            width: 25%;
+        }
+    }
+}

@@ -1,0 +1,103 @@
+//---------------------------------------
+// 目次
+//---------------------------------------
+.swell-toc-placeholder:empty {
+    display: none;
+}
+
+.p-toc {
+
+    .-index-off & {
+        display: none;
+    }
+
+    &.-modal {
+        // モーダル内の目次
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+    }
+
+    #main_content & {
+        max-width: 800px;
+        margin: 4em auto;
+        border-radius: var(--swl-radius--2, 0px);
+
+        @include pc {
+            width: 92%;
+        }
+    }
+
+    #sidebar & {
+        margin-top: -.5em;
+    }
+
+}
+
+.p-toc__ttl {
+    position: relative;
+    display: block;
+    font-size: 1.2em;
+    line-height: 1;
+    text-align: center;
+
+    &::before {
+        display: inline-block;
+        margin-right: .5em;
+        padding-bottom: 2px;
+        font-family: icomoon;
+        vertical-align: middle;
+        content: "\e918";
+    }
+
+    #index_modal & {
+        margin-bottom: .5em;
+    }
+}
+
+.p-toc__list {
+    // position: relative;
+
+    li {
+        line-height: 1.6;
+    }
+
+    li li {
+        //子リスト
+        font-size: .9em; //beforeを考慮してliに指定
+    }
+
+    ul,
+    ol {
+        padding-bottom: .5em;
+        padding-left: .5em;
+    }
+
+    .mininote {
+        display: none;
+    }
+
+    .post_content & {
+        padding-left: 0;
+    }
+
+    #sidebar & {
+        margin-bottom: 0;
+
+        ol,
+        ul {
+            padding-left: 0;
+        }
+    }
+}
+
+.p-toc__link {
+    color: inherit;
+    font-size: inherit;
+    text-decoration: none;
+
+    &:hover {
+        opacity: .8;
+    }
+}

@@ -19,9 +19,4 @@ if ( SWELL_Theme::is_show_thumb( $the_id ) ) {
 }
 
 // コンテンツ上ウィジェット
-$meta = get_post_meta( $the_id, 'swell_meta_show_widget_top', true );
-if ( is_active_sidebar( 'page_top' ) && $meta !== '1' ) {
-	echo '<div class="w-pageTop">';
-		dynamic_sidebar( 'page_top' );
-	echo '</div>';
-}
+SWELL_Theme::outuput_content_widget( 'page', 'top' );

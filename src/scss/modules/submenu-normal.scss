@@ -1,0 +1,116 @@
+@import "../foundation/placeholder";
+@import "../foundation/mixin/**";
+
+.c-submenuToggleBtn {
+    display: none;
+}
+
+
+// 基本スタイル
+.c-listMenu a {
+    padding: .75em 1em .75em 1.5em;
+    transition: padding .25s;
+
+    &:hover {
+        padding-right: .75em; // 1 - .25
+        padding-left: 1.75em; // 1.5 + .25
+    }
+
+}
+
+// アイコン用の before要素
+.c-listMenu a::before,
+.c-gnav .sub-menu a::before {
+    position: absolute;
+    top: 50%;
+    left: 2px;
+    display: inline-block;
+    color: inherit;
+    vertical-align: middle;
+    transform: translateY(-50%);
+    content: "\e921"; //.icon-chevron-small-right
+
+    @extend %swellicon;
+}
+
+
+/* --------------- ウィジェットリスト系 --------------- */
+
+.c-listMenu .children,
+.c-listMenu .sub-menu {
+
+    margin: 0;
+
+    a {
+        padding-left: 2.5em;
+        font-size: .9em;
+
+        &::before {
+            left: 1em;
+        }
+
+        &:hover {
+            padding-left: 2.75em; // 2.5 + .25
+        }
+
+    }
+
+    ul a {
+
+        padding-left: 3.25em;
+
+        &::before {
+            left: 1.75em;
+        }
+
+        &:hover {
+            padding-left: 3.5em; // 3.25 + .25
+        }
+
+    }
+}
+
+
+.c-gnav {
+
+    li:hover > .sub-menu {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .sub-menu {
+        // z-index: 1;
+
+        &::before {
+
+            // 孫メニューのシャドウより上に背景を持っていくため。
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            background: inherit;
+            content: "";
+        }
+
+        .sub-menu {
+            top: 0;
+            left: 100%;
+            z-index: -1;
+        }
+
+        a {
+            padding-left: 2em;
+
+            &::before {
+                left: .5em;
+            }
+
+            &:hover .ttl {
+                left: 4px;
+            }
+        }
+    }
+}
+

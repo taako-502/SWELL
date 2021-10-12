@@ -12,7 +12,13 @@ import setDomData from '@swell-js/modules/setDomData';
 /**
  * 状態を管理する変数データ
  */
-import setState, { smoothOffset, ua } from '@swell-js/modules/data/stateData';
+import {
+	smoothOffset,
+	ua,
+	setMediaSize,
+	setHeightData,
+	setScrollbarW,
+} from '@swell-js/modules/data/stateData';
 
 /**
  * モジュール読み込み
@@ -22,7 +28,6 @@ import setIndexList from '@swell-js/modules/setIndexList';
 import setFixWidget from '@swell-js/modules/setFixWidget';
 import setGnavClass from '@swell-js/modules/setGnavClass';
 import changeDeviceSize from '@swell-js/modules/changeDeviceSize';
-import { setupFixHeader, setFixHeaderPosition } from '@swell-js/modules/setupFixHeader';
 import addClickEvents from '@swell-js/modules/addClickEvents';
 import { smoothScroll, addSmoothScrollEvent } from '@swell-js/modules/smoothScroll';
 import { pvCount } from '@swell-js/modules/pvCount';
@@ -40,9 +45,9 @@ if (isFB) {
 }
 
 /**
- * 状態変数のセット
+ * デバイス判定変数のセット
  */
-setState.mediaSize();
+setMediaSize();
 
 /**
  * URLのハッシュ取得
@@ -65,20 +70,14 @@ window.onpageshow = function (event) {
  * DOMContentLoaded
  */
 document.addEventListener('DOMContentLoaded', function () {
-	/* DOMデータを取得 */
+	// DOMデータを取得
 	setDomData(DOM);
 
-	/* ヘッダーの高さ取得 */
-	setState.headH(DOM.header);
-
-	/* PC用固定ヘッダーの高さ取得 */
-	setState.fixBarH(DOM.fixBar);
-
-	/* smoothOffsetをセット */
-	setState.smoothOffset(DOM.wpadminbar);
+	// 高さ取得
+	setHeightData();
 
 	// スクロールバーの幅
-	setState.scrollbarW();
+	setScrollbarW();
 
 	/**
 	 * objectFitImages
@@ -89,9 +88,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	 * スマホ・タブレット縦 と PC・タブレット横による分岐処理
 	 */
 	changeDeviceSize();
-
-	// fixヘッダー
-	setupFixHeader(DOM.fixBar);
 
 	/**
 	 * グロナビに -current つける
@@ -119,14 +115,7 @@ window.addEventListener('load', function () {
 	document.documentElement.setAttribute('data-loaded', 'true');
 
 	/* ヘッダーの高さ取得 */
-	setState.headH(DOM.header);
-
-	/* PC用固定ヘッダーの高さ取得 */
-	setState.fixBarH(DOM.fixBar);
-	setFixHeaderPosition(DOM.fixBar);
-
-	/* smoothOffsetをセット */
-	setState.smoothOffset(DOM.wpadminbar);
+	setHeightData();
 
 	/**
 	 * 追従サイドバーウィジェットの位置・サイズのセット
@@ -167,19 +156,13 @@ window.addEventListener('orientationchange', function () {
 
 	// 縦・横サイズを正確に取得するために少しタイミングを遅らせる
 	setTimeout(() => {
-		/* 状態変数のセット */
-		setState.mediaSize();
+		// デバイス判定変数のセット
+		setMediaSize();
 
-		/* ヘッダーの高さ取得 */
-		setState.headH(DOM.header);
+		// 高さ取得
+		setHeightData();
 
-		/* PC用固定ヘッダーの高さ取得 */
-		setState.fixBarH(DOM.fixBar);
-
-		/* smoothOffsetをセット */
-		setState.smoothOffset(DOM.wpadminbar);
-
-		/** スマホ・タブレット縦 と PC・タブレット横による分岐処理 */
+		// スマホ・タブレット縦 と PC・タブレット横による分岐処理
 		changeDeviceSize();
 	}, 10);
 });
@@ -190,24 +173,16 @@ window.addEventListener('orientationchange', function () {
 window.addEventListener('resize', function () {
 	// console.log('resize');
 	setTimeout(() => {
-		// setState.scrollbarW();
+		// デバイス判定変数のセット
+		setMediaSize();
 
-		/* 状態変数のセット */
-		setState.mediaSize();
-
-		/* ヘッダーの高さ取得 */
-		setState.headH(DOM.header);
-
-		/* PC用固定ヘッダーの高さ取得 */
-		setState.fixBarH(DOM.fixBar);
-
-		/* smoothOffsetをセット */
-		setState.smoothOffset(DOM.wpadminbar);
+		// 高さ取得
+		setHeightData();
 
 		// スクロールバーの幅
-		setState.scrollbarW();
+		setScrollbarW();
 
-		/** スマホ・タブレット縦 と PC・タブレット横による分岐処理 */
+		// スマホ・タブレット縦 と PC・タブレット横による分岐処理
 		changeDeviceSize();
 	}, 5);
 });

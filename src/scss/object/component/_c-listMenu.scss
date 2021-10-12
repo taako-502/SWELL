@@ -1,0 +1,24 @@
+/*
+    リスト系のウィジェットに関するもの
+*/
+.c-listMenu {
+
+    li {
+        position: relative;
+        margin: 0;
+    }
+
+    a {
+        position: relative;
+        display: block;
+        color: inherit;
+        line-height: 1.4;
+        text-decoration: none;
+        border-bottom: solid 1px var(--swl-color_border);
+
+        &:hover {
+            background-color: var(--swl-color_hov_gray);
+        }
+    }
+
+}

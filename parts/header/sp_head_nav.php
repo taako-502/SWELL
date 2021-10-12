@@ -1,44 +1,28 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-$is_loop = SWELL_Theme::get_setting( 'sp_head_nav_loop' );
-$class   = $is_loop ? ' swiper-container' : '';
-
-if ( $is_loop ) :
+$is_loop   = SWELL_Theme::get_setting( 'sp_head_nav_loop' );
+$nav_class = 'l-header__spNav';
+$ul_class  = 'p-spHeadMenu';
+$data_loop = '0';
+if ( $is_loop ) {
+	$nav_class .= ' swiper';
+	$ul_class  .= ' swiper-wrapper';
+	$data_loop  = '1';
+}
+// phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 ?>
-<div class="l-header__spNav swiper-container" data-loop="<?php echo $is_loop ? '1' : '0'; ?>">
-	<ul class="p-spHeadMenu swiper-wrapper">
+<div class="<?=$nav_class?>" data-loop="<?=$data_loop?>">
+	<ul class="<?=$ul_class?>">
 		<?php
-			wp_nav_menu(
-				[
-					'container'       => '',
-					'fallback_cb'     => '',
-					'theme_location'  => 'sp_head_menu',
-					'items_wrap'      => '%3$s',
-					'link_before'     => '<span>',
-					'link_after'      => '</span>',
-					'depth'           => 1,
-				]
-			);
+			wp_nav_menu( [
+				'container'       => '',
+				'fallback_cb'     => '',
+				'theme_location'  => 'sp_head_menu',
+				'items_wrap'      => '%3$s',
+				'link_before'     => '<span>',
+				'link_after'      => '</span>',
+				'depth'           => 1,
+			] );
 		?>
 	</ul>
 </div>
-<?php else : ?>
-<div class="l-header__spNav" data-loop="0">
-	<ul class="p-spHeadMenu">
-		<?php
-			wp_nav_menu(
-				[
-					'container'       => '',
-					'fallback_cb'     => '',
-					'theme_location'  => 'sp_head_menu',
-					'items_wrap'      => '%3$s',
-					'link_before'     => '<span>',
-					'link_after'      => '</span>',
-					'depth'           => 1,
-				]
-			);
-		?>
-	</ul>
-</div>
-
-<?php endif; ?>

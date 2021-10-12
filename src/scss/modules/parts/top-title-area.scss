@@ -1,0 +1,62 @@
+@import "../../foundation/mixin/media";
+
+.l-topTitleArea {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 11em;
+    margin: 0;
+    padding: 1.5em 0;
+    overflow: hidden;
+
+    @include tab {
+        min-height: 240px;
+        padding: 1em 0;
+    }
+
+    .u-thin {
+        opacity: 1;
+    }
+
+    .c-postTitle__date {
+        border-color: #fff;
+    }
+
+    .c-categoryList,
+    .c-tagList {
+        color: #fff;
+
+        &__link {
+            color: #fff;
+            background: none;
+
+        }
+    }
+
+    .c-categoryList__link {
+        border: solid 1px #fff;
+    }
+
+    .c-tagList__link {
+        padding: 4px .25em;
+        border-bottom: solid 1px #fff;
+        border-radius: 0;
+    }
+
+}
+
+.l-topTitleArea__body {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, .1);
+}
+
+// IEでは align-items: center + min-height がきかない
+// _:lang(x)::-ms-backdrop,
+// .l-topTitleArea {
+//     min-height: auto !important;
+//     padding: 2em 0 !important;
+// }

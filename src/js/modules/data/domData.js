@@ -5,7 +5,7 @@ export default {
 	bodyWrap: null,
 	header: null,
 	gnav: null,
-	fixBar: null,
+	fixHeader: null,
 	content: null,
 	mainContent: null,
 	sidebar: null,

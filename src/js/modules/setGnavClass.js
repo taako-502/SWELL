@@ -36,5 +36,5 @@ const setCurrent = (nav) => {
 export default function () {
 	// クラス付与
 	setCurrent(DOM.gnav);
-	setCurrent(DOM.fixBar);
+	setCurrent(DOM.fixHeader);
 }

@@ -50,5 +50,16 @@ class Editor {
 		}
 	}
 
+	/**
+	 * シャドウをeditorにだけ
+	 */
+	public static function balloon() {
+		if ( ! SWELL::get_setting( 'to_site_flat' ) ) {
+			Style::add(
+				'.is-style-balloon .c-tabList__button',
+				'box-shadow: 0 2px 4px rgba(0,0,0,.12)'
+			);
+		}
+	}
 
 }

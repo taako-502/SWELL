@@ -20,23 +20,22 @@ $spmenu_class = ( 'center_left' === SWELL_Theme::get_setting( 'header_layout_sp'
 							'container'      => '',
 							'fallback_cb'    => '',
 							'theme_location' => 'nav_sp_menu',
-							'items_wrap'     => '<ul class="c-spnav">%3$s</ul>',
+							'items_wrap'     => '<ul class="c-spnav c-listMenu">%3$s</ul>',
 						]);
 					else :
 						wp_nav_menu([
 							'container'      => '',
 							'theme_location' => 'header_menu',
-							'items_wrap'     => '<ul class="c-spnav">%3$s</ul>',
+							'items_wrap'     => '<ul class="c-spnav c-listMenu">%3$s</ul>',
 						]);
 					endif;
 				?>
 			</div>
 			<?php
-				if ( is_active_sidebar( 'sp_menu_bottom' ) ) :
-				echo '<div id="sp_menu_bottom" class="p-spMenu__bottom w-spMenuBottom">';
-				dynamic_sidebar( 'sp_menu_bottom' );
-				echo '</div>';
-				endif;
+				\SWELL_Theme::outuput_widgets( 'sp_menu_bottom', [
+					'before' => '<div id="sp_menu_bottom" class="p-spMenu__bottom w-spMenuBottom">',
+					'after'  => '</div>',
+				] );
 			?>
 		</div>
 	</div>

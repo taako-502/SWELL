@@ -16,11 +16,10 @@
 		$('[name="balloon_icon"]').change(function () {
 			const thisVal = $(this).val() || '';
 
-			const $iconHtml = '';
 			if (0 === $balloonBoxIcon.length) {
-				const $iconHtml =
+				const iconHtml =
 					'<div class="c-balloon__icon -circle"><img src="" class="c-balloon__iconImg" width="80px" height="80px"><span class="c-balloon__iconName"></span></div>';
-				$balloonBoxBody.before($iconHtml);
+				$balloonBoxBody.before(iconHtml);
 
 				// 取得し直す
 				$balloonBoxIcon = $balloonBox.find('.c-balloon__icon');

@@ -99,7 +99,7 @@ if ( $bgimg_id ) {
 				<?=wp_kses( $SETTING['pickup_title'], SWELL_Theme::$allowed_text_html )?>
 			</div>
 		<?php endif; ?>
-		<div class="p-postSlider__swiper swiper-container">
+		<div class="p-postSlider__swiper swiper">
 			<?php
 				SWELL_Theme::get_parts( 'parts/post_list/loop_by_slider', [
 					'query_args'  => $q_args,
@@ -110,16 +110,8 @@ if ( $bgimg_id ) {
 				<div class="swiper-pagination"></div>
 			<?php endif; ?>
 			<?php if ( $SETTING['ps_on_nav'] ) : ?>
-				<div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide">
-					<svg x="0px" y="0px" viewBox="0 0 136 346" xml:space="preserve">
-						<polyline points="123.2,334.2 12.2,173.2 123.8,11.8 " fill="none" stroke="#fff" stroke-width="12" stroke-miterlimit="10"></polyline>
-					</svg>
-				</div>
-				<div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide">
-					<svg x="0px" y="0px" viewBox="0 0 136 346" xml:space="preserve">
-						<polyline class="st0" points="12.8,11.8 123.8,172.8 12.2,334.2" fill="none" stroke="#fff" stroke-width="12" stroke-miterlimit="10"></polyline>
-					</svg>
-				</div>
+				<div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>
+				<div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>
 			<?php endif; ?>
 		</div>
 	</div>

@@ -20,6 +20,7 @@ import getBlockIcon from '@swell-guten/utils/getBlockIcon';
  */
 import classnames from 'classnames';
 
+
 /**
  * ふきだしブロック
  */

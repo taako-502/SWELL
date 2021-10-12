@@ -80,10 +80,12 @@ if ( 'category' === $SETTING['post_relation_type'] ) {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo '<h2 class="l-articleBottom__title c-secTitle">' . $SETTING['related_post_title'] . '</h2>';
 
+		$list_class = 'p-postList p-relatedPosts -type-' . $SETTING['related_post_style'];
+
 		// 優先記事だけで一杯の場合
 		if ( 0 === $maxnum ) :
 
-			echo '<ul class="p-postList -type-' . esc_attr( $SETTING['related_post_style'] ) . '">';
+			echo '<ul class="' . esc_attr( $list_class ) . '">';
 
 			// 優先的に表示する関連記事
 			echo $priority_list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -110,7 +112,7 @@ if ( 'category' === $SETTING['post_relation_type'] ) {
 			elseif ( $q->have_posts() ) :
 				// 表示する記事がある時
 
-				echo '<ul class="p-postList -type-' . esc_attr( $SETTING['related_post_style'] ) . '">';
+				echo '<ul class="' . esc_attr( $list_class ) . '">';
 
 				// 優先的に表示する関連記事
 				echo $priority_list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped

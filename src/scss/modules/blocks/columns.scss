@@ -1,0 +1,118 @@
+@import "../../foundation/mixin/media";
+
+.wp-block-column {
+    margin-top: 0;
+    margin-bottom: 0;
+
+    .border_gray > & {
+        padding: 1.5em;
+        border: solid 1px var(--color_border);
+    }
+
+    .border_main > & {
+        padding: 1.5em;
+        border: solid 1px var(--color_main);
+    }
+
+    .shadow_on > & {
+        padding: 1.5em;
+        color: #333;
+        background: #fff;
+        box-shadow: var(--swl-box_shadow);
+    }
+
+    @include sp {
+
+        flex-basis: 100%; //tab縦サイズの時にもコアと同じ指定を
+
+        &:not(:first-child) {
+            //600px以上で :nth-child(2n)に、782px以上で:not(:first-child)に 32pxついてしまう
+            margin-left: 0;
+        }
+
+        + .wp-block-column {
+            margin-top: 2em;
+
+            .sp_mb4_ & {
+                margin-top: 4em;
+            }
+
+            .sp_mb6_ & {
+                margin-top: 6em;
+            }
+        }
+    }
+}
+
+.wp-block-columns {
+
+    line-height: 1.6; //少し狭めに
+
+    @include pc {
+        flex-wrap: nowrap;
+    }
+
+    &.first_big {
+
+        .wp-block-column:first-child {
+            flex-basis: 100% !important; //5.3 のimportant対策
+        }
+    }
+
+    &.last_big {
+
+        .wp-block-column:last-child {
+            flex-basis: 100% !important; //5.3 のimportant対策
+        }
+    }
+
+    @include pc {
+
+        .wp-block-column {
+            flex-basis: calc(50% - 12px);
+            flex-grow: 0;
+        }
+
+        .wp-block-column:not(:first-child) {
+            margin-left: 24px;
+        }
+    }
+
+    @include sp {
+        flex-wrap: wrap; //(min-width: 782px) で nowrap にされるので明示的に指定
+
+        //スマホは1列の場合
+        .wp-block-column:not(:only-child) {
+            flex-basis: 100% !important;
+        }
+
+        // スマホで２列の場合
+        &.sp_column2 {
+            font-size: .9em;
+
+            > .wp-block-column {
+                flex-basis: 48% !important; //5.3 のimportant対策
+                flex-grow: 0;
+                margin-top: 2% !important;
+                margin-bottom: 2% !important;
+
+                &:nth-child(2n) {
+                    margin-left: 4%;
+                }
+            }
+
+            &.has-2-columns {
+                flex-wrap: nowrap; //first_bigなどを２列・２項目の場合で保持させるため
+            }
+
+            //２列 かつ ３項目 かつ 「最初を大きく」
+            &.first_big.has-3-columns {
+
+                .wp-block-column:nth-child(2) {
+                    margin-right: 4%;
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}

@@ -88,7 +88,7 @@ class SWELL_PARTS{
 		$caption    = get_post_meta( $post_id, 'swell_meta_thumb_caption', true ) ?: '';
 
 		if ( $caption ) {
-			$caption = '<figcaption class="p-articleThumb__caption">' . esc_html( $caption ) . '</figcaption>';
+			$caption = '<figcaption class="p-articleThumb__caption">' . wp_kses( $caption, \SWELL_Theme::$allowed_text_html ) . '</figcaption>';
 		}
 
 		//YouTubeの指定があれば動画を返す

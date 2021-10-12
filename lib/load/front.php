@@ -3,17 +3,49 @@ namespace SWELL_Theme\Load_Files\Front;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-use \SWELL_Theme as SWELL;
+use \SWELL_Theme as SWELL, SWELL_Theme\Style;
+
 
 /**
  * フロントで読み込むファイル
  */
 add_action( 'wp_enqueue_scripts', __NAMESPACE__ . '\wp_enqueue_scripts', 8 );
 function wp_enqueue_scripts() {
+	load_plugins();
 	load_front_styles();
 	load_front_scripts();
-	load_plugins();
+
+	if ( SWELL::get_option( 'load_style_async' ) ) {
+		add_filter( 'style_loader_tag', __NAMESPACE__ . '\load_css_async', 10, 4 );
+	}
 }
+
+// CSSを非同期で読み込む
+function load_css_async( $html, $handle, $href, $media ) {
+
+	$target_handles = [
+		'swell_luminous',
+		'swell-parts/footer',
+		'swell-parts/comments',
+		// 'swell-parts/pn-links--normal',
+		// 'swell-parts/pn-links--simple',
+		// 'swell-parts/sns-cta',
+		// 'swell-parts/fix-header',
+		// 'swell-parts/fix_bottom_menu',
+	];
+
+	if ( in_array( $handle, $target_handles, true ) ) {
+		// 元の link 要素の HTML（改行が含まれているようなので前後の空白文字を削除）
+		$default_html = trim( $html );
+
+		// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+		$html = '<link rel="stylesheet" id="' . $handle . '-css" href="' . $href . '" media="print" onload="this.media=\'all\'">' .
+		'<noscript> ' . $default_html . '</noscript>' . PHP_EOL;
+		}
+
+	return $html;
+}
+
 
 /**
  * フロント用のスクリプト
@@ -64,23 +96,29 @@ function load_front_styles() {
 	wp_enqueue_style( 'wp-block-library' );
 
 	// main.css
-	if ( SWELL::get_setting( 'load_style_inline' ) ) {
+	if ( SWELL::is_load_css_inline() ) {
 
 		// インライン読み込み時
 		$main_style = SWELL::get_file_contents( T_DIRE . '/assets/css/main.css' );
 		$main_style = str_replace( '../', T_DIRE_URI . '/assets/', $main_style );
 		$main_style = str_replace( '@charset "UTF-8";', '', $main_style );
 
-		// 空でmain_styleを登録しておく
+		// 空で登録しておく
 		wp_register_style( 'main_style', false ); // phpcs:ignore
 		wp_enqueue_style( 'main_style' );
-
-		// インラインで吐き出し
 		wp_add_inline_style( 'main_style', $main_style );
 
 	} else {
 		wp_enqueue_style( 'main_style', $assets . '/css/main.css', [], SWELL_VERSION );
 	}
+
+	// 切り分けたCSSの読み込み
+	load_separated_styles();
+
+	// 動的CSS（カスマイザーの設定値で変わるCSS）
+	wp_register_style( 'swell_custom', false ); // phpcs:ignore
+	wp_enqueue_style( 'swell_custom' );
+	wp_add_inline_style( 'swell_custom', Style::get_front_css() );
 
 	// カスタムフォーマット用CSS
 	$custom_format_css = SWELL::get_editor( 'custom_format_css' );
@@ -88,6 +126,87 @@ function load_front_styles() {
 		wp_add_inline_style( 'main_style', $custom_format_css );
 	}
 }
+
+
+function load_separated_styles() {
+
+	$separated_blocks = [
+		'core/calendar'     => '/assets/css/modules/blocks/calendar.css',
+		'core/categories'   => '/assets/css/modules/blocks/categories.css',
+		'core/columns'      => '/assets/css/modules/blocks/columns.css',
+		'core/embed'        => '/assets/css/modules/blocks/embed.css',
+		'core/file'         => '/assets/css/modules/blocks/file.css',
+		'core/gallery'      => '/assets/css/modules/blocks/gallery.css',
+		'core/media-text'   => '/assets/css/modules/blocks/media-text.css',
+		'core/latest-posts' => '/assets/css/modules/blocks/latest-posts.css',
+		'core/pullquote'    => '/assets/css/modules/blocks/pullquote.css',
+		'core/search'       => '/assets/css/modules/blocks/search.css',
+		'core/separator'    => '/assets/css/modules/blocks/separator.css',
+		'core/social-links' => '/assets/css/modules/blocks/social-links.css',
+		'core/table'        => '/assets/css/modules/blocks/table.css',
+		'core/tag-cloud'    => '/assets/css/modules/blocks/tag-cloud.css',
+		'widget/dropdown'   => '/assets/css/modules/blocks/widget-dropdown.css',
+		'widget/rss'        => '/assets/css/modules/blocks/widget-rss.css',
+		// 'widget/list'       => '/assets/css/modules/blocks/widget-list.css',
+
+		// swell
+		// 'loos/post-list'    => '/assets/css/modules/blocks/post-list.css',
+		'loos/profile-box'  => '/assets/css/modules/blocks/profile-box.css',
+		'loos/accordion'    => '/build/blocks/accordion/index.css',
+		'loos/ad-tag'       => '/build/blocks/ad-tag/index.css',
+		'loos/balloon'      => '/build/blocks/balloon/index.css',
+		'loos/banner-link'  => '/build/blocks/banner-link/index.css',
+		'loos/cap-block'    => '/build/blocks/cap-block/index.css',
+		'loos/columns'      => '/build/blocks/columns/index.css',
+		'loos/dl'           => '/build/blocks/dl/index.css',
+		'loos/faq'          => '/build/blocks/faq/index.css',
+		'loos/full-wide'    => '/build/blocks/full-wide/index.css',
+		'loos/step'         => '/build/blocks/step/index.css',
+		'loos/tab'          => '/build/blocks/tab/index.css',
+	];
+
+	// 使われたブロックだけ読み込むかどうか
+	if ( SWELL::is_separate_css() ) {
+		if ( SWELL::is_widget_iframe() ) SWELL::$used_blocks = [];
+		foreach ( $separated_blocks as $name => $path ) {
+
+			// if ( false !== stripos( $name, 'loos/' ) ) {}
+			if ( ! isset( SWELL::$used_blocks[ $name ] ) ) {
+				continue;
+			}
+			load_separated_css( $path, $name );
+		}
+	} else {
+
+		// インライン出力するかどうか
+		if ( SWELL::is_load_css_inline() ) {
+
+			$block_style = SWELL::get_file_contents( T_DIRE . '/assets/css/blocks.css' );
+			$block_style = str_replace( '@charset "UTF-8";', '', $block_style );
+
+			wp_register_style( 'swell_blocks', false ); // phpcs:ignore
+			wp_enqueue_style( 'swell_blocks' );
+			wp_add_inline_style( 'swell_blocks', $block_style );
+		} else {
+			wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/blocks.css', [], SWELL_VERSION );
+		}
+}
+
+}
+
+function load_separated_css( $css_path, $name ) {
+	// インライン出力するかどうか
+	if ( SWELL::is_load_css_inline() ) {
+		$css = '';
+		$css = SWELL::get_file_contents( T_DIRE . $css_path );
+		// $css = str_replace( '../', T_DIRE_URI . '/assets/', $css );
+		$css = str_replace( '@charset "UTF-8";', '', $css );
+		wp_add_inline_style( 'main_style', $css );
+	} else {
+		wp_enqueue_style( "swell_{$name}", T_DIRE_URI . $css_path, [ 'main_style' ], SWELL_VERSION );
+	}
+}
+
 
 /**
  * プラグインファイル
@@ -97,6 +216,7 @@ function load_plugins() {
 	if ( SWELL::is_widget_iframe() ) return;
 
 	// 登録だけしておく
+	wp_register_style( 'swell_swiper', T_DIRE_URI . '/assets/css/plugins/swiper.css', [], SWELL_VERSION );
 	wp_register_script( 'swell_luminous', T_DIRE_URI . '/assets/js/plugins/luminous.min.js', [], SWELL_VERSION, true );
 	wp_register_script( 'swell_swiper', T_DIRE_URI . '/assets/js/plugins/swiper.min.js', [], SWELL_VERSION, true );
 	wp_register_script( 'swell_rellax', T_DIRE_URI . '/assets/js/plugins/rellax.min.js', [], SWELL_VERSION, true );
@@ -104,6 +224,7 @@ function load_plugins() {
 	// スマホヘッダーナビ
 	if ( SWELL::is_use( 'sp_head_nav' ) ) {
 		if ( SWELL::get_setting( 'sp_head_nav_loop' ) ) {
+			wp_enqueue_style( 'swell_swiper' );
 			wp_enqueue_script( 'swell_set_sp_headnav_loop', T_DIRE_URI . '/build/js/front/set_sp_headnav_loop.min.js', [ 'swell_swiper' ], SWELL_VERSION, true );
 		} else {
 			wp_enqueue_script( 'swell_set_sp_headnav', T_DIRE_URI . '/build/js/front/set_sp_headnav.min.js', [], SWELL_VERSION, true );
@@ -114,14 +235,18 @@ function load_plugins() {
 	$pjax = SWELL::is_use( 'pjax' );
 
 	// mv
-	$mv_type = SWELL::get_setting( 'main_visual_type' );
-	if ( $pjax || SWELL::is_top() && ! is_paged() && 'none' !== $mv_type ) {
-		$deps = 'slider' === $mv_type ? ['swell_script', 'swell_swiper' ] : ['swell_script' ];
-		wp_enqueue_script( 'swell_set_mv', T_DIRE_URI . '/build/js/front/set_mv.min.js', $deps, SWELL_VERSION, true );
+	if ( $pjax || SWELL::is_use( 'mv' ) ) {
+		if ( 'slider' === SWELL::site_data( 'mv' ) ) {
+			wp_enqueue_style( 'swell_swiper' );
+			wp_enqueue_script( 'swell_set_mv', T_DIRE_URI . '/build/js/front/set_mv.min.js', [ 'swell_script', 'swell_swiper' ], SWELL_VERSION, true );
+		} else {
+			wp_enqueue_script( 'swell_set_mv', T_DIRE_URI . '/build/js/front/set_mv.min.js', [ 'swell_script' ], SWELL_VERSION, true );
+		}
 	}
 
 	// post slider
-	if ( $pjax || SWELL::is_top() && ! is_paged() && 'on' === SWELL::get_setting( 'show_post_slide' ) ) {
+	if ( $pjax || SWELL::is_use( 'post_slider' ) ) {
+		wp_enqueue_style( 'swell_swiper' );
 		wp_enqueue_script(
 			'swell_set_post_slider',
 			T_DIRE_URI . '/build/js/front/set_post_slider.min.js',
@@ -168,7 +293,7 @@ function global_vars_on_front() {
 	];
 
 	// メインビジュアルスライダー
-	if ( 'slider' === $SETTING['main_visual_type'] ) {
+	if ( 'slider' === SWELL::site_data( 'mv' ) ) {
 		$global_vars += [
 			'mvSlideEffect' => $SETTING['mv_slide_effect'],
 			'mvSlideSpeed'  => $SETTING['mv_slide_speed'],

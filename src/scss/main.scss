@@ -1,4 +1,4 @@
-@charset "utf-8";
+@charset "UTF-8";
 
 // settingファイル
 @import "foundation/variable";
@@ -22,9 +22,13 @@
 @import "layout/*.scss";
 @import "object/**";
 
-// エディターコンテンツ
-@import "editor/front";
-@import "editor/block/**";
+// content
+@import "content/common/**";
+@import "content/color_palette"; // commonより優先度高く
+@import "content/front";
+@import "content/block/**";
+
+// SWELLブロック
 @import "../gutenberg/blocks/**/_common.scss";
 @import "../gutenberg/blocks/**/_front.scss";
 

@@ -5,7 +5,9 @@
 // @import "../foundation/plugins/icomoon";
 
 // プレビュー用
-@import "../object/parts/balloon";
+// @import "../object/parts/balloon";
+@import "../../gutenberg/blocks/balloon/index.scss";
+
 
 /**
  * ふきだし一覧テーブルの表示

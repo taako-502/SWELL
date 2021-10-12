@@ -9,7 +9,7 @@ export default function setDomData(DOM) {
 	DOM.searchModal = document.getElementById('search_modal');
 	DOM.indexModal = document.getElementById('index_modal');
 	DOM.pageTopBtn = document.getElementById('pagetop');
-	DOM.fixBar = document.getElementById('fix_header');
+	DOM.fixHeader = document.getElementById('fix_header');
 	DOM.gnav = document.getElementById('gnav');
 	DOM.spMenu = document.getElementById('sp_menu');
 	DOM.wpadminbar = document.getElementById('wpadminbar');

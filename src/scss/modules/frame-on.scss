@@ -1,0 +1,195 @@
+@import "../foundation/variable";
+@import "../foundation/mixin/**";
+
+
+$mc-pad--sp: 3vw;
+$mc-pad--pc: 32px;
+
+// CSS変数上書き
+.-frame-on {
+
+    @include sp {
+        --swl-pad_container: 2vw;
+    }
+}
+
+.alignwide {
+
+    @include sp {
+        left: (-$mc-pad--sp); // = $mc-pad--sp
+        width: calc(100% + #{$mc-pad--sp * 2});
+    }
+
+    @include pc {
+        left: -48px;
+        width: calc(100% + 96px);
+    }
+
+}
+
+// フレームがある時の .alignfull
+.alignfull {
+
+    // -> LPでのフレームオンの時も同じCSSを書いている
+    .l-content & {
+
+        @include sp {
+            left: -3vw;
+            width: calc(100% + 6vw);
+        }
+
+        @include pc {
+            left: -48px;
+            width: calc(100% + 96px);
+        }
+    }
+
+    // ウィジェット内でフルワイド使われた時にはみださないようにする
+    .l-content .c-widget & {
+
+        @include pc {
+            left: -32px;
+            width: calc(100% + 64px);
+        }
+    }
+
+}
+
+.-frame-on {
+
+    //コンテンツエリア
+    .l-content {
+        // mt ちょい狭く。（padding分があるので。）
+        padding-top: 1em;
+
+        @include tab {
+            padding-top: 2em;
+        }
+
+        @include sp {
+            //フレームの外側の幅
+            padding-right: 2vw;
+            padding-left: 2vw;
+        }
+    }
+
+    .p-breadcrumb + .l-content {
+        padding-top: 0;
+    }
+
+    // 記事下コンテンツの幅も、横幅合わせるコンテンツl-articleBottom
+
+    &.-sidebar-on {
+
+        .l-mainContent {
+
+            @include pc {
+                width: calc(100% - 340px);
+            }
+        }
+    }
+
+    .post_content > h2 {
+
+        @include sp {
+            margin-right: (-$mc-pad--sp);
+            margin-left: (-$mc-pad--sp);
+        }
+    }
+
+
+    // メインコンテンツ
+    .l-mainContent {
+        padding: $mc-pad--sp;
+        background: #fff;
+        border-radius: var(--swl-radius--4, 0px);
+
+        @include pc {
+            padding: $mc-pad--pc;
+        }
+    }
+
+    .swell-block-fullWide__inner {
+
+        @include pc {
+
+            &.l-article {
+                --swl-fw_inner_pad: calc(var(--swl-pad_post_content) + #{$mc-pad--pc});
+            }
+        }
+
+        @include sp {
+            // フル幅用
+            --swl-fw_inner_pad: var(--swl-pad_container, 2vw);
+
+            &.l-article {
+                --swl-fw_inner_pad: calc(var(--swl-pad_container, 2vw) + #{$mc-pad--sp});
+            }
+        }
+    }
+}
+
+// メインエリアのみの場合
+.-frame-off-sidebar {
+
+    .l-sidebar {
+
+        @include sp {
+            padding-right: 1vw;
+            padding-left: 1vw;
+        }
+    }
+}
+//サイドバーもフレームオンの時
+.-frame-on-sidebar {
+
+    #sidebar {
+
+        @include pc {
+            width: 316px;
+        }
+
+        .c-widget {
+            padding: 16px 16px;
+            overflow: hidden;
+            background: #fff;
+            border-radius: var(--swl-radius--4, 0px);
+        }
+    }
+
+    // プロフィールウィジェット
+    #sidebar .widget_swell_prof_widget {
+        padding: 0 !important;
+    }
+
+    // プロフィールボックス
+    #sidebar .p-profileBox {
+        color: #333;
+        background: #fff;
+        border: none;
+    }
+
+    // カレンダーウィジェット
+    #sidebar .calendar_wrap {
+        padding: 0;
+        border: none;
+    }
+
+}
+
+
+// ボーダーオンの時
+.-frame-border {
+
+    .l-mainContent {
+        box-shadow: 0 0 1px var(--swl-color_shadow);
+    }
+
+    &.-frame-on-sidebar {
+
+        #sidebar .c-widget {
+            box-shadow: 0 0 1px var(--swl-color_shadow);
+        }
+    }
+
+}

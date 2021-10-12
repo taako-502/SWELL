@@ -1,6 +1,7 @@
 
 .w-fixSide {
-    top: 8px;
+    top: calc(8px + var(--swl-adminbarH, 0px) + var(--swl-fix_headerH, 0px));
+    max-height: calc(100vh - 16px - var(--swl-adminbarH, 0px) - var(--swl-fix_headerH, 0px));
     margin-top: 2em;
 
     @include pc {

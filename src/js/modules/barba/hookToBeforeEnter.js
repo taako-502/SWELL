@@ -33,8 +33,8 @@ export function resetMeta({ newHead }) {
 // head内SWELLスタイルをリセット
 export function resetSwellStyle({ newHead }) {
 	if (!newHead) return;
-	const newSwellStyle = newHead.querySelector('#swell_custom_front_style');
-	const oldSwellStyle = document.querySelector('#swell_custom_front_style');
+	const newSwellStyle = newHead.querySelector('#swell_custom-inline-css');
+	const oldSwellStyle = document.querySelector('#swell_custom-inline-css');
 	const newSwellStyleCSS = newSwellStyle ? newSwellStyle.textContent : '';
 	if (oldSwellStyle) oldSwellStyle.textContent = newSwellStyleCSS;
 

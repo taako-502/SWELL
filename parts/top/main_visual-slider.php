@@ -11,7 +11,7 @@ $is_fix_text   = $SETTING['mv_fix_text'];
 $mv_img_filter = $SETTING['mv_img_filter'];
 
 ?>
-<div class="p-mainVisual__inner swiper-container">
+<div class="p-mainVisual__inner swiper">
 	<div class="swiper-wrapper">
 	<?php
 		foreach ( $slider_images as $i => $img_data ) :
@@ -78,16 +78,8 @@ $mv_img_filter = $SETTING['mv_img_filter'];
 	<?php endif; ?>
 
 	<?php if ( $SETTING['mv_on_nav'] ) : ?>
-		<div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide">
-			<svg x="0px" y="0px" viewBox="0 0 136 346" xml:space="preserve">
-				<polyline points="123.2,334.2 12.2,173.2 123.8,11.8 " fill="none" stroke="#fff" stroke-width="12" stroke-miterlimit="10"></polyline>
-			</svg>
-		</div>
-		<div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide">
-			<svg x="0px" y="0px" viewBox="0 0 136 346" xml:space="preserve">
-				<polyline class="st0" points="12.8,11.8 123.8,172.8 12.2,334.2" fill="none" stroke="#fff" stroke-width="12" stroke-miterlimit="10"></polyline>
-			</svg>
-		</div>
+		<div class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>
+		<div class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>
 	<?php endif; ?>
 	<?php
 		// 固定テキスト設定の場合は外側にスライダー１のテキストを出力

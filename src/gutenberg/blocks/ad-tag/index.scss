@@ -1,0 +1,212 @@
+@import "../../../scss/foundation/mixin/_media.scss";
+
+.p-adBox {
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+
+    &.-border-on {
+        padding: 1.5em;
+        border: solid 1px var(--swl-color_border);
+
+        &[data-ad="ranking"] {
+            padding-top: .5em;
+        }
+    }
+}
+
+.p-adBox__body {
+
+    @include tab {
+        display: flex;
+    }
+}
+
+.p-adBox__img {
+    text-align: center;
+
+    @include mobile {
+        padding: 0 8px;
+    }
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+
+    [data-ad="normal"] & {
+        width: 100%;
+    }
+
+    [data-ad="affiliate"] &,
+    [data-ad="ranking"] & {
+
+        @include tab {
+            flex-basis: 32%;
+            flex-shrink: 0;
+            margin-right: 1.5em;
+        }
+    }
+
+    [data-ad="amazon"] & {
+        // width: 30%;
+
+        @include tab {
+            flex-basis: 160px;
+            flex-shrink: 0;
+            margin-right: 1.5em;
+        }
+    }
+
+    a:hover {
+        opacity: .8;
+    }
+}
+
+
+//※ タイトルは「ランキング」でのみ使用される
+.p-adBox__title {
+    margin-bottom: 1em;
+    padding: .5em 0;
+    font-weight: 700;
+    font-size: 1.25em;
+    line-height: 1.4;
+    background-repeat: no-repeat;
+    background-position: center left;
+    background-size: auto 1.75em;
+    border-bottom: solid 1px var(--swl-color_border);
+
+    &:not(.-rank0) {
+        padding-top: 1em;
+        padding-left: 3em;
+    }
+
+    &.-rank1 {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACsBAMAAAC3NzwtAAAAD1BMVEX3zUv2zEu5mjjtwkr3zUv2hefuAAAAA3RSTlPYSwBqYTaYAAAEd0lEQVR42u3aa3KjMAwAYAc4QGI4gA05wO6IA2CW+59pk3bbADa2JJBpd6qfHchnGSM/qGpPCvX94Gs1TcMlO2wf7DMGnRe202fonPBHvjty5sHNNAuXD7bTInQ2uFrCLhe8SpiXstr7hLkpq/09/RjYeWCvp1l9zYDvPjxmgRsfdlngKRA5YBuCdQbYhOAiA3wPweP/DDch2P3AP/AP/FNAvnKtPm12Om0+Pm8Fcuyay16VUjfZVebtQVz0Ev63/cPt/Hjr6hWhlkkMrIfsSM3VL3i23XWcvtak1r7nrNYpFPSUB2LZcR+wof4KY39crW9QXgLklB25zrp32NI7jnwGUnl9pPyCoGmyZgzH8Q2uODMN7ZzL+C++8ou+o9QvzSvvT9jwphpLmYgD87cK1HxK74286j4+4Ia3nLgTnosJzKPKL/m4LBoC7HfqsBse+DBzPVHtmc4eA5gLW97M9I1hs2Ma3QU3lJEoAjs2XLHgijKLNse9x5ZU2cPvMatk0r7ChEsma5K4c5s5myRY02JDK7DBadHuGlvMYa1DSx9iCgNjdA3cxZ4lPpnwYs/u2xdM7OXt6q/k4ltQW/qWG2sLs2yqI99RcDdtLX13HNy0zZ8yqvmcj5rN6nq1ak/Rkp8Y9Z5ifhRhSBk3/MXhZzNfhy8VfhtRMfaX/y5dH768fq5glF58TwfPuRps8w1jOqvWD9KDESnf6SsHM0XgDju8GOdclddC5fegpj7i9C3Gf/FmsO1x7Tf04+rKb2AATv0M/fTWTFG4BdwjI59X29Blc7hEJUD/NNCEBmEQjg4W8ucfE7xqDtc94v0IfpKINXXjhDYMRzJowjDqhnED7uB1zQVxmIhK+boxEuawgT75Q9cNdyvlzWXhHLZzOCzbaTN0+hXYhmFKnMo227BLv3qbn38WcEi+TpG4pNxhEy4Xfe33np2ioRPNxMOrJDZHdFi+Rh/GAq6Xff0IpdH5PuMWbWUU7tfdc/lcDU6I+FjLBa8eN+HOh5/07REo9q2PnlerKTmTLGADXl8fGXoTtmfCvRzcRmG5lIdtuD0NLiX72kXgWjLl0+AxAncg2NdFBH5WELGU03CfoX6sYHsuDBkK1/o/X0Au5SEKl3Ipuyhcnwz32eEOxFIeUXAvXT/WsAGxlHUUtiCWMhKGzHALYim3cbiUSnk4C3YJuJbqazwMeeEOhFIeE7ABoZSLBGxBKGVNgA+VU3A7hyEnXAql3JJgECtcPlyDSMqOCEM+uAORlNOwARF5TMJ2BYNM4ULAvchrHPjnfRCROTBkgksRuU3DNQh09sCD98sOAXcBGHLABgRkPtwfXLgCsAUBueDD+2SNgFsQkFFwKSC3GLiG4+WdMFseUHAHh8sOBRuIxWkwHFM/QrCNw5zuPgZmJF2g4DYJk5PWOLhMyyAC1wAH0+2RMIVGwh1go2cXrp3w0+5Z9SMI29vBoZFwlgjCR2eMhmvYFd5j15lgT88Kv8cfGtzBsdGeBP9Cw+Ys2B4L//768GmVK0f8BclJCBMTL9DlAAAAAElFTkSuQmCC);
+    }
+
+    &.-rank2 {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACsBAMAAAC3NzwtAAAAD1BMVEXN0tPL0NGanZ7Gy8zN0tP8f8AzAAAAA3RSTlPYSwBqYTaYAAAEd0lEQVR42u3aa3KjMAwAYAc4QGI4gA05wO6IA2DK/c+0SZ+AjS0JZNqd6mcH8lnGyA+q2pNC/Tz4Wk3TcMkO2wf7jEHnhe30GTon/JHvjpx5cDPNwuWD7bQInQ2ulrDLBa8S5qWs9j5hbspqf08/BnYe2OtpVl8z4LsPj1ngxoddFngKRA7YhmCdATYhuMgA30Pw+D/DTQh2v/Av/Av/FpDvXKtPm51Om4/PW4Ecu+ayV6XUTXaVeXsQF72E37d/uJ0fb129ItQyiYH1kB2pufoLnm13HaevNam1bzmrdQoFPeWBWHbcB2yov8LYH1frG5SXADllR66z7g229I4jn4FUXh8pvyBomqwZw3F8hSvOTEM75zL+i6/8ou8o9UvzyvsTNrypxlIm4sD8rQI1n9J7I6+6jw+44S0n7oTnYgLzqPJLPi6LhgD7nTrshgc+zFxPVHums8cA5sKWNzP9YNjsmEZ3wQ1lJIrAjg1XLLiizKLNce+xJVX28HvMKpm0rzDhksmaJO7cZs4mCda02NAKbHBatLvGFnNY69DSh5jCwBhdA3exZ4lPJrzYs/v2BRN7ebv6K7n4FtSWvubG2sIsm+rIdxTcTVtL3x0HN23zp4xqPuejZrO6Xq3aU7TkJ0a9p5gfRRhSxg1/cfjZzK/Dlwq/jagY+8v3S9eHL18/VzBKL76ng+dcDbb5hjGdVesH6cGIlO/0lYOZInCHHV6Mc67Ka6Hye1BTH3H6FuO/eDPY9rj2G/pxdeU3MACnfoZ+emumKNwC7pGRz6tt6LI5XKISoH8aaEKDMAhHBwv5848JXjWH6x7xfgQ/ScSaunFCG4YjGTRhGHXDuAF38HXNBXGYiEr5ujES5rCBPvlD1w13K+XNZeEctnM4LNtpM3T6FdiGYUqcyjbbsEu/epuffxZwSL5Okbik3GETLhd97feenaKhE83Ew6skNkd0WL5GH8YCrpd9/Qil0fk+4xZtZRTu191z+VwNToj4WMsFrx434c6Hn/TtESj2tY+eV6spOZMsYANeXx8ZehO2Z8K9HNxGYbmUh224PQ0uJfvaReBaMuXT4DECdyDY10UEflYQsZTTcJ+hfqxgey4MGQrX+j9fQC7lIQqXcim7KFyfDPfZ4Q7EUh5RcC9dP9awAbGUdRS2IJYyEobMcAtiKbdxuJRKeTgLdgm4luprPAx54Q6EUh4TsAGhlIsEbEEoZU2AD5VTcDuHISdcCqXckmAQK1w+XINIyo4IQz64A5GU07ABEXlMwnYFg0zhQsC9yGsc+Od9EJE5MGSCSxG5TcM1CHT2wIP3yw4BdwEYcsAGBGQ+3B9cuAKwBQG54MP7ZI2AWxCQUXApILcYuIbj5Z0wWx5QcAeHyw4FG4jFaTAcUz9CsI3DnO4+BmYkXaDgNgmTk9Y4uEzLIALXAAfT7ZEwwMvRcAfY6Htu4doJI22HhO3t4NBIOEsE4aMzRsM17ArvsetM8Jv+chL88ar3FLiDY6M9Cf6Dhs1ZsD0W/vv94dMqV474B1iOCAEEFpn0AAAAAElFTkSuQmCC);
+    }
+
+    &.-rank3 {
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAACsBAMAAAC3NzwtAAAAD1BMVEXRlGrQk2qdb1DHjWfRlGriCQ0CAAAAA3RSTlPYSwBqYTaYAAAEfklEQVR42u3aa3KjMAwAYAc4QGI4gA05wO6IA2DK/c+0SZ+AjS0JZNqd6mcH8lnGyA+q2pNC/Tz4Wk3TcMkO2wf7jEHnhe30GTon/JHvjpx5cDPNwuWD7bQInQ2ulrDLBa8S5qWs9j5hbspqf08/BnYe2OtpVl8z4LsPj1ngxoddFngKRA7YhmCdATYhuMgA30Pw+D/DTQh2v/Av/Av/FpDvXKtPm51Om4/PW4Ecu+ayV6XUTXaVeXsQF72E37d/uJ0fb129ItQyiYH1kB2pufoLnm13HaevNam1bzmrdQoFPeWBWHbcB2yov8LYH1frG5SXADllR66z7g229I4jn4FUXh8pvyBomqwZw3F8hSvOTEM75zL+i6/8ou8o9UvzyvsTNrypxlIm4sD8rQI1n9J7I6+6jw+44S0n7oTnYgLzqPJLPi6LhgD7nTrshgc+zFxPVHums8cA5sKWNzP9YNjsmEZ3wQ1lJIrAjg1XLLiizKLNce+xJVX28HvMKpm0rzDhksmaJO7cZs4mCda02NAKbHBatLvGFnNY69DSh5jCwBhdA3exZ4lPJrzYs/v2BRN7ebv6K7n4FtSWvubG2sIsm+rIdxTcTVtL3x0HN23zp4xqPuejZrO6Xq3aU7TkJ0a9p5gfRRhSxg1/cfjZzK/Dlwq/jagY+8v3S9eHL18/VzBKL76ng+dcDbb5hjGdVesH6cGIlO/0lYOZInCHHV6Mc67Ka6Hye1BTH3H6FuO/eDPY9rj2G/pxdeU3MACnfoZ+emumKNwC7pGRz6tt6LI5XKISoH8aaEKDMAhHBwv5848JXjWH6x7xfgQ/ScSaunFCG4YjGTRhGHXDuAF38HXNBXGYiEr5ujES5rCBPvlD1w13K+XNZeEctnM4LNtpM3T6FdiGYUqcyjbbsEu/epuffxZwSL5Okbik3GETLhd97feenaKhE83Ew6skNkd0WL5GH8YCrpd9/Qil0fk+4xZtZRTu191z+VwNToj4WMsFrx434c6Hn/TtESj2tY+eV6spOZMsYANeXx8ZehO2Z8K9HNxGYbmUh224PQ0uJfvaReBaMuXT4DECdyDY10UEflYQsZTTcJ+hfqxgey4MGQrX+j9fQC7lIQqXcim7KFyfDPfZ4Q7EUh5RcC9dP9awAbGUdRS2IJYyEobMcAtiKbdxuJRKeTgLdgm4luprPAx54Q6EUh4TsAGhlIsEbEEoZU2AD5VTcDuHISdcCqXckmAQK1w+XINIyo4IQz64A5GU07ABEXlMwnYFg0zhQsC9yGsc+Od9EJE5MGSCSxG5TcM1CHT2wIP3yw4BdwEYcsAGBGQ+3B9cuAKwBQG54MP7ZI2AWxCQUXApILcYuIbj5Z0wWx5QcAeHyw4FG4jFaTAcUz9CsI3DnO4+BmYkXaDgNgmTk9Y4uEzLIALXAAfT7ZEwhUbCHWCjZxeunfDTfmHVjyBsbweHRsJZIggfnTEarmFXvEx98jUWgV/HXD8bdTnh99zfkkfDHRwb7UnwHzRszoLtsfDf7w+fVrlyxD9q+Qgx9BFZ3AAAAABJRU5ErkJggg==);
+    }
+
+}
+
+.p-adBox__star {
+    // color: #ffc82e;
+    font-size: 1.1em;
+}
+
+.p-adBox__name {
+    margin-bottom: 4px;
+    font-weight: 700;
+
+    [data-ad="affiliate"] & {
+        font-size: 1.2em;
+        line-height: 1.4;
+    }
+}
+
+.p-adBox__details {
+
+    @include mobile {
+        margin-top: 1em;
+    }
+
+    @include tab {
+        flex: 1 1 auto;
+    }
+
+    // ボタンの位置を右下にしたい
+    [data-ad="affiliate"] &,
+    [data-ad="amazon"] & {
+
+        @include pc {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+
+}
+
+.p-adBox__desc {
+
+    [data-ad="amazon"] & {
+        display: none;
+    }
+}
+
+.p-adBox__btns {
+
+    display: flex;
+    justify-content: space-between;
+    margin: 0 -4px;
+    padding-top: 1.25em;
+    text-align: center;
+
+    @include mobile {
+        flex-wrap: wrap;
+    }
+
+    // ボタンの位置を右下にしたい
+    [data-ad="affiliate"] &,
+    [data-ad="amazon"] & {
+
+        @include pc {
+            margin-top: auto;
+        }
+    }
+
+    [data-ad="ranking"] & {
+        // ボーダーありの時に上下の余白感を合わせる
+        padding-bottom: .5em;
+    }
+}
+
+.p-adBox__btn {
+    display: block;
+    flex: 1 1 100%;
+    margin: 0 4px;
+    padding: .5em;
+    line-height: 1.5;
+    text-decoration: none;
+    text-shadow: 0 -1px rgba(0, 0, 0, .1);
+    border-radius: 3px;
+    box-shadow: var(--swl-btn_shadow);
+    transition: box-shadow .25s, opacity .25s;
+
+    @include mobile {
+        margin-top: 10px;
+        padding: .75em;
+    }
+
+    [data-ad="ranking"] & {
+        padding: .75em;
+    }
+
+
+    :root & {
+        // 詳細度足りないので :root から指定
+        color: #fff;
+    }
+
+    &.-btn1 {
+        background: #309ff7;
+    }
+
+    &.-btn2 {
+        background: #ffad13;
+    }
+
+    &:hover {
+        box-shadow:
+            0 4px 12px rgba(0, 0, 0, .1),
+            0 12px 24px -12px rgba(0, 0, 0, .2);
+        opacity: .9;
+    }
+
+}
+

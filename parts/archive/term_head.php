@@ -40,8 +40,8 @@ $lazy_type = apply_filters( 'swell_mv_single_lazy_off', true ) ? 'none' : SWELL_
 		</figure>
 	<?php endif; ?>
 	<?php if ( $description ) : ?>
-		<div class="p-termHead__desc">
+		<p class="p-termHead__desc">
 			<?=wp_kses( do_shortcode( nl2br( $description ) ), SWELL_Theme::$allowed_text_html )?>
-		</div>
+		</p>
 	<?php endif; ?>
 </div>

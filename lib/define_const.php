@@ -41,7 +41,7 @@ add_action( 'after_setup_theme', function() {
 add_action( 'wp_loaded', __NAMESPACE__ . '\hook_wp_loaded', 11 );
 function hook_wp_loaded() {
 
-	$SETTING      = \SWELL_Theme::get_setting();
+	$SETTING      = SWELL::get_setting();
 	$is_customize = is_customize_preview();
 
 	SWELL::set_use( 'pjax', ( 'pjax' === $SETTING['use_pjax'] && ! $is_customize ) );
@@ -52,6 +52,8 @@ function hook_wp_loaded() {
 	SWELL::set_use( 'card_cache__ex', $SETTING['cache_blogcard_ex'] );
 	SWELL::set_use( 'acc_submenu', $SETTING['acc_submenu'] );
 	SWELL::set_use( 'sp_head_nav', has_nav_menu( 'sp_head_menu' ) );
+	SWELL::set_use( 'fix_header', $SETTING['fix_header'] );
+	SWELL::set_use( 'head_bar', 'head_bar' === $SETTING['phrase_pos'] || $SETTING['show_icon_list'] );
 
 	// NO IMAGE画像
 	$noimg_id              = $SETTING['noimg_id'];
@@ -111,10 +113,28 @@ function hook_wp_loaded() {
 
 
 /**
- * 主な条件分岐タグを定数化
+ * 条件分岐が有効になってから定義するもの
  */
 add_action( 'wp', __NAMESPACE__ . '\hook_wp', 2 );
 function hook_wp() {
 	define( 'IS_TOP', SWELL::is_top() );
 	define( 'IS_TERM', SWELL::is_term() );
+	if ( SWELL::is_top() && ! is_paged() ) {
+
+		if ( 'no' !== SWELL::get_setting( 'header_transparent' ) ) {
+			SWELL::set_use( 'top_header', true );
+		}
+
+		// mvタイプ
+		$mv_type = SWELL::get_setting( 'main_visual_type' );
+		SWELL::set_use( 'mv', 'none' !== $mv_type );
+
+		if ( 'slider' === $mv_type && count( SWELL::get_mv_slide_imgs() ) === 1 ) {
+			SWELL::$site_data['mv'] = 'single';
+		} else {
+			SWELL::$site_data['mv'] = $mv_type;
+		}
+		SWELL::set_use( 'post_slider', 'on' === SWELL::get_setting( 'show_post_slide' ) );
+	}
+
 }

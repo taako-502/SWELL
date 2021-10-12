@@ -1,0 +1,176 @@
+.p-mainVisual {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    &.-margin-on {
+        padding: 8px;
+
+        @include tab {
+            padding: 16px;
+        }
+    }
+
+    &.-height-full {
+        height: calc(var(--swl-mv-height, 100vh) - var(--swl-headerH, 0px) - var(--swl-adminbarH, 0px));
+
+        .p-mainVisual__inner {
+            height: 100%;
+        }
+    }
+}
+
+
+.-height-img {
+
+    // プレースホルダー画像時
+    [src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="] {
+        height: 0px;
+    }
+
+    // スライダーの時だけ
+    .swiper-slide {
+        width: var(--swl-mv_slide_width--pc, 100%);
+
+        @include sp {
+            width: var(--swl-mv_slide_width--sp, 100%);
+        }
+    }
+
+    .p-mainVisual__imgLayer {
+        position: relative;
+        height: auto;
+    }
+
+    .p-mainVisual__img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
+}
+
+.p-mainVisual__inner {
+    position: relative;
+
+    .-height-auto & {
+        height: auto;
+    }
+}
+
+.p-mainVisual__slide {
+    position: relative;
+    height: auto;
+    // transform: perspective(0);
+    overflow: hidden;
+    backface-visibility: hidden;
+
+    .-height-full &,
+    .-height-set & {
+        height: 100%;
+    }
+}
+
+.p-mainVisual__slideLink {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.p-mainVisual__textLayer {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transform: translateX(-50%);
+
+    @include sp {
+        padding: 0 4vw;
+    }
+
+    > .p-blogParts {
+        margin: 1em 0 0;
+        text-align: left;
+    }
+
+    .-height-auto & {
+        position: relative;
+        left: 0;
+        padding-top: 4em;
+        padding-bottom: 4em;
+        transform: none;
+    }
+}
+
+.p-mainVisual__slideTitle {
+    // display: block;
+    // font-weight: bold;
+    // width: 100%;
+    font-size: 5.5vw;
+    line-height: 1.4;
+
+    @include tab {
+        font-size: 28px;
+    }
+}
+
+.p-mainVisual__slideText {
+    // width: 100%;
+    margin-top: .75em;
+    font-size: 3.2vw;
+
+    @include tab {
+        font-size: 16px;
+    }
+
+
+    .-height-full & {
+        font-size: 3.4vw;
+
+        @include tab {
+            font-size: 18px;
+        }
+    }
+}
+
+.p-mainVisual__scroll {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    z-index: 9; //ページネーションの1つ下
+    color: #fff;
+    text-align: center;
+    transform: translateX(-50%);
+    opacity: .75;
+    transition: opacity .25s;
+
+    .-height-full > & {
+        bottom: 24px;
+    }
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.p-mainVisual__scrollArrow {
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+    animation: FloatVertical 3s ease-in-out infinite alternate;
+}
+
+.p-mainVisual__scrollLabel {
+    display: block;
+    padding-top: 4px;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 1px;
+}
