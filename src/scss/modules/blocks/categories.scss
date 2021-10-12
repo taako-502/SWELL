@@ -1,0 +1,33 @@
+// @import "../../foundation/mixin/media";
+@import "../../foundation/placeholder";
+
+// カテゴリーウィジェット & ブロック
+.wp-block-categories-list > li > a,
+.widget_categories > ul > .cat-item > a {
+
+    // padding-left: 1.5em; // サブメニューがアコーディオンのときでもここは変えない
+    // text-decoration: none;
+
+    &::before {
+        position: absolute;
+        top: 50%;
+        left: 2px;
+        display: inline-block;
+        color: inherit;
+        font-family: icomoon !important;
+        line-height: 1;
+        transform: scale(.8) translateX(1px) translateY(-50%);
+        transform-origin: 0 0;
+        opacity: .85;
+        content: "\e92f";
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        // @extend %swellicon;
+    }
+}
+
+.wp-block-categories-list .children {
+    padding-left: 0;
+    list-style: none;
+}
+

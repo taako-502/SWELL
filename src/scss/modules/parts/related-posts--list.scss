@@ -1,0 +1,15 @@
+@import "../../foundation/mixin/media";
+
+// 関連記事
+.p-relatedPosts {
+
+    @media screen and (min-width: 1240px) {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .p-postList__item {
+            width: 49%;
+        }
+    }
+}

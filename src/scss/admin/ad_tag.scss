@@ -4,7 +4,7 @@
 @import "../foundation/placeholder";
 
 // プレビュー用
-@import "../object/project/adBox";
+@import "../../gutenberg/blocks/ad-tag/index.scss";
 
 .p-adBox__star {
     font-size: 1.2em;
@@ -14,20 +14,6 @@
     }
 }
 
-.p-adBox__title {
-
-    &.-rank1 {
-        background-image: url(../../img/icon/icon_rank1.png);
-    }
-
-    &.-rank2 {
-        background-image: url(../../img/icon/icon_rank2.png);
-    }
-
-    &.-rank3 {
-        background-image: url(../../img/icon/icon_rank3.png);
-    }
-}
 
 /**
  * 広告タグ一覧テーブルの表示

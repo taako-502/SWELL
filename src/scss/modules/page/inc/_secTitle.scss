@@ -1,0 +1,24 @@
+
+.c-secTitle {
+
+    position: relative;
+    display: block;
+    margin-bottom: 1.5em;
+    // font-weight: bold;
+    font-size: 4.5vw;
+    // border-left: solid 2px var(--color_main);
+
+    @include tab {
+        font-size: 20px;
+    }
+
+    &::before,
+    &::after {
+        position: absolute;
+        z-index: 0;
+        display: block;
+        box-sizing: inherit;
+        height: 1px;
+    }
+
+}

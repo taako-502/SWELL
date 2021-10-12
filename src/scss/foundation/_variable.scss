@@ -14,19 +14,9 @@ $color_main: #04384c; //メインカラー
 $color_border: rgba(200, 200, 200, .5); //ボーダー
 $color_note: #e03030; //注意書きの赤字
 
-$color_shadow: rgba(0, 0, 0, .12);
-$color_thin_shadow: rgba(0, 0, 0, .06);
-$color_gray: rgba(200, 200, 200, .15);
+// $color_shadow: rgba(0, 0, 0, .12);
+// $color_thin_shadow: rgba(0, 0, 0, .06);
 
 // エディター用
 //----------------------------
 $color_guide: rgba(123, 134, 162, .3);//#b8c7da;
-
-
-// 余白感
-// l-container
-$pad_container_pc: 48px;
-$pad_container_sp: 4vw;
-
-// post_content
-$pad_post_content_pc: 16px;

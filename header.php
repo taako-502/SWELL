@@ -27,26 +27,26 @@
 	SWELL_Theme::get_parts( 'parts/header/header_contents', null, $cache_key );
 
 	// Barba用 wrapper
-	if ( \SWELL_Theme::is_use( 'pjax' ) ) echo '<div data-barba="container" data-barba-namespace="home">';
+	if ( SWELL_Theme::is_use( 'pjax' ) ) {
+		echo '<div data-barba="container" data-barba-namespace="home">';
+	}
 
-	if ( SWELL_Theme::is_top() && ! is_paged() ) {
-		// メインビジュアル
-		if ( 'none' !== $SETTING['main_visual_type'] ) {
-			$cache_key = $SETTING['cache_top'] ? 'mv' : '';
-			SWELL_Theme::get_parts( 'parts/top/main_visual', null, $cache_key );
-		}
+	// メインビジュアル
+	if ( SWELL_Theme::is_use( 'mv' ) ) {
+		$cache_key = $SETTING['cache_top'] ? 'mv' : '';
+		SWELL_Theme::get_parts( 'parts/top/main_visual', null, $cache_key );
+	}
 
-		// MV下通知バー
-		// if ( 1 ) {
-		//	$cache_key = $SETTING['cache_top'] ? 'mv_info' : '';
-		// 	SWELL_Theme::get_parts( 'parts/top/mv_info', null, $cache_key );
-		// }
+	// MV下通知バー
+	// if ( 1 ) {
+	//	$cache_key = $SETTING['cache_top'] ? 'mv_info' : '';
+	// 	SWELL_Theme::get_parts( 'parts/top/mv_info', null, $cache_key );
+	// }
 
-		// 記事スライダー
-		if ( 'on' === $SETTING['show_post_slide'] ) {
-			$cache_key = $SETTING['cache_top'] ? 'post_slider' : '';
-			SWELL_Theme::get_parts( 'parts/top/post_slider', null, $cache_key );
-		}
+	// 記事スライダー
+	if ( SWELL_Theme::is_use( 'post_slider' ) ) {
+		$cache_key = $SETTING['cache_top'] ? 'post_slider' : '';
+		SWELL_Theme::get_parts( 'parts/top/post_slider', null, $cache_key );
 	}
 
 	// タイトル(コンテンツ上)

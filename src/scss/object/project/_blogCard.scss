@@ -1,15 +1,10 @@
 .p-blogCard {
-
     display: block;
     width: 100%;
     max-width: 880px;
     margin: 2.5em auto 2em;
-    text-decoration: none;
+    cursor: pointer;
     transition: box-shadow .25s;
-    // 詳細度上げるための .post_content
-    .post_content & {
-        color: inherit;
-    }
 
     .wp-block-embed > & {
         margin: 0 auto;
@@ -63,12 +58,9 @@
     justify-content: space-between;
     margin: 0;
     padding: 16px;
-    // padding: 1.5em 1em;
-    // border: solid 1px #555;
     transition: box-shadow .25s;
 
     @include tab {
-        // padding: 1.5em;
         padding: 24px;
     }
 
@@ -107,8 +99,10 @@
 
 .p-blogCard__title {
     display: block;
+    color: inherit;
     font-weight: normal;
     line-height: 1.4;
+    text-decoration: none;
 
     @include mobile {
         font-size: 3.6vw;
@@ -157,7 +151,8 @@
         &::before {
             display: block;
             border: solid 1px currentColor;
-            opacity: .9;
+            border-radius: var(--swl-radius--2, 0px);
+            pointer-events: none;
 
             @extend %absLayer;
 
@@ -183,7 +178,6 @@
         @include tab {
             padding-top: 28px;
         }
-
     }
 }
 

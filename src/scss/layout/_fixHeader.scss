@@ -1,0 +1,27 @@
+// memo: 最低限必要なもの以外はmodulesに分離
+.l-fixHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 101;
+    width: 100%;
+    margin-top: var(--swl-adminbarH, 0);
+    transform: translateY(calc(-1 * var(--swl-fix_headerH, 100px)));
+    visibility: hidden;
+    opacity: 0;
+
+    &[data-ready] {
+        transition: all .5s;
+    }
+
+    @include sp {
+        display: none;
+    }
+
+    &::before {
+
+        @extend %absLayer;
+        display: block;
+        background: var(--color_header_bg);
+    }
+}

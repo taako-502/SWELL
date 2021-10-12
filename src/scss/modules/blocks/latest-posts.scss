@@ -1,0 +1,55 @@
+.wp-block-latest-posts,
+.widget_recent_entries {
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.wp-block-latest-posts {
+
+    // clear float
+    li::after {
+        display: block;
+        clear: both;
+        height: 0;
+        visibility: hidden;
+        content: "";
+    }
+
+    &:not(.is-grid) {
+        border-top: solid 1px var(--color_border);
+
+        li {
+            padding: 1em 0;
+            border-bottom: solid 1px var(--color_border);
+        }
+    }
+}
+
+// 「最近の投稿」ウィジェット。 「>」アイコン なし
+.widget_recent_entries {
+
+    li {
+        // position: relative;
+        margin: 0;
+        border-bottom: solid 1px var(--color_border);
+    }
+
+    a {
+        // position: relative;
+        display: block;
+        padding: .75em .5em;
+        color: inherit;
+        line-height: 1.4;
+
+        &:hover {
+            background-color: var(--swl-color_hov_gray);
+        }
+    }
+}
+
+.recent_entries_date {
+    display: block;
+    margin-top: 2px;
+}

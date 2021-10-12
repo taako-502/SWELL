@@ -1,0 +1,44 @@
+@import "../../foundation/mixin/media";
+@import "./pickup-banner.scss";
+
+// スマホでスライド
+.-sp-slide {
+
+    @include sp {
+        // .p-pickupBanners {}
+
+        .p-pickupBanners__list {
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            padding: 0 0 1em;
+            overflow-x: scroll;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+
+            &::-webkit-scrollbar {
+                // width: 4px;
+                height: 2px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: rgba(0, 0, 0, .01);
+                border: none;
+                border-radius: 2px;
+                // box-shadow: inset 0 0 2px #777;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, .2);
+                border-radius: 2px;
+                box-shadow: none;
+            }
+        }
+
+        .p-pickupBanners__item {
+            flex: 0 0 88%;
+            margin: 0 4px;
+            scroll-snap-align: center;
+        }
+    }
+}

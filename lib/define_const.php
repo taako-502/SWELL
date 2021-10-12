@@ -32,7 +32,24 @@ add_action( 'after_setup_theme', function() {
 
 
 /**
- * カスタマイザーのデータを受け取ってから定義する定数群
+ * カスタマイザー以外の設定に依存していて早めにセットしておくもの
+ */
+add_action( 'init', __NAMESPACE__ . '\set_data__init', 8 );
+function set_data__init() {
+	$OPTION       = SWELL::get_option();
+	$is_customize = is_customize_preview();
+
+	SWELL::set_use( 'pjax', ( 'pjax' === $OPTION['use_pjax'] && ! $is_customize ) );
+	SWELL::set_use( 'prefetch', ( 'prefetch' === $OPTION['use_pjax'] && ! $is_customize ) );
+	SWELL::set_use( 'ajax_footer', ( $OPTION['ajax_footer'] && ! $is_customize ) );
+	SWELL::set_use( 'ajax_after_post', ( $OPTION['ajax_after_post'] && ! $is_customize ) );
+	SWELL::set_use( 'card_cache__in', $OPTION['cache_blogcard_in'] );
+	SWELL::set_use( 'card_cache__ex', $OPTION['cache_blogcard_ex'] );
+}
+
+
+/**
+ * カスタマイザーのデータを受け取ってからセットするデータ
  *    プレビュー画面の即時反映データも受け取れる
  *    AJAXでもギリギリ呼び出される
  *    Gutenbergの<ServerSideRender />でも実行されてるっぽい?
@@ -41,17 +58,13 @@ add_action( 'after_setup_theme', function() {
 add_action( 'wp_loaded', __NAMESPACE__ . '\hook_wp_loaded', 11 );
 function hook_wp_loaded() {
 
-	$SETTING      = \SWELL_Theme::get_setting();
+	$SETTING      = SWELL::get_setting();
 	$is_customize = is_customize_preview();
 
-	SWELL::set_use( 'pjax', ( 'pjax' === $SETTING['use_pjax'] && ! $is_customize ) );
-	SWELL::set_use( 'prefetch', ( 'prefetch' === $SETTING['use_pjax'] && ! $is_customize ) );
-	SWELL::set_use( 'ajax_footer', ( $SETTING['ajax_footer'] && ! $is_customize ) );
-	SWELL::set_use( 'ajax_after_post', ( $SETTING['ajax_after_post'] && ! $is_customize ) );
-	SWELL::set_use( 'card_cache__in', $SETTING['cache_blogcard_in'] );
-	SWELL::set_use( 'card_cache__ex', $SETTING['cache_blogcard_ex'] );
 	SWELL::set_use( 'acc_submenu', $SETTING['acc_submenu'] );
 	SWELL::set_use( 'sp_head_nav', has_nav_menu( 'sp_head_menu' ) );
+	SWELL::set_use( 'fix_header', $SETTING['fix_header'] );
+	SWELL::set_use( 'head_bar', 'head_bar' === $SETTING['phrase_pos'] || $SETTING['show_icon_list'] );
 
 	// NO IMAGE画像
 	$noimg_id              = $SETTING['noimg_id'];
@@ -111,10 +124,31 @@ function hook_wp_loaded() {
 
 
 /**
- * 主な条件分岐タグを定数化
+ * 条件分岐が有効になってから定義するもの
  */
 add_action( 'wp', __NAMESPACE__ . '\hook_wp', 2 );
 function hook_wp() {
 	define( 'IS_TOP', SWELL::is_top() );
 	define( 'IS_TERM', SWELL::is_term() );
+
+	// mvタイプ
+	$mv_type = SWELL::get_setting( 'main_visual_type' );
+
+	// mv種別はpjax時のCSS判定に必要なのでページ分岐せずに取得
+	if ( 'slider' === $mv_type && count( SWELL::get_mv_slide_imgs() ) === 1 ) {
+		SWELL::$site_data['mv'] = 'single';
+	} else {
+		SWELL::$site_data['mv'] = $mv_type;
+	}
+
+	if ( SWELL::is_top() && ! is_paged() ) {
+
+		if ( 'no' !== SWELL::get_setting( 'header_transparent' ) ) {
+			SWELL::set_use( 'top_header', true );
+		}
+
+		SWELL::set_use( 'mv', 'none' !== $mv_type );
+		SWELL::set_use( 'post_slider', 'on' === SWELL::get_setting( 'show_post_slide' ) );
+	}
+
 }

@@ -1,0 +1,703 @@
+
+//---------------------------------------
+// ボックス装飾
+//---------------------------------------
+// 見出し note風
+// h2{
+//     padding: 0.58em 1em;
+//     background: repeating-linear-gradient(180deg, #eee 0 1px, transparent 1px .5em);
+// }
+
+.has-border {
+
+    &.-border01 {
+        border: var(--border01);
+    }
+
+    &.-border02 {
+        border: var(--border02);
+    }
+
+    &.-border03 {
+        border: var(--border03);
+    }
+
+    &.-border04 {
+        border: var(--border04);
+    }
+}
+
+
+// has-
+p.has-background,
+div.has-background,
+.has-border,
+// シンプルボックス
+.is-style-border_sg,
+.is-style-border_dg,
+.is-style-border_sm,
+.is-style-border_dm,
+.is-style-bg_gray,
+.is-style-bg_main,
+.is-style-bg_main_thin,
+.is-style-bg_stripe,
+.is-style-bg_grid,
+.is-style-stitch,
+// .is-style-bg_border,
+.is-style-dent_box,
+.is-style-emboss_box,
+.is-style-note_box {
+    padding: 1.5em;
+}
+
+@include tab {
+
+    div.has-border,
+    div.has-background,
+    div.is-style-border_sg,
+    div.is-style-border_dg,
+    div.is-style-border_sm,
+    div.is-style-border_dm,
+    div.is-style-bg_gray,
+    div.is-style-bg_main,
+    div.is-style-bg_main_thin,
+    div.is-style-bg_stripe,
+    div.is-style-bg_grid,
+    div.is-style-stitch,
+    div.is-style-note_box,
+    div.is-style-dent_box,
+    div.is-style-emboss_box {
+        padding: 2em;
+    }
+}
+
+
+// 旧ボーダースタイル
+.is-style-border_sg {
+    border: solid 1px $color_border;
+}
+
+.is-style-border_dg {
+    border: dashed 1px $color_border;
+}
+
+.is-style-border_sm {
+    border: solid 1px var(--color_main);
+}
+
+.is-style-border_dm {
+    border: dashed 1px var(--color_main);
+}
+
+
+// 旧背景色スタイル
+.is-style-bg_main {
+    color: #fff;
+    background-color: var(--color_main);
+}
+
+.is-style-bg_main_thin {
+    background-color: var(--color_main_thin);
+}
+
+.is-style-bg_gray {
+    background: var(--color_gray);
+}
+
+// 背景が白 / テキスト 黒 で固定された要素
+.is-style-emboss_box,
+.is-style-sticky_box,
+.is-style-balloon_box2 {
+    color: #333;
+    background-color: #fff;
+}
+
+
+// ストライプ
+.is-style-bg_stripe {
+    position: relative;
+    background: linear-gradient(-45deg, transparent 25%, var(--color_gray) 25%, var(--color_gray) 50%, transparent 50%, transparent 75%, var(--color_gray) 75%, var(--color_gray));
+    background-size: 6px 6px;
+    background-clip: padding-box;
+}
+
+
+// 角に折り目
+.is-style-crease {
+    $size: 20px;
+    $calc_size: calc(.5em + 20px);
+
+    position: relative;
+    padding: $calc_size;
+    padding-right: $calc_size;
+    background-color: #f7f7f7;
+
+    &::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 0;
+        background-color: inherit;
+        border-color: var(--color_content_bg) var(--color_content_bg) rgba(0, 0, 0, .1) rgba(0, 0, 0, .1);
+        border-style: solid;
+        border-width: 0 $size $size 0;
+        box-shadow: -1px 1px 1px rgba(0, 0, 0, .05);
+        content: "";
+    }
+}
+
+// 方眼グリッド
+.is-style-bg_grid {
+    background-image:
+        linear-gradient(transparent calc(100% - 1px), var(--color_gray) 50%, var(--color_gray)),
+        linear-gradient(90deg, transparent calc(100% - 1px), var(--color_gray) 50%, var(--color_gray));
+    background-repeat: repeat;
+    background-size: 16px 16px;
+}
+
+
+// 注釈エリア -> スティッチ
+.is-style-note_box,
+.is-style-stitch {
+    position: relative;
+    display: block;
+    color: #5f5a59;
+    font-style: normal;
+    background: #f7f7f7;
+
+    &::before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        display: block;
+        width: calc(100% - 12px);
+        height: calc(100% - 12px);
+        border: 1px dashed rgba(200, 200, 200, .6);
+        border-radius: inherit;
+        content: "";
+        pointer-events: none;
+    }
+}
+
+//ボックス装飾
+.is-style-dent_box {
+    background: rgba(0, 0, 0, .05);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .1);
+}
+
+.is-style-emboss_box {
+
+    border-top: solid 2px var(--color_main);
+    box-shadow: var(--swl-box_shadow);
+}
+
+.is-style-kakko_box {
+    position: relative;
+    padding: 2em;
+
+    &::before {
+        top: 0;
+        left: 0;
+        border-top: solid 1px;
+        border-left: solid 1px;
+    }
+
+    &::after {
+        right: 0;
+        bottom: 0;
+        border-right: solid 1px;
+        border-bottom: solid 1px;
+    }
+
+    // border-colorがborderより後に来るように。
+    &::before,
+    &::after {
+        position: absolute;
+        display: inline-block;
+        width: 2.25em;
+        height: 2em;
+        border-color: var(--color_main);
+        content: "";
+    }
+}
+
+.is-style-big_kakko_box {
+    position: relative;
+    padding: 2em;
+
+    &::before {
+        bottom: 0;
+        left: 0;
+        border-top: solid 1px;
+        border-bottom: solid 1px;
+        border-left: solid 1px;
+    }
+
+    &::after {
+        right: 0;
+        bottom: 0;
+        border-top: solid 1px;
+        border-right: solid 1px;
+        border-bottom: solid 1px;
+    }
+
+    // border-colorがborderより後に来るように。
+    &::before,
+    &::after {
+        position: absolute;
+        display: inline-block;
+        width: .75em;
+        height: 100%;
+        border-color: var(--color_main);
+        content: "";
+    }
+}
+
+//横棒
+.is-style-border_left {
+    padding-left: 10px;
+    border-left: solid 2px currentColor;
+}
+
+//付箋
+.is-style-sticky_box {
+    position: relative;
+    width: fit-content;
+    min-width: 6em;
+    padding: .75em 1em;
+    line-height: 1.4;
+    border-left: solid 8px var(--color_main);
+    box-shadow: var(--swl-box_shadow);
+
+}
+
+//ふきだし
+.is-style-balloon_box {
+    position: relative;
+    width: fit-content;
+    min-width: 6em;
+    padding: .5em 1.25em;
+    color: #fff;
+    line-height: 1.4;
+    background-color: var(--color_main);
+    border-radius: 2px;
+
+    &::before {
+        position: absolute;
+        bottom: -22px;
+        left: 1.25em;
+        width: 0;
+        height: 0;
+        border: 12px solid transparent;
+        border-top-color: var(--color_main);
+        visibility: visible;
+        content: "";
+    }
+}
+
+.is-style-balloon_box2 {
+    position: relative;
+    width: fit-content;
+    min-width: 6em;
+    padding: .5em 1.25em;
+    line-height: 1.4;
+    border: solid 1px;
+    border-radius: 2px;
+
+    &::before {
+        position: absolute;
+        bottom: -7px;
+        left: 1.25em;
+        width: 12px;
+        height: 12px;
+        background: inherit;
+        border-right: 1px solid;
+        border-bottom: 1px solid;
+        transform: rotate(45deg);
+        visibility: visible;
+        content: "";
+    }
+}
+
+.is-style-balloon_box,
+.is-style-balloon_box2 {
+
+    &.has-text-align-center {
+        margin-right: auto;
+        margin-left: auto;
+    }
+}
+
+.is-style-balloon_box.has-text-align-center {
+
+    &::before {
+        left: calc(50% - 12px);
+    }
+}
+
+.is-style-balloon_box2.has-text-align-center {
+
+    &::before {
+        left: 50%;
+        transform: translateX(-50%) rotate(45deg);
+    }
+}
+
+
+//---------------------------------------
+// アイコン付きテキスト
+//---------------------------------------
+// [class*="is-style-icontext_"] {
+// }
+// .is-style-icontext_check{
+// }
+
+
+//---------------------------------------
+// アイコンボックス（小）
+//---------------------------------------
+.is-style-icon_good,
+.is-style-icon_bad,
+.is-style-icon_book,
+.is-style-icon_pen,
+.is-style-icon_info,
+.is-style-icon_announce {
+    position: relative;
+    padding: 1em 1em 1em 4.25em;
+    line-height: 1.6;
+    border-radius: 2px;
+
+    &::before {
+        position: absolute;
+        top: 50%;
+        left: 1.25em;
+        display: inline-block;
+        font-size: inherit;
+        font-family: icomoon;
+        transform: translateY(-50%) scale(1.5);
+        content: "";
+    }
+
+    &::after {
+        position: absolute;
+        top: 25%;
+        left: 3.25em;
+        display: block;
+        width: 0;
+        height: 50%;
+        border-right: 2px dashed;
+        transform: scaleX(.5);
+        opacity: .5;
+        content: "";
+    }
+}
+
+.is-style-icon_good {
+    background: var(--color_icon_good_bg);
+    border-color: var(--color_icon_good);
+
+    &::before {
+        color: var(--color_icon_good);
+        content: "\e8dc";
+    }
+
+    &::after {
+        border-right-color: var(--color_icon_good);
+    }
+}
+
+.is-style-icon_bad {
+    background: var(--color_icon_bad_bg);
+    border-color: var(--color_icon_bad);
+
+    &::before {
+        color: var(--color_icon_bad);
+        content: "\e8db";
+    }
+
+    &::after {
+        border-right-color: var(--color_icon_bad);
+    }
+}
+
+.is-style-icon_info {
+    background: var(--color_icon_info_bg);
+    border-color: var(--color_icon_info);
+
+    &::before {
+        color: var(--color_icon_info);
+        content: "\e91d";
+    }
+
+    &::after {
+        border-right-color: var(--color_icon_info);
+    }
+}
+
+.is-style-icon_announce {
+    background: var(--color_icon_announce_bg);
+    border-color: var(--color_icon_announce);
+
+    &::before {
+        color: var(--color_icon_announce);
+        content: "\e913";
+    }
+
+    &::after {
+        border-right-color: var(--color_icon_announce);
+    }
+}
+
+.is-style-icon_pen {
+    background: var(--color_icon_pen_bg);
+    border-color: var(--color_icon_pen);
+
+    &::before {
+        color: var(--color_icon_pen);
+        content: "\e934";
+    }
+
+    &::after {
+        border-right-color: var(--color_icon_pen);
+    }
+}
+
+.is-style-icon_book {
+    background: var(--color_icon_book_bg);
+    border-color: var(--color_icon_book);
+
+    &::before {
+        color: var(--color_icon_book);
+        content: "\e91a";
+    }
+
+    &::after {
+        border-right-color: var(--color_icon_book);
+    }
+}
+
+
+//---------------------------------------
+// アイコンボックス（大）
+//---------------------------------------
+
+[class*="is-style-big_icon_"] {
+
+    @include tab {
+        padding: 2.5em 2em 2em;
+    }
+
+    &::before {
+        position: absolute;
+        top: -1px; //pタグのボーダーサイズの半分
+        left: .75em;
+        padding: 8px;
+        color: #fff;
+        font-size: 1.35em;
+        font-family: icomoon;
+        line-height: 1;
+        border: solid 2px;
+        border-color: var(--color_content_bg);
+        border-radius: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.is-style-big_icon_point {
+    border-color: var(--color_icon_point);
+
+    &::before {
+        background: var(--color_icon_point);
+        content: "\e915";
+    }
+}
+
+.is-style-big_icon_good,
+.is-style-big_icon_check {
+    border-color: var(--color_icon_check);
+
+    &::before {
+        background: var(--color_icon_check);
+
+        @extend .icon-check::before;
+    }
+}
+
+.is-style-big_icon_bad,
+.is-style-big_icon_batsu {
+    border-color: var(--color_icon_batsu);
+
+    &::before {
+        background: var(--color_icon_batsu);
+
+        @extend .icon-batsu::before;
+    }
+}
+
+.is-style-big_icon_hatena {
+    border-color: var(--color_icon_hatena);
+
+    &::before {
+        background: var(--color_icon_hatena);
+        content: "\e917";
+    }
+}
+
+.is-style-big_icon_caution {
+    border-color: var(--color_icon_caution);
+
+    &::before {
+        padding-top: 7px;
+        padding-bottom: 9px;
+        background: var(--color_icon_caution);
+        content: "\e916";
+    }
+}
+
+.is-style-big_icon_memo {
+    border-color: var(--color_icon_memo);
+
+    &::before {
+        background: var(--color_icon_memo);
+        content: "\e929";
+    }
+}
+
+
+.is-style-browser_mac {
+    position: relative;
+    padding: 32px 0 0;
+    // padding: 0;
+    overflow: hidden;
+    color: #333;
+    background: #fff;
+    border: solid 6px #dfe1e5;
+    border-top: none;
+    border-radius: 8px;
+    box-shadow: 0 1px 16px -2px var(--swl-color_shadow);
+
+    .wp-block-group__inner-container {
+        max-height: 400px;
+        padding: 1.5em;
+        overflow-y: auto;
+
+        @include mobile {
+            max-height: 56vw;
+        }
+    }
+
+    &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 32px;
+        padding: 0;
+        background: #dfe1e5 url(../img/style/macdot.svg) no-repeat left 8px top 50% / auto 12px;
+        content: "";
+    }
+
+    &.wp-block-image,
+    &.wp-block-video {
+        width: 100%;
+        width: fit-content !important;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    &.wp-block-image img,
+    &.wp-block-video video {
+        display: block;
+        margin: 0 auto;
+        border-radius: 2px 2px 4px 4px;
+        box-shadow: 0 0 0 2px #dfe1e5;
+    }
+
+    .components-resizable-box__container {
+        display: block;
+    }
+
+    // & > figure > figcaption,
+    > figcaption {
+        position: absolute;
+        top: 6px;
+        left: 72px;
+        max-width: calc(100% - 80px);
+        margin: 0 !important;
+        padding: 6px 8px 6px;
+        font-size: 12px;
+        line-height: 1;
+        background: #fff;
+        border-radius: 6px 6px 0 0;
+    }
+
+
+    &.wp-block-image.size_s img {
+        max-width: 100%;
+        padding: 2% 5%;
+    }
+
+    &.wp-block-image.size_xs img {
+        max-width: 100%;
+        padding: 2% 12%;
+    }
+}
+
+
+.is-style-desktop {
+    position: relative;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    // overflow: hidden;
+
+    &.wp-block-image img,
+    &.wp-block-video video,
+    .wp-block-group__inner-container {
+        display: block;
+        margin: 0 auto;
+        border: solid 8px #3f4244;
+        border-bottom-width: 16px;
+        border-radius: 6px;
+    }
+
+    .wp-block-group__inner-container {
+        width: 100%;
+        max-width: 800px;
+        min-height: 440px;
+        max-height: 440px;
+        padding: 1.5em 1.5em;
+        overflow-y: auto;
+
+        @include sp {
+            max-width: 640px;
+            min-height: 360px;
+            max-height: 360px;
+        }
+
+        @include mobile {
+            min-height: 56vw;
+            max-height: 56vw;
+        }
+    }
+
+    &::before {
+        position: relative;
+        display: block;
+        order: 1;
+        width: 100%;
+        height: 48px;
+        margin-top: -4px;
+        padding: 0;
+        background: url(../img/style/desktop.svg) no-repeat top center / auto 48px;
+        content: "";
+    }
+
+    > figcaption {
+        order: 3;
+    }
+
+}
+

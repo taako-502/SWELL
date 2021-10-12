@@ -1,0 +1,37 @@
+.l-fixHeader {
+
+    .l-fixHeader__gnav {
+        order: 0;
+    }
+
+    [data-scrolled="true"] &[data-ready] {
+        transform: translateY(0px) !important;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .-body-solid & {
+        box-shadow: 0 2px 4px var(--swl-color_shadow);
+    }
+
+}
+
+.l-fixHeader__inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: var(--color_header_text);
+}
+
+.l-fixHeader__logo {
+    display: flex;
+    align-items: center;
+    order: 0;
+    margin-right: 24px;
+    padding: 16px 0;
+    line-height: 1;
+}

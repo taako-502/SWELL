@@ -1,0 +1,95 @@
+@import "../../foundation/mixin/media";
+
+/*
+ブロック
+    .wp-block-calendar
+        table.wp-calendar-table
+        nav.wp-calendar-nav
+
+ウィジェット
+    .widget_calendar
+        .calendar_wrap
+            table.wp-calendar-table
+            nav.wp-calendar-nav
+ */
+
+// tableのラッパー
+.wp-block-calendar,
+.calendar_wrap {
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
+    padding: 24px;
+    color: #333;
+    background: #fff;
+    border: 1px solid var(--swl-color_border);
+    border-radius: var(--swl-radius--4, 0px);
+
+    @include tab {
+        font-size: 14px;
+    }
+}
+
+
+.wp-block-calendar,
+.widget_calendar {
+
+    .wp-calendar-table {
+        width: 100%;
+        text-align: center;
+        border: none;
+
+        caption {
+            padding: 0 0 .75em;
+            color: #40464d; //.wp-block-calendarに合わせる
+            line-height: 1;
+
+            @include tab {
+                font-size: 13px;
+            }
+        }
+    }
+
+    thead th {
+        padding: 0 0 10px;
+        color: inherit !important;
+        font-weight: 700 !important;
+        background: none !important;
+        border: none !important;
+    }
+
+    tbody {
+
+        a {
+            display: block;
+            color: #fff !important;
+            line-height: 36px;
+            background-color: var(--color_main);
+        }
+    }
+
+    tbody td {
+        padding: 0;
+        font-family: arial, sans-serif;
+        line-height: 36px;
+        text-align: center;
+        background: #f7f7f7;
+        border: 1px solid #fff;
+    }
+
+
+    .pad {
+        background: none;
+    }
+
+}
+
+.wp-calendar-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+
+    a {
+        color: inherit;
+    }
+}

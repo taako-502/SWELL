@@ -1,6 +1,9 @@
 .wp-block-columns {
     display: flex;
-    flex-wrap: wrap;
+
+    @include sp {
+        flex-wrap: wrap;
+    }
 }
 
 .wp-block-column {

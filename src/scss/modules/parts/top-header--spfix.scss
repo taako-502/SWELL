@@ -1,0 +1,38 @@
+//ヘッダー透過設定時、かつトップページでしか読み込まれないファイル
+
+@import "../../foundation/mixin/media";
+@import "./inc/top-header";
+
+
+@include sp {
+
+    [data-scrolled="false"] [data-spfix="1"] {
+        background: none;
+        box-shadow: none;
+
+        .l-header__inner {
+            color: var(--swl-color_top_header, #fff);
+        }
+
+        .c-headLogo__img.-common {
+            display: none;
+        }
+    }
+
+    [data-scrolled="true"] [data-spfix="1"] {
+
+        .l-header__inner {
+            color: inherit;
+        }
+
+        .c-headLogo__img.-top {
+            display: none;
+        }
+
+        .l-header__spNav {
+            top: 0;
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+}

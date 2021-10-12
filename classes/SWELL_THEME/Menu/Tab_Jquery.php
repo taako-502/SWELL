@@ -18,7 +18,7 @@ class Tab_Jquery {
 
 		add_settings_section(
 			$section_name,
-			'ファイルの読み込み',
+			'jQueryの読み込み',
 			'',
 			$page_name
 		);

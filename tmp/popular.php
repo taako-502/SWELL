@@ -41,12 +41,7 @@ while ( have_posts() ) :
 		</div>
 		<?php
 			// ウィジェット
-			$meta = get_post_meta( $the_id, 'swell_meta_show_widget_bottom', true );
-			if ( is_active_sidebar( 'page_bottom' ) && '1' !== $meta ) :
-			echo '<div class="w-pageBottom">';
-			dynamic_sidebar( 'page_bottom' );
-			echo '</div>';
-			endif;
+			SWELL_Theme::outuput_content_widget( 'page', 'bottom' );
 		?>
 	</div>
 </main>

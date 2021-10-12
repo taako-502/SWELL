@@ -31,6 +31,11 @@ trait Get {
 	 * フレーム設定を取得する
 	 */
 	public static function get_frame_class() {
+
+		// キャッシュ取得
+		$cached_class = wp_cache_get( 'frame_class', 'swell' );
+		if ( $cached_class ) return $cached_class;
+
 		$content_frame = self::get_setting( 'content_frame' );
 		$frame_scope   = self::get_setting( 'frame_scope' );
 
@@ -58,7 +63,9 @@ trait Get {
 			}
 		}
 
-		return apply_filters( 'swell_frame_class', $frame_class );
+		$frame_class = apply_filters( 'swell_frame_class', $frame_class );
+		wp_cache_set( 'frame_class', $frame_class, 'swell' );
+		return $frame_class;
 	}
 
 
@@ -85,9 +92,9 @@ trait Get {
 		}
 
 		// ヒーローヘッダーの時だけトップページに付与するクラス
-		$header_transparent = str_replace( '_', '-', self::get_setting( 'header_transparent' ) ); // no | t-fff | t-000
-		if ( self::is_top() && $header_transparent !== 'no' ) {
-			$header_class .= ' -transparent -' . $header_transparent;
+		if ( self::is_use( 'top_header' ) ) {
+			$header_transparent = str_replace( '_', '-', self::get_setting( 'header_transparent' ) ); // no | t-fff | t-000
+			$header_class      .= ' -transparent -' . $header_transparent;
 		}
 
 		wp_cache_set( 'header_class', $header_class, 'swell' );
@@ -306,15 +313,15 @@ trait Get {
 		$echo      = $args['echo'] ?? false;
 		// $placeholder = $args['placeholder'] ?? ''; // 後方互換用
 
-		$class .= ' -no-lb';
-
 		$thumb_id  = 0;
 		$thumb_url = '';
 
 		if ( $term_id ) {
 
 			$thumb_id = self::get_term_thumb_id( $term_id );
-
+			if ( is_string( $thumb_id ) ) {
+				$thumb_url = $thumb_id; // 昔はURLデータを保存してた
+			}
 		} elseif ( has_post_thumbnail( $post_id ) ) {
 
 			$thumb_id = get_post_thumbnail_id( $post_id );
@@ -828,8 +835,9 @@ trait Get {
 		$echo = $args['echo'] ?? false;
 		$size = $args['size'] ?? 'full';
 
-		$html  = '';
-		$image = wp_get_attachment_image_src( $img_id, $size, false );
+		$html     = '';
+		$noscript = '';
+		$image    = wp_get_attachment_image_src( $img_id, $size, false );
 
 		if ( ! $image ) return '';
 
@@ -887,6 +895,10 @@ trait Get {
 			}
 
 			if ( 'lazysizes' === $loading ) {
+				// noscript画像
+				$noscript = '<noscript><img src="' . esc_attr( $src ) . '" class="' . esc_attr( $attrs['class'] ) . '" alt=""></noscript>';
+
+				// lazyloadクラス追加はnoscript画像生成後に。
 				$attrs['class'] .= ' lazyload';
 				if ( $width && $height ) {
 					$attrs['data-aspectratio'] = $width . '/' . $height;
@@ -903,10 +915,12 @@ trait Get {
 			$img_props .= ' ' . $name . '="' . esc_attr( $val ) . '"';
 		}
 
+		$img = "<img $img_props >" . $noscript;
+
 		if ( $echo ) {
-			echo "<img $img_props >"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $img; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		}
-		return "<img $img_props >";
+		return $img;
 	}
 
 
@@ -966,6 +980,9 @@ trait Get {
 		for ( $i = 1; $i < 6; $i++ ) {
 			$imgid  = self::get_setting( "slider{$i}_imgid" );
 			$imgurl = self::get_setting( "slider{$i}_img" ); // 古いデータ
+			if ( 1 === $i && ! $imgid && ! $imgurl ) {
+				$imgurl = 'https://picsum.photos/1600/1200';
+			}
 			if ( $imgid || $imgurl ) {
 				$data[ $i ] = [
 					'id'     => $imgid,
@@ -1010,8 +1027,6 @@ trait Get {
 			] );
 		} elseif ( $pc_imgurl ) {
 			$picture_img = '<img src="' . esc_url( $pc_imgurl ) . '" alt="" class="' . $img_class . '" decoding="async">';
-		} elseif ( 1 === $i ) {
-			$picture_img = '<img src="https://picsum.photos/1600/1200" alt="" class="' . $img_class . '" decoding="async">';
 		}
 
 		// SP用画像
@@ -1120,6 +1135,41 @@ trait Get {
 
 		}
 		return absint( $meta );
+	}
+
+
+	/**
+	 * SNS CTAのデータ
+	 */
+	public static function get_sns_cta_data() {
+		$cached_data = wp_cache_get( 'sns_cta_data', 'swell' );
+		if ( $cached_data ) return $cached_data;
+
+		$data = apply_filters( 'swell_get_sns_cta_data', [
+			'tw_id'    => self::get_setting( 'show_tw_follow_btn' ) ? self::get_setting( 'tw_follow_id' ) : '',
+			'fb_url'   => self::get_setting( 'show_fb_like_box' ) ? self::get_setting( 'fb_like_url' ) : '',
+			'insta_id' => self::get_setting( 'show_insta_follow_btn' ) ? self::get_setting( 'insta_follow_id' ) : '',
+		] );
+
+		wp_cache_set( 'sns_cta_data', $data, 'swell' );
+		return $data;
+	}
+
+	/**
+	 * ページ種別スラッグ（キャッシュ用）
+	 */
+	public static function get_page_type_slug() {
+		if ( self::is_top() && ! is_paged() ) {
+			return 'top';
+		} elseif ( is_single() ) {
+			return 'single';
+		} elseif ( is_page() ) {
+			return 'page';
+		} elseif ( is_archive() ) {
+			return 'archive';
+		} else {
+			return 'other';
+		}
 	}
 
 }

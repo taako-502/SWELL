@@ -20,10 +20,10 @@
 }
 
 .admin-bar {
-    --swl-adminbar_height: 32px;
+    --swl-adminbarH: 32px;
 
     @media screen and (max-width: 782px) {
-        --swl-adminbar_height: 46px;
+        --swl-adminbarH: 46px;
     }
 }
 

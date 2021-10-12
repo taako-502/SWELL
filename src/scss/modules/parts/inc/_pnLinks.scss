@@ -1,0 +1,117 @@
+.p-pnLinks {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    margin: 2em 0; //%postParts_margin;
+
+    &.-thumb-on {
+
+        @include sp {
+            display: block;
+
+            .p-pnLinks__item {
+                width: 100%;
+            }
+        }
+    }
+}
+
+
+.p-pnLinks__item {
+    position: relative;
+    width: 49%;
+    font-size: 3vw;
+
+    @include tab {
+        font-size: 13px;
+    }
+
+    &::before {
+        position: absolute;
+        top: 50%;
+        z-index: 1;
+        display: block;
+        width: .5em;
+        height: .5em;
+        // background-color: rgba(#fff, .2);
+        content: "";
+        pointer-events: none;
+
+    }
+
+    &.-prev {
+
+        &::before {
+            left: .35em;
+            border-bottom: solid 1px currentColor;
+            border-left: solid 1px currentColor;
+            transform: rotate(45deg) translateY(-50%);
+        }
+
+        .p-pnLinks__thumb {
+            margin-right: 8px;
+        }
+
+    }
+
+    &.-next {
+
+        .p-pnLinks__link {
+            justify-content: flex-end;
+        }
+
+        &::before {
+            right: .35em;
+            border-right: solid 1px currentColor;
+            border-bottom: solid 1px currentColor;
+            transform: rotate(-45deg) translateY(-50%);
+        }
+
+        .p-pnLinks__thumb {
+            order: 2;
+            margin-left: 8px;
+        }
+    }
+}
+
+.p-pnLinks__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    min-height: 4em;
+    padding: .5em 1em;
+    color: inherit;
+    line-height: 1.4;
+    text-decoration: none;
+    border-radius: var(--swl-radius--2, 0px);
+    transition: box-shadow .25s;
+}
+
+.p-pnLinks__thumb {
+    width: 48px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: var(--swl-radius--4, 0px);
+
+    @include tab {
+        width: 72px;
+        height: 48px;
+    }
+}
+
+@include tab {
+
+    .p-pnLinks__title {
+        transition: transform .25s;
+    }
+
+    .-prev > .p-pnLinks__link:hover .p-pnLinks__title {
+        transform: translateX(4px);
+    }
+
+    .-next > .p-pnLinks__link:hover .p-pnLinks__title {
+        transform: translateX(-4px);
+    }
+}

@@ -1,0 +1,28 @@
+// カテゴリ・タグ
+.p-articleMetas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 0 1px;
+    font-size: 12px;
+}
+
+.p-articleMetas.-top {
+    margin-top: .5em;
+
+    .p-articleMetas__termList {
+        font-size: 11px;
+    }
+}
+
+.p-articleMetas__termList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0 .25em 0 0;
+}
+
+.p-articleMetas__times,
+.p-articleMetas__author {
+    margin: .25em .25em .25em 0;
+}

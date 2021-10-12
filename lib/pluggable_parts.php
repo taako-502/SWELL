@@ -99,22 +99,23 @@ if ( ! function_exists( 'swl_parts__blog_card' ) ) :
 		$card_excerpt = $nodesc ? '' : '<span class="p-blogCard__excerpt">' . esc_html( $excerpt ) . '</span>';
 
 		// target, rel
-		$props = ( $is_blank ) ? ' target="_blank"' : '';
-		$rel   = $rel ?: ( $is_blank ? 'noopener noreferrer' : '' );
+		$link_props = ( $is_blank ) ? ' target="_blank"' : '';
+		$rel        = $rel ?: ( $is_blank ? 'noopener noreferrer' : '' );
 		if ( $rel ) {
-			$props .= ' rel="' . esc_attr( $rel ) . '"';
+			$link_props .= ' rel="' . esc_attr( $rel ) . '"';
 		}
 
 		?>
-			<a href="<?=esc_url( $url )?>" class="<?=esc_attr( $card_class )?>" data-type="<?=esc_attr( $type )?>"<?=$props?>>
-			<div class="p-blogCard__inner">
-				<span class="p-blogCard__caption"><?=esc_html( $caption )?></span>
-				<?=$card_thumb?>
-				<div class="p-blogCard__body">
-					<span class="p-blogCard__title"><?=esc_html( $title )?></span>
-					<?=$card_excerpt?>
+			<div class="<?=esc_attr( $card_class )?>" data-type="<?=esc_attr( $type )?>" data-onclick="clickLink">
+				<div class="p-blogCard__inner">
+					<span class="p-blogCard__caption"><?=esc_html( $caption )?></span>
+					<?=$card_thumb?>
+					<div class="p-blogCard__body">
+						<a class="p-blogCard__title" href="<?=esc_url( $url )?>"<?=$link_props?>><?=esc_html( $title )?></a>
+						<?=$card_excerpt?>
+					</div>
 				</div>
-			</div></a>
+			</div>
 		<?php
 	}
 endif;

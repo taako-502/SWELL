@@ -1,5 +1,41 @@
-@charset "UTF-8";
 
 :root {
+
+    // 余白間
+    --swl-pad_post_content: 0;
+    --swl-pad_container: 4vw;
+
+    @include pc {
+        --swl-pad_post_content: 16px;
+        --swl-pad_container: 48px;
+    }
+
+    --swl-color_hov_gray: rgba(150, 150, 150, .05);
+
+    // ボーダー
     --swl-color_border: rgba(200, 200, 200, .5);
+
+    // shadowカラー
+    --swl-color_shadow: rgba(0, 0, 0, .12);
+
+    // 記事コンテンツの浮き出し系
+    --swl-box_shadow:
+        0 2px 4px rgba(0, 0, 0, .05),
+        0 4px 4px -4px rgba(0, 0, 0, .1);
+
+    // 画像系のシャドウ
+    --swl-img_shadow:
+        0 2px 8px rgba(0, 0, 0, .1),
+        0 4px 8px -4px rgba(0, 0, 0, .2);
+
+    // %buttonShadow
+    // ボタン系のシャドウ
+    --swl-btn_shadow:
+        0 2px 2px rgba(0, 0, 0, .1),
+        0 4px 8px -4px rgba(0, 0, 0, .2);
+
+
+    // box-shadow:
+    //     0 2px 4px rgba(0, 0, 0, .1),
+    //     0 4px 4px -4px rgba(0, 0, 0, .1);
 }

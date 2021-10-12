@@ -174,6 +174,16 @@ Customizer::add( $section, 'post_relation_type', [
 	],
 ] );
 
+Customizer::add( $section, 'related_post_orderby', [
+	'label'   => '並び順',
+	'type'    => 'select',
+	'choices' => [
+		'date'     => '新着順',
+		'modified' => '更新順',
+		'rand'     => 'ランダム',
+	],
+] );
+
 
 // ■ コメントエリアの設定
 Customizer::big_title( $section, 'comment_area', [

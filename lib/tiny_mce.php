@@ -89,7 +89,7 @@ function set_content_style( $mceInit ) {
 	}
 
 	// editor用インラインスタイル取得
-	$add_styles = \SWELL_Theme\Style::output( 'editor' );
+	$add_styles = \SWELL_Theme\Style::get_editor_css();
 	$add_styles = str_replace( '\\', '', $add_styles );  // contentのバックスラッシュで変になってしまうのでtinymceは別途指定
 	$add_styles = preg_replace( '/(?:\n|\r|\r\n)/su', '', $add_styles );
 	$add_styles = str_replace( '"', "'", $add_styles );

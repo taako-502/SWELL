@@ -1,0 +1,270 @@
+.c-shareBtns {
+    margin: 2em 0; //%postParts_margin;
+}
+
+.c-shareBtns__message {
+    width: 100%;
+    padding: .25em 0 .75em;
+    text-align: center;
+
+    .__text {
+        position: relative;
+        display: inline-block;
+        padding: 0 1.5em;
+        line-height: 1.5;
+
+        &::before,
+        &::after {
+            position: absolute;
+            bottom: 0;
+            display: block;
+            width: 1px;
+            height: 1.5em;
+            background-color: currentColor;
+            content: "";
+        }
+
+        &::before {
+            left: 0;
+            transform: rotate(-40deg);
+        }
+
+        &::after {
+            right: 0;
+            transform: rotate(40deg);
+        }
+    }
+}
+
+.c-shareBtns__list {
+    display: flex;
+    justify-content: center;
+}
+
+.c-shareBtns__item {
+
+    &.-facebook {
+        color: #3b5998;
+    }
+
+    &.-twitter {
+        color: #1da1f2;
+    }
+
+    &.-hatebu {
+        color: #00a4de;
+    }
+
+    &.-pocket {
+        color: #ef3f56;
+    }
+
+    &.-pinterest {
+        color: #bb0f23;
+    }
+
+    &.-line {
+        color: #00c300;
+    }
+
+    &.-copy {
+        position: relative;
+        color: #909494;
+    }
+}
+
+.c-shareBtns:not(.-style-btn-small) {
+
+    .c-shareBtns__item {
+        flex: 1;
+    }
+}
+
+.c-shareBtns__btn {
+    display: block;
+    color: inherit;
+    text-align: center;
+    text-decoration: none;
+    background-color: currentColor;
+    border-radius: var(--swl-radius--2, 0px);
+    cursor: pointer;
+}
+
+.c-shareBtns__icon {
+    display: block;
+    color: #fff;
+    font-size: 4.5vw;
+    line-height: 1;
+    // transition: color .25s;
+
+    @include tab {
+        font-size: 18px;
+    }
+
+    &::before {
+        display: block;
+        color: inherit;
+    }
+}
+
+// FIX シェアボタン
+$btn_width: 30px;
+$btn_height: 30px;
+
+.-fix.c-shareBtns {
+    position: fixed;
+    top: 50%;
+    left: 8px;
+    z-index: 99;
+    width: $btn_width;
+    margin: 0;
+    border: none !important;
+    transform: translateY(-50%);
+
+    @include sp {
+        display: none !important;
+    }
+
+    .c-shareBtns__list {
+        flex-direction: column;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    .c-shareBtns__item {
+        flex-basis: 100%;
+        width: 100%;
+        max-width: 100%;
+        margin: 4px 0;
+        padding: 0;
+    }
+
+    .c-shareBtns__btn {
+        padding: 0;
+        // border-radius: 0;
+    }
+
+    .c-shareBtns__icon {
+
+        &::before {
+            height: $btn_height;
+            font-size: 16px;
+            line-height: $btn_height;
+        }
+    }
+}
+
+.c-urlcopy {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    .-copied {
+        position: absolute;
+        top: 8px;
+        opacity: 0;
+    }
+
+    .-to-copy {
+        top: 0;
+        opacity: 1;
+        // transition-duration: 0s;
+    }
+
+    &.-done {
+
+        .-to-copy {
+            top: 8px;
+            opacity: 0;
+            transition-duration: 0s;
+        }
+
+        .-copied {
+            top: 0;
+            opacity: 1;
+            transition-duration: .25s;
+        }
+
+        + .c-copyedPoppup {
+            visibility: visible;
+            opacity: 1;
+        }
+    }
+
+    .c-shareBtns__icon {
+        transition: opacity .25s, top .25s;
+    }
+}
+
+.c-urlcopy__text {
+    display: block;
+}
+
+.c-urlcopy__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.c-copyedPoppup {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 2px);
+    color: #808080;
+    font-size: 10px;
+    white-space: nowrap;
+    text-align: right;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .25s, visibility .25s;
+
+    @include tab {
+        right: 50%;
+        font-size: 11px;
+        transform: translateX(50%);
+    }
+
+    .-fix.c-shareBtns & {
+        right: auto;
+        bottom: 50%;
+        left: 100%;
+        transform: translateX(8px) translateY(50%);
+    }
+}
+
+.c-big-urlcopy {
+    margin: 1em 0;
+
+    .c-shareBtns__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .c-urlcopy__text {
+        margin-left: .75em;
+        padding-top: 1px;
+        font-size: .8em;
+    }
+}
+
+
+.c-shareBtns.-style-btn-small {
+
+    &.has-big-copybtn {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .c-big-urlcopy {
+        width: 16em;
+        max-width: 100%;
+        margin: 8px;
+    }
+}

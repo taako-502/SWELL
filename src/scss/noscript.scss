@@ -1,0 +1,21 @@
+@charset "UTF-8";
+
+.lazyload {
+    display: none !important;
+}
+
+.p-blogCard__title {
+    text-decoration: underline;
+}
+
+.p-mainVisual .swiper:not(.swiper-initialized),
+.p-postSlider__swiper:not(.swiper-initialized) {
+    visibility: visible;
+}
+
+.p-mainVisual__scroll,
+.swiper-pagination,
+.swiper-button-prev,
+.swiper-button-next {
+    display: none;
+}
