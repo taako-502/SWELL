@@ -14,6 +14,10 @@
     transition: bottom .4s;
 
     @include sp {
+        display: block;
+    }
+
+    @include sp {
         // .l-footer__innerと同じ値
         padding-bottom: calc(env(safe-area-inset-bottom) * .5);
     }

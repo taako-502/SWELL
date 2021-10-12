@@ -66,10 +66,7 @@ a {
     position: fixed;
     bottom: -60px;
     left: 0;
-
-    @include pc {
-        display: none;
-    }
+    display: none; // moduleファイルが読み込まれるまで none
 
     &::before {
 

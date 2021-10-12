@@ -27,11 +27,11 @@ function load_css_async( $html, $handle, $href, $media ) {
 		'swell_luminous',
 		'swell-parts/footer',
 		'swell-parts/comments',
+		// 'swell-parts/fix_bottom_menu',
 		// 'swell-parts/pn-links--normal',
 		// 'swell-parts/pn-links--simple',
 		// 'swell-parts/sns-cta',
 		// 'swell-parts/fix-header',
-		// 'swell-parts/fix_bottom_menu',
 	];
 
 	if ( in_array( $handle, $target_handles, true ) ) {
