@@ -15,7 +15,7 @@ if ( ! $table_exists ) {
 		id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
 		title text NOT NULL,
 		data text DEFAULT NULL,
-		order_no bigint(20) unsigned NOT NULL UNIQUE,
+		order_no bigint(20) unsigned NOT NULL,
 		PRIMARY KEY (id)
 	) {$collate};";
 

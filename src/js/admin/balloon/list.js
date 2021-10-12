@@ -10,7 +10,7 @@ import { useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { Button } from '@wordpress/components';
 import { addQueryArgs } from '@wordpress/url';
-import { Icon, close, shortcode, stack } from '@wordpress/icons';
+import { Icon, close, shortcode, stack, chevronLeft, chevronRight } from '@wordpress/icons';
 
 /**
  * @SWELL dependencies
@@ -66,7 +66,7 @@ export default function BalloonList() {
 		const regEx = new RegExp(escapedSearchWord.toLowerCase().trim());
 
 		setFilteredBalloonList(
-			balloonList.filter(({ title }) => {
+			(balloonList || []).filter(({ title }) => {
 				return title.toLowerCase().match(regEx);
 			})
 		);
@@ -147,6 +147,39 @@ export default function BalloonList() {
 					setShowCodeId();
 				});
 		}
+	};
+
+	// ふきだしデータの並び替え
+	const sortBalloon = (idx, direction) => {
+		if (idx === undefined || !direction) return;
+		if (direction !== 'prev' && direction !== 'next') return;
+
+		// 並び替える二つの吹き出しをセット
+		const balloon1 =
+			direction === 'prev' ? filteredBalloonList[idx - 1] : filteredBalloonList[idx];
+		const balloon2 =
+			direction === 'prev' ? filteredBalloonList[idx] : filteredBalloonList[idx + 1];
+
+		if (!balloon1 || !balloon2) return;
+
+		// 並び替え
+		apiFetch({
+			path: `${swellApiPath}-sort`,
+			method: 'POST',
+			data: { balloon1, balloon2 },
+		})
+			.then((res) => {
+				// state更新
+				setBalloonList(res);
+				setShowCodeId();
+			})
+			.catch((res) => {
+				setApiMessage({
+					status: 'error',
+					text: res.message || 'エラーが発生しました。',
+				});
+				setShowCodeId();
+			});
 	};
 
 	if (!isApiLoaded) {
@@ -248,6 +281,28 @@ export default function BalloonList() {
 									data-id={id}
 								>
 									<div key={idx} className='swl-setting-balloon__item__inner'>
+										{idx !== 0 && (
+											<Button
+												className='swl-setting-balloon__arrow -prev'
+												label='前に移動'
+												onClick={() => {
+													sortBalloon(idx, 'prev');
+												}}
+											>
+												<Icon icon={chevronLeft} />
+											</Button>
+										)}
+										{idx !== filteredBalloonList.length - 1 && (
+											<Button
+												className='swl-setting-balloon__arrow -next'
+												label='次に移動'
+												onClick={() => {
+													sortBalloon(idx, 'next');
+												}}
+											>
+												<Icon icon={chevronRight} />
+											</Button>
+										)}
 										<div className='swl-setting-balloon__btns'>
 											<Button
 												className='swl-setting-balloon__copyBtn swl-setting-balloon__btn'
@@ -268,8 +323,9 @@ export default function BalloonList() {
 													}
 												}}
 											>
-												<Icon icon={shortcode} data-role='open' />
-												<Icon icon={close} data-role='close' />
+												<Icon
+													icon={showCodeId === id ? close : shortcode}
+												/>
 											</Button>
 											<Button
 												isSecondary

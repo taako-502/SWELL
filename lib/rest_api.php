@@ -370,7 +370,7 @@ function hook_rest_api_init() {
 					return $results;
 				} else {
 					// 全件取得
-					$sql  = "SELECT * FROM {$table_name} ORDER BY id DESC";
+					$sql  = "SELECT * FROM {$table_name} ORDER BY order_no DESC";
 					$rows = $wpdb->get_results( $sql, ARRAY_A );
 
 					if ( empty( $rows ) ) {
@@ -384,6 +384,7 @@ function hook_rest_api_init() {
 							'id'    => $row['id'],
 							'title' => $row['title'],
 							'data'  => json_decode( $row['data'], true ),
+							'order' => $row['order_no'],
 						];
 					}
 
@@ -551,6 +552,66 @@ function hook_rest_api_init() {
 			$results = $wpdb->get_row( $query, ARRAY_A );
 
 			$results['data'] = json_decode( $results['data'], true );
+			return $results;
+		},
+	]);
+
+	// ふきだし設定ページ（並び替え）
+	register_rest_route('wp/v2', '/swell-balloon-sort', [
+		'methods'             => 'POST',
+		'permission_callback' => function( $request ) {
+			return current_user_can( 'create_speech_balloon' );
+		},
+		'callback'            => function( $request ) {
+			$balloon1 = isset( $request['balloon1'] ) ? $request['balloon1'] : null;
+			$balloon2 = isset( $request['balloon2'] ) ? $request['balloon2'] : null;
+
+			global $wpdb;
+			$table_name = 'swell_balloon';
+
+			// 不正なパラメータの場合は修了
+			if ( ! $balloon1 || ! $balloon2 ) wp_die( json_encode( [] ) );
+
+			// テーブルが存在しない場合は終了
+			if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) wp_die( json_encode( [] ) );
+
+			// 二つのレコードの並び順を入れ替え
+			$result1 = $wpdb->update(
+				$table_name,
+				[ 'order_no' => $balloon2['order'] ],
+				[ 'id' => $balloon1['id'] ],
+				[ '%d' ]
+			);
+
+			$result2 = $wpdb->update(
+				$table_name,
+				[ 'order_no' => $balloon1['order'] ],
+				[ 'id' => $balloon2['id'] ],
+				[ '%d' ]
+			);
+
+			// アップデート失敗の場合は終了
+			if ( $result1 === false || $result2 === false ) wp_die();
+
+			// 全件取得
+			$sql  = "SELECT * FROM {$table_name} ORDER BY order_no DESC";
+			$rows = $wpdb->get_results( $sql, ARRAY_A );
+
+			if ( empty( $rows ) ) {
+				return [];
+			}
+
+			$results = [];
+
+			foreach ( $rows as $row ) {
+				$results[] = [
+					'id'    => $row['id'],
+					'title' => $row['title'],
+					'data'  => json_decode( $row['data'], true ),
+					'order' => $row['order_no'],
+				];
+			}
+
 			return $results;
 		},
 	]);
