@@ -25,7 +25,7 @@ endif;
 // 関連記事
 $show_meta = get_post_meta( $the_id, 'swell_meta_show_related', true );
 if ( 'hide' !== $show_meta && ( 'show' === $show_meta || SWELL_Theme::get_setting( 'show_related_posts' ) ) ) :
-	SWELL_Theme::get_parts( 'parts/single/related_post_list', $the_id );
+	SWELL_Theme::get_parts( 'parts/single/related_post_list' );
 endif;
 
 // 関連記事前ウィジェット

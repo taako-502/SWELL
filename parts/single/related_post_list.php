@@ -1,15 +1,8 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) exit;
-/**
- * 関連記事
- */
 
-$the_id  = $variable ?: get_the_ID();
-$SETTING = SWELL_Theme::get_setting();
-
-// 無視するリスト
+$the_id = get_the_ID();
 $not_in = [ $the_id ];
-
 $maxnum = apply_filters( 'swell_related_post_maxnum', 8 );
 
 /**
@@ -35,6 +28,7 @@ if ( $priority_posts ) {
 	$maxnum = $maxnum > 0 ? $maxnum : 0;
 }
 
+
 /**
  * ここから普通に関連記事を取得
  */
@@ -44,10 +38,10 @@ $args = [
 	'post_status'         => 'publish',
 	'no_found_rows'       => true,
 	'ignore_sticky_posts' => true,
-	'orderby'             => 'rand',
+	'orderby'             => SWELL_Theme::get_setting( 'related_post_orderby' ),
 ];
 
-if ( 'category' === $SETTING['post_relation_type'] ) {
+if ( 'category' === SWELL_Theme::get_setting( 'post_relation_type' ) ) {
 
 	// カテゴリ情報から関連記事をランダムに呼び出す
 	$categories = get_the_category( $the_id );
@@ -77,20 +71,21 @@ if ( 'category' === $SETTING['post_relation_type'] ) {
 ?>
 <section class="l-articleBottom__section -related">
 	<?php
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<h2 class="l-articleBottom__title c-secTitle">' . $SETTING['related_post_title'] . '</h2>';
+		echo '<h2 class="l-articleBottom__title c-secTitle">' .
+			wp_kses( SWELL_Theme::get_setting( 'related_post_title' ), SWELL_Theme::$allowed_text_html ) .
+		'</h2>';
 
-		$list_class = 'p-postList p-relatedPosts -type-' . $SETTING['related_post_style'];
+		$list_class = 'p-postList p-relatedPosts -type-' . SWELL_Theme::get_setting( 'related_post_style' );
 
 		// 優先記事だけで一杯の場合
 		if ( 0 === $maxnum ) :
 
-			echo '<ul class="' . esc_attr( $list_class ) . '">';
+		echo '<ul class="' . esc_attr( $list_class ) . '">';
 
-			// 優先的に表示する関連記事
-			echo $priority_list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		// 優先的に表示する関連記事
+		echo $priority_list; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
-			echo '</ul>';
+		echo '</ul>';
 
 		else :
 

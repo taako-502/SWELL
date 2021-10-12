@@ -421,6 +421,7 @@ trait Default_Settings {
 			'comments_title'          => __( 'Comments', 'swell' ),
 			'related_post_style'      => 'card',
 			'post_relation_type'      => 'category',
+			'related_post_orderby'    => 'date',
 			'page_link_style'         => 'normal',
 			'show_page_link_thumb'    => false,
 			'pn_link_is_same_term'    => false,
