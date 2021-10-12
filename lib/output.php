@@ -197,8 +197,6 @@ function output_noscript_css() {
 }
 
 
-
-
 /**
  * 記事ごとのカスタムCSSの出力
  */

@@ -213,7 +213,7 @@ class Theme_Data {
 		self::set_variables();
 		self::set_default();
 
-		add_action( 'init', '\SWELL_Theme::set_options', 8 ); // set_settings よりも前で。
+		add_action( 'init', '\SWELL_Theme::set_options', 5 ); // set_settings よりも前。かつ、init8,9でこのデータ使うことに注意。
 		add_action( 'wp_loaded', '\SWELL_Theme::set_editors', 10 ); // set_settings よりも前で。
 		add_action( 'wp_loaded', '\SWELL_Theme::set_settings', 10 ); // ※早すぎるとカスタマイザーの値が受け取れない
 	}

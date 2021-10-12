@@ -4,6 +4,7 @@ namespace SWELL_Theme\Load_Files;
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 
+// \SWELL_Theme::set_optionsより後にフック
 add_action( 'init', function() {
 
 	if ( ! \SWELL_Theme::is_separate_css() ) return;
@@ -25,23 +26,21 @@ add_action( 'init', function() {
 
 
 // add_action( 'wp_body_open', __NAMESPACE__ . '\wp_enqueue_scripts__ttt', 8 );
-function wp_enqueue_scripts__ttt() {
-	?>
-<style>
-.dump-blocks{
-	padding:10px;
-	background:#efefef;
-	position: fixed;
-	width: 240px;
-	bottom: 10px;
-	right: 10px;
-	height: 400px;
-	overflow: auto;
-	z-index: 100;
-}
-</style>
-	<?php
-	echo '<pre class="dump-blocks u-fz-s pc_">';
-	var_dump( array_keys( \SWELL_Theme::$used_blocks ) );
-	echo '</pre>';
-}
+// function wp_enqueue_scripts__ttt() {
+// 	echo '<style>
+// .dump-blocks{
+// 	padding:10px;
+// 	background:#efefef;
+// 	position: fixed;
+// 	width: 240px;
+// 	bottom: 10px;
+// 	right: 10px;
+// 	height: 400px;
+// 	overflow: auto;
+// 	z-index: 100;
+// }
+// </style>';
+// 	echo '<pre class="dump-blocks u-fz-s pc_">';
+// 	var_dump( array_keys( \SWELL_Theme::$used_blocks ) );
+// 	echo '</pre>';
+// }

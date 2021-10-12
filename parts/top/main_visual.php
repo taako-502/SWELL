@@ -2,7 +2,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $mv_class = 'p-mainVisual';
-$mv_type  = SWELL_Theme::site_data( 'mv' ); // $SETTING['main_visual_type'];
+$mv_type  = SWELL_Theme::site_data( 'mv' );
 
 // スライド / １枚画像 / 動画 で処理を分ける
 if ( 'single' === $mv_type ) {

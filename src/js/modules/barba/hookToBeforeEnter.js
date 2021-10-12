@@ -28,6 +28,33 @@ export function resetMeta({ newHead }) {
 	newHeadTags.forEach((item) => {
 		head.appendChild(item);
 	});
+
+	// 遷移前ページのCSS-link一覧
+	const oldStyles = [];
+	const oldStyleLinks = [...head.querySelectorAll("link[type='text/css']")];
+	oldStyleLinks.forEach((link) => {
+		const cssID = link.getAttribute('id');
+		if (!cssID) return;
+		oldStyles[cssID] = link;
+	});
+
+	// 遷移先ページのCSS-link一覧
+	const newStyles = [];
+	const newStyleLinks = [...newHead.querySelectorAll("link[type='text/css']")];
+	newStyleLinks.forEach((link) => {
+		const cssID = link.getAttribute('id');
+		if (!cssID) return;
+		newStyles[cssID] = link;
+	});
+
+	Object.keys(newStyles).forEach((id) => {
+		// まだ読み込んでいないCSSだけheadに追加する
+		if (!oldStyles[id]) {
+			head.appendChild(newStyles[id]);
+			/* eslint no-console: 0 */
+			console.log('added css:', id);
+		}
+	});
 }
 
 // head内SWELLスタイルをリセット

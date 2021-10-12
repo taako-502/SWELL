@@ -564,7 +564,7 @@ class Style {
 
 
 	/**
-	 * パーツ化したCSSファイルの読み込み(キャッシュ対象外・link読み込み)
+	 * パーツ化したCSSファイルの読み込み(キャッシュ対象外)
 	 */
 	public static function get_nocache_modules() {
 
@@ -573,18 +573,49 @@ class Style {
 			self::add_module( 'loaded-animation' );
 		}
 
-		// MV
-		if ( SWELL::is_use( 'mv' ) ) {
-			self::add_module( 'parts/main-visual--' . SWELL::site_data( 'mv' ) );
-		};
-
-		// 記事スライダー
-		if ( SWELL::is_use( 'post_slider' ) ) {
-			self::add_module( 'parts/post-slider' );
-		}
-
 		// フッター
 		self::add_module( 'parts/footer' );
+
+		// pjax有効化どうかで処理を分岐
+		if ( SWELL::is_use( 'pjax' ) ) {
+			$mv = SWELL::site_data( 'mv' );
+			if ( 'none' !== $mv ) {
+				self::add_module( 'parts/main-visual--' . SWELL::site_data( 'mv' ) );
+			}
+			if ( 'on' === SWELL::get_setting( 'show_post_slide' ) ) {
+				self::add_module( 'parts/post-slider' );
+			}
+			self::add_module( 'pages' );
+		} else {
+			// MV
+			if ( SWELL::is_use( 'mv' ) ) {
+				self::add_module( 'parts/main-visual--' . SWELL::site_data( 'mv' ) );
+			};
+
+			// 記事スライダー
+			if ( SWELL::is_use( 'post_slider' ) ) {
+				self::add_module( 'parts/post-slider' );
+			}
+
+			// ページ種別ごとのファイル
+			if ( is_home() ) {
+				self::add_module( 'page/home' );
+			} elseif ( is_singular( 'lp' ) ) {
+				self::add_module( 'page/lp' );
+			} elseif ( is_single() ) {
+				self::add_module( 'page/single' );
+			} elseif ( is_page() ) {
+				self::add_module( 'page/page' );
+			} elseif ( SWELL::is_term() ) {
+				self::add_module( 'page/term' );
+			} elseif ( is_author() ) {
+				self::add_module( 'page/author' );
+			} elseif ( is_archive() ) {
+				self::add_module( 'page/archive' );
+			} elseif ( is_404() ) {
+				self::add_module( 'page/404' );
+			}
+		}
 
 		// コメント
 		if ( is_single() || is_page() ) {
@@ -592,25 +623,6 @@ class Style {
 			if ( SWELL::is_show_comments( $the_id ) ) {
 				self::add_module( 'parts/comments' );
 			};
-		}
-
-		// ページ種別ごとのファイル
-		if ( is_home() ) {
-			self::add_module( 'page/home' );
-		} elseif ( is_singular( 'lp' ) ) {
-			self::add_module( 'page/lp' );
-		} elseif ( is_single() ) {
-			self::add_module( 'page/single' );
-		} elseif ( is_page() ) {
-			self::add_module( 'page/page' );
-		} elseif ( SWELL::is_term() ) {
-			self::add_module( 'page/term' );
-		} elseif ( is_author() ) {
-			self::add_module( 'page/author' );
-		} elseif ( is_archive() ) {
-			self::add_module( 'page/archive' );
-		} elseif ( is_404() ) {
-			self::add_module( 'page/404' );
 		}
 
 		// カスタマイザープレビュー時

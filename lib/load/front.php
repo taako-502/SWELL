@@ -20,7 +20,7 @@ function wp_enqueue_scripts() {
 	}
 }
 
-// CSSを非同期で読み込む
+// 一部のCSSを非同期で読み込む
 function load_css_async( $html, $handle, $href, $media ) {
 
 	$target_handles = [
@@ -84,7 +84,7 @@ function load_front_scripts() {
 
 
 /**
- * フロント用のスクリプト
+ * フロント用のスタイル
  */
 function load_front_styles() {
 
@@ -190,8 +190,7 @@ function load_separated_styles() {
 		} else {
 			wp_enqueue_style( 'swell_blocks', T_DIRE_URI . '/assets/css/blocks.css', [], SWELL_VERSION );
 		}
-}
-
+	}
 }
 
 function load_separated_css( $css_path, $name ) {

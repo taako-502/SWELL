@@ -391,6 +391,10 @@ trait Status {
 	 * 必要なCSSだけを読み込むかどうか
 	 */
 	public static function is_separate_css() {
+
+		if ( is_customize_preview() ) return false;
+		if ( self::is_use( 'pjax' ) ) return false;
+
 		$flag = (bool) \SWELL_Theme::get_option( 'separate_style' );
 		return apply_filters( 'swell_is_separate_css', $flag );
 	}
