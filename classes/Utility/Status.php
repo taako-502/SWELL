@@ -309,19 +309,27 @@ trait Status {
 	 */
 	public static function is_show_comments( $post_id ) {
 
-		$is_show = false;
+		$is_show = true;
 
-		if ( is_single() ) {
+		if ( post_password_required( $post_id ) ) {
+			// パスワード保護記事ではコメントエリア非表示
+			$is_show = false;
 
-			$show_comments = self::get_setting( 'show_comments' );
+		} elseif ( ! comments_open( $post_id ) && intval( get_comments_number( $post_id ) ) < 1 ) {
+			// コメント非許可、かつコメントがまだない時
+			$is_show = false;
+
+		} elseif ( is_single() ) {
+			// カスタマイザーの設定に依存
+			$is_show = self::get_setting( 'show_comments' );
+
+			// メタで上書き
 			$comments_meta = get_post_meta( $post_id, 'swell_meta_show_comments', true );
-			$comments_open = comments_open( $post_id ) && ! post_password_required( $post_id );
-
-			$is_show = ( $comments_meta !== 'hide' && ( $comments_meta === 'show' || $show_comments ) );
-			$is_show = $is_show && $comments_open;
-
-		} elseif ( is_page() ) {
-			$is_show = comments_open( $post_id ) && ! post_password_required( $post_id );
+			if ( 'hide' === $comments_meta ) {
+				$is_show = false;
+			} elseif ( 'show' === $comments_meta ) {
+				$is_show = true;
+			}
 		}
 
 		return apply_filters( 'swell_is_show_comments', $is_show );
