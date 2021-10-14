@@ -7,6 +7,51 @@
 // @import "../object/parts/balloon";
 @import "../../gutenberg/blocks/balloon/index.scss";
 
+.-to-next {
+
+    opacity: 0;
+    transition: .4s;
+
+    @media (min-width: 783px) {
+        transform: translateX(32px);
+    }
+
+    @media (max-width: 782px) {
+        transform: translateY(32px);
+    }
+}
+
+.-to-prev {
+
+    opacity: 0;
+    transition: .4s;
+
+    @media (min-width: 783px) {
+        transform: translateX(-32px);
+    }
+
+    @media (max-width: 782px) {
+        transform: translateY(-32px);
+    }
+}
+
+.swl-setting-balloon__item.-hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.swl-setting-balloon__item.-show {
+    opacity: 1;
+
+    @media (min-width: 783px) {
+        transform: translateX(0);
+    }
+
+    @media (max-width: 782px) {
+        transform: translateY(0);
+    }
+}
+
 
 .toplevel_page_swell_balloon {
     background: #fefefe;
@@ -65,6 +110,7 @@
 
     @media screen and (max-width: 782px) {
         width: 100%;
+        margin-left: 24px;
     }
 }
 
@@ -87,23 +133,26 @@
 
 .swl-setting-balloon__arrow {
     position: absolute;
-    top: 50%;
+    top: calc(50% - 13px);
     z-index: 2;
     width: 26px;
     min-width: 0 !important;
     height: 26px;
-    margin-top: -13px;
+    // margin-top: -13px;
     padding: 0;
     background-color: #fefefe !important;
     border-radius: 50%;
     box-shadow: inset 0 0 0 1px currentColor;
-    visibility: hidden;
-    opacity: 0;
     transition: opacity .25s;
 
-    .swl-setting-balloon__item__inner:hover & {
-        visibility: visible;
-        opacity: 1;
+    @media (min-width: 783px) {
+        visibility: hidden;
+        opacity: 0;
+
+        .swl-setting-balloon__item__inner:hover & {
+            visibility: visible;
+            opacity: 1;
+        }
     }
 
     &.-prev {
@@ -112,6 +161,33 @@
 
     &.-next {
         right: -13px;
+    }
+
+    // SP
+    @media (max-width: 782px) {
+        box-shadow: none;
+
+        &.-prev {
+            // display: none;
+            top: calc(50% - 26px - 4px);
+            right: calc(100% + 4px);
+            left: auto;
+            // bottom: 4px;
+
+            svg {
+                transform: rotate(90deg);
+            }
+        }
+
+        &.-next {
+            top: calc(50% + 4px);
+            right: calc(100% + 4px);
+            // bottom: 4px;
+
+            svg {
+                transform: rotate(90deg);
+            }
+        }
     }
 }
 
@@ -148,7 +224,7 @@
     position: relative;
     display: block;
     width: 100%;
-    padding: 8px 12px;
+    padding: 12px 16px;
     color: inherit;
     text-decoration: none;
     background: #fdfdfd;

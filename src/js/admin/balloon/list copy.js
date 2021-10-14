@@ -163,15 +163,8 @@ export default function BalloonList() {
 		if (!balloon1 || !balloon2) return;
 
 		const li1 = document.querySelector(`.swl-setting-balloon__item[data-id="${balloon1.id}"]`);
-		li1.classList.add('-to-next');
-
-		const li2 = document.querySelector(`.swl-setting-balloon__item[data-id="${balloon2.id}"]`);
-		li2.classList.add('-to-prev');
-
+		li1.classList.add('-to-prev');
 		setTimeout(() => {
-			li1.classList.add('-hide');
-			li2.classList.add('-hide');
-
 			// 並び替え
 			apiFetch({
 				path: `${swellApiPath}-sort`,
@@ -182,20 +175,6 @@ export default function BalloonList() {
 					// state更新
 					setBalloonList(res);
 					setShowCodeId();
-
-					setTimeout(() => {
-						li1.classList.remove('-hide');
-						li1.classList.add('-show');
-						li2.classList.remove('-hide');
-						li2.classList.add('-show');
-					}, 100);
-
-					setTimeout(() => {
-						li1.classList.remove('-show');
-						li2.classList.remove('-show');
-						li1.classList.remove('-to-next');
-						li2.classList.remove('-to-prev');
-					}, 1100);
 				})
 				.catch((res) => {
 					setApiMessage({
@@ -204,7 +183,7 @@ export default function BalloonList() {
 					});
 					setShowCodeId();
 				});
-		}, 400);
+		}, 1000);
 	};
 
 	if (!isApiLoaded) {
