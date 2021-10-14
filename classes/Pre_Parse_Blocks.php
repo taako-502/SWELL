@@ -21,7 +21,7 @@ class Pre_Parse_Blocks {
 		add_filter( 'render_block', [ __CLASS__, 'render_check' ], 10, 2 );
 
 		// メインコンテンツをパースしてチェック
-		if ( is_singular( 'post' ) || is_page() ) {
+		if ( is_single() || is_page() || ( is_home() && ! is_front_page() ) ) {
 			$post = get_post( get_queried_object_id() );
 			if ( $post ) {
 				self::parse_content( $post->post_content );
