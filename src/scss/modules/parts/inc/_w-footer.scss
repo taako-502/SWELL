@@ -1,0 +1,38 @@
+.w-beforeFooter {
+    margin: 6em auto 3em;
+    overflow: hidden;
+}
+
+
+.w-footer {
+
+    @include pc {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.w-footer__box {
+
+    @include pc {
+        flex: 1;
+        padding: 1em;
+    }
+
+    @include sp {
+        padding: 1em 0;
+
+        & + .w-footer__box {
+            margin-top: 1em;
+        }
+    }
+}
+
+
+// フッターウィジェット
+.c-widget__title.-footer {
+
+    &::before {
+        background-color: currentColor !important;
+    }
+}

@@ -33,12 +33,13 @@ $filter_class = ( 'nofilter' === $filter_name ) ? '' : "c-filterLayer -$filter_n
 <div id="top_title_area" class="l-topTitleArea <?=esc_attr( $filter_class )?>">
 	<?php
 		if ( $ttlbg_url ) {
-			echo '<img src="' . esc_attr( $ttlbg_url ) . '" class="l-topTitleArea__img c-filterLayer__img u-obf-cover">';
+			echo '<img src="' . esc_attr( $ttlbg_url ) . '" class="l-topTitleArea__img c-filterLayer__img u-obf-cover" decoding="async">';
 		} elseif ( $ttlbg_id ) {
 			SWELL_Theme::get_image( $ttlbg_id, [
 				'class'       => 'l-topTitleArea__img c-filterLayer__img u-obf-cover',
 				'loading'     => apply_filters( 'swell_top_area_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type,
 				'aria-hidden' => 'true',
+				'decoding'    => 'async',
 				'echo'        => true,
 			]);
 		}

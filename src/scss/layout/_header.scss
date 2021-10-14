@@ -12,45 +12,9 @@
 
         @include sp {
             position: sticky;
-            top: var(--swl-adminbar_height, 0);
+            top: var(--swl-adminbarH, 0);
         }
     }
-}
-
-// ヘッドバー
-.l-header__bar {
-    position: relative;
-    width: 100%;
-
-    @include sp {
-        display: none;
-    }
-
-    .c-catchphrase {
-        width: 50%;
-        margin-right: auto;
-        padding: 4px 0;
-        overflow: hidden;
-        color: inherit;
-        font-size: 12px;
-        line-height: 14px;
-        letter-spacing: .2px;
-        white-space: nowrap;
-    }
-
-    .c-iconList {
-
-        .c-iconList__link {
-            margin: 0;
-            padding: 4px 6px;
-        }
-    }
-}
-
-.l-header__barInner {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
 }
 
 .l-header__inner {
@@ -109,6 +73,7 @@
 
 .c-headLogo__link {
     display: block;
+    text-decoration: none;
 
     .-img & {
         height: 100%;
@@ -153,6 +118,4 @@
 }
 
 
-@import "./header/gnav";
-@import "./header/spHeadNav";
-@import "./header/fixBar";
+// @import "./header/gnav";

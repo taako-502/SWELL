@@ -100,7 +100,7 @@ trait Others {
 			$file_content = file_get_contents( $file );
 			return $file_content;
 		}
-		return false;
+		return '';
 	}
 
 
@@ -118,6 +118,9 @@ trait Others {
 			$image = str_replace( ' src="', ' loading="lazy" src="', $image );
 
 		} elseif ( $lazy_type === 'lazysizes' ) {
+
+			$noscript = '<noscript>' . $image . '</noscript>';
+
 			$placeholder = $placeholder ?: self::$placeholder;
 			$image       = str_replace( ' src="', ' src="' . esc_url( $placeholder, ['http', 'https', 'data' ] ) . '" data-src="', $image );
 			$image       = str_replace( ' srcset="', ' data-srcset="', $image );
@@ -128,6 +131,8 @@ trait Others {
 				$props = self::set_aspectratio( $props );
 				return '<img' . $props . '>';
 			}, $image );
+
+			$image .= $noscript;
 		}
 
 		return $image;

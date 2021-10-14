@@ -1,42 +1,21 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Top {
 
-	public static function init() {
-
-		$SETTING = \SWELL_Theme::get_setting();
-
-		// コンテンツ上の余白量
-		Style::add( '.top #content', 'padding-top:' . $SETTING['top_content_mt'] );
-
-		// ヘッダーの透過設定
-		if ( $SETTING['header_transparent'] !== 'no' ) {
-			Style::add_module( '-top-header' );
-		}
-
-		// MV
-		if ( $SETTING['main_visual_type'] !== 'none' ) {
-			self::mv( $SETTING );
-			Style::add_module( '-main-visual' );
-		};
-
-		// 記事スライダー
-		if ( $SETTING['show_post_slide'] !== 'off' ) {
-			self::post_slider( $SETTING );
-			Style::add_module( '-post-slider' );
-		}
-	}
-
 
 	/**
 	 * メインビジュアル
 	 */
-	public static function mv( $SETTING ) {
+	public static function mv() {
+
+		$SETTING = SWELL::get_setting();
+
 		// 高さ
 		$mv_slide_height_sp = 'auto';
 		$mv_slide_height_pc = 'auto';
@@ -81,10 +60,13 @@ class Top {
 		}
 	}
 
+
 	/**
 	 * 記事スライダー
 	 */
-	public static function post_slider( $SETTING ) {
+	public static function post_slider() {
+
+		$SETTING = SWELL::get_setting();
 
 		// スライドがページ表示の瞬間にでかくなるのを防ぐための横幅定義
 		$pc_num    = (float) $SETTING['ps_num'];
@@ -144,10 +126,10 @@ class Top {
 		Style::add_root( '--ps_space', $ps_space );
 
 		// その他
-		$ps_swiper_container = [];
+		$ps_swiper = [];
 		if ( $SETTING['ps_on_pagination'] ) {
 			// ページネーションがあればpaddingつける
-			$ps_swiper_container[] = 'padding-bottom:24px';
+			$ps_swiper[] = 'padding-bottom:24px';
 		}
 
 		// 左右の余白量
@@ -157,14 +139,14 @@ class Top {
 				break;
 			case 'wide': // コンテンツ幅に収める
 				if ( ! $SETTING['ps_no_space'] ) {
-					$ps_swiper_container[] = 'margin-left:-8px;margin-right:-8px;';
+					$ps_swiper[] = 'margin-left:-8px;margin-right:-8px;';
 				}
 				break;
 			default:
 				break;
 		}
 
-		Style::add( '#post_slider .swiper-container', $ps_swiper_container );
+		Style::add( '#post_slider .swiper', $ps_swiper );
 
 	}
 

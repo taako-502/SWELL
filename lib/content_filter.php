@@ -109,7 +109,7 @@ function add_toc( $content, $is_content_hook = true ) {
 			'<span class="p-toc__ttl">' . $SETTING['toc_title'] . '</span></div>';
 
 		// 目次広告コード
-		if ( SWELL::is_show_toc_ad( true ) ) {
+		if ( SWELL::is_show_toc_ad() ) {
 			$toc_ad = \SWELL_PARTS::toc_ad();
 		}
 
@@ -181,6 +181,8 @@ function add_lazysizes( $content ) {
 			return $matches[0];
 		}
 
+		$noscript = '<noscript>' . $matches[0] . '</noscript>';
+
 		// src を data-srcへ
 		$props = str_replace( ' src=', ' data-src=', $props );
 
@@ -200,7 +202,7 @@ function add_lazysizes( $content ) {
 			}, $props );
 		}
 
-		return '<iframe' . $props . '>';
+		return $noscript . '<iframe' . $props . '>';
 	}, $content );
 
 	// img, video
@@ -208,6 +210,8 @@ function add_lazysizes( $content ) {
 		// var_dump( $matches );
 		$tag   = $matches[1];
 		$props = rtrim( $matches[2], '/' );
+
+		$noscript = '<noscript><' . $tag . $props . '></noscript>';
 
 		// すでにlazyload設定が済んでいれば何もせず返す
 		if ( strpos( $props, ' data-src=' ) !== false || strpos( $props, ' data-srcset=' ) !== false ) {
@@ -252,7 +256,7 @@ function add_lazysizes( $content ) {
 			}, $props );
 		}
 
-		return '<' . $tag . $props . '>';
+		return '<' . $tag . $props . '>' . $noscript;
 
 	}, $content );
 

@@ -263,7 +263,7 @@ class Post {
 				$is_col_fff   = true;
 				break;
 			case 'block':
-				$h2[]       = 'background:' . $colH . ';padding:.75em 1em;color:#fff';
+				$h2[]       = 'background:' . $colH . ';padding:.75em 1em;color:#fff;border-radius:var(--swl-radius--2, 0px)';
 				$is_col_fff = true;
 				break;
 			case 'tag_normal':
@@ -507,22 +507,6 @@ class Post {
 				break;
 			default:
 				break;
-		}
-	}
-
-
-	/**
-	 * シャドウをeditorにだけ
-	 */
-	public static function editor( $to_site_flat ) {
-
-		if ( ! $to_site_flat ) {
-			Style::add(
-				'.is-style-balloon .c-tabList__button',
-				'box-shadow: 0 2px 4px rgba(0,0,0,.12)',
-				'all',
-				'editor'
-			);
 		}
 	}
 

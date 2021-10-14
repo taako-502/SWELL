@@ -1,6 +1,7 @@
 <?php
 namespace SWELL_Theme\Style;
 
+use \SWELL_Theme as SWELL;
 use SWELL_Theme\Style as Style;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -10,7 +11,10 @@ class Color {
 	/**
 	 * カラー変数のセット（フロント & エディターで共通のもの）
 	 */
-	public static function common( $SETTING, $EDITOR ) {
+	public static function common() {
+		$SETTING = SWELL::get_setting();
+		$EDITOR  = SWELL::get_editor();
+
 		$color_main = $SETTING['color_main'];
 		$color_text = $SETTING['color_text'];
 
@@ -25,8 +29,8 @@ class Color {
 		Style::add_root( '--color_gradient1', $SETTING['color_gradient1'] );
 		Style::add_root( '--color_gradient2', $SETTING['color_gradient2'] );
 
-		Style::add_root( '--color_main_thin', \SWELL_Theme::get_rgba( $SETTING['color_main'], 0.05, 0.25 ) );
-		Style::add_root( '--color_main_dark', \SWELL_Theme::get_rgba( $SETTING['color_main'], 1, -.25 ) );
+		Style::add_root( '--color_main_thin', SWELL::get_rgba( $SETTING['color_main'], 0.05, 0.25 ) );
+		Style::add_root( '--color_main_dark', SWELL::get_rgba( $SETTING['color_main'], 1, -.25 ) );
 
 		// リストアイコンの色
 		// Style::add_root( '--color_list_dot', $EDITOR['color_list_dot'] ?: $color_text );
@@ -75,7 +79,9 @@ class Color {
 	/**
 	 * フロントだけで使うもの
 	 */
-	public static function front( $SETTING ) {
+	public static function front() {
+
+		$SETTING = SWELL::get_setting();
 
 		// ヘッダーやフッターの色
 		Style::add_root( '--color_header_bg', $SETTING['color_header_bg'] );
@@ -89,12 +95,6 @@ class Color {
 		if ( $color_footwdgt_text = $SETTING['color_footwdgt_text'] ) {
 			Style::add( '.l-footer__widgetArea', 'color:' . $color_footwdgt_text );
 		}
-
-		// その他 :: ここまで変数化するべきか？
-		Style::add_root( '--color_fbm_text', $SETTING['color_fbm_text'] );
-		Style::add_root( '--color_fbm_bg', $SETTING['color_fbm_bg'] );
-		Style::add_root( '--fbm_opacity', $SETTING['fbm_opacity'] );
-		Style::add_root( '--fix_header_opacity', $SETTING['fix_header_opacity'] );
 
 	}
 

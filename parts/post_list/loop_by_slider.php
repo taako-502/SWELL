@@ -45,6 +45,7 @@ $ps_num_sp = SWELL_Theme::get_setting( 'ps_num_sp' );
 						'cat_pos'   => $cat_pos,
 						'size'      => 'large',
 						'sizes'     => $thumb_sizes,
+						'decoding'  => 'async',
 						'lazy_type' => $ct > $ps_num_sp ? SWELL_Theme::$lazy_type : 'none',
 					]
 				);
@@ -56,15 +57,12 @@ $ps_num_sp = SWELL_Theme::get_setting( 'ps_num_sp' );
 				<div class="p-postList__meta">
 					<?php
 						// 日付
-						SWELL_Theme::get_parts(
-							'parts/post_list/item/date',
-							[
-								'show_date'     => $show_date,
-								'show_modified' => $show_modified,
-								'date'          => $post_data->post_date,
-								'modified'      => $post_data->post_modified,
-							]
-						);
+						SWELL_Theme::get_parts( 'parts/post_list/item/date', [
+							'show_date'     => $show_date,
+							'show_modified' => $show_modified,
+							'date'          => $post_data->post_date,
+							'modified'      => $post_data->post_modified,
+						] );
 						if ( 'on_title' === $cat_pos ) :
 							SWELL_Theme::pluggable_parts( 'post_list_category', [
 								'post_id' => $the_id,

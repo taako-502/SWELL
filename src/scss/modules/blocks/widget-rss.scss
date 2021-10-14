@@ -1,0 +1,45 @@
+.widget_rss {
+
+    ul {
+        line-height: 1.5;
+    }
+
+    li {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: .75em .5em;
+        border-bottom: solid 1px var(--color_border);
+    }
+
+    // li .rsswidget{}
+    .rss-date,
+    .rssSummary,
+    cite {
+        margin-top: .5em;
+        font-size: .9em;
+        opacity: .8;
+    }
+
+    .rss-date,
+    cite {
+        order: 1;
+        margin-right: .5em;
+    }
+
+    li .rsswidget,
+    .rssSummary {
+        order: 0;
+        width: 100%;
+    }
+
+    // .rssSummary {
+    //     font-size: .9em;
+    //     opacity: .8;
+    // }
+}
+
+.c-widget__title .rsswidget {
+    color: inherit;
+    text-decoration: none;
+}

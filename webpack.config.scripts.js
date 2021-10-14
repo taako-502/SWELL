@@ -30,6 +30,7 @@ if ('front' === process.env.TYPE) {
 		'front/set_post_slider',
 		'front/set_sp_headnav',
 		'front/set_sp_headnav_loop',
+		'front/set_fix_header',
 		'front/count_CTR',
 	];
 } else if ('admin' === process.env.TYPE) {

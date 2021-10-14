@@ -1,0 +1,114 @@
+@import "../foundation/variable";
+@import "../foundation/placeholder";
+@import "../foundation/mixin/**";
+
+// サブメニューの展開
+.c-submenuToggleBtn {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    z-index: 1;
+    display: block;
+    width: 2em;
+    height: 2em;
+    line-height: 2;
+    text-align: center;
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    @include tab {
+        width: 28px;
+        height: 28px;
+        line-height: 28px;
+        transition: background-color .25s;
+    }
+
+    &::before {
+        display: inline-block;
+        font-size: 14px;
+        font-family: icomoon;
+        // line-height: inherit;
+        transition: transform .25s;
+        content: "\e910"; //e5c5
+    }
+
+    &::after {
+        border: solid 1px currentColor;
+        opacity: .15;
+        transition: background-color .25s;
+
+        @extend %absLayer;
+
+    }
+
+    @include pc {
+
+        &:hover::after {
+            background-color: currentColor;
+        }
+    }
+
+
+    &.is-opened {
+
+        &::before {
+            transform: rotate(-180deg);
+        }
+    }
+}
+
+
+// カテゴリーリストはアイコンある
+.wp-block-categories-list > li > a,
+.widget_categories > ul > .cat-item > a {
+    padding-left: 1.5em;
+}
+
+
+.c-listMenu {
+
+    a {
+        position: relative;
+        padding: .75em .5em;
+    }
+
+    // a + ul がある時
+    a:not(:last-child) {
+        padding-right: 40px;
+    }
+}
+
+.c-gnav .sub-menu a:not(:last-child) {
+    padding-right: 40px;
+}
+
+.c-gnav .sub-menu .sub-menu {
+    box-shadow: none;
+}
+
+.c-gnav .sub-menu .sub-menu,
+.c-listMenu .children,
+.c-listMenu .sub-menu {
+    position: relative;
+    height: 0;
+    margin: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: .25s;
+
+    &.is-opened {
+        height: auto;
+        visibility: visible;
+        opacity: 1;
+    }
+
+    a {
+        padding-left: 1.5em;
+        font-size: .9em;
+
+    }
+
+    ul a {
+        padding-left: 2.25em;
+    }
+}

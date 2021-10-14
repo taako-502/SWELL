@@ -235,32 +235,32 @@ trait Status {
 	 */
 	public static function is_show_index() {
 
-		$is_show_index = false;
+		$is_show = false;
 
 		if ( ! is_singular( 'lp' ) && is_single() ) {
-			$is_show_index = self::get_setting( 'show_index' );
+			$is_show = self::get_setting( 'show_index' );
 		} elseif ( ! is_front_page() && is_page() ) {
-			$is_show_index = self::get_setting( 'show_index_page' );
+			$is_show = self::get_setting( 'show_index_page' );
 		}
 
-		return apply_filters( 'swell_is_show_index', $is_show_index );
+		return apply_filters( 'swell_is_show_index', $is_show );
 	}
 
 
 	/**
 	 * 目次広告を表示するかどうか
 	 */
-	public static function is_show_toc_ad( $in_shortcode = false ) {
+	public static function is_show_toc_ad() {
 
-		$is_show_toc_ad = false;
+		$is_show = false;
 
 		if ( ! is_singular( 'lp' ) && is_single() ) {
-			$is_show_toc_ad = $is_show_toc_ad || self::get_setting( 'show_toc_ad_alone_post' ) || self::is_show_index();
+			$is_show = self::get_setting( 'show_toc_ad_alone_post' ) || self::is_show_index();
 		} elseif ( ! is_front_page() && is_page() ) {
-			$is_show_toc_ad = $is_show_toc_ad || self::get_setting( 'show_toc_ad_alone_page' ) || self::is_show_index();
+			$is_show = self::get_setting( 'show_toc_ad_alone_page' ) || self::is_show_index();
 		}
 
-		return apply_filters( 'swell_is_show_toc_ad', $is_show_toc_ad, $in_shortcode );
+		return apply_filters( 'swell_is_show_toc_ad', $is_show );
 	}
 
 
@@ -271,35 +271,35 @@ trait Status {
 
 		if ( self::is_top() ) {
 
-			$is_show_sidebar = self::get_setting( 'show_sidebar_top' );
+			$is_show = self::get_setting( 'show_sidebar_top' );
 
 		} elseif ( is_singular( 'lp' ) ) {
 
-			$is_show_sidebar = false;
+			$is_show = false;
 
 		} elseif ( is_page() || is_home() ) {
 
-			$is_show_sidebar = self::get_setting( 'show_sidebar_page' );
+			$is_show = self::get_setting( 'show_sidebar_page' );
 
 		} elseif ( is_single() ) {
 
-			$is_show_sidebar = self::get_setting( 'show_sidebar_post' );
+			$is_show = self::get_setting( 'show_sidebar_post' );
 
 		} elseif ( is_archive() ) {
 
-			$is_show_sidebar = self::get_setting( 'show_sidebar_archive' );
+			$is_show = self::get_setting( 'show_sidebar_archive' );
 
 		} elseif ( is_search() ) {
 
-			$is_show_sidebar = self::get_setting( 'show_sidebar_archive' );
+			$is_show = self::get_setting( 'show_sidebar_archive' );
 
 		} else {
 
-			$is_show_sidebar = false;
+			$is_show = false;
 
 		}
 
-		return apply_filters( 'swell_is_show_sidebar', $is_show_sidebar );
+		return apply_filters( 'swell_is_show_sidebar', $is_show );
 
 	}
 
@@ -309,22 +309,30 @@ trait Status {
 	 */
 	public static function is_show_comments( $post_id ) {
 
-		$is_show_comments = false;
+		$is_show = true;
 
-		if ( is_single() ) {
+		if ( post_password_required( $post_id ) ) {
+			// パスワード保護記事ではコメントエリア非表示
+			$is_show = false;
 
-			$show_comments = self::get_setting( 'show_comments' );
+		} elseif ( ! comments_open( $post_id ) && intval( get_comments_number( $post_id ) ) < 1 ) {
+			// コメント非許可、かつコメントがまだない時
+			$is_show = false;
+
+		} elseif ( is_single() ) {
+			// カスタマイザーの設定に依存
+			$is_show = self::get_setting( 'show_comments' );
+
+			// メタで上書き
 			$comments_meta = get_post_meta( $post_id, 'swell_meta_show_comments', true );
-			$comments_open = comments_open( $post_id ) && ! post_password_required( $post_id );
-
-			$is_show_comments = ( $comments_meta !== 'hide' && ( $comments_meta === 'show' || $show_comments ) );
-			$is_show_comments = $is_show_comments && $comments_open;
-
-		} elseif ( is_page() ) {
-			$is_show_comments = comments_open( $post_id ) && ! post_password_required( $post_id );
+			if ( 'hide' === $comments_meta ) {
+				$is_show = false;
+			} elseif ( 'show' === $comments_meta ) {
+				$is_show = true;
+			}
 		}
 
-		return apply_filters( 'swell_is_show_comments', $is_show_comments );
+		return apply_filters( 'swell_is_show_comments', $is_show );
 	}
 
 
@@ -333,17 +341,70 @@ trait Status {
 	 */
 	public static function is_show_pickup_banner() {
 
-		if ( is_paged() ) return false;
+		$cached_flag = wp_cache_get( 'is_show_pickup_banner', 'swell' );
+		if ( $cached_flag ) return $cached_flag;
 
-		$is_show_banners = false;
+		if ( is_paged() ) return false;
+		if ( ! has_nav_menu( 'pickup_banner' ) ) return false;
+
+		$is_show = false;
 
 		if ( self::is_top() ) {
-			$is_show_banners = true;
+			$is_show = true;
 		} else {
-			$is_show_banners = self::get_setting( 'pickbnr_show_under' );
+			$is_show = self::get_setting( 'pickbnr_show_under' );
 		}
 
-		return apply_filters( 'swell_is_show_pickup_banner', $is_show_banners );
+		$is_show = apply_filters( 'swell_is_show_pickup_banner', $is_show );
+		wp_cache_set( 'is_show_pickup_banner', $is_show, 'swell' );
+		return $is_show;
+	}
+
+
+
+	/**
+	 * 投稿ページの前の記事・次の記事リンクを使用するかどうか
+	 */
+	public static function is_show_page_links() {
+		$is_show = self::get_setting( 'show_page_links' );
+		return apply_filters( 'swell_is_show_page_links', $is_show );
+	}
+
+
+	/**
+	 * 投稿ページの前の記事・次の記事リンクを使用するかどうか
+	 */
+	public static function is_show_sns_cta() {
+		$data = self::get_sns_cta_data();
+		return ( $data['tw_id'] || $data['fb_url'] || $data['insta_id'] );
+	}
+
+
+
+	/**
+	 * CSSをインライン出力するかどうか
+	 */
+	public static function is_load_css_inline() {
+		$cached_flag = wp_cache_get( 'is_load_css_inline', 'swell' );
+		if ( $cached_flag ) return $cached_flag;
+
+		$flag = \SWELL_Theme::get_option( 'load_style_inline' );
+
+		wp_cache_set( 'is_load_css_inline', $flag, 'swell' );
+		return $flag;
+	}
+
+
+	/**
+	 * 必要なCSSだけを読み込むかどうか
+	 */
+	public static function is_separate_css() {
+
+		if ( is_customize_preview() ) return false;
+		if ( self::is_use( 'pjax' ) ) return false;
+
+		$flag = (bool) \SWELL_Theme::get_option( 'separate_style' );
+		return apply_filters( 'swell_is_separate_css', $flag );
 	}
 
 }

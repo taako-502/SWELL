@@ -90,12 +90,92 @@ trait Parts {
 	}
 
 
-	/**
+	/*
 	 * ブログパーツの出力処理
 	 */
 	public static function do_blog_parts( $content ) {
 		$content = do_blocks( do_shortcode( $content ) );
 		return apply_filters( 'swell_do_blog_parts', $content );
+	}
+
+
+	/**
+	 * キャッシュ機能付きのサイドバー呼び出し
+	 */
+	public static function outuput_widgets( $key, $args = [] ) {
+
+		$is_active = $args['active'] ?? is_active_sidebar( $key );
+		if ( ! $is_active ) {
+			return '';
+		}
+
+		$before  = $args['before'] ?? '';
+		$after   = $args['after'] ?? '';
+		$is_echo = $args['echo'] ?? true;
+
+		// キャッシュ取得
+		$html = wp_cache_get( "widget_{$key}", 'swell' );
+		if ( ! $html ) {
+			ob_start();
+			dynamic_sidebar( $key );
+			$html = ob_get_clean();
+
+			// dynamic_sidebarの出力をキャッシュ
+			wp_cache_set( "widget_{$key}", $html, 'swell' );
+		}
+
+		// 前後にHTMLあれば付ける
+		$html = $before . $html . $after;
+
+		if ( ! $is_echo ) {
+			return $html;
+		}
+		echo $html; // phpcs:ignore
+	}
+
+
+	/**
+	 * コンテンツ上下のウィジェット
+	 */
+	public static function outuput_content_widget( $type, $position ) {
+
+		// 3.0: show_ → hide_ に修正。
+		$is_hide = '1' === get_post_meta( get_queried_object_id(), "swell_meta_show_widget_{$position}", true );
+		if ( $is_hide ) return;
+
+		$classname = 'w-' . $type . ucfirst( $position );
+		\SWELL_Theme::outuput_widgets( "{$type}_{$position}", [
+			'before' => '<div class="' . esc_attr( $classname ) . '">',
+			'after'  => '</div>',
+		] );
+	}
+
+
+	/**
+	 * CTAエリア
+	 */
+	public static function outuput_cta() {
+		$the_id    = get_the_ID();
+		$hide_meta = get_post_meta( $the_id, 'swell_meta_hide_widget_cta', true );
+		if ( '1' === $hide_meta ) return;
+
+		// カテゴリー用のCTAがあるかどうか
+		$cta_id     = 0;
+		$categories = get_the_category( $the_id ) ?: [];
+		foreach ( $categories as $the_cat ) :
+			$cta_id = get_term_meta( $the_cat->term_id, 'swell_term_meta_cta_parts', 1 );
+			if ( $cta_id ) break; // CTAが取得できればループ終了。(先に取得できるカテゴリーを優先)
+		endforeach;
+
+		if ( $cta_id ) {
+			echo '<div class="w-cta">' . do_shortcode( '[blog_parts id=' . $cta_id . ']' ) . '</div>';
+			return;
+		}
+
+		\SWELL_Theme::outuput_widgets( 'single_cta', [
+			'before' => '<div class="w-cta">',
+			'after'  => '</div>',
+		] );
 	}
 
 }

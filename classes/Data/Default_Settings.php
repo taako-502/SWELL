@@ -35,6 +35,8 @@ trait Default_Settings {
 			'remove_balloon'         => '',
 
 			'load_style_inline'      => '',
+			'load_style_async'       => '',
+			'separate_style'         => '',
 			'jquery_to_foot'         => '1',
 			'remove_jqmigrate'       => '1',
 			'load_jquery'            => '',
@@ -66,6 +68,7 @@ trait Default_Settings {
 
 			// JSON-LD
 			'use_json_ld'            => '1',
+			'publisher_logo_url'     => '',
 
 			// 広告設定
 			'sc_ad_code'             => '',
@@ -418,6 +421,7 @@ trait Default_Settings {
 			'comments_title'          => __( 'Comments', 'swell' ),
 			'related_post_style'      => 'card',
 			'post_relation_type'      => 'category',
+			'related_post_orderby'    => 'date',
 			'page_link_style'         => 'normal',
 			'show_page_link_thumb'    => false,
 			'pn_link_is_same_term'    => false,

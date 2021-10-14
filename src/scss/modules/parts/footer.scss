@@ -1,0 +1,88 @@
+@charset "UTF-8";
+@import "../../foundation/mixin/media";
+@import "./inc/w-footer";
+
+.l-footer {
+    position: relative;
+    z-index: 0;
+    color: var(--color_footer_text);
+    background-color: var(--color_footer_bg);
+
+    a,
+    span {
+        color: inherit;
+    }
+
+    .copyright {
+
+        font-size: 12px;
+        text-align: center;
+
+        a {
+            color: var(--color_link);
+        }
+    }
+
+}
+
+.l-footer__nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: .5em 0 1em;
+    color: inherit;
+
+    a {
+        display: block;
+        padding: .25em .5em;
+        color: inherit;
+        font-size: 3vw;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+
+        @include tab {
+            padding: 0 .75em;
+            font-size: 13px;
+            border-right: 1px solid;
+        }
+    }
+
+    li {
+
+        &:first-child a {
+
+            @include tab {
+                border-left: 1px solid;
+            }
+        }
+    }
+}
+
+.l-footer__inner {
+
+    @include sp {
+        // #fix_bottom_menuと同じ値
+        padding-bottom: calc(env(safe-area-inset-bottom) * .5);
+    }
+}
+
+
+.l-footer__foot {
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    // .l-footer__widgetArea + & {
+    //     border-top: solid 1px $color_border;
+    // }
+}
+
+.l-footer__widgetArea {
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+
+@import "./inc/foot_modals";

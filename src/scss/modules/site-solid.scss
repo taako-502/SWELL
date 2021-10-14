@@ -1,0 +1,42 @@
+@import "../foundation/mixin/media";
+
+
+// サイトの質感：立体
+.-body-solid {
+
+    [class*="page-numbers"],
+    .p-snsCta,
+    .c-shareBtns__btn,
+    .is-style-balloon > .c-tabList .c-tabList__button {
+        box-shadow: var(--swl-box_shadow);
+    }
+
+    .is-style-btn_normal a,
+    .is-style-btn_shiny a {
+        box-shadow: var(--swl-btn_shadow);
+    }
+
+    //画像の影
+    .p-articleThumb__img,
+    .p-articleThumb__youtube {
+        box-shadow: var(--swl-img_shadow);
+    }
+
+    // 投稿リストのサムネイル画像は少しスッとさせる
+    .p-postList__thumb,
+    .p-pickupBanners__item .c-bannerLink {
+
+        box-shadow:
+            0 2px 8px rgba(0, 0, 0, .1),
+            0 4px 4px -4px rgba(0, 0, 0, .1);
+    }
+
+    //ランキング
+    .p-postList.-w-ranking {
+
+        li::before {
+            background-image: repeating-linear-gradient(-45deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .1) 6px, transparent 6px, transparent 12px);
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+        }
+    }
+}

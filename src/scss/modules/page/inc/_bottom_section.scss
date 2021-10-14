@@ -1,0 +1,13 @@
+// 投稿ページ下部。固定ページでもコメントの部分でのみ使用。
+
+.l-articleBottom__section {
+
+    @include mobile {
+        margin-top: 4em;
+    }
+
+    @include tab {
+        margin-top: 6em;
+    }
+
+}

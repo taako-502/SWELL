@@ -1,0 +1,8 @@
+.wp-block-cover {
+    overflow: hidden;
+
+    @include pc {
+        padding: 2em;
+    }
+
+}

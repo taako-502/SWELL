@@ -1,0 +1,44 @@
+@import "../../foundation/mixin/media";
+
+// ベース
+@import "./inc/pnLinks";
+
+// .p-pnLinks.-style-normal
+.p-pnLinks {
+
+    .-prev {
+
+        .p-pnLinks__link {
+            border-left: solid 1.25em var(--color_main);
+
+            @include tab {
+
+                &:hover {
+                    box-shadow: 1px 1px 2px var(--swl-color_shadow);
+                }
+            }
+        }
+
+        &::before {
+            color: #fff;
+        }
+    }
+
+    .-next {
+
+        .p-pnLinks__link {
+            border-right: solid 1.25em var(--color_main);
+
+            @include tab {
+
+                &:hover {
+                    box-shadow: -1px 1px 2px var(--swl-color_shadow);
+                }
+            }
+        }
+
+        &::before {
+            color: #fff;
+        }
+    }
+}

@@ -9,7 +9,7 @@
         "wp-stop": "wp-env run cli wp db export sql/local.sql && wp-env stop",
         "wp-import": "wp-env run cli wp db import sql/local.sql",
         "build": "npm run build:blocks && npm run build:js && npm run build:css",
-        "build:css": "npx gulp compileScss",
+        "build:css": "npx gulp compileScss && npx gulp compileBlockScss",
         "build:blocks": "wp-scripts build",
         "build:js": "npm run build:js:front && npm run build:js:admin && npm run build:js:customizer",
         "build:js:front": "cross-env TYPE=front npx webpack --config webpack.config.scripts.js",

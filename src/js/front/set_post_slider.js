@@ -34,7 +34,7 @@ function setPostSlider() {
 	const swellVars = window.swellVars;
 	if (swellVars === undefined) return;
 
-	const swiperContainer = pSlider.querySelector('.swiper-container');
+	const swiperContainer = pSlider.querySelector('.swiper');
 	if (null === swiperContainer) {
 		// もしスライダークラスが見つからなければ
 		pSlider.classList.add('show_');

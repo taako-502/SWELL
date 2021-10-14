@@ -4,7 +4,9 @@
 @import "../foundation/placeholder";
 
 // プレビュー用
-@import "../object/parts/balloon";
+// @import "../object/parts/balloon";
+@import "../../gutenberg/blocks/balloon/index.scss";
+
 
 .toplevel_page_swell_balloon {
     background: #fefefe;

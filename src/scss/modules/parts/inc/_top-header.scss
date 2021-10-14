@@ -1,0 +1,76 @@
+// 透過ヘッダー
+
+#body_wrap {
+    padding-top: 0 !important;
+}
+
+.c-infoBar {
+    display: none;
+}
+
+.l-header {
+    position: absolute; //SP ではjs での fixedを優先するために important なし。
+    top: 0;
+    left: 0;
+    transition: all .5s;
+
+    @include pc {
+        position: absolute !important; //PCでは js で relativeついてしまうので、打ち消すために importantあり。
+        background: none;
+        box-shadow: none !important;
+    }
+
+    &[data-spfix="1"] {
+
+        @include sp {
+            position: fixed !important;
+        }
+    }
+
+    .l-container {
+        max-width: 100%;
+    }
+
+    &.-t-fff {
+        --swl-color_top_header: #fff;
+    }
+
+    &.-t-000 {
+        --swl-color_top_header: #000;
+    }
+
+    .l-header__inner {
+        color: var(--swl-color_top_header, #fff);
+    }
+
+    .c-gnav > li > a::after {
+        background: var(--swl-color_top_header, #fff);
+    }
+}
+
+
+.l-fixHeader {
+
+    .c-headLogo__img.-common {
+        display: block;
+    }
+
+    .c-headLogo__img.-top {
+        display: none;
+    }
+}
+
+@include pc {
+
+    .c-headLogo__img.-common {
+        display: none;
+    }
+}
+
+
+.l-header__spNav {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity .5s, visibility .5s;
+    animation: none !important;
+}

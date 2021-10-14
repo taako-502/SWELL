@@ -1,5 +1,5 @@
 import DOM from './data/domData';
-import { isPC, smoothOffset } from './data/stateData';
+import { smoothOffset } from './data/stateData';
 
 /**
  * スムーススクロール関数

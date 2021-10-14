@@ -1,0 +1,22 @@
+@import "../../foundation/mixin/media";
+
+// ベース
+@import "./inc/toc";
+
+.p-toc.-double {
+    padding: 1.5em 1em 1em;
+    background: var(--color_gray);
+    background: linear-gradient(-45deg, transparent 25%, var(--color_gray) 25%, var(--color_gray) 50%, transparent 50%, transparent 75%, var(--color_gray) 75%, var(--color_gray));
+    background-size: 4px 4px;
+    background-clip: padding-box;
+    border-top: double 4px var(--color_border);
+    border-bottom: double 4px var(--color_border);
+
+    @include tab {
+        padding: 2em 2em 2em;
+    }
+
+    .p-toc__ttl {
+        margin-bottom: .75em;
+    }
+}

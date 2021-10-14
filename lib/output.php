@@ -21,15 +21,9 @@ add_action( 'wp_body_open', __NAMESPACE__ . '\hook_wp_body_open', 1 );
 function hook_wp_head_9() {
 
 	echo PHP_EOL;
-
-	// 「SWELLERS' ID」の出力
 	output_meta_swellers_id();
-
-	// webフォントの出力
 	output_google_font();
-
-	// スタイルの出力
-	echo '<style id="swell_custom_front_style">' . get_swl_front_css() . '</style>' . PHP_EOL;
+	output_noscript_css();
 }
 
 
@@ -65,6 +59,10 @@ function hook_wp_footer_1() {
 	// lazysizes
 	if ( $pjax || SWELL::is_use( 'lazysizes' ) ) {
 		wp_enqueue_script( 'swell_lazysizes', T_DIRE_URI . '/assets/js/plugins/lazysizes.min.js', [], SWELL_VERSION, true );
+	}
+
+	if ( $pjax || SWELL::is_use( 'fix_header' ) ) {
+		wp_enqueue_script( 'swell_set_fix_header', T_DIRE_URI . '/build/js/front/set_fix_header.min.js', [], SWELL_VERSION, true );
 	}
 
 	if ( $pjax || SWELL::is_use( 'ol_start' ) ) {
@@ -141,95 +139,10 @@ function hook_admin_head() {
 
 	if ( $is_editor || $is_swell_page || $is_balloon_page || $is_usePreviewPage ) {
 		// ブロックエディターなどで読み込ませたい inlineスタイル
-		echo '<style id="loos-block-style">' . Style::output( 'editor' ) . '</style>' . PHP_EOL;
+		echo '<style id="loos-block-style">' . Style::get_editor_css() . '</style>' . PHP_EOL;
 	}
 }
 
-
-
-/**
- * フロントCSS
- */
-function get_swl_front_css() {
-
-	$is_cache_style = ( SWELL::get_setting( 'cache_style' ) && ! is_customize_preview() );
-
-	// キャッシュキー (トップ/その他)
-	if ( SWELL::is_top() && ! is_paged() ) {
-		$cache_key = 'style_top';
-	} elseif ( is_single() ) {
-		$cache_key = 'style_single';
-	} elseif ( is_page() ) {
-		$cache_key = 'style_page';
-	} else {
-		$cache_key = 'style_other';
-	}
-
-	if ( $is_cache_style ) {
-		// キャッシュを使う場合
-
-		$style = get_transient( 'swell_parts_' . $cache_key ); // キャッシュを取得
-
-		if ( empty( $style ) ) {
-			$style = Style::output( 'front' );
-			$style = str_replace( '@charset "UTF-8";', '', $style );  // モジュール化したCSSに入っている場合を考慮
-
-			// キャッシュデータの生成(有効：30日)
-			set_transient( 'swell_parts_' . $cache_key, $style, 30 * DAY_IN_SECONDS );
-		}
-	} else {
-		// キャッシュオフ時
-
-		$style = Style::output( 'front' );
-
-		// かつカスタマイザープレビュー時
-		if ( is_customize_preview() ) {
-
-			// キャッシュクリアしとく
-			delete_transient( 'swell_' . $cache_key );  // ~2.0.2を考慮
-			delete_transient( 'swell_parts_' . $cache_key );
-
-			// カスタマイザープレビュー中にのみ読み込むCSS
-			$customizer_css = T_DIRE . '/assets/css/module/-is-customizer.css';
-			if ( file_exists( $customizer_css ) ) {
-				$style .= SWELL::get_file_contents( $customizer_css );
-			}
-		}
-
-		$style = str_replace( '@charset "UTF-8";', '', $style );
-	}
-
-	/**
-	 * 以下、キャッシュさせないCSS
-	 */
-	// タブ
-	$is_android = SWELL::is_android();
-	if ( $is_android ) {
-		$style .= '.c-tabBody__item[aria-hidden="false"]{animation:none !important;display:block;}';
-	}
-
-	// Androidでは Noto-serif 以外はデフォルトフォントに指定。(游ゴシックでの太字バグがある & 6.0からデフォルトフォントが Noto-sans に。)
-	$font = SWELL::get_setting( 'body_font_family' );
-	if ( $is_android && 'serif' !== $font ) {
-		$style .= 'body{font-weight:400;font-family:sans-serif}';
-	}
-
-	// ページごとのカスタムCSS を追加
-	if ( is_single() || is_page() || is_home() ) {
-		if ( get_post_meta( get_queried_object_id(), 'swell_meta_no_mb', true ) === '1' ) {
-			$style .= '#content{margin-bottom:0;}.w-beforeFooter{margin-top:0;}';
-		};
-	}
-
-	// LP
-	if ( is_singular( 'lp' ) ) {
-		$lp_css = T_DIRE . '/assets/css/module/-lp.css';
-
-		if ( file_exists( $lp_css ) ) $style .= SWELL::get_file_contents( $lp_css );
-	}
-
-	return $style;
-}
 
 
 /**
@@ -273,6 +186,15 @@ function output_google_font() {
 
 	// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
 	echo '<link href="' . esc_url( $google_font ) . '" rel="stylesheet">' . PHP_EOL;
+}
+
+
+/**
+ * noscript時CSS
+ */
+function output_noscript_css() {
+	// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
+	echo '<noscript><link href="' . esc_url( T_DIRE_URI . '/assets/css/noscript.css' ) . '" rel="stylesheet"></noscript>' . PHP_EOL;
 }
 
 

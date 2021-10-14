@@ -1,0 +1,412 @@
+/*
+.swell-block-tab[.is-style-HOGE]
+
+    ul.c-tabList -> 投稿リストにはこっちに [.is-style-HOGE]
+        .c-tabList__item
+        .c-tabList__item
+    div.c-tabBody
+        .c-tabBody__item
+        .c-tabBody__item
+
+*/
+
+// アーカイブ用タブのみ
+.p-postListTab {
+    width: 96%;
+    margin: 4em auto 2em;
+}
+
+
+.c-tabList {
+    position: relative;
+    display: flex;
+    justify-content: center;
+
+    .swell-block-tab > & {
+        padding: 0;
+        list-style: none;
+    }
+
+    #content & {
+        padding-left: 0;
+        list-style: none;
+    }
+
+    [data-width-pc="25"] &,
+    [data-width-pc="auto"] & {
+
+        @include pc {
+            flex-wrap: wrap;
+        }
+
+    }
+
+    [data-width-sp="50"] &,
+    [data-width-sp="auto"] & {
+
+        @include sp {
+            flex-wrap: wrap;
+        }
+
+    }
+
+    &::-webkit-scrollbar {
+        height: 11px;
+        background-color: var(--color_gray);
+        box-shadow: inset 0 0 2px 0 rgba(0, 0, 0, .15);
+    }
+
+    // &::-webkit-scrollbar-track {
+    //     background: none;
+    //     border: none;
+    // }
+
+    &::-webkit-scrollbar-thumb {
+        background: rgba(200, 200, 200, .9);
+        background-clip: padding-box;
+        border: solid 3px transparent;
+        border-bottom-width: 4px;
+        border-radius: 8px;
+    }
+
+}
+
+.c-tabList__item {
+    text-align: center;
+
+    @include pc {
+
+        [data-width-pc="25"] & {
+            width: 25%;
+        }
+
+        [data-width-pc="flex-50"] & {
+            flex-basis: 50%;
+        }
+
+        [data-width-pc="flex-auto"] & {
+            flex: 1 1 auto;
+        }
+    }
+
+    @include sp {
+
+        [data-width-sp="50"] & {
+            width: 50%;
+        }
+
+        [data-width-sp="flex-50"] & {
+            flex-basis: 50%;
+        }
+
+        [data-width-sp="flex-auto"] & {
+            flex: 1 1 auto;
+        }
+    }
+}
+
+.c-tabList__button {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding: 1em .5em;
+    color: var(--color_text);
+    font-size: 13px;
+    line-height: 1;
+    border: none;
+    transition: background-color .25s, color .25s;
+
+    [data-width-pc="auto"] & {
+
+        @include pc {
+            padding-right: 1em;
+            padding-left: 1em;
+        }
+
+    }
+
+    [data-width-sp="auto"] & {
+
+        @include sp {
+            padding-right: 1em;
+            padding-left: 1em;
+        }
+
+    }
+
+    @include tab {
+        font-size: 14px;
+    }
+
+    &:hover {
+        outline: none; //マウス操作ではアウトライン非表示
+    }
+}
+
+.c-tabBody {
+    position: relative;
+}
+
+// .c-tabBody__item{}
+.is-style-balloon,
+.is-style-bb,
+.is-style-simple {
+
+    .c-tabList {
+        margin: 0 0 1em;
+    }
+}
+
+[data-scroll-sp] {
+
+    @include sp {
+
+        &.swell-block-tab {
+            position: relative;
+
+            &::after {
+                position: absolute;
+                right: -2px;
+                bottom: 100%;
+                padding: 2px 12px 2px 4px;
+                color: #333;
+                font-weight: 400;
+                font-size: 13px;
+                font-family: icomoon !important;
+                line-height: 1;
+                letter-spacing: -8px;
+                background: #fff;
+                border-radius: 8px;
+                box-shadow: 0 0 8px rgba(0, 0, 0, .1);
+                animation: FloatHorizontal 3s ease-in-out infinite alternate;
+                content: "\e921\e921"; //930
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                // @extend .icon-file-empty::before;
+            }
+        }
+
+        &.has-background,
+        &.has-border {
+
+            &::after {
+                right: 4px;
+                bottom: calc(100% - 1.5em);
+            }
+        }
+
+        .c-tabList {
+            z-index: 1;
+            flex-wrap: nowrap !important;
+            justify-content: flex-start;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        .c-tabList__item {
+            flex-shrink: 0;
+        }
+
+        &.is-style-bb {
+
+            .c-tabList__item {
+                margin-bottom: 4px;
+            }
+        }
+    }
+}
+
+[data-scroll-pc] {
+
+    @include pc {
+
+
+        .c-tabList {
+
+            z-index: 1;
+            flex-wrap: nowrap !important;
+            justify-content: flex-start;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+
+        }
+
+        .c-tabList__item {
+            flex-shrink: 0;
+        }
+
+        &.is-style-bb {
+
+            .c-tabList__item {
+                margin-bottom: 4px;
+            }
+        }
+    }
+}
+
+//通常タブ
+.is-style-default {
+
+    .c-tabList {
+        position: relative;
+        justify-content: flex-start;
+        width: 100%;
+        margin: 0;
+    }
+
+    .c-tabList__item {
+        margin: 0;
+    }
+
+    .c-tabList__button {
+        box-sizing: border-box;
+        padding-top: .75em;
+        padding-bottom: .75em;
+        background: none;
+        opacity: .5;
+
+        &:hover,
+        &[aria-selected="true"] {
+            color: var(--color_content_bg);
+            background-color: var(--color_text);
+            opacity: 1;
+
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+// ふきだし
+.is-style-balloon {
+
+    .c-tabList__item {
+        margin: 0 0 16px;
+        padding: 0 4px;
+        transition: background-color .1s, color .1s;
+    }
+
+    .c-tabList__button {
+        background: var(--color_gray);
+        transition: background-color .25s, color .25s;
+
+        &::before {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            display: block;
+            width: 0;
+            height: 0;
+            border: solid 8px transparent;
+            border-top-color: var(--color_main);
+            border-bottom: 0;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity .25s;
+            content: "";
+        }
+
+        &:hover,
+        &[aria-selected="true"] {
+            color: #fff;
+            background-color: var(--color_main);
+
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+// グレーボックス
+.is-style-simple {
+    // &.c-tabList {}
+
+    .c-tabList__item {
+        margin: 0 0 8px;
+
+        &:not(:first-child) {
+            margin-left: -1px;
+        }
+    }
+
+    .c-tabList__button {
+        color: #666;
+        background: none;
+        border: solid 1px #ddd;
+        box-shadow: none;
+
+        &:hover,
+        &[aria-selected="true"] {
+            color: #333;
+            background: #ddd;
+
+            &::before {
+                opacity: 1;
+            }
+        }
+    }
+}
+
+// 下線
+.is-style-bb {
+
+    // .c-tabList {
+    //     align-items: flex-end;
+    // }
+
+    .c-tabList__item {
+        margin: 0 0 .75em;
+    }
+
+    .c-tabList__button {
+        padding-top: .25em;
+        background: none;
+        box-shadow: none;
+        opacity: .7;
+        transition: color .25s, opacity .25s;
+
+        &::before,
+        &::after {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            content: "";
+        }
+
+        &::before {
+            z-index: 0;
+            height: 1px;
+            background-color: var(--color_text);
+            opacity: .4;
+        }
+
+        &::after {
+            z-index: 1;
+            height: 2px;
+            background-color: var(--color_main);
+            opacity: 0;
+            transition: opacity .25s;
+        }
+
+        &:hover,
+        &[aria-selected="true"] {
+            color: var(--color_main);
+            // text-shadow: .5px .5px 0 currentColor;
+            font-weight: bold;
+            opacity: 1;
+
+            &::after {
+                opacity: 1;
+            }
+        }
+
+    }
+}

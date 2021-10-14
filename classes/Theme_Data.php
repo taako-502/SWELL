@@ -76,13 +76,18 @@ class Theme_Data {
 	// JSの読み込みを制御する変数
 	public static $use = [];
 
+	// そのページに使われているブロック
+	public static $used_blocks = [];
+
 	// キャッシュキー
 	public static $cache_keys = [
 		'style' => [ // スタイルに関わるキャッシュキー
+			'style_common',
 			'style_top',
 			'style_single',
 			'style_page',
-			'style_other',
+			'style_archive',
+			// 'style_other',
 		],
 		'header' => [ // ヘッダーに関わるキャッシュキー
 			'header_top',
@@ -208,7 +213,7 @@ class Theme_Data {
 		self::set_variables();
 		self::set_default();
 
-		add_action( 'init', '\SWELL_Theme::set_options', 9 ); // set_settings よりも前で。
+		add_action( 'init', '\SWELL_Theme::set_options', 5 ); // set_settings よりも前。かつ、init8,9でこのデータ使うことに注意。
 		add_action( 'wp_loaded', '\SWELL_Theme::set_editors', 10 ); // set_settings よりも前で。
 		add_action( 'wp_loaded', '\SWELL_Theme::set_settings', 10 ); // ※早すぎるとカスタマイザーの値が受け取れない
 	}
@@ -325,10 +330,10 @@ class Theme_Data {
 	/**
 	 * settingsデータを個別でセット
 	 */
-	// public static function set_setting( $key = null, $val = '' ) {
-	// 	if ( null === $key ) return;
-	// 	self::$setting[ $key ] = $val;
-	// }
+	public static function set_setting( $key = null, $val = '' ) {
+		if ( null === $key ) return;
+		self::$setting[ $key ] = $val;
+	}
 
 
 	/**

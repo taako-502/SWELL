@@ -1,0 +1,62 @@
+@import "../../foundation/mixin/media";
+@import "./inc/main-visual";
+
+
+.p-mainVisual {
+    --swiper-nav-size: 40px;
+
+    @include mobile {
+        --swiper-nav-size: 32px;
+        --swiper-nav-border-width: 1px;
+    }
+
+    // スライダーの時だけ
+    .swiper:not(.swiper-initialized) {
+        visibility: hidden;
+    }
+
+    .swiper-wrapper {
+        //align-items: stretch;
+        align-content: stretch;
+    }
+
+    .swiper-button-prev {
+        left: 0;
+    }
+
+    .swiper-button-next {
+        right: 0;
+    }
+
+    .swiper-pagination-bullet-active {
+        background: #fff;
+    }
+
+    // 後方互換
+    .swiper-button-prev,
+    .swiper-button-next {
+
+        svg {
+            display: none;
+        }
+    }
+}
+
+
+.p-mainVisual:not(.-motion-no) {
+
+    .swiper-slide-active .p-mainVisual__imgLayer,
+    .swiper-slide-duplicate-active .p-mainVisual__imgLayer,
+    .swiper-slide-prev .p-mainVisual__imgLayer {
+        animation: var(--mv_slide_animation) 10s linear 0s 1 normal both;
+    }
+}
+
+.-motion-leftToRight .p-mainVisual__imgLayer {
+    transform: scale(1.15);
+
+    @include pc {
+        transform: scale(1.1);
+    }
+}
+

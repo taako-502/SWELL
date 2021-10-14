@@ -1,0 +1,16 @@
+.wp-block-gallery {
+
+    .blocks-gallery-grid {
+        width: 100%; // 5.8ではいらなかった
+        padding: 0;
+    }
+
+    .blocks-gallery-item {
+        padding: 0;
+    }
+
+    figure {
+        margin: 0; // 5.8ではいらなかった
+    }
+
+}

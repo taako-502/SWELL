@@ -5,19 +5,21 @@ the_post();
 ?>
 <main id="main_content" class="l-mainContent l-article">
 	<div class="l-mainContent__inner">
-		<?php if ( is_active_sidebar( 'front_top' ) ) : ?>
-			<div class="w-frontTop">
-				<?php dynamic_sidebar( 'front_top' ); ?>
-			</div>
-		<?php endif; ?>
+		<?php
+			\SWELL_Theme::outuput_widgets( 'front_top', [
+				'before' => '<div class="w-frontTop">',
+				'after'  => '</div>',
+			] );
+		?>
 		<div class="<?=esc_attr( apply_filters( 'swell_post_content_class', 'post_content' ) )?>">
 			<?php the_content(); ?>
 		</div>
-		<?php if ( is_active_sidebar( 'front_bottom' ) ) : ?>
-			<div class="w-frontBottom">
-				<?php dynamic_sidebar( 'front_bottom' ); ?>
-			</div>
-		<?php endif; ?>
+		<?php
+			\SWELL_Theme::outuput_widgets( 'front_bottom', [
+				'before' => '<div class="w-frontBottom">',
+				'after'  => '</div>',
+			] );
+		?>
 	</div>
 </main>
 <?php endwhile; ?>

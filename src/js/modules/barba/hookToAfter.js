@@ -1,10 +1,17 @@
 /* eslint no-undef: 0 */
+/* eslint no-eval: 0 */
+/* eslint no-console: 0 */
 
 /**
  * モジュール読み込み
  */
 import DOM from '@swell-js/modules/data/domData';
-import setState, { smoothOffset } from '@swell-js/modules/data/stateData';
+import {
+	smoothOffset,
+	setMediaSize,
+	setHeightData,
+	setScrollbarW,
+} from '@swell-js/modules/data/stateData';
 import setDomData from '@swell-js/modules/setDomData';
 import setIndexList from '@swell-js/modules/setIndexList';
 import setFixWidget from '@swell-js/modules/setFixWidget';
@@ -162,7 +169,7 @@ export function resetWidgetScripts({ newBody }) {
  */
 export function resetSwellScript({ newBody, next }) {
 	// isPC / isSPなどをセット
-	setState.mediaSize();
+	setMediaSize();
 
 	/**
 	 * mainでは ready でやってる処理
@@ -173,17 +180,11 @@ export function resetSwellScript({ newBody, next }) {
 	// DOMセットしなおす
 	setDomData(DOM);
 
-	// ヘッダーの高さ取得
-	setState.headH(DOM.header);
-
-	// PC用固定ヘッダーの高さ取得
-	setState.fixBarH(DOM.fixBar);
-
-	//スムーススクロールのオフセット値
-	setState.smoothOffset(DOM.wpadminbar);
+	// 高さ取得
+	setHeightData();
 
 	// スクロールバーの幅
-	setState.scrollbarW();
+	setScrollbarW();
 
 	//グロナビに -current つける
 	setGnavClass();

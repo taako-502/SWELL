@@ -45,7 +45,7 @@ function count_CTR() {
 	}
 	const postID = content.getAttribute('data-postid');
 	if (!postID) {
-		console.error('data-postid not found.');
+		console.log('data-postid not found.');
 		return;
 	}
 

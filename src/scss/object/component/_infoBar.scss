@@ -1,0 +1,9 @@
+.c-infoBar__btn {
+
+    @extend %shinyBtn;
+}
+
+.c-infoBar::before {
+
+    @extend %absLayer;
+}

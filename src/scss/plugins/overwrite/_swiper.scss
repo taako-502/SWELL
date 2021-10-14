@@ -1,0 +1,60 @@
+:root {
+    --swiper-nav-size: 40px; // swell
+    --swiper-nav-border-width: 2px; // swell
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+    position: absolute;
+    top: 50%;
+    z-index: 10;
+    width: var(--swiper-nav-size);
+    height: calc(var(--swiper-nav-size) * 1.2);
+    padding: calc(var(--swiper-nav-size) * .4) calc(var(--swiper-nav-size) * .3);
+    color: var(--swiper-navigation-color, var(--swiper-theme-color));
+    background: rgba(0, 0, 0, .6);
+    transform: translateY(-50%);
+    cursor: pointer;
+
+    &::after {
+        position: relative;
+        display: block;
+        box-sizing: border-box;
+        // width: 100%;
+        // height: 100%;
+        width: calc(var(--swiper-nav-size) * .4);
+        height: calc(var(--swiper-nav-size) * .4);
+        transform: rotate(45deg) skew(10deg, 10deg);
+        content: "";
+    }
+
+    .swiper-button-disabled {
+        cursor: auto;
+        opacity: .35;
+        pointer-events: none;
+    }
+
+}
+
+.swiper-button-prev::after {
+    left: calc(var(--swiper-nav-size) * .05);
+    border-bottom: solid var(--swiper-nav-border-width) currentColor;
+    border-left: solid var(--swiper-nav-border-width) currentColor;
+}
+
+.swiper-button-next::after {
+    right: calc(var(--swiper-nav-size) * .05);
+    border-top: solid var(--swiper-nav-border-width) currentColor;
+    border-right: solid var(--swiper-nav-border-width) currentColor;
+}
+
+
+.swiper-button-prev {
+    right: auto;
+    left: 0px;
+}
+
+.swiper-button-next {
+    right: 0px;
+    left: auto;
+}

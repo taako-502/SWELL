@@ -1,0 +1,12 @@
+@import "../../foundation/mixin/media";
+@import "./inc/main-visual";
+
+.p-mainVisual__video {
+    position: relative;
+    z-index: -1; //なぜかtext_layerが下に潜ってしまう
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
