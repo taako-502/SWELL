@@ -18,6 +18,7 @@ export default function BalloonListItem({
 	copyBalloon,
 	deleteBalloon,
 	swapBallons,
+	isFirst,
 	isLast,
 }) {
 	const { id, title, data } = balloonData;
@@ -61,7 +62,7 @@ export default function BalloonListItem({
 			})}
 			data-id={id}
 		>
-			{idx !== 0 && (
+			{!isFirst && (
 				<Button
 					className='swl-setting-balloon__arrow -prev'
 					label='前に移動'

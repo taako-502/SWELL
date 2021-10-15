@@ -13,29 +13,36 @@ import { addQueryArgs } from '@wordpress/url';
 import { swellApiPath } from './index';
 import BalloonListItem from './list-item';
 
+/**
+ * @Others dependencies
+ */
+import ReactPaginate from 'react-paginate';
+
 // 並び替えアニメーション用の処理
-const setSwitchAnimation = (li1, li2, phase) => {
-	if (null === li1 || null === li2) return;
+const setSwitchAnimation = (item1, item2, phase) => {
+	const existItem1 = null !== item1;
+	const existItem2 = null !== item2;
 
 	if (1 === phase) {
-		li1.classList.add('-to-next');
-		li2.classList.add('-to-prev');
+		if (existItem1) item1.classList.add('-to-next');
+		if (existItem2) item2.classList.add('-to-prev');
 	} else if (2 === phase) {
-		li1.classList.add('-hide');
-		li2.classList.add('-hide');
+		if (existItem1) item1.classList.add('-hide');
+		if (existItem2) item2.classList.add('-hide');
 	} else if (3 === phase) {
-		li1.classList.add('-show');
-		li2.classList.add('-show');
-		li1.classList.remove('-hide');
-		li2.classList.remove('-hide');
+		if (existItem1) item1.classList.add('-show');
+		if (existItem2) item2.classList.add('-show');
+		if (existItem1) item1.classList.remove('-hide');
+		if (existItem2) item2.classList.remove('-hide');
 	} else if (4 === phase) {
-		li1.classList.remove('-show');
-		li2.classList.remove('-show');
-		li1.classList.remove('-to-next');
-		li2.classList.remove('-to-prev');
+		if (existItem1) item1.classList.remove('-show');
+		if (existItem2) item2.classList.remove('-show');
+		if (existItem1) item1.classList.remove('-to-next');
+		if (existItem2) item2.classList.remove('-to-prev');
 	}
 };
 
+// const perPageList = [30, 60, 90, 120];
 export default function BalloonList() {
 	// REST APIの通信中かどうか
 	const [isApiLoaded, setIsApiLoaded] = useState(false);
@@ -54,6 +61,14 @@ export default function BalloonList() {
 
 	// 絞り込み検索ワード
 	const [searchWord, setSearchWord] = useState('');
+
+	// 1ページあたりの表示数
+	const [perPage, setPerPage] = useState(30); // eslint-disable-line no-unused-vars
+
+	// ページ番号
+	const [page, setPage] = useState(0);
+
+	const offset = page * perPage;
 
 	// ふきだしデータの初回セット
 	useEffect(() => {
@@ -176,11 +191,14 @@ export default function BalloonList() {
 			if (idx === undefined || !direction) return;
 			if (direction !== 'prev' && direction !== 'next') return;
 
+			// filteredBalloonListの全体の中でのindexを計算。idxはページャーで区切られた表示数の中での数。
+			const index = idx + offset;
+
 			// 並び替える二つの吹き出しをセット
 			const balloon1 =
-				direction === 'prev' ? filteredBalloonList[idx - 1] : filteredBalloonList[idx];
+				direction === 'prev' ? filteredBalloonList[index - 1] : filteredBalloonList[index];
 			const balloon2 =
-				direction === 'prev' ? filteredBalloonList[idx] : filteredBalloonList[idx + 1];
+				direction === 'prev' ? filteredBalloonList[index] : filteredBalloonList[index + 1];
 
 			if (!balloon1 || !balloon2) return;
 
@@ -223,7 +241,7 @@ export default function BalloonList() {
 					});
 			}, 400);
 		},
-		[filteredBalloonList]
+		[filteredBalloonList, offset]
 	);
 
 	// null返すのが早すぎると、「Rendered more hooks than during the previous render.」エラーになる。
@@ -236,6 +254,10 @@ export default function BalloonList() {
 		page: 'swell_balloon',
 		post_new: null,
 	});
+
+	const lastPage = Math.ceil(filteredBalloonList.length / perPage); // 端数切り上げ。
+
+	const slicedFilteredBalloonList = filteredBalloonList.slice(offset, offset + perPage);
 
 	return (
 		<>
@@ -269,26 +291,82 @@ export default function BalloonList() {
 						}}
 					/>
 				</div>
+				{/* <div className='swl-setting__perPage'>
+					<ButtonGroup>
+						{perPageList.map((_pp) => (
+							<Button
+								isPrimary={_pp === perPage}
+								onClick={() => {
+									setPerPage(_pp);
+								}}
+								key={_pp}
+							>
+								{_pp}
+							</Button>
+						))}
+					</ButtonGroup>
+					<input
+						className='swl-setting__perPage'
+						type='number'
+						value={perPage}
+						onChange={(e) => {
+							let newPerPage = parseInt(e.target.value);
+							if (isNaN(newPerPage) || !newPerPage || 1 > newPerPage) {
+								newPerPage = 1;
+							}
+							setPerPage(newPerPage);
+						}}
+					/>
+				</div> */}
 				{!filteredBalloonList.length ? (
 					<p>ふきだしデータがまだありません。</p>
 				) : (
-					<ul className='swl-setting-balloon__list'>
-						{filteredBalloonList.map((balloonData, idx) => {
-							return (
-								<BalloonListItem
-									key={idx}
-									isLast={idx === filteredBalloonList.length - 1}
-									{...{
-										idx,
-										balloonData,
-										copyBalloon,
-										deleteBalloon,
-										swapBallons,
-									}}
-								/>
-							);
-						})}
-					</ul>
+					<>
+						<ul className='swl-setting-balloon__list'>
+							{slicedFilteredBalloonList.map((balloonData, idx) => {
+								return (
+									<BalloonListItem
+										key={idx}
+										isFirst={idx + offset === 0}
+										isLast={idx + offset === filteredBalloonList.length - 1}
+										{...{
+											idx,
+											balloonData,
+											copyBalloon,
+											deleteBalloon,
+											swapBallons,
+										}}
+									/>
+								);
+							})}
+						</ul>
+						<ReactPaginate
+							// initialPage={1} // 初期ページのセット。※ 0始まり。
+							// forcePage={1}
+							pageCount={lastPage} // 必須。総ページ数。
+							pageRangeDisplayed={5} // 必須。上記の「今いるページの前後」の番号をいくつ表示させるかを決めます。
+							marginPagesDisplayed={1} // 必須。先頭と末尾に表示するページの数。
+							onPageChange={(pageData) => {
+								// ※ pageData.selected は 0 始まり。
+								// console.log(pageData.selected);
+								setPage(pageData.selected);
+							}}
+							containerClassName='pagination' //ページネーションリンクの親要素のクラス名
+							pageClassName='pagination__item' //各子要素(li要素)のクラス名
+							pageLinkClassName='pagination__link' //ページネーションのリンクのクラス名
+							activeClassName='active' //今いるページ番号のクラス名。今いるページの番号だけ太字にしたりできます
+							previousLabel='<' //前のページ番号に戻すリンクのテキスト
+							nextLabel='>' //次のページに進むボタンのテキスト
+							previousClassName='pagination__item -prev' // '<'の親要素(li)のクラス名
+							previousLinkClassName='pagination__link -prev' //'<'のリンクのクラス名
+							nextClassName='pagination__item -next' //'>'の親要素(li)のクラス名
+							nextLinkClassName='pagination__link -next' //'>'のリンクのクラス名
+							breakClassName='pagination__item -break' // 上記の「…」のクラス名
+							breakLinkClassName='pagination__link -break' // 「…」の中のリンクにつけるクラス
+							// disabledClassName='disabled' //先頭 or 末尾に行ったときにそれ以上戻れ(進め)なくするためのクラス
+							// breakLabel='...' // ページがたくさんあるときに表示しない番号に当たる部分をどう表示するか
+						/>
+					</>
 				)}
 			</div>
 		</>

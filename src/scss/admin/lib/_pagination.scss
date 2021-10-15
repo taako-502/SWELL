@@ -1,0 +1,40 @@
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination__item {
+    margin: 2px;
+
+    &.disabled {
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+.pagination__link {
+    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-size: 16px;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+
+    .active > & {
+        color: var(--wp-admin-theme-color);
+        border: solid 1px currentColor;
+    }
+
+    .-break > & {
+        cursor: default;
+        pointer-events: none;
+    }
+}

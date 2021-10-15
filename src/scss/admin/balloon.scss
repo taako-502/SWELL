@@ -7,6 +7,9 @@
 // @import "../object/parts/balloon";
 @import "../../gutenberg/blocks/balloon/index.scss";
 
+// pagination
+@import "./lib/pagination";
+
 $arrow_W: 24px;
 $arrow_H: 26px;
 $li_pad: 16px;
