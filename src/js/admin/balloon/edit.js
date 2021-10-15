@@ -1,8 +1,4 @@
 /**
- * 「ふきだし」編集コンテンツ
- */
-
-/**
  * @WordPress dependencies
  */
 import { useState, useEffect, createInterpolateElement } from '@wordpress/element';

@@ -1,8 +1,4 @@
 /**
- * 「ふきだし」編集ページ
- */
-
-/**
  * @WordPress dependencies
  */
 import { render, useState } from '@wordpress/element';
