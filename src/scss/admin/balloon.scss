@@ -7,50 +7,9 @@
 // @import "../object/parts/balloon";
 @import "../../gutenberg/blocks/balloon/index.scss";
 
-.-to-next {
-
-    opacity: 0;
-    transition: .4s;
-
-    @media (min-width: 783px) {
-        transform: translateX(32px);
-    }
-
-    @media (max-width: 782px) {
-        transform: translateY(32px);
-    }
-}
-
-.-to-prev {
-
-    opacity: 0;
-    transition: .4s;
-
-    @media (min-width: 783px) {
-        transform: translateX(-32px);
-    }
-
-    @media (max-width: 782px) {
-        transform: translateY(-32px);
-    }
-}
-
-.swl-setting-balloon__item.-hide {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.swl-setting-balloon__item.-show {
-    opacity: 1;
-
-    @media (min-width: 783px) {
-        transform: translateX(0);
-    }
-
-    @media (max-width: 782px) {
-        transform: translateY(0);
-    }
-}
+$arrow_W: 24px;
+$arrow_H: 26px;
+$li_pad: 16px;
 
 
 .toplevel_page_swell_balloon {
@@ -85,8 +44,12 @@
         content: "\00a0";
     }
 
+    .swl-setting__new {
+        margin-right: auto;
+    }
+
     .swl-setting__search {
-        margin-left: auto;
+        margin-left: 1em;
     }
 }
 
@@ -94,15 +57,15 @@
 .swl-setting-balloon__list {
     display: flex;
     flex-wrap: wrap;
-    margin: 0 -12px 2em;
+    margin: 0 (-$li_pad) 2em;
 }
 
 
 .swl-setting-balloon__item {
     position: relative;
     width: 33.3%;
-    margin-bottom: 32px;
-    padding: 0 12px;
+    margin-bottom: ($li_pad * 2);
+    padding: 0 $li_pad;
 
     @media screen and (max-width: 1500px) {
         width: 50%;
@@ -116,63 +79,51 @@
 
 .swl-setting-balloon__item__inner {
     position: relative;
-    // overflow: hidden;
-    // border-radius: 6px;
 }
-
-// .swl-setting-balloon__item__head {
-//     display: flex;
-//     align-items: center;
-//     padding: 8px;
-
-//     .swl-setting-balloon__btns {
-//         flex-shrink: 0;
-//         margin-left: auto;
-//     }
-// }
 
 .swl-setting-balloon__arrow {
     position: absolute;
-    top: calc(50% - 13px);
+    top: 50%;
     z-index: 2;
-    width: 26px;
+    width: $arrow_W;
     min-width: 0 !important;
-    height: 26px;
-    // margin-top: -13px;
+    height: $arrow_H;
     padding: 0;
     background-color: #fefefe !important;
-    border-radius: 50%;
     box-shadow: inset 0 0 0 1px currentColor;
+    transform: translateY(-50%);
     transition: opacity .25s;
 
     @media (min-width: 783px) {
         visibility: hidden;
         opacity: 0;
 
-        .swl-setting-balloon__item__inner:hover & {
+        .swl-setting-balloon__item:hover & {
             visibility: visible;
             opacity: 1;
         }
     }
 
     &.-prev {
-        left: -13px;
+        left: ($li_pad - $arrow_W / 2);
+        border-radius: 6px 2px 2px 6px;
     }
 
     &.-next {
-        right: -13px;
+        right: ($li_pad - $arrow_W / 2);
+        border-radius: 2px 6px 6px 2px;
     }
 
     // SP
     @media (max-width: 782px) {
+        background: none !important;
+        border-radius: 2px !important;
         box-shadow: none;
 
         &.-prev {
-            // display: none;
-            top: calc(50% - 26px - 4px);
-            right: calc(100% + 4px);
+            top: calc(50% - #{$arrow_H / 2} - 4px);
+            right: calc(100% - #{$arrow_W / 2});
             left: auto;
-            // bottom: 4px;
 
             svg {
                 transform: rotate(90deg);
@@ -180,9 +131,8 @@
         }
 
         &.-next {
-            top: calc(50% + 4px);
-            right: calc(100% + 4px);
-            // bottom: 4px;
+            top: calc(50% + #{$arrow_H / 2} + 4px);
+            right: calc(100% - #{$arrow_W / 2});
 
             svg {
                 transform: rotate(90deg);
@@ -278,10 +228,8 @@
 // 新規追加・編集ページ
 .swell_settings_balloon_edit {
     margin-bottom: 32px;
-    // padding: 32px;
     background: #fdfdfd;
     border-radius: 2px;
-    // box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
     &[disabled] {
         opacity: .5;
@@ -399,3 +347,49 @@
     border-left: solid 2px #04384c;
 }
 
+
+// 入れ替えアニメーション
+.-to-next {
+
+    opacity: 0;
+    transition: .4s;
+
+    @media (min-width: 783px) {
+        transform: translateX(32px);
+    }
+
+    @media (max-width: 782px) {
+        transform: translateY(32px);
+    }
+}
+
+.-to-prev {
+
+    opacity: 0;
+    transition: .4s;
+
+    @media (min-width: 783px) {
+        transform: translateX(-32px);
+    }
+
+    @media (max-width: 782px) {
+        transform: translateY(-32px);
+    }
+}
+
+.swl-setting-balloon__item.-hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.swl-setting-balloon__item.-show {
+    opacity: 1;
+
+    @media (min-width: 783px) {
+        transform: translateX(0);
+    }
+
+    @media (max-width: 782px) {
+        transform: translateY(0);
+    }
+}

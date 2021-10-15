@@ -244,7 +244,7 @@ export default function BalloonList() {
 			)}
 			<div className='swl-setting__body swl-setting-balloon' disabled={isWaiting}>
 				<div className='swl-setting__controls'>
-					<a className='components-button is-primary' href={newEditUrl}>
+					<a className='components-button is-primary swl-setting__new' href={newEditUrl}>
 						新規ふきだし追加
 					</a>
 					<input
@@ -305,29 +305,29 @@ export default function BalloonList() {
 									})}
 									data-id={id}
 								>
+									{idx !== 0 && (
+										<Button
+											className='swl-setting-balloon__arrow -prev'
+											label='前に移動'
+											onClick={() => {
+												sortBalloon(idx, 'prev');
+											}}
+										>
+											<Icon icon={chevronLeft} />
+										</Button>
+									)}
+									{idx !== filteredBalloonList.length - 1 && (
+										<Button
+											className='swl-setting-balloon__arrow -next'
+											label='次に移動'
+											onClick={() => {
+												sortBalloon(idx, 'next');
+											}}
+										>
+											<Icon icon={chevronRight} />
+										</Button>
+									)}
 									<div key={idx} className='swl-setting-balloon__item__inner'>
-										{idx !== 0 && (
-											<Button
-												className='swl-setting-balloon__arrow -prev'
-												label='前に移動'
-												onClick={() => {
-													sortBalloon(idx, 'prev');
-												}}
-											>
-												<Icon icon={chevronLeft} />
-											</Button>
-										)}
-										{idx !== filteredBalloonList.length - 1 && (
-											<Button
-												className='swl-setting-balloon__arrow -next'
-												label='次に移動'
-												onClick={() => {
-													sortBalloon(idx, 'next');
-												}}
-											>
-												<Icon icon={chevronRight} />
-											</Button>
-										)}
 										<div className='swl-setting-balloon__btns'>
 											<Button
 												className='swl-setting-balloon__copyBtn swl-setting-balloon__btn'
