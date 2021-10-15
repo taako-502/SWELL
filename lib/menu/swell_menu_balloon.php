@@ -23,6 +23,18 @@ if ( ! $table_exists ) {
 	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	dbDelta( $sql );
 }
-?>
 
-<div id="swell_setting_page" class="swl-setting -balloon"></div>
+$the_query = new \WP_Query( [
+	'post_type'      => 'speech_balloon',
+	'no_found_rows'  => true,
+	'posts_per_page' => 1,
+	'fields'         => 'ids',
+] );
+
+// データが一つでも残ってたら
+if ( $the_query->post_count ) {
+	echo '<div id="swell_setting_page" class="swl-setting -balloon -old"></div>';
+	return;
+}
+
+echo '<div id="swell_setting_page" class="swl-setting -balloon"></div>';

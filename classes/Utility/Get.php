@@ -146,13 +146,13 @@ trait Get {
 
 			$return_data[ $row['id'] ] = [
 				'title'  => $row['title'],
-				'icon'   => isset( $bln_data['icon'] ) ? $bln_data['icon'] : '',
-				'name'   => isset( $bln_data['name'] ) ? $bln_data['name'] : '',
-				'col'    => isset( $bln_data['col'] ) ? $bln_data['col'] : 'gray',
-				'type'   => isset( $bln_data['type'] ) ? $bln_data['type'] : 'speaking',
-				'align'  => isset( $bln_data['align'] ) ? $bln_data['align'] : 'left',
-				'border' => isset( $bln_data['border'] ) ? $bln_data['border'] : 'none',
-				'shape'  => isset( $bln_data['shape'] ) ? $bln_data['shape'] : 'circle',
+				'icon'   => $bln_data['icon'] ?? '',
+				'name'   => $bln_data['name'] ?? '',
+				'col'    => $bln_data['col'] ?? 'gray',
+				'type'   => $bln_data['type'] ?? 'speaking',
+				'align'  => $bln_data['align'] ?? 'left',
+				'border' => $bln_data['border'] ?? 'none',
+				'shape'  => $bln_data['shape'] ?? 'circle',
 			];
 		}
 

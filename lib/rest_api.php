@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * エンドポイントを追加
+ * callback では、returnで返すとそのままのデータを渡せる。wp_dieを使うと {code: 'wp_die', message: 'wp_dieで出力した文字列', ...}
  */
 add_action( 'rest_api_init', __NAMESPACE__ . '\hook_rest_api_init' );
 function hook_rest_api_init() {
@@ -495,6 +496,39 @@ function hook_rest_api_init() {
 				}
 
 				wp_die();
+			},
+		],
+		// データの移行
+		[
+			'methods'             => 'PATCH',
+			'permission_callback' => function( $request ) {
+				return current_user_can( 'create_speech_balloon' );
+			},
+			'callback'            => function( $request ) {
+
+				global $wpdb;
+				$table_name = 'swell_balloon';
+
+				// テーブルが存在しない場合は終了
+				if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) wp_die( 'no table' );
+
+				// 旧データ全部取得
+				$the_query = new \WP_Query( [
+					'post_type'      => 'speech_balloon',
+					'no_found_rows'  => true,
+					'posts_per_page' => -1,
+				] );
+
+				while ( $the_query->have_posts() ) {
+					$the_query->the_post();
+
+					// データ移行処理
+
+				}
+
+				wp_reset_postdata();
+
+				return [ 'status' => 'ok' ];
 			},
 		],
 	]);
