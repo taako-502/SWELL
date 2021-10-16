@@ -1,4 +1,4 @@
-const html = (
+export default (
 	<div lass='swell-block-postLink' data-style='card'>
 		<div href='###' className='p-blogCard -internal' data-type='type1'>
 			<div className='p-blogCard__inner'>
@@ -22,5 +22,3 @@ const html = (
 		</div>
 	</div>
 );
-
-export default html;
