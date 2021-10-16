@@ -42,7 +42,7 @@ export default memo(({ balloonID, setAttributes }) => {
 			<ButtonGroup className='swl-style-ctrls -balloon'>
 				{Object.keys(swellBalloons).map((key) => {
 					const balData = swellBalloons[key];
-					const theBalID = balData.id;
+					const theBalID = balData.id.toString();
 					const theBalTitle = balData.title;
 					const isSelected = theBalID === balloonID;
 

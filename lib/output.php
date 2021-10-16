@@ -134,10 +134,10 @@ function hook_admin_head() {
 	$is_swell_page   = strpos( $hook_suffix, 'swell_settings' ) !== false;
 	$is_balloon_page = strpos( $hook_suffix, 'swell_balloon' ) !== false;
 
-	global $post_type;
-	$is_usePreviewPage = 'speech_balloon' === $post_type;
+	// global $post_type;
+	// $is_usePreviewPage = 'speech_balloon' === $post_type;
 
-	if ( $is_editor || $is_swell_page || $is_balloon_page || $is_usePreviewPage ) {
+	if ( $is_editor || $is_swell_page || $is_balloon_page ) {
 		// ブロックエディターなどで読み込ませたい inlineスタイル
 		echo '<style id="loos-block-style">' . Style::get_editor_css() . '</style>' . PHP_EOL;
 	}

@@ -97,35 +97,28 @@ function hook_init() {
 	 * ふきだしを追加
 	 * 寄稿者(contributor) は画像を扱えないので、新規追加の権限をなくしておく
 	 */
-	if ( ! $OPTION['remove_balloon'] ) {
-
-		// 新ふきだしデータに移行済の場合は、メニューを追加しない
-		$table_name   = \SWELL_Theme::DB_TABLES['balloon'];
-		$table_exists = \SWELL_Theme::check_table_exists( $table_name );
-
-		if ( $table_exists ) return;
-
-		$balloon_name = __( 'Balloons', 'swell' );
-		register_post_type(
-			'speech_balloon', // 投稿タイプ名の定義
-			[
-				'labels'        => [
-					'name'          => $balloon_name,
-					'singular_name' => $balloon_name,
-				],
-				'public'        => false,
-				// 'menu_position' => 6,
-				'show_ui'       => true,
-				'show_in_menu'  => true,
-				'capabilities'  => ['create_posts' => 'create_speech_balloon' ],
-				'map_meta_cap'  => true, // capabilities を使用するために必要
-				'has_archive'   => false,
-				'menu_icon'     => 'dashicons-format-chat',
-				'show_in_rest'  => false,
-				'supports'      => [ 'title' ],
-			]
-		);
-	}
+	// if ( ! $OPTION['remove_balloon'] ) {
+		// $balloon_name = __( 'Balloons', 'swell' );
+		// register_post_type(
+		// 	'speech_balloon', // 投稿タイプ名の定義
+		// 	[
+		// 		'labels'        => [
+		// 			'name'          => $balloon_name,
+		// 			'singular_name' => $balloon_name,
+		// 		],
+		// 		'public'        => false,
+		// 		// 'menu_position' => 6,
+		// 		'show_ui'       => true,
+		// 		'show_in_menu'  => true,
+		// 		'capabilities'  => ['create_posts' => 'create_speech_balloon' ],
+		// 		'map_meta_cap'  => true, // capabilities を使用するために必要
+		// 		'has_archive'   => false,
+		// 		'menu_icon'     => 'dashicons-format-chat',
+		// 		'show_in_rest'  => false,
+		// 		'supports'      => [ 'title' ],
+		// 	]
+		// );
+	// }
 }
 
 

@@ -69,7 +69,7 @@ trait Balloon {
 		foreach ( $rows as $row ) {
 			$bln_data = json_decode( $row['data'], true );
 
-			$return_data[ 'id:' . $row['id'] ] = [
+			$return_data[ "id:{$row['id']}" ] = [
 				'id'     => $row['id'],
 				'title'  => $row['title'],
 				'icon'   => $bln_data['icon'] ?? '',
@@ -110,7 +110,7 @@ trait Balloon {
 			$balloon_border     = get_post_meta( $balloon_id, 'balloon_border', true );
 			$balloon_icon_shape = get_post_meta( $balloon_id, 'balloon_icon_shape', true );
 
-			$return_data[ 'id:' . $balloon_id ] = [
+			$return_data[ "id:{$balloon_id}" ] = [
 				'id'     => $balloon_id,
 				'title'  => $balloon_title,
 				'icon'   => $balloon_icon,
@@ -134,9 +134,8 @@ trait Balloon {
 	public static function get_balloon_data( $getby, $val ) {
 		if ( ! $getby || ! $val ) return [];
 
-		$cache_key = "balloon_{$getby}_{$val}";
-
 		// キャッシュ取得
+		$cache_key   = "balloon_{$getby}_{$val}";
 		$cached_data = wp_cache_get( $cache_key, 'swell' );
 		if ( $cached_data ) return $cached_data;
 

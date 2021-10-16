@@ -83,15 +83,17 @@ class Admin_Menu {
 		);
 
 		// 「ふきだし」を追加
-		add_menu_page(
-			__( 'Balloons', 'swell' ), // ページタイトルタグ
-			__( 'Balloons', 'swell' ), // メニュータイトル
-			'manage_options', // 必要な権限
-			self::PAGE_SLUG['balloon'], // このメニューを参照するスラッグ名
-			[self::$instance, 'balloon_setting' ], // 表示内容
-			'dashicons-format-chat', // アイコン
-			28 // 管理画面での表示位置
-		);
+		if ( ! \SWELL_Theme::get_option( 'remove_balloon' ) ) {
+			add_menu_page(
+				__( 'Balloons', 'swell' ), // ページタイトルタグ
+				__( 'Balloons', 'swell' ), // メニュータイトル
+				'manage_options', // 必要な権限
+				self::PAGE_SLUG['balloon'], // このメニューを参照するスラッグ名
+				[self::$instance, 'balloon_setting' ], // 表示内容
+				'dashicons-format-chat', // アイコン
+				28 // 管理画面での表示位置
+			);
+		}
 
 		// トップメニュー複製
 		add_submenu_page(

@@ -20,7 +20,6 @@ import getBlockIcon from '@swell-guten/utils/getBlockIcon';
  */
 import classnames from 'classnames';
 
-
 /**
  * ふきだしブロック
  */
@@ -57,7 +56,7 @@ registerBlockType(metadata.name, {
 			};
 
 			// 吹き出しセット選択時
-			const setedBalloon = '0' !== balloonID ? swellBalloons['id:' + balloonID] : '';
+			const setedBalloon = '0' !== balloonID ? swellBalloons[`id:${balloonID}`] : '';
 			if (setedBalloon) {
 				data.icon = setedBalloon.icon;
 				data.name = setedBalloon.name;
