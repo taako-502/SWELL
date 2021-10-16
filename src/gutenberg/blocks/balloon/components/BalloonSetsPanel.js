@@ -10,7 +10,6 @@ import { PanelBody, ButtonGroup } from '@wordpress/components';
  * ふきだしセットのセレクトボックス生成
  */
 const swellBalloons = window.swellBalloons || {};
-console.log(swellBalloons);
 
 const BalloonPrev = ({ balData }) => {
 	const { icon, name, align, col, shape, type, border } = balData;

@@ -134,11 +134,20 @@ trait Balloon {
 	public static function get_balloon_data( $getby, $val ) {
 		if ( ! $getby || ! $val ) return [];
 
+		$cache_key = "balloon_{$getby}_{$val}";
+
+		// キャッシュ取得
+		$cached_data = wp_cache_get( $cache_key, 'swell' );
+		if ( $cached_data ) return $cached_data;
+
 		if ( \SWELL_Theme::check_table_exists( self::DB_TABLES['balloon'] ) ) {
-			return self::get_balloon_data__new( $getby, $val );
+			$balloon_data = self::get_balloon_data__new( $getby, $val );
 		} else {
-			return self::get_balloon_data__old( $getby, $val );
+			$balloon_data = self::get_balloon_data__old( $getby, $val );
 		}
+
+		wp_cache_set( $cache_key, $balloon_data, 'swell' );
+		return $balloon_data;
 	}
 
 

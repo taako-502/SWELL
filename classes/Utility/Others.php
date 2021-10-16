@@ -279,10 +279,19 @@ trait Others {
 	 * DB上のテーブルの存在チェック
 	 */
 	public static function check_table_exists( $table_name ) {
+		$cache_key = 'table_' . $table_name . '_exists';
+
+		// キャッシュ取得
+		$cached_data = wp_cache_get( $cache_key, 'swell' );
+		if ( $cached_data ) return $cached_data;
+
 		global $wpdb;
 		$sql     = "SHOW TABLES LIKE '{$table_name}'";
 		$results = $wpdb->get_results( $sql );
-		return ! empty( $results );
+		$return  = ! empty( $results );
+
+		wp_cache_set( $cache_key, $return, 'swell' );
+		return $return;
 	}
 
 
