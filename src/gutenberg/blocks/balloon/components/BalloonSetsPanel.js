@@ -1,7 +1,7 @@
 /**
  * @WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+// import { __ } from '@wordpress/i18n';
 import { memo } from '@wordpress/element';
 import { addQueryArgs } from '@wordpress/url';
 import { PanelBody, ButtonGroup } from '@wordpress/components';
@@ -10,35 +10,21 @@ import { PanelBody, ButtonGroup } from '@wordpress/components';
  * ふきだしセットのセレクトボックス生成
  */
 const swellBalloons = window.swellBalloons || {};
-const balloonSetList = [
-	{
-		value: '0',
-		label: '- ふきだしセットを選択 -',
-	},
-];
-
-const iconPlaceholder =
-	'https://0.gravatar.com/avatar/00000000000000000000000000000000?s=128&d=mp&r=g';
-
-Object.keys(swellBalloons).forEach(function (key) {
-	const balData = swellBalloons[key];
-	balloonSetList.push({
-		value: key,
-		label: balData.title,
-	});
-});
+console.log(swellBalloons);
 
 const BalloonPrev = ({ balData }) => {
 	const { icon, name, align, col, shape, type, border } = balData;
 	return (
 		<div className={`c-balloon -bln-${align}`} data-col={col}>
-			<div className={`c-balloon__icon -${shape}`}>
-				<img className='c-balloon__iconImg' src={icon || iconPlaceholder} alt='' />
-				<span className='c-balloon__iconName'>{name}</span>
-			</div>
+			{icon && (
+				<div className={`c-balloon__icon -${shape}`}>
+					<img className='c-balloon__iconImg' src={icon} alt='' />
+					<span className='c-balloon__iconName'>{name}</span>
+				</div>
+			)}
 			<div className={`c-balloon__body -${type} -border-${border}`}>
 				<div className='c-balloon__text'>
-					<p>ふきだしのテキスト...</p>
+					<p>ふきだしテキスト</p>
 					<span className='c-balloon__shapes'>
 						<span className='c-balloon__before'></span>
 						<span className='c-balloon__after'></span>
@@ -57,9 +43,9 @@ export default memo(({ balloonID, setAttributes }) => {
 			<ButtonGroup className='swl-style-ctrls -balloon'>
 				{Object.keys(swellBalloons).map((key) => {
 					const balData = swellBalloons[key];
-					const theBalID = key;
+					const theBalID = balData.id;
 					const theBalTitle = balData.title;
-					const isSelected = key === balloonID;
+					const isSelected = theBalID === balloonID;
 
 					return (
 						<div className='__btnBox' key={`key_style_${key}`}>

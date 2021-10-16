@@ -274,6 +274,7 @@ trait Others {
 		return false;
 	}
 
+
 	/**
 	 * DB上のテーブルの存在チェック
 	 */
@@ -282,5 +283,19 @@ trait Others {
 		$sql     = "SHOW TABLES LIKE '{$table_name}'";
 		$results = $wpdb->get_results( $sql );
 		return ! empty( $results );
+	}
+
+
+	/**
+	 * テーブルの全レコード取得
+	 */
+	public static function get_select_all_rows( $table_name, $orderby = '' ) {
+		global $wpdb;
+		if ( ! $orderby ) {
+			$sql = "SELECT * FROM {$table_name}";
+		} else {
+			$sql = "SELECT * FROM {$table_name} ORDER BY {$orderby} DESC";
+		}
+		return $wpdb->get_results( $sql, ARRAY_A );
 	}
 }

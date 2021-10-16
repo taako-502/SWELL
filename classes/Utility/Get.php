@@ -122,43 +122,6 @@ trait Get {
 		];
 	}
 
-	/**
-	 * ふきだしデータ
-	 */
-	public static function get_balloon_data() {
-		$return_data = [];
-
-		global $wpdb;
-		$table_name = 'swell_balloon';
-
-		// テーブルが存在しない場合は終了
-		if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) return [];
-
-		$sql     = "SELECT * FROM {$table_name}";
-		$results = $wpdb->get_results( $sql, ARRAY_A );
-
-		if ( empty( $results ) ) {
-			return [];
-		}
-
-		foreach ( $results as $row ) {
-			$bln_data = json_decode( $row['data'], true );
-
-			$return_data[ $row['id'] ] = [
-				'title'  => $row['title'],
-				'icon'   => $bln_data['icon'] ?? '',
-				'name'   => $bln_data['name'] ?? '',
-				'col'    => $bln_data['col'] ?? 'gray',
-				'type'   => $bln_data['type'] ?? 'speaking',
-				'align'  => $bln_data['align'] ?? 'left',
-				'border' => $bln_data['border'] ?? 'none',
-				'shape'  => $bln_data['shape'] ?? 'circle',
-			];
-		}
-
-		return $return_data;
-	}
-
 
 	/**
 	 * ブログパーツデータ

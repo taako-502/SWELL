@@ -62,8 +62,8 @@ const BalloonMenu = ({ mode }) => {
 };
 
 const root = document.getElementById('swell_setting_page');
-const isOld = root.classList.contains('-old');
-if (isOld) {
+const isOld = root.getAttribute('data-old');
+if ('1' === isOld) {
 	render(<BalloonMenu mode='migrate' />, root);
 } else {
 	render(<BalloonMenu mode='' />, root);

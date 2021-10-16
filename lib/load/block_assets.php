@@ -57,7 +57,7 @@ function output_content_data() {
 	echo 'window.capBlockColors = ' . wp_json_encode( \SWELL_Theme::get_cap_colors_data(), JSON_UNESCAPED_UNICODE ) . ';';
 
 	// ふきだし
-	echo 'window.swellBalloons = ' . wp_json_encode( \SWELL_Theme::get_balloon_data(), JSON_UNESCAPED_UNICODE ) . ';';
+	echo 'window.swellBalloons = ' . wp_json_encode( \SWELL_Theme::get_all_balloons(), JSON_UNESCAPED_UNICODE ) . ';';
 
 	// ブログパーツ
 	echo 'window.swellBlogParts = ' . wp_json_encode( \SWELL_Theme::get_blog_parts_data(), JSON_UNESCAPED_UNICODE ) . ';';

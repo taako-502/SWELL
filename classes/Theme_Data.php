@@ -18,6 +18,11 @@ class Theme_Data {
 		'editor' => 'swell_settings_editor',
 	];
 
+	// 独自テーブル
+	const DB_TABLES = [
+		'balloon'  => 'swell_balloon',
+	];
+
 	// カスタマイザー用
 	public static $setting            = '';
 	protected static $default_setting = '';

@@ -203,6 +203,9 @@ export default function BalloonEdit({ id, setId }) {
 		// 通常のフォームサブミットを停止
 		event.preventDefault();
 
+		// eslint-disable-next-line no-alert
+		if (!window.confirm('本当に複製しますか？')) return;
+
 		// setIsWaiting(true);
 
 		apiFetch({

@@ -3,38 +3,13 @@
 use \SWELL_THEME\Admin_Menu;
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// ふきだし用テーブルがなければ作成
-$table_name   = 'swell_balloon';
-$table_exists = \SWELL_Theme::check_table_exists( $table_name );
+$table_exists = \SWELL_Theme::check_table_exists( 'balloon' );
+$has_old_data = \SWELL_Theme::has_old_balloon_data();
 
-if ( ! $table_exists ) {
-	global $wpdb;
-	$collate = $wpdb->get_charset_collate();
-
-	$sql = "CREATE TABLE {$table_name} (
-		id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-		title text NOT NULL,
-		data text DEFAULT NULL,
-		order_no bigint(20) unsigned NOT NULL,
-		PRIMARY KEY (id)
-	) {$collate};";
-
-	// テーブル作成関数の読み込み・実行
-	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-	dbDelta( $sql );
+// 古いデータもなく、新しいテーブルもない場合はアクセス時に作成
+if ( ! $has_old_data && ! $table_exists ) {
+	\SWELL_Theme::create_balloon_table();
 }
 
-$the_query = new \WP_Query( [
-	'post_type'      => 'speech_balloon',
-	'no_found_rows'  => true,
-	'posts_per_page' => 1,
-	'fields'         => 'ids',
-] );
-
-// データが一つでも残ってたら
-if ( $the_query->post_count ) {
-	echo '<div id="swell_setting_page" class="swl-setting -balloon -old"></div>';
-	return;
-}
-
-echo '<div id="swell_setting_page" class="swl-setting -balloon"></div>';
+?>
+<div id="swell_setting_page" class="swl-setting -balloon" data-old="<?=esc_attr( $has_old_data )?>"></div>

@@ -265,52 +265,29 @@ add_shortcode( 'ad_tag', __NAMESPACE__ . '\ad_tag' );
  */
 if ( ! function_exists( __NAMESPACE__ . '\balloon' ) ) :
 	function balloon( $args, $content = null ) {
-		$bln_icon       = '';
-		$bln_name       = '';
-		$bln_col        = 'gray';
-		$bln_type       = 'speaking';
-		$bln_align      = 'left';
-		$bln_border     = 'none';
-		$bln_icon_shape = 'circle';
 
-		$q_args = [];
+		// ふきだしセットの指定があればデータを取得
+		$bln_data = [];
 		if ( isset( $args['id'] ) ) {
-			$q_args['id'] = $args['id'];
+			$bln_data = \SWELL_Theme::get_balloon_data( 'id', $args['id'] );
 		} elseif ( isset( $args['set'] ) ) {
-			$q_args['title'] = $args['set'];
+			$bln_data = \SWELL_Theme::get_balloon_data( 'title', $args['set'] );
 		}
 
-		// ふきだしセットの指定があれば取得
-		global $wpdb;
-		$table_name = 'swell_balloon';
-
-		if ( ! empty( $q_args ) && \SWELL_Theme::check_table_exists( $table_name ) ) {
-
-			if ( isset( $q_args['id'] ) ) {
-				// IDでデータ取得
-				$sql   = "SELECT * FROM {$table_name} WHERE id = %d";
-				$query = $wpdb->prepare( $sql, $q_args['id'] );
-			} elseif ( isset( $q_args['title'] ) ) {
-				// タイトルでデータ取得
-				$sql   = "SELECT * FROM {$table_name} WHERE title = %d";
-				$query = $wpdb->prepare( $sql, $q_args['title'] );
-			}
-
-			$results = $wpdb->get_row( $query, ARRAY_A );
-
-			if ( $results ) {
-				$bln_data = json_decode( $results['data'], true );
-
-				if ( isset( $bln_data['icon'] ) ) $bln_icon        = $bln_data['icon'];
-				if ( isset( $bln_data['name'] ) ) $bln_name        = $bln_data['name'];
-				if ( isset( $bln_data['col'] ) ) $bln_col          = $bln_data['col'];
-				if ( isset( $bln_data['type'] ) ) $bln_type        = $bln_data['type'];
-				if ( isset( $bln_data['align'] ) ) $bln_align      = $bln_data['align'];
-				if ( isset( $bln_data['border'] ) ) $bln_border    = $bln_data['border'];
-				if ( isset( $bln_data['shape'] ) ) $bln_icon_shape = $bln_data['shape'];
-			}
+		if ( ! is_array( $bln_data ) ) {
+			$bln_data = [];
 		}
 
+		// ふきだしセットのデータ > デフォルト値
+		$bln_icon       = $bln_data['icon'] ?? '';
+		$bln_name       = $bln_data['name'] ?? '';
+		$bln_col        = $bln_data['col'] ?? 'gray';
+		$bln_type       = $bln_data['type'] ?? 'speaking';
+		$bln_align      = $bln_data['align'] ?? 'left';
+		$bln_border     = $bln_data['border'] ?? 'none';
+		$bln_icon_shape = $bln_data['shape'] ?? 'circle';
+
+		// プロパティが指定されていれば上書き。
 		if ( isset( $args['icon'] ) ) $bln_icon             = $args['icon'];
 		if ( isset( $args['name'] ) ) $bln_name             = $args['name'];
 		if ( isset( $args['col'] ) ) $bln_col               = $args['col'];

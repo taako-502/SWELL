@@ -113,6 +113,9 @@ export default function BalloonList() {
 		(id) => {
 			if (!id) return;
 
+			// eslint-disable-next-line no-alert
+			if (!window.confirm('本当に複製しますか？')) return;
+
 			setIsWaiting(true);
 
 			// データ
@@ -341,7 +344,7 @@ export default function BalloonList() {
 							})}
 						</ul>
 						<ReactPaginate
-							// initialPage={1} // 初期ページのセット。※ 0始まり。
+							// initialPage={1} // 初期ページあのセット。※ 0始まり。
 							// forcePage={1}
 							pageCount={lastPage} // 必須。総ページ数。
 							pageRangeDisplayed={5} // 必須。上記の「今いるページの前後」の番号をいくつ表示させるかを決めます。
