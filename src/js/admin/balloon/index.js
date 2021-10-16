@@ -46,12 +46,9 @@ const BalloonMenu = ({ mode }) => {
 	// 編集ページID
 	const [id, setId] = useState(params.id);
 
-	// データ移行画面にするかどうか
-	const [isMigrate, setIsMigrate] = useState('migrate' === mode);
-
-	if (isMigrate) {
+	if ('migrate' === mode) {
 		// 古いデータある時
-		return <BalloonMigrate setIsMigrate={setIsMigrate} />;
+		return <BalloonMigrate />;
 	} else if (id || isNewEdit) {
 		// 編集ページ
 		return <BalloonEdit {...{ id, setId }} />;

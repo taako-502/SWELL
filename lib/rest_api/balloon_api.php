@@ -162,24 +162,71 @@ register_rest_route('wp/v2', '/swell-balloon', [
 			global $wpdb;
 			$table_name = \SWELL_Theme::DB_TABLES['balloon'];
 
-			// テーブルが存在しない場合は終了
-			if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) wp_die( 'no table' );
+			// テーブル作成
+			if ( ! \SWELL_Theme::check_table_exists( $table_name ) ) {
+				\SWELL_Theme::create_balloon_table();
+			}
 
 			// 旧データ全部取得
 			$the_query = new \WP_Query( [
 				'post_type'      => 'speech_balloon',
-				'no_found_rows'  => true,
+				// 全てのステータスの記事を取得
+				'post_status'    => [ 'publish', 'future', 'draft', 'pending', 'private', 'trash', 'auto-draft' ],
 				'posts_per_page' => -1,
+				// 一覧ページでの並び順を保持する
+				'orderby'        => 'menu_order',
 			] );
+
+			$i = $the_query->found_posts;
 
 			while ( $the_query->have_posts() ) {
 				$the_query->the_post();
 
-				// データ移行処理
+				// ステータスが「ゴミ箱」「自動保存（リビジョン）」以外の場合のみ移行する
+				if ( ! in_array( get_post_status(), [ 'trash', 'auto-draft' ], true ) ) {
+					// データ移行処理
+					$bln_id   = get_the_ID();
+					$title    = the_title_attribute( 'echo=0' );
+					$bln_data = [
+						'icon'   => get_post_meta( $bln_id, 'balloon_icon', true ),
+						'name'   => get_post_meta( $bln_id, 'balloon_icon_name', true ),
+						'col'    => get_post_meta( $bln_id, 'balloon_col', true ) ?: 'gray',
+						'type'   => get_post_meta( $bln_id, 'balloon_type', true ) ?: 'speaking',
+						'align'  => get_post_meta( $bln_id, 'balloon_align', true ) ?: 'left',
+						'border' => get_post_meta( $bln_id, 'balloon_border', true ) ?: 'none',
+						'shape'  => get_post_meta( $bln_id, 'balloon_icon_shape', true ) ?: 'circle',
+					];
 
+					$wpdb->insert(
+						$table_name,
+						[
+							'id'       => $bln_id,
+							'title'    => $title,
+							'data'     => json_encode( $bln_data ),
+							'order_no' => $i,
+						],
+						[
+							'%d',
+							'%s',
+							'%s',
+							'%d',
+						]
+					);
+
+					// 旧データの削除
+					wp_delete_post( $bln_id, true );
+
+					delete_post_meta( $bln_id, 'balloon_icon' );
+					delete_post_meta( $bln_id, 'balloon_icon_name' );
+					delete_post_meta( $bln_id, 'balloon_col' );
+					delete_post_meta( $bln_id, 'balloon_type' );
+					delete_post_meta( $bln_id, 'balloon_align' );
+					delete_post_meta( $bln_id, 'balloon_border' );
+					delete_post_meta( $bln_id, 'balloon_icon_shape' );
+				}
+
+				$i--;
 			}
-
-			wp_reset_postdata();
 
 			return [ 'status' => 'ok' ];
 		},

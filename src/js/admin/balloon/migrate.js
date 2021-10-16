@@ -10,7 +10,7 @@ import { Button } from '@wordpress/components';
  */
 import { swellApiPath } from './index';
 
-export default function BalloonMigrate({ setIsMigrate }) {
+export default function BalloonMigrate() {
 	// 移行処理が始まっているかどうか
 	const [isWaiting, setIsWaiting] = useState(false);
 
@@ -44,12 +44,12 @@ export default function BalloonMigrate({ setIsMigrate }) {
 								method: 'PATCH',
 							})
 								.then((res) => {
-									// console.log(res.code);
 									if ('ok' === res.status) {
-										// データ移行モードを終了
-										setIsMigrate(false);
+										// 旧ふきだしメニューを非表示にするためにリロード
+										location.reload();
+									} else {
+										setErrMessage('データ移行に失敗しました。');
 									}
-									setErrMessage('データ移行に失敗しました。');
 								})
 								.catch((res) => {
 									setErrMessage(res.message);
