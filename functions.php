@@ -2,6 +2,16 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * 動作環境チェック
+ */
+require_once __DIR__ . '/lib/check_environment.php';
+if ( isset( $GLOBALS['swell_env_err_text'] ) ) {
+	swl__throw_env_err();
+	return;
+}
+
+
+/**
  * 先に定義すべき定数
  */
 define( 'T_DIRE', get_template_directory() );
@@ -9,15 +19,17 @@ define( 'S_DIRE', get_stylesheet_directory() );
 define( 'T_DIRE_URI', get_template_directory_uri() );
 define( 'S_DIRE_URI', get_stylesheet_directory_uri() );
 
-// テキストドメイン
-load_theme_textdomain( 'swell', T_DIRE . '/languages' );
 
+
+/**
+ * テキストドメイン読み込み
+ */
+load_theme_textdomain( 'swell', T_DIRE . '/languages' );
 
 /**
  * CLASSのオートロード
  */
 require_once T_DIRE . '/lib/autoloader.php';
-
 
 /**
  * メインクラス
