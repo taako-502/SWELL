@@ -3,6 +3,12 @@ namespace SWELL_Theme\Update;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+// sslverifyオフ
+add_filter( 'puc_request_update_options_theme-swell', function( $option ) {
+	$option['sslverify'] = false;
+	return $option;
+} );
+
 if ( ! class_exists( '\Puc_v4_Factory' ) ) {
 	require_once T_DIRE . '/lib/update/plugin-update-checker.php';
 }
