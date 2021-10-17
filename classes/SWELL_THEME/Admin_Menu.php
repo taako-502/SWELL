@@ -188,6 +188,7 @@ class Admin_Menu {
 		Menu\Tab_Balloon::balloon_settings( self::PAGE_NAMES['balloon'] );
 		Menu\Tab_Others::blogcard_settings( self::PAGE_NAMES['others'] );
 		Menu\Tab_Others::blockquote_settings( self::PAGE_NAMES['others'] );
+		Menu\Tab_Custom::custom_format_set_settings( self::PAGE_NAMES['custom'] );
 		Menu\Tab_Custom::custom_format_settings( self::PAGE_NAMES['custom'] );
 		Menu\Tab_Custom::custom_format_css_editor( self::PAGE_NAMES['custom'] );
 	}

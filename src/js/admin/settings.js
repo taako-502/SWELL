@@ -425,6 +425,21 @@ function getRGBA(colorCode, alpha, brightness) {
 				$('.is-style-btn_line a').css('border-radius', thisVal);
 			});
 		})();
+
+		/**
+		 * カスタム書式設置
+		 */
+		(function () {
+			const $setMenu = $('.swell-menu-set');
+
+			const $enableField = $setMenu.find('.__enable');
+			$enableField.change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.__field');
+				$parent.attr('data-is-enable', Number(isChecked));
+			});
+		})();
 	});
 
 	// ページ上部へ
