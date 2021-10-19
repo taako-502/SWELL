@@ -4,22 +4,27 @@
 // import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { useState, useMemo } from '@wordpress/element';
-import { registerFormatType, removeFormat } from '@wordpress/rich-text';
+import { removeFormat } from '@wordpress/rich-text';
 import { RichTextToolbarButton } from '@wordpress/block-editor';
 import { Icon } from '@wordpress/components';
 
 /**
+ * @SWELL dependencies
+ */
+import { swellStore } from '@swell-guten/config';
+import getActiveColor from '../../helper/getActiveColor';
+
+/**
  * @Self dependencies
  */
-import FormatPopover from './_popover';
-import getActiveColor from '../../helper/getActiveColor';
-import { swellStore } from '@swell-guten/config';
+import FormatPopover from './popover';
 
-const formatName = 'loos/bg-color';
-const formatTitle = '背景色';
+const name = 'loos/bg-color';
+const title = '背景色';
 
-registerFormatType(formatName, {
-	title: formatTitle,
+export const bgColor = {
+	name,
+	title,
 	tagName: 'span',
 	className: 'swl-bg-color',
 	attributes: {
@@ -27,8 +32,7 @@ registerFormatType(formatName, {
 		class: 'class',
 	},
 	edit: ({ isActive, value, onChange }) => {
-		if (useSelect === undefined) return null;
-		const [isAddingColor, setIsAddingColor] = useState(false);
+		const [isAdding, setIsAdding] = useState(false);
 
 		// SWELLストアから設定を取得
 		const isShowTop = useSelect((select) => {
@@ -57,7 +61,7 @@ registerFormatType(formatName, {
 
 		// アイコンの下線の色
 		const colorIndicatorStyle = useMemo(() => {
-			const activeColor = getActiveColor(formatName, value, colors);
+			const activeColor = getActiveColor(name, value, colors);
 			if (!activeColor) {
 				return undefined;
 			}
@@ -78,7 +82,7 @@ registerFormatType(formatName, {
 				<RichTextToolbarButton
 					key={btnKey}
 					name={btnName}
-					title={formatTitle}
+					title={title}
 					className='format-library-text-color-button'
 					icon={
 						<>
@@ -94,25 +98,20 @@ registerFormatType(formatName, {
 					// カラーパレットが無効だけど過去の設定があれば、removeFormatさせる。
 					onClick={() => {
 						if (hasColorsToChoose) {
-							setIsAddingColor(true);
+							setIsAdding(true);
 						} else {
-							onChange(removeFormat(value, formatName));
+							onChange(removeFormat(value, name));
 						}
 					}}
 				/>
-				{isAddingColor && (
+				{isAdding && (
 					<FormatPopover
-						name={formatName}
+						{...{ name, value, isActive, onChange, isAdding, colors }}
 						className='components-inline-color-popover'
-						isAddingColor={isAddingColor}
-						value={value}
-						isActive={isActive}
-						onChange={onChange}
-						onClose={() => setIsAddingColor(false)}
-						colors={colors}
+						onClose={() => setIsAdding(false)}
 					/>
 				)}
 			</>
 		);
 	},
-});
+};

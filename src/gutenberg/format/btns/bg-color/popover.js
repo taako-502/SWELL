@@ -8,15 +8,15 @@ import { applyFormat, removeFormat } from '@wordpress/rich-text';
 import { ColorPalette, URLPopover, getColorObjectByColorValue } from '@wordpress/block-editor';
 
 /**
- * @Self dependencies
+ * @SWELL dependencies
  */
 import getActiveColor from '../../helper/getActiveColor';
 import getPopoverAnchorRect from '../../helper/getPopoverAnchorRect';
 
 export default (props) => {
-	const { value, name, isAddingColor, onChange, colors } = props;
+	const { value, name, isAdding, onChange, colors } = props;
 
-	const anchorRect = useMemo(() => getPopoverAnchorRect(isAddingColor), []);
+	const anchorRect = useMemo(() => getPopoverAnchorRect(isAdding), []);
 	if (!anchorRect) {
 		return null;
 	}

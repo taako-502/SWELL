@@ -4,18 +4,19 @@
 // import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
 import { useState, useMemo } from '@wordpress/element';
-import { registerFormatType, getActiveFormat } from '@wordpress/rich-text';
+import { getActiveFormat } from '@wordpress/rich-text';
 import { RichTextToolbarButton } from '@wordpress/block-editor';
+
+/**
+ * @SWELL dependencies
+ */
+import { swellStore } from '@swell-guten/config';
 
 /**
  * @Self dependencies
  */
-import FormatPopover from './_popover';
-import { swellIcon } from '@swell-guten/icon';
-import { swellStore } from '@swell-guten/config';
-
-const formatName = 'loos/font-size';
-const formatTitle = 'フォントサイズ';
+import fontSizeIcon from './icon';
+import FormatPopover from './popover';
 
 const fontSizes = [
 	{
@@ -40,18 +41,19 @@ const fontSizes = [
 	},
 ];
 
-registerFormatType(formatName, {
-	title: formatTitle,
+const name = 'loos/font-size';
+const title = 'フォントサイズ';
+
+export const fontSize = {
+	name,
+	title,
 	tagName: 'span',
 	className: 'swl-fz',
 	attributes: {
-		// style: 'style',
 		class: 'class',
 	},
 	edit: ({ isActive, value, onChange }) => {
-		if (useState === undefined) return null;
-
-		const [isAddingColor, setIsAddingColor] = useState(false);
+		const [isAdding, setIsAdding] = useState(false);
 
 		// SWELLストアから設定を取得
 		const isShowTop = useSelect((select) => {
@@ -65,7 +67,7 @@ registerFormatType(formatName, {
 
 		// アイコンの下線の色
 		const activeSize = useMemo(() => {
-			const activeColorFormat = getActiveFormat(value, formatName);
+			const activeColorFormat = getActiveFormat(value, name);
 			if (!activeColorFormat) {
 				return '';
 			}
@@ -95,11 +97,11 @@ registerFormatType(formatName, {
 				<RichTextToolbarButton
 					key={btnKey}
 					name={btnName}
-					title={formatTitle}
+					title={title}
 					className='format-library-text-color-button'
 					icon={
 						<>
-							{swellIcon.fontSize}
+							{fontSizeIcon}
 							{isActive && (
 								<span
 									className='format-library-text-color-button__indicator'
@@ -109,23 +111,17 @@ registerFormatType(formatName, {
 						</>
 					}
 					onClick={() => {
-						setIsAddingColor(true);
+						setIsAdding(true);
 					}}
 				/>
-				{isAddingColor && (
+				{isAdding && (
 					<FormatPopover
-						name={formatName}
+						{...{ name, value, isActive, onChange, isAdding, fontSizes, activeSize }}
 						className='components-inline-color-popover -swl-fz'
-						isAddingColor={isAddingColor}
-						value={value}
-						isActive={isActive}
-						onChange={onChange}
-						onClose={() => setIsAddingColor(false)}
-						fontSizes={fontSizes}
-						activeSize={activeSize}
+						onClose={() => setIsAdding(false)}
 					/>
 				)}
 			</>
 		);
 	},
-});
+};
