@@ -13,6 +13,7 @@ import { bgColor } from './bg-color'; // 背景色
 import { marker } from './marker'; // マーカー
 import { fontSize } from './font-size'; // フォントサイズ
 import { note } from './mini-note'; // 注釈ボタン
+import { inlineBtn } from './inline-btn'; // nowrapボタン
 import { nowrap } from './nowrap'; // nowrapボタン
 import { customFormats } from './custom'; // カスタムボタン
 
@@ -24,6 +25,7 @@ const formats = [
 	marker,
 	fontSize,
 	note,
+	inlineBtn,
 	nowrap,
 	...customFormats,
 ];
