@@ -427,17 +427,44 @@ function getRGBA(colorCode, alpha, brightness) {
 		})();
 
 		/**
-		 * カスタム書式設置
+		 * カスタム書式設定
 		 */
 		(function () {
 			const $setMenu = $('.swell-menu-set');
 
-			const $enableField = $setMenu.find('.__enable');
-			$enableField.change(function () {
+			const $toggleField = $setMenu.find('.__toggle');
+			$toggleField.change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
 				const $parent = $this.parents('.__field');
 				$parent.attr('data-is-enable', Number(isChecked));
+				$parent.find('.__choices input').prop('checked', false);
+			});
+
+			const $colorField = $setMenu.find('.__color');
+			$colorField.change(function () {
+				const $this = $(this);
+				const thisVal = $this.val();
+				const $parent = $this.parents('.swell-menu-set');
+
+				let colorVal = 'var(--color_' + thisVal + ')';
+				if (thisVal === 'white' || thisVal === 'black') {
+					colorVal = thisVal;
+				}
+				$parent.find('.__preview span').css('color', colorVal);
+			});
+
+			const $bgField = $setMenu.find('.__bg');
+			$bgField.change(function () {
+				const $this = $(this);
+				const thisVal = $this.val();
+				const $parent = $this.parents('.swell-menu-set');
+
+				let colorVal = 'var(--color_' + thisVal + ')';
+				if (thisVal === 'white' || thisVal === 'black') {
+					colorVal = thisVal;
+				}
+				$parent.find('.__preview span').css('background-color', colorVal);
 			});
 		})();
 	});

@@ -32,20 +32,20 @@ class Tab_Custom {
 				[
 					'class'              => 'tr-custom-format-set',
 					'i'                  => $i,
-					'base_text_colors'   => [
+					'base_colors'   => [
 						[
 							'name'  => 'メインカラー',
-							'slug'  => 'swl-main',
+							'slug'  => 'main',
 							'color' => 'var( --color_main )',
 						],
 						[
 							'name'  => 'メインカラー(薄)',
-							'slug'  => 'swl-main-thin',
+							'slug'  => 'main_thin',
 							'color' => 'var( --color_main_thin )',
 						],
 						[
 							'name'  => 'グレー',
-							'slug'  => 'swl-gray',
+							'slug'  => 'gray',
 							'color' => 'var( --color_gray )',
 						],
 						[
@@ -59,7 +59,7 @@ class Tab_Custom {
 							'color' => '#000',
 						],
 					],
-					'custom_text_colors' => [
+					'custom_colors' => [
 						'deep01' => '濃い色1',
 						'deep02' => '濃い色2',
 						'deep03' => '濃い色3',
@@ -87,110 +87,201 @@ class Tab_Custom {
 	}
 
 	public static function cb_format_set( $args ) {
-		$i   = $args['i'];
-		$db  = \SWELL_Theme::DB_NAME_EDITORS;
-		$key = 'format_set_title_' . $i;
-		// $name = $db . '[' . $key . ']';
-		$val = \SWELL_Theme::get_editor( $key );
+		$i  = $args['i'];
+		$db = \SWELL_Theme::DB_NAME_EDITORS;
 
-		// Temp
-		$color_name     = 'set_color_' . $i;
-		$mark_name      = 'set_mark_' . $i;
-		$font_size_name = 'set_font_size_' . $i;
+		$bold_key      = 'format_set_bold_' . $i;
+		$italic_key    = 'format_set_italic_' . $i;
+		$color_key     = 'format_set_color_' . $i;
+		$bg_key        = 'format_set_bg_' . $i;
+		$marker_key    = 'format_set_marker_' . $i;
+		$font_size_key = 'format_set_font_size_' . $i;
 
-		$enable_bold_key      = 'enable_bold_' . $i;
-		$enable_color_key     = 'enable_color_' . $i;
-		$enable_marker_key    = 'enable_marker_' . $i;
-		$enable_font_size_key = 'font_size_' . $i;
+		$bold_name      = $db . '[' . $bold_key . ']';
+		$italic_name    = $db . '[' . $italic_key . ']';
+		$color_name     = $db . '[' . $color_key . ']';
+		$bg_name        = $db . '[' . $bg_key . ']';
+		$marker_name    = $db . '[' . $marker_key . ']';
+		$font_size_name = $db . '[' . $font_size_key . ']';
 
-		$base_text_colors   = $args['base_text_colors'];
-		$custom_text_colors = $args['custom_text_colors'];
-		$marker_colors      = $args['marker_colors'];
-		$font_sizes         = $args['font_sizes'];
+		$base_colors   = $args['base_colors'];
+		$custom_colors = $args['custom_colors'];
+		$marker_colors = $args['marker_colors'];
+		$font_sizes    = $args['font_sizes'];
+
+		$editor = \SWELL_Theme::get_editor();
+
+		$enable_color     = $editor[ $color_key ] !== '' ? 1 : 0;
+		$enable_bg        = $editor[ $bg_key ] !== '' ? 1 : 0;
+		$enable_marker    = $editor[ $marker_key ] !== '' ? 1 : 0;
+		$enable_font_size = $editor[ $font_size_key ] !== '' ? 1 : 0;
+
 		?>
 		<div class="swell-menu-set">
 				<div class="__settings">
 					<div class="__field">
 						<div class="__ttl">
-							<input type="checkbox" id="<?=esc_attr( $enable_bold_key )?>" class="__enable"/>
-							<label for="<?=esc_attr( $enable_bold_key )?>">太字</label>
+							<input
+								type="checkbox"
+								id="<?=esc_attr( $bold_key )?>"
+								name="<?=esc_attr( $bold_name )?>"
+								value="1"
+								class="__enable_bold"
+								<?=checked( (string) $editor[ $bold_key ], '1', false )?>
+							/>
+							<label for="<?=esc_attr( $bold_key )?>">太字</label>
 						</div>
 					</div>
 					<div class="__field">
 						<div class="__ttl">
-							<input type="checkbox" id="<?=esc_attr( $enable_color_key )?>" class="__enable"/>
-							<label for="<?=esc_attr( $enable_color_key )?>">文字色</label>
+							<input
+								type="checkbox"
+								id="<?=esc_attr( $italic_key )?>"
+								name="<?=esc_attr( $italic_name )?>"
+								value="1"
+								<?=checked( (string) $editor[ $italic_key ], '1', false )?>
+							/>
+							<label for="<?=esc_attr( $italic_key )?>">斜体</label>
+						</div>
+					</div>
+					<div class="__field" data-is-enable=<?=esc_attr( $enable_color );?>>
+						<div class="__ttl">
+							<input
+								type="checkbox"
+								id="<?=esc_attr( $color_key )?>"
+								class="__toggle"
+								<?=checked( (string) $enable_color, '1', false )?>
+							/>
+							<label for="<?=esc_attr( $color_key )?>">文字色</label>
 						</div>
 						<div class="__choices">
 							<?php
-							foreach ( $base_text_colors as $color ) :
+							foreach ( $base_colors as $color ) :
 								?>
-								<label for="<?=esc_attr( 'set_color_' . $color['slug'] . '_' . $i )?>" class="__color">
+								<label for="<?=esc_attr( $color_key . '_' . $color['slug'] )?>" class="__label">
 									<input
 										type="radio"
-										id="<?=esc_attr( 'set_color_' . $color['slug'] . '_' . $i )?>"
+										id="<?=esc_attr( $color_key . '_' . $color['slug'] )?>"
 										name="<?=esc_attr( $color_name )?>"
 										value="<?=esc_attr( $color['slug'] );?>"
-										class="u-none"
+										class="__color u-none"
+										<?=checked( (string) $editor[ $color_key ], $color['slug'], false )?>
 									/>
 									<span style="background:<?=esc_attr( $color['color'] );?>"><?=esc_html( $color['name'] )?></span>
 								</label>
 							<?php endforeach; ?>
 							<?php
-							foreach ( $custom_text_colors as $key => $label ) :
-								$val = \SWELL_Theme::get_editor( 'color_' . $key );
+							foreach ( $custom_colors as $slug => $name ) :
+								$val = \SWELL_Theme::get_editor( 'color_' . $slug );
 								?>
-								<label for="<?=esc_attr( 'set_color_' . $key . '_' . $i )?>" class="__color">
+								<label for="<?=esc_attr( $color_key . '_' . $slug )?>" class="__label">
 									<input
 										type="radio"
-										id="<?=esc_attr( 'set_color_' . $key . '_' . $i )?>"
+										id="<?=esc_attr( $color_key . '_' . $slug )?>"
 										name="<?=esc_attr( $color_name )?>"
-										value="<?=esc_attr( $key );?>"
-										class="u-none"
+										value="<?=esc_attr( $slug );?>"
+										class="__color u-none"
+										<?=checked( (string) $editor[ $color_key ], $slug, false )?>
 									/>
-									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $label )?></span>
+									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $name )?></span>
 								</label>
 							<?php endforeach; ?>
 						</div>
 					</div>
-					<div class="__field">
+					<div class="__field" data-is-enable=<?=esc_attr( $enable_bg );?>>
 						<div class="__ttl">
-							<input type="checkbox" id="<?=esc_attr( $enable_marker_key )?>" class="__enable"/>
-							<label for="<?=esc_attr( $enable_marker_key )?>">マーカー</label>
+							<input
+								type="checkbox"
+								id="<?=esc_attr( $bg_key )?>"
+								class="__toggle"
+								<?=checked( (string) $enable_bg, '1', false )?>
+							/>
+							<label for="<?=esc_attr( $bg_key )?>">背景色</label>
 						</div>
 						<div class="__choices">
 							<?php
-							foreach ( $marker_colors as $key => $label ) :
-								$val = \SWELL_Theme::get_editor( 'color_mark_' . $key );
+							foreach ( $base_colors as $color ) :
 								?>
-								<label for="<?=esc_attr( 'set_mark_' . $key . '_' . $i )?>" class="__color">
+								<label for="<?=esc_attr( $bg_key . '_' . $color['slug'] )?>" class="__label">
 									<input
 										type="radio"
-										id="<?=esc_attr( 'set_mark_' . $key . '_' . $i )?>"
-										name="<?=esc_attr( $mark_name )?>"
-										value="<?=esc_attr( $key );?>"
-										class="u-none"
+										id="<?=esc_attr( $bg_key . '_' . $color['slug'] )?>"
+										name="<?=esc_attr( $bg_name )?>"
+										value="<?=esc_attr( $color['slug'] );?>"
+										class="__bg u-none"
+										<?=checked( (string) $editor[ $bg_key ], $color['slug'], false )?>
 									/>
-									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $label )?></span>
+									<span style="background:<?=esc_attr( $color['color'] );?>"><?=esc_html( $color['name'] )?></span>
+								</label>
+							<?php endforeach; ?>
+							<?php
+							foreach ( $custom_colors as $slug => $name ) :
+								$val = \SWELL_Theme::get_editor( 'color_' . $slug );
+								?>
+								<label for="<?=esc_attr( $bg_key . '_' . $slug )?>" class="__label">
+									<input
+										type="radio"
+										id="<?=esc_attr( $bg_key . '_' . $slug )?>"
+										name="<?=esc_attr( $bg_name )?>"
+										value="<?=esc_attr( $slug );?>"
+										class="__bg u-none"
+										<?=checked( (string) $editor[ $bg_key ], $slug, false )?>
+									/>
+									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $name )?></span>
 								</label>
 							<?php endforeach; ?>
 						</div>
 					</div>
-					<div class="__field">
+					<div class="__field" data-is-enable=<?=esc_attr( $enable_marker );?>>
 						<div class="__ttl">
-							<input type="checkbox" id="<?=esc_attr( $enable_font_size_key )?>" class="__enable"/>
-							<label for="<?=esc_attr( $enable_font_size_key )?>">フォントサイズ</label>
+							<input
+								type="checkbox"
+								id="<?=esc_attr( $marker_key )?>"
+								class="__toggle"
+								<?=checked( (string) $enable_marker, '1', false )?>
+							/>
+							<label for="<?=esc_attr( $marker_key )?>">マーカー</label>
 						</div>
 						<div class="__choices">
-							<?php foreach ( $font_sizes as $key => $label ) : ?>
+							<?php
+							foreach ( $marker_colors as $slug => $name ) :
+								$val = \SWELL_Theme::get_editor( 'color_mark_' . $slug );
+								?>
+								<label for="<?=esc_attr( $marker_key . '_' . $slug )?>" class="__label">
+									<input
+										type="radio"
+										id="<?=esc_attr( $marker_key . '_' . $slug )?>"
+										name="<?=esc_attr( $marker_name )?>"
+										value="<?=esc_attr( $slug );?>"
+										class="__color u-none"
+										<?=checked( (string) $editor[ $marker_key ], $slug, false )?>
+									/>
+									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $name )?></span>
+								</label>
+							<?php endforeach; ?>
+						</div>
+					</div>
+					<div class="__field" data-is-enable=<?=esc_attr( $enable_font_size );?>>
+						<div class="__ttl">
+							<input
+								type="checkbox"
+								id="<?=esc_attr( $font_size_key )?>"
+								class="__toggle"
+								<?=checked( (string) $enable_font_size, '1', false )?>
+							/>
+							<label for="<?=esc_attr( $font_size_key )?>">フォントサイズ</label>
+						</div>
+						<div class="__choices">
+							<?php foreach ( $font_sizes as $slug => $name ) : ?>
 								<p class="__fontsize">
 									<input
 										type="radio"
-										id="<?=esc_attr( 'set_font_size_' . $key . '_' . $i )?>"
+										id="<?=esc_attr( $font_size_key )?>"
 										name="<?=esc_attr( $font_size_name )?>"
-										value="<?=esc_attr( $key )?>"
+										value="<?=esc_attr( $slug )?>"
+										<?=checked( (string) $editor[ $font_size_key ], $slug, false )?>
 									/>
-									<label for="<?=esc_attr( 'set_font_size_' . $key . '_' . $i )?>"><?=esc_html( $label )?></label>
+									<label for="<?=esc_attr( $font_size_key . '_' . $slug )?>"><?=esc_html( $name )?></label>
 								</p>
 							<?php endforeach; ?>
 						</div>
