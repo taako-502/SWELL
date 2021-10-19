@@ -94,6 +94,8 @@ function add_toc_on_widget( $content ) {
  */
 function add_toc( $content, $is_content_hook = true ) {
 
+	SWELL::create_toc( $content );
+
 	// ウィジェットですでにswell_tocで生成されている時に本文エリアでの2重生成を防ぐ
 	// if ( SWELL::$added_toc ) return $content;
 
