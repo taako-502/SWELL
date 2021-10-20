@@ -77,6 +77,9 @@
 
         span {
             padding: .25em .5em;
+
+            // Windowsの場合、設定画面ではメイリオが当たってイタリック体が表示されないため、遊ゴシック体を優先指定する
+            font-family: "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "メイリオ", Meiryo, sans-serif;
             border-radius: 1px;
         }
     }

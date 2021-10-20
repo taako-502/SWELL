@@ -10,6 +10,9 @@ import { RichTextToolbarButton } from '@wordpress/block-editor';
  */
 import { swellIcon } from '@swell-guten/icon';
 
+const formatSets = window.swellVars.customFormatSets || [];
+console.log(formatSets);
+
 // applyFormat: https://github.com/WordPress/gutenberg/blob/trunk/packages/rich-text/src/apply-format.js
 // memo: 設定値を取得
 const formatSet = [

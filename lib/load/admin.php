@@ -113,6 +113,7 @@ function global_vars_on_admin() {
 		'ajaxNonce' => wp_create_nonce( 'swell-ajax-nonce' ),
 	];
 
+	// カスタム書式
 	$custom_formats = [];
 	for ( $i = 1; $i < 3; $i++ ) {
 		$format_title = \SWELL_Theme::get_editor( 'format_title_' . $i );
@@ -128,6 +129,92 @@ function global_vars_on_admin() {
 
 	if ( $custom_formats ) {
 		$global_vars['customFormats'] = apply_filters( 'swell_custom_formats', $custom_formats );
+	}
+
+	// カスタム書式セット
+	$custom_format_sets = [];
+	$editor             = \SWELL_Theme::get_editor();
+
+	for ( $i = 1; $i < 3; $i++ ) {
+		$format_set = [];
+
+		$format_bold      = $editor[ 'format_set_bold_' . $i ];
+		$format_italic    = $editor[ 'format_set_italic_' . $i ];
+		$format_color     = $editor[ 'format_set_color_' . $i ];
+		$format_bg        = $editor[ 'format_set_bg_' . $i ];
+		$format_marker    = $editor[ 'format_set_marker_' . $i ];
+		$format_font_size = $editor[ 'format_set_font_size_' . $i ];
+
+		if ( $format_bold ) {
+			$format_set[] = [
+				'type'      => 'core/bold',
+			];
+		}
+
+		if ( $format_italic ) {
+			$format_set[] = [
+				'type'      => 'core/italic',
+			];
+		}
+
+		if ( $format_color ) {
+			if ( $format_color === 'white' || $format_color === 'black' ) {
+				$color_slug = $format_bg;
+			} elseif ( $format_color === 'main_thin' ) {
+				$color_slug = 'swl-' . str_replace( '_', '-', $format_color );
+			} elseif ( strpos( $format_color, 'deep' ) !== false ) {
+				$color_slug = 'swl-' . str_replace( 'deep', 'deep-', $format_color );
+			} elseif ( strpos( $format_color, 'pale' ) !== false ) {
+				$color_slug = 'swl-' . str_replace( 'pale', 'pale-', $format_color );
+			} else {
+				$color_slug = 'swl-' . $format_color;
+			}
+
+			$format_set[] = [
+				'type'       => 'core/text-color',
+				'attributes' => [
+					'class' => "has-inline-color has-{$color_slug}-color",
+				],
+			];
+		}
+
+		if ( $format_bg ) {
+			if ( $format_bg === 'white' || $format_bg === 'black' ) {
+				$color_slug = $format_bg;
+			} elseif ( $format_bg === 'main_thin' ) {
+				$color_slug = 'swl-' . str_replace( '_', '-', $format_bg );
+			} elseif ( strpos( $format_bg, 'deep' ) !== false ) {
+				$color_slug = 'swl-' . str_replace( 'deep', 'deep-', $format_bg );
+			} elseif ( strpos( $format_bg, 'pale' ) !== false ) {
+				$color_slug = 'swl-' . str_replace( 'pale', 'pale-', $format_bg );
+			} else {
+				$color_slug = 'swl-' . $format_bg;
+			}
+
+			$format_set[] = [
+				'type'       => 'loos/bg-color',
+				'attributes' => [
+					'class' => "swl-bg-color has-{$color_slug}-background-color",
+				],
+			];
+		}
+
+		if ( $format_marker ) {
+			$format_set[] = [
+				'type'       => 'loos/marker',
+				'attributes' => [
+					'class' => "mark_{$format_marker}",
+				],
+			];
+		}
+
+		if ( $format_set ) {
+			$custom_format_sets[] = $format_set;
+		}
+	}
+
+	if ( $custom_format_sets ) {
+		$global_vars['customFormatSets'] = apply_filters( 'swell_custom_format_sets', $custom_format_sets );
 	}
 
 	return $global_vars;
