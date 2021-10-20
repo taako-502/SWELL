@@ -432,21 +432,50 @@ function getRGBA(colorCode, alpha, brightness) {
 		(function () {
 			const $setMenu = $('.swell-menu-set');
 
-			const $toggleField = $setMenu.find('.__toggle');
-			$toggleField.change(function () {
+			// 太字のオン・オフ
+			const $toggleBold = $setMenu.find('.__toggle-bold');
+			$toggleBold.change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
-				const $parent = $this.parents('.__field');
-				$parent.attr('data-is-enable', Number(isChecked));
-				$parent.find('.__choices input').prop('checked', false);
+				const $parent = $this.parents('.swell-menu-set');
+				if (isChecked) {
+					$parent.find('.__preview span').css('font-weight', 'bold');
+				} else {
+					$parent.find('.__preview span').css('font-weight', '');
+				}
 			});
 
+			// 斜体のオン・オフ
+			const $toggleItalic = $setMenu.find('.__toggle-italic');
+			$toggleItalic.change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				if (isChecked) {
+					$parent.find('.__preview span').css('font-style', 'italic');
+				} else {
+					$parent.find('.__preview span').css('font-style', '');
+				}
+			});
+
+			// 文字色のオン・オフ
+			const $toggleColor = $setMenu.find('.__toggle-color');
+			$toggleColor.change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+				$field.find('.__choices input').prop('checked', false);
+				$parent.find('.__preview span').css('color', '');
+			});
+
+			// 文字色の変更
 			const $colorField = $setMenu.find('.__color');
 			$colorField.change(function () {
 				const $this = $(this);
 				const thisVal = $this.val();
 				const $parent = $this.parents('.swell-menu-set');
-
 				let colorVal = 'var(--color_' + thisVal + ')';
 				if (thisVal === 'white' || thisVal === 'black') {
 					colorVal = thisVal;
@@ -454,17 +483,77 @@ function getRGBA(colorCode, alpha, brightness) {
 				$parent.find('.__preview span').css('color', colorVal);
 			});
 
+			// 背景色のオン・オフ
+			const $toggleBg = $setMenu.find('.__toggle-bg');
+			$toggleBg.change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+				$field.find('.__choices input').prop('checked', false);
+				$parent.find('.__preview span').css('background-color', '');
+			});
+
+			// 背景色の変更
 			const $bgField = $setMenu.find('.__bg');
 			$bgField.change(function () {
 				const $this = $(this);
 				const thisVal = $this.val();
 				const $parent = $this.parents('.swell-menu-set');
-
 				let colorVal = 'var(--color_' + thisVal + ')';
 				if (thisVal === 'white' || thisVal === 'black') {
 					colorVal = thisVal;
 				}
 				$parent.find('.__preview span').css('background-color', colorVal);
+			});
+
+			// マーカーのオン・オフ
+			const $toggleMarker = $setMenu.find('.__toggle-marker');
+			$toggleMarker.change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+				$field.find('.__choices input').prop('checked', false);
+				$parent
+					.find('.__preview span')
+					.removeClass('swl-marker mark_orange mark_yellow mark_green mark_blue');
+			});
+
+			// マーカーの変更
+			const $markerField = $setMenu.find('.__marker');
+			$markerField.change(function () {
+				const $this = $(this);
+				const markerClass = 'swl-marker mark_' + $this.val();
+				const $parent = $this.parents('.swell-menu-set');
+				$parent
+					.find('.__preview span')
+					.removeClass('mark_orange mark_yellow mark_green mark_blue');
+				$parent.find('.__preview span').addClass(markerClass);
+			});
+
+			// フォントサイズのオン・オフ
+			const $toggleFontSize = $setMenu.find('.__toggle-font-size');
+			$toggleFontSize.change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+				$field.find('.__choices input').prop('checked', false);
+				$parent.find('.__preview span').removeClass('u-fz-xs u-fz-s u-fz-l u-fz-xl');
+			});
+
+			// フォントサイズの変更
+			const $fontSizeField = $setMenu.find('.__font-size input');
+			$fontSizeField.change(function () {
+				const $this = $(this);
+				const fontSizeClass = 'u-fz-' + $this.val();
+				const $parent = $this.parents('.swell-menu-set');
+				$parent.find('.__preview span').removeClass('u-fz-xs u-fz-s u-fz-l u-fz-xl');
+				$parent.find('.__preview span').addClass(fontSizeClass);
 			});
 		})();
 	});

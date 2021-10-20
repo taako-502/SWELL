@@ -32,7 +32,8 @@ class Tab_Custom {
 				[
 					'class'              => 'tr-custom-format-set',
 					'i'                  => $i,
-					'base_colors'   => [
+					// 文字色・背景色 カラーセット
+					'base_colors'        => [
 						[
 							'name'  => 'メインカラー',
 							'slug'  => 'main',
@@ -59,7 +60,7 @@ class Tab_Custom {
 							'color' => '#000',
 						],
 					],
-					'custom_colors' => [
+					'custom_colors'      => [
 						'deep01' => '濃い色1',
 						'deep02' => '濃い色2',
 						'deep03' => '濃い色3',
@@ -69,12 +70,14 @@ class Tab_Custom {
 						'pale03' => '淡い色3',
 						'pale04' => '淡い色4',
 					],
+					// マーカー カラーセット
 					'marker_colors'      => [
 						'orange' => '橙色',
 						'yellow' => '黄色',
 						'green'  => '緑色',
 						'blue'   => '青色',
 					],
+					// フォントサイズ バリエーション
 					'font_sizes'         => [
 						'xs' => 'XS',
 						's'  => 'S',
@@ -104,18 +107,54 @@ class Tab_Custom {
 		$marker_name    = $db . '[' . $marker_key . ']';
 		$font_size_name = $db . '[' . $font_size_key . ']';
 
+		// 文字色・背景色 カラーセット
 		$base_colors   = $args['base_colors'];
 		$custom_colors = $args['custom_colors'];
+		// マーカー カラーセット
 		$marker_colors = $args['marker_colors'];
-		$font_sizes    = $args['font_sizes'];
+
+		// フォントサイズ バリエーション
+		$font_sizes = $args['font_sizes'];
 
 		$editor = \SWELL_Theme::get_editor();
 
+		// 各チェックボックスのオン/オフの状態
 		$enable_color     = $editor[ $color_key ] !== '' ? 1 : 0;
 		$enable_bg        = $editor[ $bg_key ] !== '' ? 1 : 0;
 		$enable_marker    = $editor[ $marker_key ] !== '' ? 1 : 0;
 		$enable_font_size = $editor[ $font_size_key ] !== '' ? 1 : 0;
 
+		// プレビューテキスト用インラインスタイル
+		$preview_style = [];
+
+		if ( $editor[ $bold_key ] ) {
+			$preview_style[] = 'font-weight:bold';
+		}
+		if ( $editor[ $italic_key ] ) {
+			$preview_style[] = 'font-style:italic';
+		}
+		if ( $editor[ $italic_key ] ) {
+			$preview_style[] = 'font-style:italic';
+		}
+		if ( $editor[ $color_key ] ) {
+			if ( $editor[ $color_key ] === 'white' || $editor[ $color_key ] === 'black' ) {
+				$preview_style[] = 'color:' . $editor[ $color_key ];
+			} else {
+				$preview_style[] = 'color:var(--color_' . $editor[ $color_key ] . ')';
+			}
+		}
+		$preview_style = implode( ';', $preview_style );
+
+		// プレビューテキスト用インラインスタイル
+		$preview_class = [];
+
+		if ( $editor[ $marker_key ] ) {
+			$preview_class[] = 'swl-marker mark_' . $editor[ $marker_key ];
+		}
+		if ( $editor[ $font_size_key ] ) {
+			$preview_class[] = 'u-fz-' . $editor[ $font_size_key ];
+		}
+		$preview_class = implode( ' ', $preview_class );
 		?>
 		<div class="swell-menu-set">
 				<div class="__settings">
@@ -126,7 +165,7 @@ class Tab_Custom {
 								id="<?=esc_attr( $bold_key )?>"
 								name="<?=esc_attr( $bold_name )?>"
 								value="1"
-								class="__enable_bold"
+								class="__toggle-bold"
 								<?=checked( (string) $editor[ $bold_key ], '1', false )?>
 							/>
 							<label for="<?=esc_attr( $bold_key )?>">太字</label>
@@ -139,6 +178,7 @@ class Tab_Custom {
 								id="<?=esc_attr( $italic_key )?>"
 								name="<?=esc_attr( $italic_name )?>"
 								value="1"
+								class="__toggle-italic"
 								<?=checked( (string) $editor[ $italic_key ], '1', false )?>
 							/>
 							<label for="<?=esc_attr( $italic_key )?>">斜体</label>
@@ -149,7 +189,7 @@ class Tab_Custom {
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $color_key )?>"
-								class="__toggle"
+								class="__toggle-color"
 								<?=checked( (string) $enable_color, '1', false )?>
 							/>
 							<label for="<?=esc_attr( $color_key )?>">文字色</label>
@@ -193,7 +233,7 @@ class Tab_Custom {
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $bg_key )?>"
-								class="__toggle"
+								class="__toggle-bg"
 								<?=checked( (string) $enable_bg, '1', false )?>
 							/>
 							<label for="<?=esc_attr( $bg_key )?>">背景色</label>
@@ -237,7 +277,7 @@ class Tab_Custom {
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $marker_key )?>"
-								class="__toggle"
+								class="__toggle-marker"
 								<?=checked( (string) $enable_marker, '1', false )?>
 							/>
 							<label for="<?=esc_attr( $marker_key )?>">マーカー</label>
@@ -253,7 +293,7 @@ class Tab_Custom {
 										id="<?=esc_attr( $marker_key . '_' . $slug )?>"
 										name="<?=esc_attr( $marker_name )?>"
 										value="<?=esc_attr( $slug );?>"
-										class="__color u-none"
+										class="__marker u-none"
 										<?=checked( (string) $editor[ $marker_key ], $slug, false )?>
 									/>
 									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $name )?></span>
@@ -266,14 +306,14 @@ class Tab_Custom {
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $font_size_key )?>"
-								class="__toggle"
+								class="__toggle-font-size"
 								<?=checked( (string) $enable_font_size, '1', false )?>
 							/>
 							<label for="<?=esc_attr( $font_size_key )?>">フォントサイズ</label>
 						</div>
 						<div class="__choices">
 							<?php foreach ( $font_sizes as $slug => $name ) : ?>
-								<p class="__fontsize">
+								<p class="__font-size">
 									<input
 										type="radio"
 										id="<?=esc_attr( $font_size_key )?>"
@@ -286,10 +326,9 @@ class Tab_Custom {
 							<?php endforeach; ?>
 						</div>
 					</div>
-					<!-- <input type="text" class="colorpicker"/> -->
 				</div>
-				<div class="__preview">
-					<span>ここにテキストが入ります。</span>
+				<div class="__preview" data-marker-type="<?=esc_attr( $editor['marker_type'] );?>">
+					<span style="<?=esc_attr( $preview_style );?>" class="<?=esc_attr( $preview_class );?>">ここにテキストが入ります。</span>
 					<div class="__previewLabel">プレビュー</div>
 				</div>
 			</div>

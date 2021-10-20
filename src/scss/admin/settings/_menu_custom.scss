@@ -6,11 +6,13 @@
 
     .swell-menu-set {
         display: flex;
+        flex-wrap: wrap;
         align-items: flex-start;
-        justify-content: space-between;
     }
 
     .__settings {
+        flex: 1;
+        max-width: 450px;
         margin-right: 16px;
     }
 
@@ -65,12 +67,12 @@
         }
     }
 
-    .__fontsize {
+    .__font-size {
         margin: 0 16px 0 0;
     }
 
     .__preview {
-        max-width: 300px;
+        max-width: 380px;
         text-align: center;
 
         span {
