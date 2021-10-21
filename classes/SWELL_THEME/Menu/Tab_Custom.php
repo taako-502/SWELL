@@ -61,14 +61,14 @@ class Tab_Custom {
 						],
 					],
 					'custom_colors'      => [
-						'deep01' => '濃い色1',
-						'deep02' => '濃い色2',
-						'deep03' => '濃い色3',
-						'deep04' => '濃い色4',
-						'pale01' => '淡い色1',
-						'pale02' => '淡い色2',
-						'pale03' => '淡い色3',
-						'pale04' => '淡い色4',
+						'deep-01' => '濃い色1',
+						'deep-02' => '濃い色2',
+						'deep-03' => '濃い色3',
+						'deep-04' => '濃い色4',
+						'pale-01' => '淡い色1',
+						'pale-02' => '淡い色2',
+						'pale-03' => '淡い色3',
+						'pale-04' => '淡い色4',
 					],
 					// マーカー カラーセット
 					'marker_colors'      => [
@@ -124,37 +124,44 @@ class Tab_Custom {
 		$enable_marker    = $editor[ $marker_key ] !== '' ? 1 : 0;
 		$enable_font_size = $editor[ $font_size_key ] !== '' ? 1 : 0;
 
-		// プレビューテキスト用インラインスタイル
-		$preview_style = [];
-
-		if ( $editor[ $bold_key ] ) {
-			$preview_style[] = 'font-weight:bold';
-		}
-		if ( $editor[ $italic_key ] ) {
-			$preview_style[] = 'font-style:italic';
-		}
-		if ( $editor[ $italic_key ] ) {
-			$preview_style[] = 'font-style:italic';
-		}
-		if ( $editor[ $color_key ] ) {
-			if ( $editor[ $color_key ] === 'white' || $editor[ $color_key ] === 'black' ) {
-				$preview_style[] = 'color:' . $editor[ $color_key ];
+		// プレビューテキスト用クラス
+		$bg_class = 'swl-bg-color';
+		if ( $editor[ $bg_key ] ) {
+			if ( $editor[ $bg_key ] === 'white' || $editor[ $bg_key ] === 'black' ) {
+				$bg_class .= ' has-' . $editor[ $bg_key ] . '-background-color';
 			} else {
-				$preview_style[] = 'color:var(--color_' . $editor[ $color_key ] . ')';
+				$bg_class .= ' has-swl-' . $editor[ $bg_key ] . '-background-color';
 			}
 		}
-		$preview_style = implode( ';', $preview_style );
 
-		// プレビューテキスト用インラインスタイル
-		$preview_class = [];
-
+		$marker_class = 'swl-marker';
 		if ( $editor[ $marker_key ] ) {
-			$preview_class[] = 'swl-marker mark_' . $editor[ $marker_key ];
+			$marker_class .= ' mark_' . $editor[ $marker_key ];
 		}
+
+		$color_class = 'has-inline-color';
+		if ( $editor[ $color_key ] ) {
+			if ( $editor[ $color_key ] === 'white' || $editor[ $color_key ] === 'black' ) {
+				$color_class .= ' has-' . $editor[ $color_key ] . '-color';
+			} else {
+				$color_class .= ' has-swl-' . $editor[ $color_key ] . '-color';
+			}
+		}
+
+		$font_size_class = 'swl-fz';
 		if ( $editor[ $font_size_key ] ) {
-			$preview_class[] = 'u-fz-' . $editor[ $font_size_key ];
+			$font_size_class .= ' u-fz-' . $editor[ $font_size_key ];
 		}
-		$preview_class = implode( ' ', $preview_class );
+
+		$text_class = [ 'swl-txt' ];
+		if ( $editor[ $bold_key ] ) {
+			$text_class[] = 'u-fw-bold';
+		}
+		if ( $editor[ $italic_key ] ) {
+			$text_class[] = 'u-fs-italic';
+		}
+
+		$text_class = implode( ' ', $text_class );
 		?>
 		<div class="swell-menu-set">
 				<div class="__settings">
@@ -212,7 +219,7 @@ class Tab_Custom {
 							<?php endforeach; ?>
 							<?php
 							foreach ( $custom_colors as $slug => $name ) :
-								$val = \SWELL_Theme::get_editor( 'color_' . $slug );
+								$val = $editor[ 'color_' . str_replace( '-', '', $slug ) ];
 								?>
 								<label for="<?=esc_attr( $color_key . '_' . $slug )?>" class="__label">
 									<input
@@ -256,7 +263,7 @@ class Tab_Custom {
 							<?php endforeach; ?>
 							<?php
 							foreach ( $custom_colors as $slug => $name ) :
-								$val = \SWELL_Theme::get_editor( 'color_' . $slug );
+								$val = $editor[ 'color_' . str_replace( '-', '', $slug ) ];
 								?>
 								<label for="<?=esc_attr( $bg_key . '_' . $slug )?>" class="__label">
 									<input
@@ -328,7 +335,17 @@ class Tab_Custom {
 					</div>
 				</div>
 				<div class="__preview" data-marker-type="<?=esc_attr( $editor['marker_type'] );?>">
-					<span style="<?=esc_attr( $preview_style );?>" class="<?=esc_attr( $preview_class );?>">ここにテキストが入ります。</span>
+					<span class="<?=esc_attr( $bg_class );?>">
+						<span class="<?=esc_attr( $marker_class );?>">
+							<span class="<?=esc_attr( $color_class );?>">
+								<span class="<?=esc_attr( $font_size_class );?>">
+									<span class="<?=esc_attr( $text_class );?>">
+									ここにテキストが入ります。
+									</span>
+								</span>
+							</span>
+						</span>
+					</span>
 					<div class="__previewLabel">プレビュー</div>
 				</div>
 			</div>

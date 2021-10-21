@@ -439,9 +439,9 @@ function getRGBA(colorCode, alpha, brightness) {
 				const isChecked = $this.prop('checked');
 				const $parent = $this.parents('.swell-menu-set');
 				if (isChecked) {
-					$parent.find('.__preview span').css('font-weight', 'bold');
+					$parent.find('.__preview .swl-txt').addClass('u-fw-bold');
 				} else {
-					$parent.find('.__preview span').css('font-weight', '');
+					$parent.find('.__preview .swl-txt').removeClass('u-fw-bold');
 				}
 			});
 
@@ -452,9 +452,9 @@ function getRGBA(colorCode, alpha, brightness) {
 				const isChecked = $this.prop('checked');
 				const $parent = $this.parents('.swell-menu-set');
 				if (isChecked) {
-					$parent.find('.__preview span').css('font-style', 'italic');
+					$parent.find('.__preview .swl-txt').addClass('u-fs-italic');
 				} else {
-					$parent.find('.__preview span').css('font-style', '');
+					$parent.find('.__preview .swl-txt').removeClass('u-fs-italic');
 				}
 			});
 
@@ -467,7 +467,10 @@ function getRGBA(colorCode, alpha, brightness) {
 				const $field = $this.parents('.__field');
 				$field.attr('data-is-enable', Number(isChecked));
 				$field.find('.__choices input').prop('checked', false);
-				$parent.find('.__preview span').css('color', '');
+				$parent
+					.find('.__preview .has-inline-color')
+					.removeClass()
+					.addClass('has-inline-color');
 			});
 
 			// 文字色の変更
@@ -475,12 +478,17 @@ function getRGBA(colorCode, alpha, brightness) {
 			$colorField.change(function () {
 				const $this = $(this);
 				const thisVal = $this.val();
-				const $parent = $this.parents('.swell-menu-set');
-				let colorVal = 'var(--color_' + thisVal + ')';
+				let colorClass = `has-swl-${thisVal}-color`;
 				if (thisVal === 'white' || thisVal === 'black') {
-					colorVal = thisVal;
+					colorClass = `has-${thisVal}-color`;
+				} else if (thisVal === 'main_thin') {
+					colorClass = `has-swl-main-thin-color`;
 				}
-				$parent.find('.__preview span').css('color', colorVal);
+				const $parent = $this.parents('.swell-menu-set');
+				$parent
+					.find('.__preview .has-inline-color')
+					.removeClass()
+					.addClass(`has-inline-color ${colorClass}`);
 			});
 
 			// 背景色のオン・オフ
@@ -492,7 +500,7 @@ function getRGBA(colorCode, alpha, brightness) {
 				const $field = $this.parents('.__field');
 				$field.attr('data-is-enable', Number(isChecked));
 				$field.find('.__choices input').prop('checked', false);
-				$parent.find('.__preview span').css('background-color', '');
+				$parent.find('.__preview .swl-bg-color').removeClass().addClass('swl-bg-color');
 			});
 
 			// 背景色の変更
@@ -500,12 +508,17 @@ function getRGBA(colorCode, alpha, brightness) {
 			$bgField.change(function () {
 				const $this = $(this);
 				const thisVal = $this.val();
-				const $parent = $this.parents('.swell-menu-set');
-				let colorVal = 'var(--color_' + thisVal + ')';
+				let bgClass = `has-swl-${thisVal}-background-color`;
 				if (thisVal === 'white' || thisVal === 'black') {
-					colorVal = thisVal;
+					bgClass = `has-${thisVal}-background-color`;
+				} else if (thisVal === 'main_thin') {
+					bgClass = `has-swl-main-thin-background-color`;
 				}
-				$parent.find('.__preview span').css('background-color', colorVal);
+				const $parent = $this.parents('.swell-menu-set');
+				$parent
+					.find('.__preview .swl-bg-color')
+					.removeClass()
+					.addClass(`swl-bg-color ${bgClass}`);
 			});
 
 			// マーカーのオン・オフ
@@ -517,21 +530,20 @@ function getRGBA(colorCode, alpha, brightness) {
 				const $field = $this.parents('.__field');
 				$field.attr('data-is-enable', Number(isChecked));
 				$field.find('.__choices input').prop('checked', false);
-				$parent
-					.find('.__preview span')
-					.removeClass('swl-marker mark_orange mark_yellow mark_green mark_blue');
+				$parent.find('.__preview .swl-marker').removeClass().addClass('swl-marker');
 			});
 
 			// マーカーの変更
 			const $markerField = $setMenu.find('.__marker');
 			$markerField.change(function () {
 				const $this = $(this);
-				const markerClass = 'swl-marker mark_' + $this.val();
+				const thisVal = $this.val();
+				const markerClass = `mark_${thisVal}`;
 				const $parent = $this.parents('.swell-menu-set');
 				$parent
-					.find('.__preview span')
-					.removeClass('mark_orange mark_yellow mark_green mark_blue');
-				$parent.find('.__preview span').addClass(markerClass);
+					.find('.__preview .swl-marker')
+					.removeClass()
+					.addClass(`swl-marker ${markerClass}`);
 			});
 
 			// フォントサイズのオン・オフ
@@ -543,17 +555,22 @@ function getRGBA(colorCode, alpha, brightness) {
 				const $field = $this.parents('.__field');
 				$field.attr('data-is-enable', Number(isChecked));
 				$field.find('.__choices input').prop('checked', false);
-				$parent.find('.__preview span').removeClass('u-fz-xs u-fz-s u-fz-l u-fz-xl');
+				$field.attr('data-is-enable', Number(isChecked));
+				$field.find('.__choices input').prop('checked', false);
+				$parent.find('.__preview .swl-fz').removeClass().addClass('swl-fz');
 			});
 
 			// フォントサイズの変更
 			const $fontSizeField = $setMenu.find('.__font-size input');
 			$fontSizeField.change(function () {
 				const $this = $(this);
-				const fontSizeClass = 'u-fz-' + $this.val();
+				const thisVal = $this.val();
+				const fontSizeClass = `u-fz-${thisVal}`;
 				const $parent = $this.parents('.swell-menu-set');
-				$parent.find('.__preview span').removeClass('u-fz-xs u-fz-s u-fz-l u-fz-xl');
-				$parent.find('.__preview span').addClass(fontSizeClass);
+				$parent
+					.find('.__preview .swl-fz')
+					.removeClass()
+					.addClass(`swl-fz ${fontSizeClass}`);
 			});
 		})();
 	});

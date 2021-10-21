@@ -145,48 +145,9 @@ function global_vars_on_admin() {
 		$format_marker    = $editor[ 'format_set_marker_' . $i ];
 		$format_font_size = $editor[ 'format_set_font_size_' . $i ];
 
-		if ( $format_bold ) {
-			$format_set[] = [
-				'type'      => 'core/bold',
-			];
-		}
-
-		if ( $format_italic ) {
-			$format_set[] = [
-				'type'      => 'core/italic',
-			];
-		}
-
-		if ( $format_color ) {
-			if ( $format_color === 'white' || $format_color === 'black' ) {
-				$color_slug = $format_bg;
-			} elseif ( $format_color === 'main_thin' ) {
-				$color_slug = 'swl-' . str_replace( '_', '-', $format_color );
-			} elseif ( strpos( $format_color, 'deep' ) !== false ) {
-				$color_slug = 'swl-' . str_replace( 'deep', 'deep-', $format_color );
-			} elseif ( strpos( $format_color, 'pale' ) !== false ) {
-				$color_slug = 'swl-' . str_replace( 'pale', 'pale-', $format_color );
-			} else {
-				$color_slug = 'swl-' . $format_color;
-			}
-
-			$format_set[] = [
-				'type'       => 'core/text-color',
-				'attributes' => [
-					'class' => "has-inline-color has-{$color_slug}-color",
-				],
-			];
-		}
-
 		if ( $format_bg ) {
 			if ( $format_bg === 'white' || $format_bg === 'black' ) {
 				$color_slug = $format_bg;
-			} elseif ( $format_bg === 'main_thin' ) {
-				$color_slug = 'swl-' . str_replace( '_', '-', $format_bg );
-			} elseif ( strpos( $format_bg, 'deep' ) !== false ) {
-				$color_slug = 'swl-' . str_replace( 'deep', 'deep-', $format_bg );
-			} elseif ( strpos( $format_bg, 'pale' ) !== false ) {
-				$color_slug = 'swl-' . str_replace( 'pale', 'pale-', $format_bg );
 			} else {
 				$color_slug = 'swl-' . $format_bg;
 			}
@@ -205,6 +166,42 @@ function global_vars_on_admin() {
 				'attributes' => [
 					'class' => "mark_{$format_marker}",
 				],
+			];
+		}
+
+		if ( $format_color ) {
+			if ( $format_color === 'white' || $format_color === 'black' ) {
+				$color_slug = $format_bg;
+			} else {
+				$color_slug = 'swl-' . $format_color;
+			}
+
+			$format_set[] = [
+				'type'       => 'core/text-color',
+				'attributes' => [
+					'class' => "has-inline-color has-{$color_slug}-color",
+				],
+			];
+		}
+
+		if ( $format_font_size ) {
+			$format_set[] = [
+				'type'       => 'loos/font-size',
+				'attributes' => [
+					'class' => "u-fz-{$format_font_size}",
+				],
+			];
+		}
+
+		if ( $format_bold ) {
+			$format_set[] = [
+				'type'      => 'core/bold',
+			];
+		}
+
+		if ( $format_italic ) {
+			$format_set[] = [
+				'type'      => 'core/italic',
 			];
 		}
 
