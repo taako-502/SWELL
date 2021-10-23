@@ -260,18 +260,4 @@ trait Others {
 		// @codingStandardsIgnoreEnd
 	}
 
-
-	/**
-	 * AJAXのNonceチェック
-	 */
-	public static function check_ajax_nonce( $request_key = 'nonce', $nonce_key = 'swell-ajax-nonce' ) {
-		if ( ! isset( $_POST[ $request_key ] ) ) return false;
-
-		$nonce = $_POST[ $request_key ];
-		if ( wp_verify_nonce( $nonce, $nonce_key ) ) {
-			return true;
-		}
-		return false;
-	}
-
 }
