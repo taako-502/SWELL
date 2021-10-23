@@ -260,7 +260,8 @@ trait Get {
 		} else {
 			// 通常
 			$excerpt = strip_shortcodes( $post_data->post_content );
-			$excerpt = preg_replace( '/<h2([^>]*)>([^<]*)<\/h2>/', '【$2】', $excerpt );
+			$excerpt = preg_replace( '/<h2.*>(.*?)<\/h2>/i', '【$1】', $excerpt );
+			$excerpt = preg_replace( '/<rt.*>.*<\/rt>/i', '', $excerpt ); // ルビのふりがな削除
 			$excerpt = wp_strip_all_tags( $excerpt, true );
 			// $excerpt = mb_substr( $excerpt, 0, $length )." ... ";
 			if ( mb_strwidth( $excerpt, 'UTF-8' ) > $length * 2 ) {
