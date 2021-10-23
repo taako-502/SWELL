@@ -24,6 +24,7 @@ $spmenu_class = ( 'center_left' === SWELL_Theme::get_setting( 'header_layout_sp'
 						]);
 					else :
 						wp_nav_menu([
+							'fallback_cb'    => '__return_false',
 							'container'      => '',
 							'theme_location' => 'header_menu',
 							'items_wrap'     => '<ul class="c-spnav c-listMenu">%3$s</ul>',
