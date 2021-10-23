@@ -22,7 +22,7 @@
     [data-scrolled="true"] [data-spfix="1"] {
 
         .l-header__inner {
-            color: inherit;
+            color: var(--color_header_text);
         }
 
         .c-headLogo__img.-top {

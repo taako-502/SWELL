@@ -251,6 +251,7 @@ trait Get {
 
 			// 「抜粋」の入力内容を優先
 			$excerpt = strip_tags( $post_data->post_excerpt, '<br><i>' );
+			$excerpt = do_shortcode( $excerpt );
 
 		} elseif ( ! empty( $post_data->post_password ) ) {
 
@@ -260,7 +261,8 @@ trait Get {
 		} else {
 			// 通常
 			$excerpt = strip_shortcodes( $post_data->post_content );
-			$excerpt = preg_replace( '/<h2([^>]*)>([^<]*)<\/h2>/', '【$2】', $excerpt );
+			$excerpt = preg_replace( '/<h2.*>(.*?)<\/h2>/i', '【$1】', $excerpt );
+			$excerpt = preg_replace( '/<rt.*>.*<\/rt>/i', '', $excerpt ); // ルビのふりがな削除
 			$excerpt = wp_strip_all_tags( $excerpt, true );
 			// $excerpt = mb_substr( $excerpt, 0, $length )." ... ";
 			if ( mb_strwidth( $excerpt, 'UTF-8' ) > $length * 2 ) {
