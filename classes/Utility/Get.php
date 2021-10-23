@@ -251,6 +251,7 @@ trait Get {
 
 			// 「抜粋」の入力内容を優先
 			$excerpt = strip_tags( $post_data->post_excerpt, '<br><i>' );
+			$excerpt = do_shortcode( $excerpt );
 
 		} elseif ( ! empty( $post_data->post_password ) ) {
 
