@@ -278,70 +278,12 @@ trait Others {
 	/**
 	 * 目次の生成
 	 */
-	public static function get_class_prop_in_html( $html, $return_array = false ) {
-		preg_match( '/class=[\'"](.*?)[\'"]/i', $html, $matches );
+	public static function get_prop_in_html( $html, $prop ) {
+		preg_match( '{' . $prop . '=[\'"](.*?)[\'"]}i', $html, $matches );
 
-		if ( empty( $matches ) ) return null;
-
-		if ( $return_array ) {
-			// classを配列にして返す
-			return explode( ' ', $matches[1] );
-		}
-
+		if ( empty( $matches ) ) return '';
 		return $matches[1];
 	}
 
-
-	/**
-	 * 目次の生成
-	 */
-	public static function create_toc( $content ) {
-
-		$toc_list = [];
-
-		// １つ目の見出しの前へ設置
-		$tag = '/^<h2.*?>/im';
-
-		// 属性を持たないh2・h3要素を正規表現で表すパターン
-		$pattern = '/^<h[2-3](.*?)>(.*?)<\/h[2-3]>/im';
-		// 本文の中から、すべてのh2・h3要素を検索
-		preg_match_all( $pattern, $content, $htags, PREG_SET_ORDER );
-
-		foreach ( $htags as $htag_data ) {
-			$full  = $htag_data[0];
-			$props = $htag_data[1];
-			$text  = $htag_data[2]; // strip_tags ?
-
-			echo '<pre style="margin-left: 100px;">';
-			var_dump( $full );
-			echo '</pre>';
-
-			// class = 'has-swl-deep-02-color has-text-color'
-			$pattern = '/<h[2-3](.*?)>(.*?)<\/h[2-3]>/i';
-
-			// classを取得してスキップ対象かどうかチェック
-			$classes = self::get_class_prop_in_html( $props, 1 );
-			if ( ! empty( $classes ) ) {
-				$is_skip = false;
-				$ignores = [ '目次に出力しないクラス', 'has-text-color' ];
-				foreach ( $classes as $class_name ) {
-					if ( in_array( $class_name, $ignores, true ) ) {
-						$is_skip = true;
-					}
-				}
-
-				// スキップ対象のクラスを持っていた場合は continue
-				if ( $is_skip ) continue;
-			}
-
-			// 目次に追加
-			$toc_list[] = $text;
-		}
-
-		echo '<pre style="margin-left: 100px;">';
-		var_dump( $toc_list );
-		echo '</pre>';
-
-	}
 
 }

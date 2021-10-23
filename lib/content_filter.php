@@ -18,7 +18,7 @@ if ( ! is_admin() ) {
 
 	// SEOプラグインのディスクリプション生成時に発火しないように、登録を遅らせる。
 	add_action('wp_head', function () {
-		add_filter( 'the_content', __NAMESPACE__ . '\add_toc', 12 );
+		add_filter( 'the_content', __NAMESPACE__ . '\add_toc', 15 );
 
 		// URLの自動ブログカード化機能: プラグインなどで不具合があるページだけオフにしたりできるように apply_filters 付き
 		$remove_url_to_card = apply_filters( 'swell_remove_url_to_card', SWELL::get_option( 'remove_url2card' ) );
@@ -93,8 +93,7 @@ function add_toc_on_widget( $content ) {
  * 目次 + 目次広告のセット
  */
 function add_toc( $content, $is_content_hook = true ) {
-
-	SWELL::create_toc( $content );
+	\SWELL_Theme\TOC::set_toc( $content );
 
 	// ウィジェットですでにswell_tocで生成されている時に本文エリアでの2重生成を防ぐ
 	// if ( SWELL::$added_toc ) return $content;
