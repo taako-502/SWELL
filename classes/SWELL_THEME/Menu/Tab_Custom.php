@@ -165,8 +165,8 @@ class Tab_Custom {
 		?>
 		<div class="swell-menu-set">
 				<div class="__settings">
-					<div class="__field">
-						<div class="__ttl">
+					<div class="__field -single">
+						<div class="__btn">
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $bold_key )?>"
@@ -177,9 +177,7 @@ class Tab_Custom {
 							/>
 							<label for="<?=esc_attr( $bold_key )?>">太字</label>
 						</div>
-					</div>
-					<div class="__field">
-						<div class="__ttl">
+						<div class="__btn">
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $italic_key )?>"
@@ -191,7 +189,7 @@ class Tab_Custom {
 							<label for="<?=esc_attr( $italic_key )?>">斜体</label>
 						</div>
 					</div>
-					<div class="__field" data-is-enable=<?=esc_attr( $enable_color );?>>
+					<div class="__field -acc" data-is-enable=<?=esc_attr( $enable_color );?>>
 						<div class="__ttl">
 							<input
 								type="checkbox"
@@ -203,39 +201,35 @@ class Tab_Custom {
 						</div>
 						<div class="__choices">
 							<?php
-							foreach ( $base_colors as $color ) :
-								?>
-								<label for="<?=esc_attr( $color_key . '_' . $color['slug'] )?>" class="__label">
-									<input
-										type="radio"
-										id="<?=esc_attr( $color_key . '_' . $color['slug'] )?>"
-										name="<?=esc_attr( $color_name )?>"
-										value="<?=esc_attr( $color['slug'] );?>"
-										class="__color u-none"
-										<?=checked( (string) $editor[ $color_key ], $color['slug'], false )?>
-									/>
-									<span style="background:<?=esc_attr( $color['color'] );?>"><?=esc_html( $color['name'] )?></span>
-								</label>
-							<?php endforeach; ?>
-							<?php
-							foreach ( $custom_colors as $slug => $name ) :
-								$val = $editor[ 'color_' . str_replace( '-', '', $slug ) ];
-								?>
-								<label for="<?=esc_attr( $color_key . '_' . $slug )?>" class="__label">
-									<input
-										type="radio"
-										id="<?=esc_attr( $color_key . '_' . $slug )?>"
-										name="<?=esc_attr( $color_name )?>"
-										value="<?=esc_attr( $slug );?>"
-										class="__color u-none"
-										<?=checked( (string) $editor[ $color_key ], $slug, false )?>
-									/>
-									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $name )?></span>
-								</label>
-							<?php endforeach; ?>
+								foreach ( $base_colors as $color ) :
+									self::color_palette(
+										'__color',
+										$color_key,
+										$color_name,
+										$color['slug'],
+										$color['name'],
+										$color['color'],
+										(string) $editor[ $color_key ]
+									);
+								endforeach;
+								foreach ( $custom_colors as $slug => $label ) :
+									$val = $editor[ 'color_' . str_replace( '-', '', $slug ) ];
+									self::color_palette(
+										'__color',
+										$color_key,
+										$color_name,
+										$slug,
+										$label,
+										$val,
+										(string) $editor[ $color_key ]
+									);
+								endforeach;
+
+								self::clear_btn( '-color' );
+							?>
 						</div>
 					</div>
-					<div class="__field" data-is-enable=<?=esc_attr( $enable_bg );?>>
+					<div class="__field -acc" data-is-enable=<?=esc_attr( $enable_bg );?>>
 						<div class="__ttl">
 							<input
 								type="checkbox"
@@ -247,39 +241,35 @@ class Tab_Custom {
 						</div>
 						<div class="__choices">
 							<?php
-							foreach ( $base_colors as $color ) :
-								?>
-								<label for="<?=esc_attr( $bg_key . '_' . $color['slug'] )?>" class="__label">
-									<input
-										type="radio"
-										id="<?=esc_attr( $bg_key . '_' . $color['slug'] )?>"
-										name="<?=esc_attr( $bg_name )?>"
-										value="<?=esc_attr( $color['slug'] );?>"
-										class="__bg u-none"
-										<?=checked( (string) $editor[ $bg_key ], $color['slug'], false )?>
-									/>
-									<span style="background:<?=esc_attr( $color['color'] );?>"><?=esc_html( $color['name'] )?></span>
-								</label>
-							<?php endforeach; ?>
-							<?php
-							foreach ( $custom_colors as $slug => $name ) :
-								$val = $editor[ 'color_' . str_replace( '-', '', $slug ) ];
-								?>
-								<label for="<?=esc_attr( $bg_key . '_' . $slug )?>" class="__label">
-									<input
-										type="radio"
-										id="<?=esc_attr( $bg_key . '_' . $slug )?>"
-										name="<?=esc_attr( $bg_name )?>"
-										value="<?=esc_attr( $slug );?>"
-										class="__bg u-none"
-										<?=checked( (string) $editor[ $bg_key ], $slug, false )?>
-									/>
-									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $name )?></span>
-								</label>
-							<?php endforeach; ?>
+								foreach ( $base_colors as $color ) :
+									self::color_palette(
+										'__bg',
+										$bg_key,
+										$bg_name,
+										$color['slug'],
+										$color['name'],
+										$color['color'],
+										(string) $editor[ $bg_key ]
+									);
+								endforeach;
+								foreach ( $custom_colors as $slug => $label ) :
+									$val = $editor[ 'color_' . str_replace( '-', '', $slug ) ];
+									self::color_palette(
+										'__bg',
+										$bg_key,
+										$bg_name,
+										$slug,
+										$label,
+										$val,
+										(string) $editor[ $bg_key ]
+									);
+								endforeach;
+
+								self::clear_btn( '-bg' );
+							?>
 						</div>
 					</div>
-					<div class="__field" data-is-enable=<?=esc_attr( $enable_marker );?>>
+					<div class="__field -acc" data-is-enable=<?=esc_attr( $enable_marker );?>>
 						<div class="__ttl">
 							<input
 								type="checkbox"
@@ -291,24 +281,24 @@ class Tab_Custom {
 						</div>
 						<div class="__choices">
 							<?php
-							foreach ( $marker_colors as $slug => $name ) :
-								$val = \SWELL_Theme::get_editor( 'color_mark_' . $slug );
-								?>
-								<label for="<?=esc_attr( $marker_key . '_' . $slug )?>" class="__label">
-									<input
-										type="radio"
-										id="<?=esc_attr( $marker_key . '_' . $slug )?>"
-										name="<?=esc_attr( $marker_name )?>"
-										value="<?=esc_attr( $slug );?>"
-										class="__marker u-none"
-										<?=checked( (string) $editor[ $marker_key ], $slug, false )?>
-									/>
-									<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $name )?></span>
-								</label>
-							<?php endforeach; ?>
+								foreach ( $marker_colors as $slug => $label ) :
+									$val = \SWELL_Theme::get_editor( 'color_mark_' . $slug );
+									self::color_palette(
+										'__marker',
+										$marker_key,
+										$marker_name,
+										$slug,
+										$label,
+										$val,
+										(string) $editor[ $marker_key ]
+									);
+								endforeach;
+
+								self::clear_btn( '-marker' );
+							?>
 						</div>
 					</div>
-					<div class="__field" data-is-enable=<?=esc_attr( $enable_font_size );?>>
+					<div class="__field -acc" data-is-enable=<?=esc_attr( $enable_font_size );?>>
 						<div class="__ttl">
 							<input
 								type="checkbox"
@@ -320,17 +310,18 @@ class Tab_Custom {
 						</div>
 						<div class="__choices">
 							<?php foreach ( $font_sizes as $slug => $name ) : ?>
-								<p class="__font-size">
+								<div class="__font-size">
 									<input
 										type="radio"
-										id="<?=esc_attr( $font_size_key )?>"
+										id="<?=esc_attr( $font_size_key . '_' . $slug )?>"
 										name="<?=esc_attr( $font_size_name )?>"
 										value="<?=esc_attr( $slug )?>"
 										<?=checked( (string) $editor[ $font_size_key ], $slug, false )?>
 									/>
 									<label for="<?=esc_attr( $font_size_key . '_' . $slug )?>"><?=esc_html( $name )?></label>
-								</p>
+							</div>
 							<?php endforeach; ?>
+							<?php self::clear_btn( '-fz' ); ?>
 						</div>
 					</div>
 				</div>
@@ -448,6 +439,40 @@ class Tab_Custom {
 			<div class="__settings -codemirror">
 				<textarea id="<?=esc_attr( $key )?>" cols="60" rows="30" name="<?=esc_attr( $name )?>" id="<?=esc_attr( $name )?>" class="swell-css-editor" ><?php echo esc_textarea( $val ); ?></textarea>
 			</div>
+		<?php
+	}
+
+
+	/**
+	 * カラーパレット出力
+	 */
+	public static function color_palette( $class, $id_key, $name, $slug, $label, $val, $saved_val ) {
+		?>
+		<label for="<?=esc_attr( $id_key . '_' . $slug )?>" class="__label">
+			<input
+				type="radio"
+				id="<?=esc_attr( $id_key . '_' . $slug )?>"
+				name="<?=esc_attr( $name )?>"
+				value="<?=esc_attr( $slug );?>"
+				class="<?=esc_attr( $class )?> u-none"
+				<?=checked( $saved_val, $slug, false )?>
+			/>
+			<span style="background:<?=esc_attr( $val );?>"><?=esc_html( $label )?></span>
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#ffffff" role="img" aria-hidden="true" focusable="false"><path d="M18.3 5.6L9.9 16.9l-4.6-3.4-.9 1.2 5.8 4.3 9.3-12.6z"></path></svg>
+		</label>
+		<?php
+	}
+
+
+	/**
+	 * クリアボタン
+	 */
+	public static function clear_btn( $class ) {
+		?>
+			<button class="__clear <?=esc_attr( $class )?>" type="button">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" role="img" aria-hidden="true" focusable="false"><path d="M13 11.8l6.1-6.3-1-1-6.1 6.2-6.1-6.2-1 1 6.1 6.3-6.5 6.7 1 1 6.5-6.6 6.5 6.6 1-1z"></path></svg>
+				クリア
+			</button>
 		<?php
 	}
 }

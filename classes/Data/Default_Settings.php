@@ -185,11 +185,11 @@ trait Default_Settings {
 			'format_title_2'          => '',
 
 			// カスタムセット
-			'format_set_bold_1'       => '',
+			'format_set_bold_1'       => '1',
 			'format_set_italic_1'     => '',
 			'format_set_color_1'      => '',
 			'format_set_bg_1'         => '',
-			'format_set_marker_1'     => '',
+			'format_set_marker_1'     => 'orange',
 			'format_set_font_size_1'  => '',
 
 			'format_set_bold_2'       => '',

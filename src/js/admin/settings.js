@@ -432,9 +432,20 @@ function getRGBA(colorCode, alpha, brightness) {
 		(function () {
 			const $setMenu = $('.swell-menu-set');
 
+			// 選択解除
+			function removeFormat($this, targetClass) {
+				const $field = $this.parents('.__field');
+				const $parent = $this.parents('.swell-menu-set');
+
+				// チェックを削除
+				$field.find('.__choices input').prop('checked', false);
+
+				// プレビューエリアのクラスを外す
+				$parent.find(`.__preview .${targetClass}`).removeClass().addClass(targetClass);
+			}
+
 			// 太字のオン・オフ
-			const $toggleBold = $setMenu.find('.__toggle-bold');
-			$toggleBold.change(function () {
+			$setMenu.find('.__toggle-bold').change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
 				const $parent = $this.parents('.swell-menu-set');
@@ -446,8 +457,7 @@ function getRGBA(colorCode, alpha, brightness) {
 			});
 
 			// 斜体のオン・オフ
-			const $toggleItalic = $setMenu.find('.__toggle-italic');
-			$toggleItalic.change(function () {
+			$setMenu.find('.__toggle-italic').change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
 				const $parent = $this.parents('.swell-menu-set');
@@ -458,24 +468,16 @@ function getRGBA(colorCode, alpha, brightness) {
 				}
 			});
 
-			// 文字色のオン・オフ
-			const $toggleColor = $setMenu.find('.__toggle-color');
-			$toggleColor.change(function () {
+			// 文字色展開
+			$setMenu.find('.__toggle-color').change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
-				const $parent = $this.parents('.swell-menu-set');
 				const $field = $this.parents('.__field');
 				$field.attr('data-is-enable', Number(isChecked));
-				$field.find('.__choices input').prop('checked', false);
-				$parent
-					.find('.__preview .has-inline-color')
-					.removeClass()
-					.addClass('has-inline-color');
 			});
 
 			// 文字色の変更
-			const $colorField = $setMenu.find('.__color');
-			$colorField.change(function () {
+			$setMenu.find('.__color').change(function () {
 				const $this = $(this);
 				const thisVal = $this.val();
 				let colorClass = `has-swl-${thisVal}-color`;
@@ -491,21 +493,22 @@ function getRGBA(colorCode, alpha, brightness) {
 					.addClass(`has-inline-color ${colorClass}`);
 			});
 
-			// 背景色のオン・オフ
-			const $toggleBg = $setMenu.find('.__toggle-bg');
-			$toggleBg.change(function () {
+			// 文字色クリア
+			$setMenu.find('.__clear.-color').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'has-inline-color');
+			});
+
+			// 背景色展開
+			$setMenu.find('.__toggle-bg').change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
-				const $parent = $this.parents('.swell-menu-set');
 				const $field = $this.parents('.__field');
 				$field.attr('data-is-enable', Number(isChecked));
-				$field.find('.__choices input').prop('checked', false);
-				$parent.find('.__preview .swl-bg-color').removeClass().addClass('swl-bg-color');
 			});
 
 			// 背景色の変更
-			const $bgField = $setMenu.find('.__bg');
-			$bgField.change(function () {
+			$setMenu.find('.__bg').change(function () {
 				const $this = $(this);
 				const thisVal = $this.val();
 				let bgClass = `has-swl-${thisVal}-background-color`;
@@ -521,21 +524,22 @@ function getRGBA(colorCode, alpha, brightness) {
 					.addClass(`swl-bg-color ${bgClass}`);
 			});
 
-			// マーカーのオン・オフ
-			const $toggleMarker = $setMenu.find('.__toggle-marker');
-			$toggleMarker.change(function () {
+			// 背景色クリア
+			$setMenu.find('.__clear.-bg').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'swl-bg-color');
+			});
+
+			// マーカー展開
+			$setMenu.find('.__toggle-marker').change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
-				const $parent = $this.parents('.swell-menu-set');
 				const $field = $this.parents('.__field');
 				$field.attr('data-is-enable', Number(isChecked));
-				$field.find('.__choices input').prop('checked', false);
-				$parent.find('.__preview .swl-marker').removeClass().addClass('swl-marker');
 			});
 
 			// マーカーの変更
-			const $markerField = $setMenu.find('.__marker');
-			$markerField.change(function () {
+			$setMenu.find('.__marker').change(function () {
 				const $this = $(this);
 				const thisVal = $this.val();
 				const markerClass = `mark_${thisVal}`;
@@ -546,9 +550,14 @@ function getRGBA(colorCode, alpha, brightness) {
 					.addClass(`swl-marker ${markerClass}`);
 			});
 
+			// マーカークリア
+			$setMenu.find('.__clear.-marker').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'swl-marker');
+			});
+
 			// フォントサイズのオン・オフ
-			const $toggleFontSize = $setMenu.find('.__toggle-font-size');
-			$toggleFontSize.change(function () {
+			$setMenu.find('.__toggle-font-size').change(function () {
 				const $this = $(this);
 				const isChecked = $this.prop('checked');
 				const $parent = $this.parents('.swell-menu-set');
@@ -571,6 +580,12 @@ function getRGBA(colorCode, alpha, brightness) {
 					.find('.__preview .swl-fz')
 					.removeClass()
 					.addClass(`swl-fz ${fontSizeClass}`);
+			});
+
+			// フォントサイズクリア
+			$setMenu.find('.__clear.-fz').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'swl-fz');
 			});
 		})();
 	});
