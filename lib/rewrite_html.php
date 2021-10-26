@@ -64,14 +64,13 @@ function rewrite_lazyload_scripts( $html ) {
 			return false;
 		}
 
-		error_log( PHP_EOL . '---', 3, ABSPATH . 'my.log' );
+		// error_log( PHP_EOL . '---', 3, ABSPATH . 'my.log' );
 		$new_html = preg_replace_callback(
 			'/<script([^>]*?)?>(.*?)?<\/script>/ims',
 			__NAMESPACE__ . '\replace_scripts',
 			$html
 		);
-
-		error_log( PHP_EOL, 3, ABSPATH . 'my.log' );
+		// error_log( PHP_EOL, 3, ABSPATH . 'my.log' );
 
 		return $new_html;
 
@@ -82,16 +81,16 @@ function rewrite_lazyload_scripts( $html ) {
 
 function replace_scripts( $matches ) {
 
-	// error_log( print_r( $matches, true ), 3, ABSPATH . 'my.log' );
-	// return $matches[0];
-
 	$script = $matches[0];
 	$attrs  = $matches[1];
 	// $js_code = $matches[2];
 
 	$include_list = apply_filters( 'swell_lazyscripts_target_list', [
-		'platform.twitter.com/widgets.js',
+		'twitter.com/widgets.js',
+		'instagram.com/embed.js',
+		'connect.facebook.net',
 		'assets.pinterest.com',
+		'pagead2.googlesyndication.com', // /pagead/js/adsbygoogle.js
 	] );
 
 	if ( empty( $attrs ) ) return $script;
@@ -110,36 +109,39 @@ function replace_scripts( $matches ) {
 		$script = str_replace( $attrs, $new_attrs, $script );
 	}
 
-	error_log( $script, 3, ABSPATH . 'my.log' );
+	// log
+	// error_log( $script, 3, ABSPATH . 'my.log' );
 
 	return $script;
 }
 
 function scripts_inject() {
-	$timeout = intval( 1000 );
+	$timeout = intval( 4000 );
 	?>
-<script type="text/javascript" id="sewll-lazyloadscripts">
-const loadScriptsTimer = setTimeout(loadScripts,<?php echo esc_attr( $timeout ); ?>);
-const userInteractionEvents=["mouseover","keydown","touchstart","touchmove","wheel"];
-userInteractionEvents.forEach(function(event){
-	window.addEventListener(event,triggerScriptLoader,{passive:!0})
-});
-
-function triggerScriptLoader(){
-	loadScripts();
-	clearTimeout(loadScriptsTimer);
-	userInteractionEvents.forEach(function(event){
-		window.removeEventListener(event,triggerScriptLoader,{passive:!0});
+<script type="text/javascript" id="swell-lazyloadscripts">
+(function () {
+	const loadJsTimer = setTimeout(loadJs,<?php echo esc_attr( $timeout ); ?>);
+	const userEvents = ["mouseover","keydown","touchstart","touchmove","wheel"];
+	userEvents.forEach(function(event){
+		window.addEventListener(event,eventTrigger,{passive:!0})
 	});
-}
 
-function loadScripts(){
-	document.querySelectorAll("script[data-type='lazy']").forEach(function(elem){
-		elem.setAttribute("src",elem.getAttribute("data-src"));
-	});
-}
+	function eventTrigger(){
+		loadJs();
+		clearTimeout(loadJsTimer);
+		userEvents.forEach(function(event){
+			window.removeEventListener(event,eventTrigger,{passive:!0});
+		});
+	}
+
+	function loadJs(){
+		document.querySelectorAll("script[data-type='lazy']").forEach(function(elem){
+			elem.setAttribute("src",elem.getAttribute("data-src"));
+		});
+	}
+})();
 </script>
 	<?php
-	}
+}
 
 add_action( 'wp_print_footer_scripts', __NAMESPACE__ . '\scripts_inject' );

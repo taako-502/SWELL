@@ -37,7 +37,7 @@ class Output_Field extends Admin_Menu {
 
 		$field_id = $args['id'];
 		if ( ! isset( $data[ $field_id ] ) ) {
-			echo 'Not found : ' . $field_id;
+			echo 'Not found : ' . esc_attr( $field_id );
 			return;
 		}
 
@@ -50,7 +50,7 @@ class Output_Field extends Admin_Menu {
 		// typeに合わせて処理を分岐
 		if ( $args['type'] === 'input' ) {
 
-			self::input( $field_id, $args['input_type'], $args['before'], $args['after'] );
+			self::input( $field_id, $args );
 
 		} elseif ( $args['type'] === 'radio' ) {
 
@@ -72,7 +72,7 @@ class Output_Field extends Admin_Menu {
 
 		// description （共通）
 		if ( $args['desc'] ) {
-			echo '<p class="description">', $args['desc'], '</p>';
+			echo '<p class="description">' . wp_kses_post( $args['desc'] ) . '</p>';
 		}
 
 	}
@@ -82,9 +82,25 @@ class Output_Field extends Admin_Menu {
 	/**
 	 * input : "text"|"number"|"email"|...]
 	 */
-	public static function input( $field_id, $type, $before_text, $after_text ) {
+	public static function input( $field_id, $args ) {
 
-		echo $before_text, '<input id="',$field_id,'" name="', \SWELL_Theme::DB_NAME_OPTIONS . "[$field_id]" ,'" type="', $type, '" value="', \SWELL_Theme::$options[ $field_id ] ,'" />', $after_text;
+		$type        = $args['input_type'] ?? 'text';
+		$before_text = $args['before'] ?? '';
+		$after_text  = $args['after'] ?? '';
+
+		$name  = \SWELL_Theme::DB_NAME_OPTIONS . '[' . $field_id . ']';
+		$value = \SWELL_Theme::$options[ $field_id ];
+
+		$props = 'id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" type="' . esc_attr( $type ) . '" value="' . esc_attr( $value ) . '"';
+
+		if ( 'number' === $type ) {
+			$step   = $args['step'] ?? '1';
+			$props .= ' step="' . esc_attr( $step ) . '"';
+		}
+
+		echo wp_kses_post( $before_text );
+		echo '<input ' . $props . ' />'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo wp_kses_post( $after_text );
 
 	}
 
@@ -94,10 +110,12 @@ class Output_Field extends Admin_Menu {
 	 */
 	public static function checkbox( $field_id, $label ) {
 
-		$checked = checked( (string) \SWELL_Theme::$options[ $field_id ], '1', false );
-		echo '<input type="hidden" name="', \SWELL_Theme::DB_NAME_OPTIONS . "[$field_id]", '" value="">';
-		echo '<input type="checkbox" id="', $field_id, '" name="', \SWELL_Theme::DB_NAME_OPTIONS . "[$field_id]", '" value="1" ', $checked, ' />';
-		echo '<label for="', $field_id, '">', $label, '</label>';
+		$name  = \SWELL_Theme::DB_NAME_OPTIONS . '[' . $field_id . ']';
+		$value = \SWELL_Theme::$options[ $field_id ];
+
+		echo '<input type="hidden" name="' . esc_attr( $name ) . '" value="">';
+		echo '<input type="checkbox" id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" value="1" ' . checked( (string) $value, '1', false ) . ' />';
+		echo '<label for="' . esc_attr( $field_id ) . '">' . wp_kses_post( $label ) . '</label>';
 	}
 
 
@@ -106,16 +124,19 @@ class Output_Field extends Admin_Menu {
 	 */
 	public static function radio( $field_id, $choices ) {
 
+		$name = \SWELL_Theme::DB_NAME_OPTIONS . '[' . $field_id . ']';
+
 		echo '<fieldset>';
 		foreach ( $choices as $key => $label ) {
 			$radio_id = $field_id . '_' . $key;
-			$checked  = checked( \SWELL_Theme::$options[ $field_id ], $key, false );
-			$attr     = 'id="' . $radio_id . '" name="' . \SWELL_Theme::DB_NAME_OPTIONS . "[$field_id]" . '" value="' . $key . '" ' . $checked . '"';
+			$value    = \SWELL_Theme::$options[ $field_id ];
+			$checked  = checked( $value, $key, false );
+			$attr     = 'id="' . esc_attr( $radio_id ) . '" name="' . esc_attr( $name ) . '" value="' . esc_attr( $key ) . '" ' . $checked . '"';
 
 			echo '<div class="swell_radio_wrapper">' .
-					'<label for="', $radio_id, '">' .
-						'<input type="radio" ' . $attr . ' >' .
-						'<span>' . $label . '</span>' .
+					'<label for="' . esc_attr( $radio_id ) . '">' .
+						'<input type="radio" ' . $attr . ' >' . // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						'<span>' . wp_kses_post( $label ) . '</span>' .
 					'</label>' .
 				'</div>';
 		}
@@ -137,9 +158,9 @@ class Output_Field extends Admin_Menu {
 	public static function color( $field_id, $name, $val, $label = '' ) {
 		echo '<div>';
 		if ( $label ) {
-			echo '<label for="' . $field_id . '">' . $label . '</label>';
+			echo '<label for="' . esc_attr( $field_id ) . '">' . wp_kses_post( $label ) . '</label>';
 		}
-		echo '<input type="text" id="' . $field_id . '" name="' . $name . '" class="colorpicker" value="' . $val . '">';
+		echo '<input type="text" id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" class="colorpicker" value="' . esc_attr( $val ) . '">';
 		echo '</div>';
 	}
 
@@ -149,14 +170,17 @@ class Output_Field extends Admin_Menu {
 	 */
 	public static function textarea( $field_id, $rows, $after = '' ) {
 
+		$name  = \SWELL_Theme::DB_NAME_OPTIONS . '[' . $field_id . ']';
+		$value = \SWELL_Theme::$options[ $field_id ];
+
 		if ( $after ) {
 
 			echo '<div class="hcb_col2_wrap">',
-				'<div class="hcb_col_item"><textarea id="' . $field_id . '" name="' . \SWELL_Theme::DB_NAME_OPTIONS . "[$field_id]" . '" type="text" class="regular-text" rows="' . $rows . '" >' . \SWELL_Theme::$options[ $field_id ] . '</textarea></div>',
-				'<div class="hcb_col_item">' . $after . '</div>',
+				'<div class="hcb_col_item"><textarea id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" type="text" class="regular-text" rows="' . esc_attr( $rows ) . '" >' . esc_textarea( $value ) . '</textarea></div>',
+				'<div class="hcb_col_item">' . wp_kses_post( $after ) . '</div>',
 				'</div>';
 		} else {
-			echo '<textarea id="',$field_id,'" name="',\SWELL_Theme::DB_NAME_OPTIONS . "[$field_id]" ,'" type="text" class="regular-text" rows="', $rows, '" >', \SWELL_Theme::$options[ $field_id ] ,'</textarea>';
+			echo '<textarea id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" type="text" class="regular-text" rows="' . esc_attr( $rows ) . '" >' . esc_textarea( $value ) . '</textarea>';
 		}
 	}
 }

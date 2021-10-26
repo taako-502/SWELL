@@ -60,6 +60,8 @@ trait Default_Settings {
 			'ajax_after_post'        => '',
 			'ajax_footer'            => '',
 			'lazy_type'              => 'lazysizes',
+			'use_delay_js'           => '',
+			'delay_js_time'          => '3000',
 
 			// Pjax
 			'use_pjax'               => 'off',

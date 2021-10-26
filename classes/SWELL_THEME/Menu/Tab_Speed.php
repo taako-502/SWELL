@@ -133,6 +133,46 @@ class Tab_Speed {
 				],
 			]
 		);
+
+		add_settings_field(
+			'label_lazyloadscript',
+			'スクリプトの遅延読み込み',
+			'__return_false',
+			$page_name,
+			$section_name,
+			[]
+		);
+
+		add_settings_field(
+			'use_delay_js',
+			'',
+			$cb,
+			$page_name,
+			$section_name,
+			[
+				'id'    => 'use_delay_js',
+				'type'  => 'checkbox',
+				'label' => '外部スクリプトを遅延読み込みさせる',
+				// 'desc'  => 'twitter, facebook, instagram, pinterest用のスクリプトが遅延読み込みされます。',
+			]
+		);
+
+		add_settings_field(
+			'delay_js_time',
+			'',
+			$cb,
+			$page_name,
+			$section_name,
+			[
+				'id'         => 'delay_js_time',
+				'type'       => 'input',
+				'step'       => '100',
+				'input_type' => 'number',
+				'before'     => '<p class="u-mb-5"><b>何秒遅延させるか</b></p>',
+				'after'      => '[m秒]',
+			]
+		);
+
 	}
 
 	/**
