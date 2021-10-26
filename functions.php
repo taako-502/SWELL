@@ -106,6 +106,9 @@ class SWELL_Theme extends \SWELL_Theme\Theme_Data {
 		// その他、フック処理
 		require_once __DIR__ . '/lib/hooks.php';
 
+		// その他、フック処理
+		require_once __DIR__ . '/lib/rewrite_html.php';
+
 		// 管理者ログイン時
 		if ( current_user_can( 'manage_options' ) ) {
 			// アップデートチェック

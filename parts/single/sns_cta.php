@@ -37,14 +37,17 @@ $tw_lang = ( 'ja' === $lang ) ? 'ja' : 'en'; // _x( 'en', 'tw', 'swell' );
 	?>
 	<div id="fb-root"></div>
 	<script class="fb_like_script">
-		(function(d, s, id) {
-			var js, fjs = d.getElementsByTagName(s)[0];
-			if (d.getElementById(id)) return;
-			js = d.createElement(s); js.id = id;
-			js.async = true;
-			js.src = "https://connect.facebook.net/<?=$fb_lang?>/sdk.js#xfbml=1&version=v4.0<?=esc_js( $fb_appID_query )?>";
-			fjs.parentNode.insertBefore(js, fjs);
-		}(document, 'script', 'facebook-jssdk'));
+		setTimeout(function() {
+			(function(d, s, id) {
+				var js, fjs = d.getElementsByTagName(s)[0];
+				if (d.getElementById(id)) return;
+				js = d.createElement(s); js.id = id;
+				js.async = true;
+				js.src = "https://connect.facebook.net/<?=$fb_lang?>/sdk.js#xfbml=1&version=v4.0<?=esc_js( $fb_appID_query )?>";
+				fjs.parentNode.insertBefore(js, fjs);
+			}(document, 'script', 'facebook-jssdk'));
+		}, 2000);
+		
 	</script>
 	<?php endif; ?>
 	<figure class="p-snsCta__figure">
