@@ -247,6 +247,11 @@
         font-size: 10px;
         transform: translateX(-50%);
     }
+
+    tr.-disable {
+        opacity: .5;
+        pointer-events: none;
+    }
 }
 
 

@@ -157,6 +157,27 @@ class Tab_Speed {
 			]
 		);
 
+		$delayjs_class = '-delay-js';
+		$value         = \SWELL_Theme::$options['use_delay_js'];
+		if ( ! $value ) {
+			$delayjs_class .= ' -disable';
+		}
+
+		add_settings_field(
+			'delay_js_list',
+			'',
+			$cb,
+			$page_name,
+			$section_name,
+			[
+				'id'     => 'delay_js_list',
+				'class'  => $delayjs_class,
+				'type'   => 'textarea',
+				'before' => '<p class="u-mb-5"><b>遅延読み込み対象にするスクリプト</b></p>',
+				'desc'   => '指定されたキーワードが含まれるscriptタグを遅延読み込みします。<br>複数の場合は「,（+改行）」で区切ってください。',
+			]
+		);
+
 		add_settings_field(
 			'delay_js_time',
 			'',
@@ -164,15 +185,15 @@ class Tab_Speed {
 			$page_name,
 			$section_name,
 			[
-				'id'         => 'delay_js_time',
-				'type'       => 'input',
-				'step'       => '100',
-				'input_type' => 'number',
-				'before'     => '<p class="u-mb-5"><b>何秒遅延させるか</b></p>',
-				'after'      => '[m秒]',
+				'id'      => 'delay_js_time',
+				'class'   => $delayjs_class,
+				'type'    => 'select',
+				'before'  => '<p class="u-mb-5"><b>遅延させる秒数</b></p>',
+				'choices' => array_map( function( $i ) {
+					return $i . '秒';
+				}, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ] ),
 			]
 		);
-
 	}
 
 	/**
@@ -209,18 +230,6 @@ class Tab_Speed {
 		);
 
 		add_settings_field(
-			'pjax_prevent_pages',
-			'Pjaxで遷移させないページのURL',
-			$cb,
-			$page_name,
-			$section_name,
-			[
-				'id'   => 'pjax_prevent_pages',
-				'type' => 'textarea',
-				'desc' => '複数の場合は「,（+改行）」で区切ってください。また、「http(s)://」から指定しない場合は、その文字列を含む全ページが対象となります。',
-			]
-		);
-		add_settings_field(
 			'prefetch_prevent_keys',
 			'Prefetchさせないページのキーワード',
 			$cb,
@@ -230,6 +239,19 @@ class Tab_Speed {
 				'id'   => 'prefetch_prevent_keys',
 				'type' => 'textarea',
 				'desc' => '複数の場合は「,」で区切ってください。指定した文字列を含む全ページが対象となります。',
+			]
+		);
+
+		add_settings_field(
+			'pjax_prevent_pages',
+			'Pjaxで遷移させないページのURL',
+			$cb,
+			$page_name,
+			$section_name,
+			[
+				'id'   => 'pjax_prevent_pages',
+				'type' => 'textarea',
+				'desc' => '複数の場合は「,（+改行）」で区切ってください。また、「http(s)://」から指定しない場合は、その文字列を含む全ページが対象となります。',
 			]
 		);
 

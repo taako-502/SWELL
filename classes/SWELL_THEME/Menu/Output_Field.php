@@ -62,11 +62,15 @@ class Output_Field extends Admin_Menu {
 
 		} elseif ( $args['type'] === 'textarea' ) {
 
-			self::textarea( $field_id, $args['rows'], $args['after'] );
+			self::textarea( $field_id, $args );
 
 		} elseif ( $args['type'] === 'color' ) {
 
 			self::color( $field_id, $name, $val, $args['rows'], $args['after'] );
+
+		} elseif ( $args['type'] === 'select' ) {
+
+			self::select( $field_id, $args );
 
 		}
 
@@ -148,8 +152,22 @@ class Output_Field extends Admin_Menu {
 	/**
 	 * select
 	 */
-	public static function select( $field_id, $options ) {
+	public static function select( $field_id, $args ) {
 
+		$choices = $args['choices'] ?: [];
+		$before  = $args['before'] ?? '';
+		$after   = $args['after'] ?? '';
+
+		$name  = \SWELL_Theme::DB_NAME_OPTIONS . '[' . $field_id . ']';
+		$value = \SWELL_Theme::$options[ $field_id ];
+
+		echo wp_kses_post( $before );
+		echo '<select id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '">';
+		foreach ( $choices as $val => $label ) {
+			echo '<option value="' . esc_attr( $val ) . '"' . selected( $value, $val, false ) . '>' . wp_kses_post( $label ) . '</option>';
+		}
+		echo '</select>';
+		echo wp_kses_post( $after );
 	}
 
 	/**
@@ -168,19 +186,19 @@ class Output_Field extends Admin_Menu {
 	/**
 	 * textarea
 	 */
-	public static function textarea( $field_id, $rows, $after = '' ) {
+	public static function textarea( $field_id, $args ) {
+
+		$placeholder = $args['placeholder'] ?? '';
+		$rows        = $args['rows'] ?? 8;
+		$before      = $args['before'] ?? '';
+		$after       = $args['after'] ?? '';
 
 		$name  = \SWELL_Theme::DB_NAME_OPTIONS . '[' . $field_id . ']';
 		$value = \SWELL_Theme::$options[ $field_id ];
 
-		if ( $after ) {
+		echo wp_kses_post( $before );
+		echo '<textarea id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" class="regular-text" rows="' . esc_attr( $rows ) . '" placeholder="' . esc_attr( $placeholder ) . '">' . esc_textarea( $value ) . '</textarea>';
+		echo wp_kses_post( $after );
 
-			echo '<div class="hcb_col2_wrap">',
-				'<div class="hcb_col_item"><textarea id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" type="text" class="regular-text" rows="' . esc_attr( $rows ) . '" >' . esc_textarea( $value ) . '</textarea></div>',
-				'<div class="hcb_col_item">' . wp_kses_post( $after ) . '</div>',
-				'</div>';
-		} else {
-			echo '<textarea id="' . esc_attr( $field_id ) . '" name="' . esc_attr( $name ) . '" type="text" class="regular-text" rows="' . esc_attr( $rows ) . '" >' . esc_textarea( $value ) . '</textarea>';
-		}
 	}
 }

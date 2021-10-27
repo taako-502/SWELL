@@ -3,29 +3,10 @@ namespace SWELL_Theme\Rewrite_Html;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-function minify_html( $html ) {
-	$html    = str_replace( "\r\n", "\n", trim( $html ) );
-	$search  = [
-		'/\>[^\S ]+/s',  // strip whitespaces after tags, except space
-		'/[^\S ]+\</s',  // strip whitespaces before tags, except space
-		'/(\s)+/s',       // shorten multiple whitespace sequences
-	];
-	$replace = [
-		'>',
-		'<',
-		'\\1',
-	];
-	$html    = preg_replace( $search, $replace, $html );
-	return $html;
-}
-
-
 if ( ! is_admin() ) {
 
 	add_action( 'wp', function() {
-		// ob_start();
 		ob_start( __NAMESPACE__ . '\rewrite_lazyload_scripts' );
-		// ob_start( __NAMESPACE__ . '\minify_html' );
 	} );
 
 	// add_action( 'shutdown', function() {
@@ -83,30 +64,38 @@ function replace_scripts( $matches ) {
 
 	$script = $matches[0];
 	$attrs  = $matches[1];
-	// $js_code = $matches[2];
+	$code   = trim( $matches[2] );
 
-	$include_list = apply_filters( 'swell_lazyscripts_target_list', [
-		'twitter.com/widgets.js',
-		'instagram.com/embed.js',
-		'connect.facebook.net',
-		'assets.pinterest.com',
-		'pagead2.googlesyndication.com', // /pagead/js/adsbygoogle.js
-	] );
+	// https://perfmatters.io/docs/delay-javascript/#scripts
 
-	if ( empty( $attrs ) ) return $script;
+	// 遅延読み込み対象のキーワード
+	$delay_js_list = trim( trim( \SWELL_Theme::get_option( 'delay_js_list' ) ), ',' );
+	$delay_js_list = explode( ',', $delay_js_list );
+	array_walk( $delay_js_list, function( &$item ) {
+		$item = trim( $item );
+	} );
 
-	preg_match( '/\ssrc="([^"]*)"/', $attrs, $matched_src );
-	$src = ( $matched_src ) ? $matched_src[1] : '';
+	$delay_js_list = apply_filters( 'swell_delay_js_list', $delay_js_list );
 
-	// srcなければ何もせず返す
-	if ( ! $src ) return $script;
+	if ( $code ) {
+		if ( is_keyword_included( $code, $delay_js_list ) ) {
+			// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
+			$attrs .= ' data-swldelayedjs="data:text/javascript;base64,' . base64_encode( $code ) . '"';
+			$script = '<script ' . $attrs . '></script>';
+		}
+	} elseif ( ! empty( $attrs ) ) {
+		preg_match( '/\ssrc="([^"]*)"/', $attrs, $matched_src );
+		$src = ( $matched_src ) ? $matched_src[1] : '';
 
-	if ( is_keyword_included( $src, $include_list ) ) {
-		// src を data-srcへ
-		$new_attrs = str_replace( ' src=', ' data-type="lazy" data-src=', $attrs );
+		if ( $src ) {
+			if ( is_keyword_included( $src, $delay_js_list ) ) {
+				// src を data-srcへ
+				$new_attrs = str_replace( ' src=', ' data-swldelayedjs=', $attrs );
 
-		// attrs入れ替え
-		$script = str_replace( $attrs, $new_attrs, $script );
+				// attrs入れ替え
+				$script = str_replace( $attrs, $new_attrs, $script );
+			}
+			}
 	}
 
 	// log
@@ -116,27 +105,27 @@ function replace_scripts( $matches ) {
 }
 
 function scripts_inject() {
-	$timeout = intval( 4000 );
+
+	$timeout = 3000 ?: 0;
 	?>
 <script type="text/javascript" id="swell-lazyloadscripts">
 (function () {
-	const loadJsTimer = setTimeout(loadJs,<?php echo esc_attr( $timeout ); ?>);
-	const userEvents = ["mouseover","keydown","touchstart","touchmove","wheel"];
-	userEvents.forEach(function(event){
-		window.addEventListener(event,eventTrigger,{passive:!0})
+	const timeout = <?php echo esc_attr( intval( $timeout ) ); ?>;
+	const loadTimer = timeout ? setTimeout(loadJs,timeout) : null;
+	const userEvents = ["mouseover","keydown","wheel","touchmove touchend","touchstart touchend"];
+	userEvents.forEach(function(e){
+		window.addEventListener(e,eTrigger,{passive:!0})
 	});
-
-	function eventTrigger(){
+	function eTrigger(){
 		loadJs();
-		clearTimeout(loadJsTimer);
-		userEvents.forEach(function(event){
-			window.removeEventListener(event,eventTrigger,{passive:!0});
+		if(null !== loadTimer) clearTimeout(loadTimer);
+		userEvents.forEach(function(e){
+			window.removeEventListener(e,eTrigger,{passive:!0});
 		});
 	}
-
 	function loadJs(){
-		document.querySelectorAll("script[data-type='lazy']").forEach(function(elem){
-			elem.setAttribute("src",elem.getAttribute("data-src"));
+		document.querySelectorAll("script[data-swldelayedjs]").forEach(function(el){
+			el.setAttribute("src",el.getAttribute("data-swldelayedjs"));
 		});
 	}
 })();

@@ -61,7 +61,12 @@ trait Default_Settings {
 			'ajax_footer'            => '',
 			'lazy_type'              => 'lazysizes',
 			'use_delay_js'           => '',
-			'delay_js_time'          => '3000',
+			'delay_js_list'          => '' .
+				'twitter.com/widgets.js,' . PHP_EOL .
+				'instagram.com/embed.js,' . PHP_EOL .
+				'connect.facebook.net,' . PHP_EOL .
+				'assets.pinterest.com,' . PHP_EOL,
+			'delay_js_time'          => '3',
 
 			// Pjax
 			'use_pjax'               => 'off',

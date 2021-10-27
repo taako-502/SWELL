@@ -96,6 +96,24 @@ function getRGBA(colorCode, alpha, brightness) {
 (function ($) {
 	$(function () {
 		/**
+		 * スクリプトの遅延読み込み
+		 */
+		(function () {
+			const checkbox = $('#use_delay_js');
+
+			checkbox.change(function () {
+				const $this = $(this);
+				const checked = $this.prop('checked');
+				console.log(checked);
+				$('.-delay-js').toggleClass('-disable');
+
+				// const $preview = $this.parents('.__settings').next();
+				// $preview.find('.c-balloon__text').css('background', newColor);
+				// $preview.find('.c-balloon__before').css('border-right-color', newColor);
+			});
+		})();
+
+		/**
 		 * ふきだしカラー
 		 */
 		(function () {
@@ -429,4 +447,4 @@ function getRGBA(colorCode, alpha, brightness) {
 
 	// ページ上部へ
 	// window.scrollTo(0, 0);
-})(jQuery);
+})(window.jQuery);
