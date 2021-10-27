@@ -105,12 +105,11 @@ function replace_scripts( $matches ) {
 }
 
 function scripts_inject() {
-
-	$timeout = 3000 ?: 0;
+	$timeout = \SWELL_Theme::get_option( 'delay_js_time' ) ?: 0;
 	?>
 <script type="text/javascript" id="swell-lazyloadscripts">
 (function () {
-	const timeout = <?php echo esc_attr( intval( $timeout ) ); ?>;
+	const timeout = <?php echo esc_attr( intval( $timeout ) * 1000 ); ?>;
 	const loadTimer = timeout ? setTimeout(loadJs,timeout) : null;
 	const userEvents = ["mouseover","keydown","wheel","touchmove touchend","touchstart touchend"];
 	userEvents.forEach(function(e){

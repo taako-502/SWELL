@@ -102,14 +102,32 @@ function getRGBA(colorCode, alpha, brightness) {
 			const checkbox = $('#use_delay_js');
 
 			checkbox.change(function () {
-				const $this = $(this);
-				const checked = $this.prop('checked');
-				console.log(checked);
+				// const $this = $(this);
+				// const checked = $this.prop('checked');
+				// console.log(checked);
 				$('.-delay-js').toggleClass('-disable');
+			});
+		})();
 
-				// const $preview = $this.parents('.__settings').next();
-				// $preview.find('.c-balloon__text').css('background', newColor);
-				// $preview.find('.c-balloon__before').css('border-right-color', newColor);
+		/**
+		 * prefetch or pjax
+		 */
+		(function () {
+			const radio = $('[name="swell_options[use_pjax]"]');
+			radio.change(function () {
+				const $this = $(this);
+				const val = $this.val();
+				console.log(val);
+				if ('pjax' === val) {
+					$('.-prevent-pjax').removeClass('-disable');
+					$('.-prevent-prefetch').addClass('-disable');
+				} else if ('prefetch' === val) {
+					$('.-prevent-pjax').addClass('-disable');
+					$('.-prevent-prefetch').removeClass('-disable');
+				} else {
+					$('.-prevent-pjax').addClass('-disable');
+					$('.-prevent-prefetch').addClass('-disable');
+				}
 			});
 		})();
 

@@ -174,7 +174,7 @@ class Tab_Speed {
 				'class'  => $delayjs_class,
 				'type'   => 'textarea',
 				'before' => '<p class="u-mb-5"><b>遅延読み込み対象にするスクリプト</b></p>',
-				'desc'   => '指定されたキーワードが含まれるscriptタグを遅延読み込みします。<br>複数の場合は「,（+改行）」で区切ってください。',
+				'desc'   => '指定されたキーワードが含まれるscriptタグを遅延読み込みします。<br>複数の場合は「,（+改行）」で区切ってください。<br><a class="swl-helpLink" href="###" target="_blank">キーワードの書き方の例はこちら</a>',
 			]
 		);
 
@@ -229,6 +229,9 @@ class Tab_Speed {
 			]
 		);
 
+		$pjax_type      = \SWELL_Theme::$options['use_pjax'];
+		$prefetch_class = ( 'prefetch' !== $pjax_type ) ? '-prevent-prefetch -disable' : '-prevent-prefetch';
+		$pjax_class     = ( 'pjax' !== $pjax_type ) ? '-prevent-pjax -disable' : '-prevent-pjax';
 		add_settings_field(
 			'prefetch_prevent_keys',
 			'Prefetchさせないページのキーワード',
@@ -236,9 +239,10 @@ class Tab_Speed {
 			$page_name,
 			$section_name,
 			[
-				'id'   => 'prefetch_prevent_keys',
-				'type' => 'textarea',
-				'desc' => '複数の場合は「,」で区切ってください。指定した文字列を含む全ページが対象となります。',
+				'id'    => 'prefetch_prevent_keys',
+				'class' => $prefetch_class,
+				'type'  => 'textarea',
+				'desc'  => '複数の場合は「,」で区切ってください。指定した文字列を含む全ページが対象となります。',
 			]
 		);
 
@@ -249,9 +253,10 @@ class Tab_Speed {
 			$page_name,
 			$section_name,
 			[
-				'id'   => 'pjax_prevent_pages',
-				'type' => 'textarea',
-				'desc' => '複数の場合は「,（+改行）」で区切ってください。また、「http(s)://」から指定しない場合は、その文字列を含む全ページが対象となります。',
+				'id'    => 'pjax_prevent_pages',
+				'class' => $pjax_class,
+				'type'  => 'textarea',
+				'desc'  => '複数の場合は「,（+改行）」で区切ってください。また、「http(s)://」から指定しない場合は、その文字列を含む全ページが対象となります。',
 			]
 		);
 

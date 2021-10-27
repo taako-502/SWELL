@@ -249,8 +249,26 @@
     }
 
     tr.-disable {
-        opacity: .5;
+        opacity: .3;
         pointer-events: none;
+    }
+
+    .swl-helpLink {
+        display: inline-block;
+        margin-top: 4px;
+
+        &::before {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 4px;
+            font-size: 12px;
+            line-height: 16px;
+            text-align: center;
+            border: solid 1px;
+            border-radius: 20px;
+            content: "?";
+        }
     }
 }
 
