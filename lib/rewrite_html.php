@@ -39,13 +39,14 @@ function rewrite_lazyload_scripts( $html ) {
 		}
 
 		// Exclude on pages
-		$disabled_pages = apply_filters( 'swell_lazyscripts_disabled_pages', [] );
-		$current_url    = isset( $_SERVER['REQUEST_URI'] ) ? home_url( $_SERVER['REQUEST_URI'] ) : '';
-		if ( is_keyword_included( $current_url, $disabled_pages ) ) {
+		$prevent_pages = \SWELL_Theme::str_to_array( \SWELL_Theme::get_option( 'delay_js_prevent_pages' ), ',' );
+		$prevent_pages = apply_filters( 'swell_delay_js_prevent_pages', $prevent_pages );
+		$current_url   = isset( $_SERVER['REQUEST_URI'] ) ? home_url( $_SERVER['REQUEST_URI'] ) : '';
+		if ( is_keyword_included( $current_url, $prevent_pages ) ) {
 			return false;
 		}
 
-		// error_log( PHP_EOL . '---', 3, ABSPATH . 'my.log' );
+		// error_log( PHP_EOL . '---' . PHP_EOL, 3, ABSPATH . 'my.log' );
 		$new_html = preg_replace_callback(
 			'/<script([^>]*?)?>(.*?)?<\/script>/ims',
 			__NAMESPACE__ . '\replace_scripts',
@@ -69,23 +70,22 @@ function replace_scripts( $matches ) {
 	// https://perfmatters.io/docs/delay-javascript/#scripts
 
 	// 遅延読み込み対象のキーワード
-	$delay_js_list = trim( trim( \SWELL_Theme::get_option( 'delay_js_list' ) ), ',' );
-	$delay_js_list = explode( ',', $delay_js_list );
-	array_walk( $delay_js_list, function( &$item ) {
-		$item = trim( $item );
-	} );
-
+	$delay_js_list = \SWELL_Theme::str_to_array( \SWELL_Theme::get_option( 'delay_js_list' ), ',' );
 	$delay_js_list = apply_filters( 'swell_delay_js_list', $delay_js_list );
 
 	if ( $code ) {
+		// error_log( $code, 3, ABSPATH . 'my.log' );
 		if ( is_keyword_included( $code, $delay_js_list ) ) {
 			// phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 			$attrs .= ' data-swldelayedjs="data:text/javascript;base64,' . base64_encode( $code ) . '"';
 			$script = '<script ' . $attrs . '></script>';
 		}
 	} elseif ( ! empty( $attrs ) ) {
-		preg_match( '/\ssrc="([^"]*)"/', $attrs, $matched_src );
+
+		// error_log( $attrs . PHP_EOL, 3, ABSPATH . 'my.log' );
+		preg_match( '/\ssrc=[\'"](.*?)[\'"]/', $attrs, $matched_src );
 		$src = ( $matched_src ) ? $matched_src[1] : '';
+		// error_log( $src . PHP_EOL, 3, ABSPATH . 'my.log' );
 
 		if ( $src ) {
 			if ( is_keyword_included( $src, $delay_js_list ) ) {
@@ -95,7 +95,7 @@ function replace_scripts( $matches ) {
 				// attrs入れ替え
 				$script = str_replace( $attrs, $new_attrs, $script );
 			}
-			}
+		}
 	}
 
 	// log

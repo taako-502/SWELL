@@ -260,4 +260,18 @@ trait Others {
 		// @codingStandardsIgnoreEnd
 	}
 
+
+	/**
+	 * 文字列を配列へ
+	 */
+	public static function str_to_array( $str, $key ) {
+		$array = trim( trim( $str ), $key );
+		$array = explode( $key, $array );
+		array_walk( $array, function( &$elm ) {
+			$elm = trim( $elm );
+		} );
+		return $array;
+	}
+
+
 }

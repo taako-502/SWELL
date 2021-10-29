@@ -66,6 +66,7 @@ trait Default_Settings {
 				'instagram.com/embed.js,' . PHP_EOL .
 				'connect.facebook.net,' . PHP_EOL .
 				'assets.pinterest.com,' . PHP_EOL,
+			'delay_js_prevent_pages' => '',
 			'delay_js_time'          => '3',
 
 			// Pjax

@@ -179,6 +179,21 @@ class Tab_Speed {
 		);
 
 		add_settings_field(
+			'delay_js_prevent_pages',
+			'',
+			$cb,
+			$page_name,
+			$section_name,
+			[
+				'id'     => 'delay_js_prevent_pages',
+				'class'  => $delayjs_class,
+				'type'   => 'textarea',
+				'before' => '<p class="u-mb-5"><b>スクリプトの遅延読み込み機能をオフにするページ</b></p>',
+				'desc'   => '指定されたキーワードが含まれるページで、スクリプトの遅延読み込み機能がオフになります。<br>複数の場合は「,（+改行）」で区切ってください。',
+			]
+		);
+
+		add_settings_field(
 			'delay_js_time',
 			'',
 			$cb,
