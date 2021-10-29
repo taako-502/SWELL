@@ -8,7 +8,8 @@ import { RichTextToolbarButton } from '@wordpress/block-editor';
 /**
  * @Internal dependencies
  */
-import { swellIcon } from '@swell-guten/icon';
+// import { swellIcon } from '@swell-guten/icon';
+import icon from './icon';
 
 const formats = window.swellVars.customFormats || [];
 
@@ -24,7 +25,7 @@ formats.forEach((format) => {
 				<RichTextToolbarButton
 					name='swell-controls'
 					title={formatTitle}
-					icon={swellIcon.swellFavi}
+					icon={icon}
 					isActive={isActive}
 					onClick={() => {
 						return onChange(toggleFormat(value, { type: formatName }));

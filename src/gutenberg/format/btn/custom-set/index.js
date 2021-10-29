@@ -8,7 +8,7 @@ import { RichTextToolbarButton } from '@wordpress/block-editor';
 /**
  * @Internal dependencies
  */
-import { swellIcon } from '@swell-guten/icon';
+import icon from './icon';
 
 const formatSets = window?.swellVars?.customFormatSets;
 
@@ -24,7 +24,7 @@ if (formatSets && formatSets.length) {
 					<RichTextToolbarButton
 						name='swell-controls'
 						title={`書式セット${index}`}
-						icon={swellIcon.swellFavi}
+						icon={icon}
 						isActive={isActive}
 						onClick={() => {
 							let newFormats = value;
