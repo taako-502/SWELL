@@ -81,7 +81,7 @@ $style     = 'opacity: ' . $SETTING['ps_img_opacity'] . ';';
 if ( $bgimg_id ) {
 	$bgimg = SWELL_Theme::get_image( $bgimg_id, [
 		'class'       => 'p-postSlider__imgLayer c-filterLayer__img u-obf-cover',
-		'loading'     => apply_filters( 'swell_top_area_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type,
+		'loading'     => apply_filters( 'swell_post_slider_lazy_off', true ) ? 'none' : SWELL_Theme::$lazy_type,
 		'style'       => $style,
 		'decoding'    => 'async',
 		'aria-hidden' => 'true',
