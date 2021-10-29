@@ -265,7 +265,7 @@ class Style {
 
 		// フッター前マージン
 		if ( SWELL::get_setting( 'footer_no_mt' ) ) {
-			self::add( '.w-beforeFooter', 'margin-bottom:0' );
+			self::add( '#before_footer_widget', 'margin-bottom:0' );
 		}
 
 		// ウィジェット

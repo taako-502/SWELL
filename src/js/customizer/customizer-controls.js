@@ -426,24 +426,24 @@
 		});
 
 		// pjax
-		function toggle__pjaxKeys(val) {
-			if ('pjax' === val) {
-				$('.customize-control.-pjax_prevent_pages').removeClass('-hide_');
-			} else {
-				$('.customize-control.-pjax_prevent_pages').addClass('-hide_');
-			}
+		// function toggle__pjaxKeys(val) {
+		// 	if ('pjax' === val) {
+		// 		$('.customize-control.-pjax_prevent_pages').removeClass('-hide_');
+		// 	} else {
+		// 		$('.customize-control.-pjax_prevent_pages').addClass('-hide_');
+		// 	}
 
-			if ('prefetch' === val) {
-				$('.customize-control.-prefetch_prevent_keys').removeClass('-hide_');
-			} else {
-				$('.customize-control.-prefetch_prevent_keys').addClass('-hide_');
-			}
-		}
-		wp.customize('loos_customizer[use_pjax]', function (value) {
-			toggle__pjaxKeys(value.get());
-			value.bind(function (to) {
-				toggle__pjaxKeys(to);
-			});
-		});
+		// 	if ('prefetch' === val) {
+		// 		$('.customize-control.-prefetch_prevent_keys').removeClass('-hide_');
+		// 	} else {
+		// 		$('.customize-control.-prefetch_prevent_keys').addClass('-hide_');
+		// 	}
+		// }
+		// wp.customize('loos_customizer[use_pjax]', function (value) {
+		// 	toggle__pjaxKeys(value.get());
+		// 	value.bind(function (to) {
+		// 		toggle__pjaxKeys(to);
+		// 	});
+		// });
 	});
 })(window.jQuery);
