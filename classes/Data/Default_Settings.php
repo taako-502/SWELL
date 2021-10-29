@@ -25,7 +25,7 @@ trait Default_Settings {
 			// SWELL機能の停止
 			'remove_url2card'        => '',
 			'remove_delete_empp'     => '',
-			'remove_page_fade'       => '',
+			'remove_page_fade'       => '1',
 			'remove_luminous'        => '',
 			'remove_ie_alert'        => '',
 			'remove_patterns'        => '',
@@ -396,7 +396,7 @@ trait Default_Settings {
 			'show_share_btn_tw'       => true,
 			'show_share_btn_hatebu'   => true,
 			'show_share_btn_pocket'   => true,
-			'show_share_btn_pin'      => true,
+			'show_share_btn_pin'      => false,
 			'show_share_btn_line'     => true,
 			'urlcopy_btn_pos'         => 'in',
 			'share_message'           => __( "Let's share this post!", 'swell' ),
