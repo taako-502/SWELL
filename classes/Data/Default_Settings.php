@@ -181,7 +181,7 @@ trait Default_Settings {
 			'blockquote_type'         => 'simple',
 
 			// カスタム書式
-			'format_title_1'          => 'カスタム01',
+			'format_title_1'          => 'カスタム1',
 			'format_title_2'          => '',
 
 			// カスタムセット
