@@ -71,13 +71,6 @@ const SwlPluginSidebar = () => {
 							}}
 						/>
 						<CheckboxControl
-							label='「背景色」を1階層上に表示'
-							checked={swellBlockSettings.show_bgcolor_top}
-							onChange={(val) => {
-								updateSettings('show_bgcolor_top', val);
-							}}
-						/>
-						<CheckboxControl
 							label='「マーカー」を1階層上に表示'
 							checked={swellBlockSettings.show_marker_top}
 							onChange={(val) => {
@@ -89,6 +82,13 @@ const SwlPluginSidebar = () => {
 							checked={swellBlockSettings.show_fz_top}
 							onChange={(val) => {
 								updateSettings('show_fz_top', val);
+							}}
+						/>
+						<CheckboxControl
+							label='「背景色」を1階層上に表示'
+							checked={swellBlockSettings.show_bgcolor_top}
+							onChange={(val) => {
+								updateSettings('show_bgcolor_top', val);
 							}}
 						/>
 					</BaseControl>

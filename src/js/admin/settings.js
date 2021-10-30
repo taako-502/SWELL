@@ -425,6 +425,169 @@ function getRGBA(colorCode, alpha, brightness) {
 				$('.is-style-btn_line a').css('border-radius', thisVal);
 			});
 		})();
+
+		/**
+		 * カスタム書式設定
+		 */
+		(function () {
+			const $setMenu = $('.swell-menu-set');
+
+			// 選択解除
+			function removeFormat($this, targetClass) {
+				const $field = $this.parents('.__field');
+				const $parent = $this.parents('.swell-menu-set');
+
+				// チェックを削除
+				$field.find('.__choices input').prop('checked', false);
+
+				// プレビューエリアのクラスを外す
+				$parent.find(`.__preview .${targetClass}`).removeClass().addClass(targetClass);
+			}
+
+			// 太字のオン・オフ
+			$setMenu.find('.__toggle-bold').change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				if (isChecked) {
+					$parent.find('.__preview .swl-txt').addClass('u-fw-bold');
+				} else {
+					$parent.find('.__preview .swl-txt').removeClass('u-fw-bold');
+				}
+			});
+
+			// 斜体のオン・オフ
+			$setMenu.find('.__toggle-italic').change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				if (isChecked) {
+					$parent.find('.__preview .swl-txt').addClass('u-fs-italic');
+				} else {
+					$parent.find('.__preview .swl-txt').removeClass('u-fs-italic');
+				}
+			});
+
+			// 文字色展開
+			$setMenu.find('.__toggle-color').change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+			});
+
+			// 文字色の変更
+			$setMenu.find('.__color').change(function () {
+				const $this = $(this);
+				const thisVal = $this.val();
+				let colorClass = `has-swl-${thisVal}-color`;
+				if (thisVal === 'white' || thisVal === 'black') {
+					colorClass = `has-${thisVal}-color`;
+				} else if (thisVal === 'main_thin') {
+					colorClass = `has-swl-main-thin-color`;
+				}
+				const $parent = $this.parents('.swell-menu-set');
+				$parent
+					.find('.__preview .has-inline-color')
+					.removeClass()
+					.addClass(`has-inline-color ${colorClass}`);
+			});
+
+			// 文字色クリア
+			$setMenu.find('.__clear.-color').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'has-inline-color');
+			});
+
+			// 背景色展開
+			$setMenu.find('.__toggle-bg').change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+			});
+
+			// 背景色の変更
+			$setMenu.find('.__bg').change(function () {
+				const $this = $(this);
+				const thisVal = $this.val();
+				let bgClass = `has-swl-${thisVal}-background-color`;
+				if (thisVal === 'white' || thisVal === 'black') {
+					bgClass = `has-${thisVal}-background-color`;
+				} else if (thisVal === 'main_thin') {
+					bgClass = `has-swl-main-thin-background-color`;
+				}
+				const $parent = $this.parents('.swell-menu-set');
+				$parent
+					.find('.__preview .swl-bg-color')
+					.removeClass()
+					.addClass(`swl-bg-color ${bgClass}`);
+			});
+
+			// 背景色クリア
+			$setMenu.find('.__clear.-bg').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'swl-bg-color');
+			});
+
+			// マーカー展開
+			$setMenu.find('.__toggle-marker').change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+			});
+
+			// マーカーの変更
+			$setMenu.find('.__marker').change(function () {
+				const $this = $(this);
+				const thisVal = $this.val();
+				const markerClass = `mark_${thisVal}`;
+				const $parent = $this.parents('.swell-menu-set');
+				$parent
+					.find('.__preview .swl-marker')
+					.removeClass()
+					.addClass(`swl-marker ${markerClass}`);
+			});
+
+			// マーカークリア
+			$setMenu.find('.__clear.-marker').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'swl-marker');
+			});
+
+			// フォントサイズのオン・オフ
+			$setMenu.find('.__toggle-font-size').change(function () {
+				const $this = $(this);
+				const isChecked = $this.prop('checked');
+				const $parent = $this.parents('.swell-menu-set');
+				const $field = $this.parents('.__field');
+				$field.attr('data-is-enable', Number(isChecked));
+				$field.find('.__choices input').prop('checked', false);
+				$field.attr('data-is-enable', Number(isChecked));
+				$field.find('.__choices input').prop('checked', false);
+				$parent.find('.__preview .swl-fz').removeClass().addClass('swl-fz');
+			});
+
+			// フォントサイズの変更
+			const $fontSizeField = $setMenu.find('.__font-size input');
+			$fontSizeField.change(function () {
+				const $this = $(this);
+				const thisVal = $this.val();
+				const fontSizeClass = `u-fz-${thisVal}`;
+				const $parent = $this.parents('.swell-menu-set');
+				$parent
+					.find('.__preview .swl-fz')
+					.removeClass()
+					.addClass(`swl-fz ${fontSizeClass}`);
+			});
+
+			// フォントサイズクリア
+			$setMenu.find('.__clear.-fz').click(function () {
+				const $this = $(this);
+				removeFormat($this, 'swl-fz');
+			});
+		})();
 	});
 
 	// ページ上部へ

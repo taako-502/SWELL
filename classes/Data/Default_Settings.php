@@ -25,7 +25,7 @@ trait Default_Settings {
 			// SWELL機能の停止
 			'remove_url2card'        => '',
 			'remove_delete_empp'     => '',
-			'remove_page_fade'       => '',
+			'remove_page_fade'       => '1',
 			'remove_luminous'        => '',
 			'remove_ie_alert'        => '',
 			'remove_patterns'        => '',
@@ -181,8 +181,23 @@ trait Default_Settings {
 			'blockquote_type'         => 'simple',
 
 			// カスタム書式
-			'format_title_1'          => 'カスタム01',
+			'format_title_1'          => 'カスタム1',
 			'format_title_2'          => '',
+
+			// カスタムセット
+			'format_set_bold_1'       => '1',
+			'format_set_italic_1'     => '',
+			'format_set_color_1'      => '',
+			'format_set_bg_1'         => '',
+			'format_set_marker_1'     => 'orange',
+			'format_set_font_size_1'  => '',
+
+			'format_set_bold_2'       => '',
+			'format_set_italic_2'     => '',
+			'format_set_color_2'      => '',
+			'format_set_bg_2'         => '',
+			'format_set_marker_2'     => '',
+			'format_set_font_size_2'  => '',
 		];
 	}
 
@@ -396,7 +411,7 @@ trait Default_Settings {
 			'show_share_btn_tw'       => true,
 			'show_share_btn_hatebu'   => true,
 			'show_share_btn_pocket'   => true,
-			'show_share_btn_pin'      => true,
+			'show_share_btn_pin'      => false,
 			'show_share_btn_line'     => true,
 			'urlcopy_btn_pos'         => 'in',
 			'share_message'           => __( "Let's share this post!", 'swell' ),

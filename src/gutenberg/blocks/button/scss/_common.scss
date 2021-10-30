@@ -39,11 +39,13 @@
 // クラシック用
 
 // SWELLボタン共通
+
 [class*="is-style-btn_"] {
     position: relative;
     display: block;
     margin: 0 auto 2em;
     text-align: center;
+
 
     a {
         position: relative;
@@ -249,4 +251,19 @@
 .is-style-btn_solid.green_ a,
 .is-style-btn_line.green_ a:hover {
     background: var(--color_btn_green);
+}
+
+
+.swl-inline-btn {
+    display: inline-block;
+    margin: 0 4px;
+
+    a {
+        padding: .5em 1em;
+    }
+
+    table & {
+        display: block;
+        margin: 0 auto;
+    }
 }

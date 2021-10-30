@@ -82,7 +82,7 @@ export default ({ className, setAttributes }) => {
 			icon={
 				activeBtn ? (
 					<span className='swl-toolbtn--margin'>
-						{swellIcon.mbCtrolSeted}
+						{swellIcon.mbCtrol}
 						{activeBtn.size}
 					</span>
 				) : (

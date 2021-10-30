@@ -19,9 +19,9 @@ function hook_rest_api_init() {
 				'show_device_toolbtn'    => true,
 				'show_margin_toolbtn'    => true,
 				'show_shortcode_toolbtn' => true,
-				'show_marker_top'        => false,
+				'show_marker_top'        => true,
+				'show_fz_top'            => true,
 				'show_bgcolor_top'       => false,
-				'show_fz_top'            => false,
 				'show_header_postlink'   => true,
 			];
 

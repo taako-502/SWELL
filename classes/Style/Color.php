@@ -72,8 +72,6 @@ class Color {
 		] as $color_key ) {
 			Style::add_root( '--' . $color_key, $EDITOR[ $color_key ] );
 		}
-
-		// Style::add_root( '--color_border', $SETTING['color_border'] );
 	}
 
 	/**

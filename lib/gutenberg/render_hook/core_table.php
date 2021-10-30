@@ -9,15 +9,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 add_filter( 'render_block_core/table', __NAMESPACE__ . '\render_table', 10, 2 );
 function render_table( $block_content, $block ) {
-	$atts      = $block['attrs'] ?? [];
-	$className = $atts['className'] ?? '';
+	$attrs     = $block['attrs'] ?? [];
+	$innerHTML = $block['innerHTML'] ?? '';
+	$className = $attrs['className'] ?? '';
 
 	$props = '';
 
 	// 横スクロール
 	$scrollable = '';
-	if ( isset( $atts['swlScrollable'] ) ) {
-		$scrollable = $atts['swlScrollable'];
+	if ( isset( $attrs['swlScrollable'] ) ) {
+		$scrollable = $attrs['swlScrollable'];
 	} elseif ( false !== strpos( $className, 'sp_scroll_' ) ) {
 		$scrollable = 'sp';
 	}
@@ -26,7 +27,7 @@ function render_table( $block_content, $block ) {
 		$props .= ' data-table-scrollable="' . esc_attr( $scrollable ) . '"';
 
 		// 一列目の固定表示
-		$swlIsFixedLeft = $atts['swlIsFixedLeft'] ?? false;
+		$swlIsFixedLeft = $attrs['swlIsFixedLeft'] ?? false;
 		if ( $swlIsFixedLeft ) {
 			$props .= ' data-cell1-fixed="' . esc_attr( $scrollable ) . '"';
 		}
@@ -37,15 +38,20 @@ function render_table( $block_content, $block ) {
 		$block_content = apply_filters( 'swell_table_scroll_hint', $hint_src ) . $block_content;
 
 		// tableの幅
-		$max_width     = $atts['swlMaxWidth'] ?? 800;
-		$width_style   = "width:{$max_width}px;max-width:{$max_width}px";
-		$block_content = str_replace( '<table', '<table style="' . esc_attr( $width_style ) . '"', $block_content );
+		$max_width = $attrs['swlMaxWidth'] ?? 800;
+		$ex_style  = "width:{$max_width}px;max-width:{$max_width}px";
+
+		$table_has_style = preg_match( '/<table[^>]*style="([^"]*)"[^>]*>/', $innerHTML, $style_matches );
+		if ( $table_has_style ) {
+			$ex_style = $ex_style . ';' . $style_matches[1];
+		}
+		$block_content = str_replace( '<table', '<table style="' . esc_attr( $ex_style ) . '"', $block_content );
 	}
 
 	// ヘッダー固定
 	$theadfix = '';
-	if ( isset( $atts['swlFixedHead'] ) ) {
-		$theadfix = $atts['swlFixedHead'];
+	if ( isset( $attrs['swlFixedHead'] ) ) {
+		$theadfix = $attrs['swlFixedHead'];
 	} elseif ( false !== strpos( $className, 'sp_fix_thead_' ) ) {
 		$theadfix = 'sp';
 	}
