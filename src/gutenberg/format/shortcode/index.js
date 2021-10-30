@@ -5,45 +5,41 @@
 import { registerFormatType } from '@wordpress/rich-text';
 import { RichTextToolbarButton } from '@wordpress/block-editor';
 
-// icon
-import { swellIcon } from '@swell-guten/icon';
+/**
+ * @Self dependencies
+ */
+import shortcodeIcon from './icon';
 
 const shortcodeBtns = [
 	{
 		name: 'ad',
 		label: '記事内広告',
 		tag: '[ad]',
-		icon: swellIcon.shortcode,
 	},
 	{
 		name: 'spbr',
 		label: 'スマホだけ改行',
 		tag: '[spbr]',
-		icon: swellIcon.shortcode,
 	},
 	{
 		name: 'pcbr',
 		label: 'PCだけ改行',
 		tag: '[pcbr]',
-		icon: swellIcon.shortcode,
 	},
 	{
 		name: 'icon',
 		label: 'アイコン用ショートコード',
 		tag: '[icon class="アイコンクラス名"]',
-		icon: swellIcon.shortcode,
 	},
 	{
 		name: 'stars',
 		label: '評価用スター',
 		tag: '[review_stars 4.5/5]',
-		icon: swellIcon.shortcode,
 	},
 	{
 		name: 'login',
 		label: 'ログイン時限定コンテンツ',
 		tag: '[only_login]ログイン時にだけ表示したいコンテンツ[/only_login]',
-		icon: swellIcon.shortcode,
 	},
 ];
 
@@ -51,9 +47,7 @@ shortcodeBtns.forEach((data) => {
 	const fillName = 'swellShortcode';
 	const formatName = `loos/shortcode-${data.name}`;
 	const formatTitle = data.label;
-	const btnIcon = data.icon;
 
-	// 登録
 	registerFormatType(formatName, {
 		title: formatTitle,
 		tagName: 'span',
@@ -64,7 +58,7 @@ shortcodeBtns.forEach((data) => {
 				<RichTextToolbarButton
 					name={fillName}
 					title={formatTitle}
-					icon={btnIcon}
+					icon={shortcodeIcon}
 					isActive={isActive}
 					onClick={() => {
 						return onChange(

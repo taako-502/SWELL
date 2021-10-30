@@ -2,32 +2,33 @@
  * @WordPress dependencies
  */
 // import { __ } from '@wordpress/i18n';
-import { registerFormatType, toggleFormat } from '@wordpress/rich-text';
+import { toggleFormat } from '@wordpress/rich-text';
 import { RichTextToolbarButton } from '@wordpress/block-editor';
 
 /**
  * @Self dependencies
  */
-import { swellIcon } from '@swell-guten/icon';
+import icon from './icon';
 
-const formatName = 'loos/mini-note';
-const formatTitle = '注釈';
+const name = 'loos/mini-note';
+const title = '注釈';
 
-registerFormatType(formatName, {
-	title: formatTitle,
+export const note = {
+	name,
+	title,
 	tagName: 'small',
 	className: 'mininote',
 	edit: ({ isActive, value, onChange }) => {
 		return (
 			<RichTextToolbarButton
 				name='swell-controls'
-				title={formatTitle}
-				icon={swellIcon.iconSmall}
+				title={title}
+				icon={icon}
 				isActive={isActive}
 				onClick={() => {
-					return onChange(toggleFormat(value, { type: formatName }));
+					return onChange(toggleFormat(value, { type: name }));
 				}}
 			/>
 		);
 	},
-});
+};

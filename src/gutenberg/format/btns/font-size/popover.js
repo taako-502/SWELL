@@ -13,9 +13,9 @@ import { Button, ButtonGroup } from '@wordpress/components';
 import getPopoverAnchorRect from '../../helper/getPopoverAnchorRect';
 
 export default function (props) {
-	const { value, name, isAddingColor, onChange, fontSizes, activeSize } = props;
+	const { value, name, isAdding, onChange, fontSizes, activeSize } = props;
 
-	const anchorRect = useMemo(() => getPopoverAnchorRect(isAddingColor), []);
+	const anchorRect = useMemo(() => getPopoverAnchorRect(isAdding), []);
 	if (!anchorRect) {
 		return null;
 	}
