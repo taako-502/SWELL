@@ -1,9 +1,227 @@
+.tr-custom-format-set {
+
+    th {
+        min-width: 13em;
+    }
+
+    .swell-menu-set {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+    }
+
+    .__settings {
+        flex: 1 0 100%;
+        max-width: 460px;
+        margin-right: 32px;
+    }
+
+    .__toggle-italic + label {
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    .__toggle-bold + label {
+        font-weight: bold;
+    }
+
+    .__field.-single {
+        display: flex;
+        margin-bottom: 16px;
+
+        .__btn {
+            min-width: 6em;
+            font-weight: bold;
+        }
+
+        label {
+            font-size: 1.1em;
+        }
+    }
+
+    .__field.-acc {
+
+        .__ttl {
+            border-top: solid 1px #dcdcdc;
+
+            input {
+                display: block;
+                width: 0px;
+                height: 0px;
+                visibility: hidden;
+            }
+
+            label {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 16px 8px;
+            }
+
+            label::after {
+
+                @extend %swellicon;
+                content: "\e910";
+            }
+
+            :checked + label::after {
+                content: "\e912";
+            }
+
+        }
+
+        .__choices {
+            padding: 16px 8px;
+            border-top: dashed 1px #dcdcdc;
+        }
+    }
+
+
+    .__choices {
+        position: relative;
+        display: none;
+        line-height: inherit;
+    }
+
+    .__clear {
+        display: inline-flex;
+        margin: 0 0 8px 4px;
+        padding: 4px 5px;
+        font-size: 12px;
+        line-height: 1;
+        background: none;
+        border: none;
+        border-radius: 2px;
+        box-shadow: none;
+        cursor: pointer;
+
+        &.-fz {
+            margin-bottom: 0;
+        }
+
+        svg {
+            margin-right: 1px;
+        }
+
+        &:hover {
+            box-shadow: 0 0 0 1px currentColor;
+        }
+    }
+
+    [data-is-enable="1"] .__choices {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .__label {
+        position: relative;
+        width: 30px;
+        height: 30px;
+        margin: 0 8px 8px 0;
+
+        span {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+            font-size: 0;
+            border-radius: 50%;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2);
+
+            &::after {
+                position: absolute;
+                top: -3px;
+                right: -3px;
+                bottom: -3px;
+                left: -3px;
+                border: 2px solid transparent;
+                border-radius: 50%;
+                content: "";
+            }
+        }
+
+        input:checked + span::after {
+            border-color: #757575;
+        }
+
+        svg {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            display: none;
+            filter: drop-shadow(0 0 1px rgba(0, 0, 0, .75));
+            pointer-events: none;
+        }
+
+        input:checked + span + svg {
+            display: block;
+        }
+    }
+
+    .__font-size {
+        margin: 0;
+
+        + .__font-size {
+            margin-left: -1px;
+        }
+
+        input {
+            display: block;
+            width: 0px;
+            height: 0px;
+            visibility: hidden;
+        }
+
+        label {
+            display: block;
+            min-width: 3rem;
+            height: 30px;
+            margin: 0;
+            padding: 0 8px;
+            line-height: 30px;
+            text-align: center;
+            box-shadow: inset 0 0 0 1px #1e1e1e;
+        }
+
+        [value="xs"] + label {
+            font-size: .9em;
+        }
+
+        :checked + label {
+            color: #fff;
+            background-color: #007cba;
+        }
+    }
+
+    .__preview {
+        max-width: 380px;
+        margin: 1em;
+        padding: 3em 1em;
+        text-align: center;
+
+        .swl-bg-color {
+            padding: .25em .5em;
+            border-radius: 1px;
+        }
+
+        .swl-marker {
+            padding: 2px;
+        }
+
+        .swl-txt {
+            // Windowsの場合、設定画面ではメイリオが当たってイタリック体が表示されないため、遊ゴシック体を優先指定する
+            font-family: "游ゴシック体", "Yu Gothic", YuGothic, "Hiragino Kaku Gothic ProN", "Hiragino Sans", "メイリオ", Meiryo, sans-serif;
+        }
+    }
+}
+
 .tr-custom-format {
 
     .__tr {
         align-items: center;
 
-        & + .__tr {
+        + .__tr {
             margin-top: 8px;
         }
 

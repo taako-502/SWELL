@@ -3,13 +3,14 @@
 
     .swell-format-toolbar {
         order: 10;
+        border-left: solid 1px #1e1e1e;
 
-        & > .components-toolbar-group {
+        > .components-toolbar-group {
             // padding-right: 4px;
             // padding-left: 4px;
 
             // ショートコードボタン、常に同じサイズ感に固定する
-            & > .components-dropdown + .components-dropdown:not(:last-child) > button {
+            > .components-dropdown + .components-dropdown:not(:last-child) > button {
                 min-width: 36px;
                 padding-right: 6px;
                 padding-left: 6px;
@@ -20,12 +21,12 @@
                 }
             }
 
-            & > .components-button.has-icon .dashicon {
+            > .components-button.has-icon .dashicon {
                 margin-right: 0;
                 margin-left: 0;
             }
 
-            & > .components-dropdown + .components-button:first-of-type:last-of-type {
+            > .components-dropdown + .components-button:first-of-type:last-of-type {
                 padding-left: 2px !important;
 
                 &::before {
@@ -33,7 +34,7 @@
                     left: 2px !important;
                 }
             }
-            // & > .components-button {
+            // > .components-button {
             //     min-width: 42px !important;
             //     padding-right: 4px !important;
             //     padding-left: 4px !important;

@@ -181,8 +181,23 @@ trait Default_Settings {
 			'blockquote_type'         => 'simple',
 
 			// カスタム書式
-			'format_title_1'          => 'カスタム01',
+			'format_title_1'          => 'カスタム1',
 			'format_title_2'          => '',
+
+			// カスタムセット
+			'format_set_bold_1'       => '1',
+			'format_set_italic_1'     => '',
+			'format_set_color_1'      => '',
+			'format_set_bg_1'         => '',
+			'format_set_marker_1'     => 'orange',
+			'format_set_font_size_1'  => '',
+
+			'format_set_bold_2'       => '',
+			'format_set_italic_2'     => '',
+			'format_set_color_2'      => '',
+			'format_set_bg_2'         => '',
+			'format_set_marker_2'     => '',
+			'format_set_font_size_2'  => '',
 		];
 	}
 

@@ -19,6 +19,7 @@ import './btn/font-size'; // フォントサイズ
 import './btn/mini-note'; // 注釈ボタン
 import './btn/nowrap'; // nowrapボタン
 import './btn/custom'; // カスタムボタン
+import './btn/custom-set'; // カスタムボタン
 
 // ドロップダウン化
 import './doropdown/shortcode'; // ショートコード用ドロップダウンメニューの登録
