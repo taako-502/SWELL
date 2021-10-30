@@ -13,9 +13,10 @@ import { bgColor } from './bg-color'; // 背景色
 import { marker } from './marker'; // マーカー
 import { fontSize } from './font-size'; // フォントサイズ
 import { note } from './mini-note'; // 注釈ボタン
-import { inlineBtn } from './inline-btn'; // nowrapボタン
+// import { inlineBtn } from './inline-btn'; // nowrapボタン
 import { nowrap } from './nowrap'; // nowrapボタン
 import { customFormats } from './custom'; // カスタムボタン
+import { customSets } from './custom-set'; // カスタムボタン
 
 const formats = [
 	clear,
@@ -25,8 +26,9 @@ const formats = [
 	marker,
 	fontSize,
 	note,
-	inlineBtn,
+	// inlineBtn,
 	nowrap,
 	...customFormats,
+	...customSets,
 ];
 formats.forEach(({ name, ...settings }) => registerFormatType(name, settings));
