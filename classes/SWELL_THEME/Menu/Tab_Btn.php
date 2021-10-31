@@ -169,8 +169,8 @@ class Tab_Btn {
 			?>
 			<div class="__field -gradation  u-mt-10">
 				<input type="hidden" name="<?=$name?>" value="">
-					<input type="checkbox" id="<?=$key?>" name="<?=$name ?>" value="1" <?=$checked?> class="__gradation"/>
-					<label for="<?=$key?>"><?=$label?></label>
+				<input type="checkbox" id="<?=$key?>" name="<?=$name ?>" value="1" <?=$checked?> class="__gradation"/>
+				<label for="<?=$key?>"><?=$label?></label>
 				<p class="description">※ ノーマルボタン・キラッとボタンでのみ有効</p>
 			</div>
 			</div>
