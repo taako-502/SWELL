@@ -167,6 +167,7 @@ class Tab_Custom {
 				<div class="__settings">
 					<div class="__field -single">
 						<div class="__btn">
+							<input type="hidden" name="<?=esc_attr( $bold_name )?>" value="">
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $bold_key )?>"
@@ -178,6 +179,7 @@ class Tab_Custom {
 							<label for="<?=esc_attr( $bold_key )?>">太字</label>
 						</div>
 						<div class="__btn">
+							<input type="hidden" name="<?=esc_attr( $italic_name )?>" value="">
 							<input
 								type="checkbox"
 								id="<?=esc_attr( $italic_key )?>"
@@ -200,6 +202,7 @@ class Tab_Custom {
 							<label for="<?=esc_attr( $color_key )?>">文字色</label>
 						</div>
 						<div class="__choices">
+							<input type="hidden" name="<?=esc_attr( $color_name )?>" value="">
 							<?php
 								foreach ( $base_colors as $color ) :
 									self::color_palette(
@@ -240,6 +243,7 @@ class Tab_Custom {
 							<label for="<?=esc_attr( $bg_key )?>">背景色</label>
 						</div>
 						<div class="__choices">
+							<input type="hidden" name="<?=esc_attr( $bg_name )?>" value="">
 							<?php
 								foreach ( $base_colors as $color ) :
 									self::color_palette(
@@ -280,6 +284,7 @@ class Tab_Custom {
 							<label for="<?=esc_attr( $marker_key )?>">マーカー</label>
 						</div>
 						<div class="__choices">
+							<input type="hidden" name="<?=esc_attr( $marker_name )?>" value="">
 							<?php
 								foreach ( $marker_colors as $slug => $label ) :
 									$val = \SWELL_Theme::get_editor( 'color_mark_' . $slug );
@@ -309,6 +314,7 @@ class Tab_Custom {
 							<label for="<?=esc_attr( $font_size_key )?>">フォントサイズ</label>
 						</div>
 						<div class="__choices">
+							<input type="hidden" name="<?=esc_attr( $font_size_name )?>" value="">
 							<?php foreach ( $font_sizes as $slug => $name ) : ?>
 								<div class="__font-size">
 									<input
