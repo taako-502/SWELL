@@ -16,9 +16,7 @@
         padding: 1.5em;
     }
 
-    // @media (min-width: 1200px) {
-    //     padding: 2em;
-    // }
+    // @media (min-width: 1200px) {padding: 2em;}
 
 
     .avatar {
@@ -93,9 +91,11 @@
     position: relative;
     display: block;
     padding: 0 1em;
+    color: inherit;
     line-height: 3;
     letter-spacing: .5px;
     text-align: center;
+    text-decoration: none;
     border: solid 1px var(--swl-color_border);
     border-radius: var(--swl-radius--4, 0px);
 
