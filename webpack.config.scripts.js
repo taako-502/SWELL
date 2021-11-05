@@ -79,5 +79,5 @@ module.exports = {
 	},
 	plugins: [...defaultConfig.plugins, new webpack.EnvironmentPlugin(['TYPE'])],
 	// performance: { hints: false },
-	devtool: 'none',
+	devtool: false,
 };
