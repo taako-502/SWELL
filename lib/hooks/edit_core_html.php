@@ -18,8 +18,7 @@ function add_class_tag_cloud_link( $links ) {
  */
 add_filter( 'wp_list_categories', __NAMESPACE__ . '\hook_wp_list_categories', 10, 2 );
 function hook_wp_list_categories( $output, $args ) {
-	$output = str_replace( '</a> (', '<span class="cat-post-count">(', $output );
-	$output = str_replace( ')', ')</span></a>', $output );
+	$output = preg_replace( '/<\/a>\s*\((\d+)\)/', ' <span class="cat-post-count">($1)</span></a>', $output );
 
 	if ( \SWELL_Theme::is_use( 'acc_submenu' ) ) {
 		$span   = '<span class="c-submenuToggleBtn" data-onclick="toggleSubmenu"></span>';
