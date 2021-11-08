@@ -76,7 +76,11 @@ function add_mce_buttons_2( $buttons ) {
  */
 function set_content_style( $mceInit ) {
 
-	$current_screen  = get_current_screen();
+	// $current_screen  = get_current_screen();
+	global $current_screen;
+	if ( ! isset( $current_screen ) ) {
+		return $mceInit;
+	}
 	$is_block_editor = $current_screen && method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor();
 
 	if ( $is_block_editor ) {
