@@ -295,9 +295,6 @@ trait Others {
 
 		// /v1-hoge → /v2-hoge などに変わってるかどうか
 		if ( false === strpos( self::$update_dir_path, "swell-theme/$dir_ver" ) ) {
-			echo '<pre style="margin-left: 200px;">';
-			var_dump( $dir_ver );
-			echo '</pre>';
 			return true;
 		}
 
