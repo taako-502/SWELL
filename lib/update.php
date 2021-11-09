@@ -3,8 +3,6 @@ namespace SWELL_Theme\Update;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( 'ok' !== self::$licence_status ) return;
-
 // sslverifyオフ
 add_filter( 'puc_request_update_options_theme-swell', function( $option ) {
 	$option['sslverify'] = false;
@@ -16,9 +14,8 @@ if ( ! class_exists( '\Puc_v4_Factory' ) ) {
 }
 
 if ( class_exists( '\Puc_v4_Factory' ) ) {
-	$file_name = apply_filters( 'swell_update_json_name', 'update.json' );
 	\Puc_v4_Factory::buildUpdateChecker(
-		'https://loos.co.jp/products/swell/' . $file_name,
+		\SWELL_Theme::get_update_json_path(),
 		T_DIRE . '/functions.php',
 		'swell'
 	);

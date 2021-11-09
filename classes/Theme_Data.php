@@ -36,6 +36,9 @@ class Theme_Data {
 	// ユーザー認証
 	public static $licence_status = '';
 
+	// update json path
+	public static $update_dir_path = '';
+
 	// ユーザーエージェント
 	public static $user_agent = '';
 

@@ -260,22 +260,69 @@ trait Others {
 		// @codingStandardsIgnoreEnd
 	}
 
+
+	/**
+	 * update path取得
+	 */
+	public static function is_change_update_dir() {
+
+		// 未認証でパスが取得できていない場合
+		if ( ! self::$update_dir_path ) return false;
+
+		$dir_ver = '';
+
+		// キャッシュ
+		$cached_ver = get_transient( 'swl_update_dir_ver' );
+
+		if ( false !== $cached_ver ) {
+			$dir_ver = $cached_ver;
+		} else {
+			$response = wp_remote_post(
+				'https://users.swell-theme.com/?swlr-api=get_dir_ver',
+				[
+					'timeout'     => 3,
+					'redirection' => 5,
+					'sslverify'   => false,
+					'headers'     => [ 'Content-Type: application/json' ],
+					'body'        => [],
+				]
+			);
+			if ( ! is_wp_error( $response ) ) {
+				$dir_ver = json_decode( $response['body'], true );
+				set_transient( 'swl_update_dir_ver', $dir_ver, 60 );
+			};
+		}
+
+		// /v1-hoge → /v2-hoge などに変わってるかどうか
+		if ( false === strpos( self::$update_dir_path, "swell-theme/$dir_ver" ) ) {
+			echo '<pre style="margin-left: 200px;">';
+			var_dump( $dir_ver );
+			echo '</pre>';
+			return true;
+		}
+
+		return false;
+	}
+
 	/**
 	 * ユーザー照合
 	 */
-	public static function check_swlr_licence( $email = '' ) {
+	public static function check_swlr_licence( $email = '', $delete_cache = false ) {
 
-		// キャッシュチェック
-		$cached_data = get_transient( 'swlr_email' );
-		if ( false !== $cached_data && isset( $cached_data['status'] ) ) {
-			self::$licence_status = $cached_data['status'];
-			return;
-		}
-
-		// ライセンスキー
 		$email = $email ?: get_option( 'sweller_email' );
 
-		if ( $email ) {
+		// 先にキャッシュを削除しておく場合
+		if ( $delete_cache ) {
+			delete_transient( 'swlr_user_status' );
+		}
+
+		// キャッシュをチェック
+		$cached_data = get_transient( 'swlr_user_status' );
+		if ( false !== $cached_data ) {
+			self::$licence_status  = $cached_data['status'] ?? '';
+			self::$update_dir_path = $cached_data['path'] ?? '';
+
+		} elseif ( $email ) {
 
 			// API接続
 			$response = wp_remote_post(
@@ -293,13 +340,29 @@ trait Others {
 
 			if ( ! is_wp_error( $response ) ) {
 				$response_data = json_decode( $response['body'], true );
-				set_transient( 'swlr_email', $response_data, 14 * DAY_IN_SECONDS );
-				self::$licence_status = $response_data['status'] ?? '';
+				set_transient( 'swlr_user_status', $response_data, 14 * DAY_IN_SECONDS );
+
+				self::$licence_status  = $response_data['status'] ?? '';
+				self::$update_dir_path = $response_data['path'] ?? '';
 			}
 		} else {
-			self::$licence_status = '';
+			self::$licence_status  = '';
+			self::$update_dir_path = '';
 		}
 
+		// self::$update_dir_path セットした上でチェック
+		if ( self::is_change_update_dir() ) {
+			delete_transient( 'swlr_user_status' );
+		}
+	}
+
+	/**
+	 * ユーザー照合
+	 */
+	public static function get_update_json_path() {
+		$dir_path  = 'ok' === self::$licence_status ? self::$update_dir_path : 'https://loos.co.jp/products/swell/';
+		$file_name = apply_filters( 'swell_update_json_name', 'update.json' );
+		return $dir_path . $file_name;
 	}
 
 }

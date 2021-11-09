@@ -32,8 +32,7 @@ if ( isset( $_POST['sweller_email'] ) ) {
 	update_option( 'sweller_email', $_POST['sweller_email'] );
 	$green_message = '設定を保存しました';
 
-	delete_transient( 'swlr_email' );
-	SWELL::check_swlr_licence( $_POST['sweller_email'] );
+	SWELL::check_swlr_licence( $_POST['sweller_email'], 1 );
 }
 
 // メッセージの表示
@@ -80,7 +79,7 @@ if ( $green_message ) {
 			<?php SWELL::set_nonce_field( '_email' ); ?>
 		</form>
 
-		<form action="" method="post">
+		<form action="" method="post" class="u-mt-20">
 			<table class="form-table">
 				<tbody>
 					<tr>
