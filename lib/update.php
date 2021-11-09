@@ -3,6 +3,8 @@ namespace SWELL_Theme\Update;
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( 'ok' !== self::$licence_status ) return;
+
 // sslverifyオフ
 add_filter( 'puc_request_update_options_theme-swell', function( $option ) {
 	$option['sslverify'] = false;

@@ -33,6 +33,9 @@ class Theme_Data {
 	// version
 	public static $swell_version = '';
 
+	// ユーザー認証
+	public static $licence_status = '';
+
 	// ユーザーエージェント
 	public static $user_agent = '';
 

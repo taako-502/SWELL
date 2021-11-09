@@ -260,4 +260,46 @@ trait Others {
 		// @codingStandardsIgnoreEnd
 	}
 
+	/**
+	 * ユーザー照合
+	 */
+	public static function check_swlr_licence( $email = '' ) {
+
+		// キャッシュチェック
+		$cached_data = get_transient( 'swlr_email' );
+		if ( false !== $cached_data && isset( $cached_data['status'] ) ) {
+			self::$licence_status = $cached_data['status'];
+			return;
+		}
+
+		// ライセンスキー
+		$email = $email ?: get_option( 'sweller_email' );
+
+		if ( $email ) {
+
+			// API接続
+			$response = wp_remote_post(
+				'https://users.swell-theme.com/?swlr-api=activation',
+				[
+					'timeout'     => 3,
+					'redirection' => 5,
+					'sslverify'   => false,
+					'headers'     => [ 'Content-Type: application/json' ],
+					'body'        => [
+						'email'  => $email,
+					],
+				]
+			);
+
+			if ( ! is_wp_error( $response ) ) {
+				$response_data = json_decode( $response['body'], true );
+				set_transient( 'swlr_email', $response_data, 14 * DAY_IN_SECONDS );
+				self::$licence_status = $response_data['status'] ?? '';
+			}
+		} else {
+			self::$licence_status = '';
+		}
+
+	}
+
 }

@@ -10,9 +10,12 @@ require_once __DIR__ . '/hooks/admin_toolbar.php';
 require_once __DIR__ . '/hooks/edit_core_html.php';
 require_once __DIR__ . '/hooks/remove.php';
 
-// キャッシュクリア処理
 if ( is_user_logged_in() ) {
 	require_once __DIR__ . '/hooks/cache_clear.php';
+}
+
+if ( is_admin() ) {
+	require_once __DIR__ . '/hooks/notice.php';
 }
 
 
