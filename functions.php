@@ -109,7 +109,8 @@ class SWELL_Theme extends \SWELL_Theme\Theme_Data {
 		// 管理者ログイン時
 		if ( current_user_can( 'manage_options' ) ) {
 
-			self::check_swlr_licence();
+			// アクティベート
+			require_once __DIR__ . '/lib/activate.php';
 
 			// アップデートチェック
 			require_once __DIR__ . '/lib/update.php';

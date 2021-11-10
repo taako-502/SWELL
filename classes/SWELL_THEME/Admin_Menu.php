@@ -110,8 +110,8 @@ class Admin_Menu {
 		);
 		add_submenu_page(
 			self::PAGE_SLUG,
-			__( 'ユーザー認証', 'swell' ),
-			__( 'ユーザー認証', 'swell' ),
+			__( 'アクティベート', 'swell' ),
+			__( 'アクティベート', 'swell' ),
 			'manage_options',
 			self::SUB_PAGE_SLUG['swellers'],
 			[self::$instance, 'swellers_id_setting' ]

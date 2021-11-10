@@ -294,7 +294,7 @@ trait Others {
 		}
 
 		// /v1-hoge → /v2-hoge などに変わってるかどうか
-		if ( false === strpos( self::$update_dir_path, "swell-theme/$dir_ver" ) ) {
+		if ( false === strpos( self::$update_dir_path, "swell-theme/{$dir_ver}" ) ) {
 			return true;
 		}
 
@@ -304,14 +304,9 @@ trait Others {
 	/**
 	 * ユーザー照合
 	 */
-	public static function check_swlr_licence( $email = '', $delete_cache = false ) {
+	public static function check_swlr_licence( $email = '' ) {
 
 		$email = $email ?: get_option( 'sweller_email' );
-
-		// 先にキャッシュを削除しておく場合
-		if ( $delete_cache ) {
-			delete_transient( 'swlr_user_status' );
-		}
 
 		// キャッシュをチェック
 		$cached_data = get_transient( 'swlr_user_status' );
@@ -319,6 +314,10 @@ trait Others {
 			self::$licence_status  = $cached_data['status'] ?? '';
 			self::$update_dir_path = $cached_data['path'] ?? '';
 
+			// waitingの時間から３分経過している場合
+			if ( 'waiting' === self::$licence_status && ! get_transient( 'swlr_is_waiting_activate' ) ) {
+				self::$licence_status = '';
+			}
 		} elseif ( $email ) {
 
 			// API接続
@@ -331,16 +330,29 @@ trait Others {
 					'headers'     => [ 'Content-Type: application/json' ],
 					'body'        => [
 						'email'  => $email,
+						'domain' => str_replace( [ 'http://', 'https://' ], '', home_url() ),
 					],
 				]
 			);
 
 			if ( ! is_wp_error( $response ) ) {
 				$response_data = json_decode( $response['body'], true );
-				set_transient( 'swlr_user_status', $response_data, 14 * DAY_IN_SECONDS );
+
+				// echo '<pre style="margin-left: 100px;">';
+				// var_dump( $response_data );
+				// echo '</pre>';
 
 				self::$licence_status  = $response_data['status'] ?? '';
 				self::$update_dir_path = $response_data['path'] ?? '';
+
+				// ワンタイム認証待ちの時
+				if ( 'waiting' === self::$licence_status ) {
+					// まだ有効期間中は上書きしない
+					if ( ! get_transient( 'swlr_is_waiting_activate' ) ) {
+						set_transient( 'swlr_is_waiting_activate', 1, 3 * MINUTE_IN_SECONDS );
+					}
+				}
+				set_transient( 'swlr_user_status', $response_data, 30 * DAY_IN_SECONDS );
 			}
 		} else {
 			self::$licence_status  = '';
